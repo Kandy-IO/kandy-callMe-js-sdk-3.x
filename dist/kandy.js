@@ -1,7 +1,7 @@
 /**
  * Kandy.js (Next)
  * kandy.callMe.js
- * Version: 3.1.0-beta.53871
+ * Version: 3.1.0-beta.53926
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -61191,7 +61191,7 @@ const factoryDefaults = {
    */
 };function factory(plugins, options = factoryDefaults) {
   // Log the SDK's version (templated by webpack) on initialization.
-  let version = '3.1.0-beta.53871';
+  let version = '3.1.0-beta.53926';
   log.info(`CPaaS SDK version: ${version}`);
 
   var sagas = [];
