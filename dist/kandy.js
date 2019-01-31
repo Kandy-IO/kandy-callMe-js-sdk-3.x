@@ -1,7 +1,7 @@
 /**
  * Kandy.js (Next)
  * kandy.callMe.js
- * Version: 3.1.0-beta.53534
+ * Version: 3.1.0-beta.53579
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -60714,7 +60714,12 @@ function middleware(context) {
         break;
       default:
         if (eventMap.hasOwnProperty(action.type)) {
+          // Get state both before and after allowing the action to go through
+          //    the reducers. This lets events have compare state changes.
+          const prevState = context.getState();
           let result = next(action);
+          const state = context.getState();
+
           // make this compatible with promise middleware by ensuring we
           // wait for the promise to resolve. It's easier to just always
           // use a promise, as opposed to handling cases.
@@ -60723,7 +60728,9 @@ function middleware(context) {
           }
           result.then(function () {
             for (let mapper of eventMap[action.type]) {
-              let events = mapper(action, context);
+              // Use the mapper(s) for this specific event to create the event object(s).
+              // Event mappings have access to the action and states pre+post reducer.
+              let events = mapper(action, { prevState, state });
               if (!events) {
                 events = [];
               } else if (!Array.isArray(events)) {
@@ -61184,7 +61191,7 @@ const factoryDefaults = {
    */
 };function factory(plugins, options = factoryDefaults) {
   // Log the SDK's version (templated by webpack) on initialization.
-  let version = '3.1.0-beta.53534';
+  let version = '3.1.0-beta.53579';
   log.info(`CPaaS SDK version: ${version}`);
 
   var sagas = [];
