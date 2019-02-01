@@ -1,16 +1,16 @@
-
+@kandy-io/callMe-sdk
 ========
 
-### Npm Install 
+### Npm Install
 
-`$ npm install `
+`$ npm install https://github.com/Kandy-IO/kandy-callMe-js-sdk#master`
 
-### Reference 
+### Reference
 
 The information about tutorials and documents can be found in the links below
 
-* `Documents`: [docs](/tree//docs) directory. 
-* `Tutorials`:  [tutorials](/tree//docs) directory.
+* `Documents`: [docs](https://github.com/Kandy-IO/kandy-callMe-js-sdk/tree/master/docs) directory.
+* `Tutorials`:  [tutorials](https://github.com/Kandy-IO/kandy-callMe-js-sdk/tree/master/tutorials) directory.
 
 
 

@@ -102,7 +102,7 @@
           "column": 35
         }
       },
-      "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/index.common.js"
+      "file": "/home/circleci/kandy/packages/kandy/src/index.common.js"
     },
     "augments": [],
     "examples": [
@@ -291,7 +291,7 @@
           "column": 59
         }
       },
-      "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/events/interface/api.js"
+      "file": "/home/circleci/kandy/packages/kandy/src/events/interface/api.js"
     },
     "augments": [],
     "examples": [],
@@ -437,7 +437,7 @@
                 "column": 3
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/events/interface/api.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/events/interface/api.js"
           },
           "augments": [],
           "examples": [
@@ -778,7 +778,7 @@
                 "column": 3
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/events/interface/api.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/events/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -1105,7 +1105,7 @@
                 "column": 3
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/events/interface/api.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/events/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -1371,7 +1371,7 @@
                 "column": 3
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/events/interface/api.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/events/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -1698,7 +1698,7 @@
           "column": 20
         }
       },
-      "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/call/interface/api.js"
+      "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
     },
     "augments": [],
     "examples": [],
@@ -1840,7 +1840,7 @@
                 "column": 40
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/call/interface/eventTypes.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [],
@@ -2125,7 +2125,7 @@
                 "column": 51
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/call/interface/eventTypes.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [
@@ -2676,7 +2676,7 @@
                 "column": 62
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/call/interface/eventTypes.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [],
@@ -2967,7 +2967,7 @@
                 "column": 63
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/call/interface/eventTypes.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [],
@@ -3207,7 +3207,7 @@
                 "column": 38
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/call/interface/eventTypes.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [],
@@ -3742,7 +3742,7 @@
                 "column": 3
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/call/callMe/index.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/call/callMe/index.js"
           },
           "augments": [],
           "examples": [
@@ -5071,7 +5071,7 @@
                 "column": 5
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/call/interface/api.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [
@@ -5292,7 +5292,7 @@
                 "column": 5
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/call/interface/api.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -5566,7 +5566,7 @@
                 "column": 5
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/call/interface/api.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -5780,7 +5780,7 @@
                 "column": 5
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/call/interface/api.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -6029,7 +6029,7 @@
                 "column": 27
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/call/interface/api.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [
@@ -6539,7 +6539,7 @@
                 "column": 33
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/call/interface/api.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -7113,7 +7113,7 @@
                 "column": 5
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/call/interface/api.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -7323,7 +7323,7 @@
                 "column": 5
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/call/interface/api.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -7533,7 +7533,7 @@
                 "column": 5
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/call/interface/api.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -7743,7 +7743,7 @@
                 "column": 5
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/call/interface/api.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -7953,7 +7953,7 @@
                 "column": 5
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/call/interface/api.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -8198,7 +8198,7 @@
                 "column": 5
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/call/interface/api.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -8535,7 +8535,7 @@
                 "column": 5
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/call/interface/api.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [
@@ -8888,7 +8888,7 @@
                 "column": 5
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/call/interface/api.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -9358,7 +9358,7 @@
                 "column": 5
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/call/interface/api.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -9568,7 +9568,7 @@
                 "column": 5
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/call/interface/api.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -9778,7 +9778,7 @@
                 "column": 5
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/call/interface/api.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -10050,7 +10050,7 @@
                 "column": 5
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/call/interface/api.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -10518,7 +10518,7 @@
                 "column": 5
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/call/interface/api.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -10738,7 +10738,7 @@
                 "column": 5
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/call/interface/api.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -11063,7 +11063,7 @@
                 "column": 5
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/call/interface/api.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -11292,7 +11292,7 @@
           "column": 20
         }
       },
-      "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/call/interface/api.js"
+      "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
     },
     "augments": [],
     "examples": [],
@@ -11434,7 +11434,7 @@
                 "column": 61
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/call/interface/eventTypes.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [],
@@ -11664,7 +11664,7 @@
                 "column": 45
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/call/interface/eventTypes.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [],
@@ -11924,7 +11924,7 @@
                 "column": 51
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/call/interface/eventTypes.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [],
@@ -12382,7 +12382,7 @@
                 "column": 5
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/call/interface/api.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [
@@ -12728,7 +12728,7 @@
                 "column": 5
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/call/interface/api.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -12899,7 +12899,7 @@
           "column": 54
         }
       },
-      "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/connectivity/interface/api.js"
+      "file": "/home/circleci/kandy/packages/kandy/src/connectivity/interface/api.js"
     },
     "augments": [],
     "examples": [],
@@ -13029,7 +13029,7 @@
                 "column": 36
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/connectivity/interface/eventTypes.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/connectivity/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [],
@@ -13244,7 +13244,7 @@
                 "column": 5
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/connectivity/interface/api.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/connectivity/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -13443,7 +13443,7 @@
                 "column": 5
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/connectivity/interface/api.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/connectivity/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -13641,7 +13641,7 @@
           "column": 35
         }
       },
-      "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/index.common.js"
+      "file": "/home/circleci/kandy/packages/kandy/src/index.common.js"
     },
     "augments": [],
     "examples": [],
@@ -13891,7 +13891,7 @@
                 "column": 1
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/logs/index.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/logs/index.js"
           },
           "augments": [],
           "examples": [],
@@ -14815,7 +14815,7 @@
                 "column": 1
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/auth/callMe/index.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/auth/callMe/index.js"
           },
           "augments": [],
           "examples": [],
@@ -15578,7 +15578,7 @@
                 "column": 1
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/call/oldLink/index.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/call/oldLink/index.js"
           },
           "augments": [],
           "examples": [],
@@ -16123,7 +16123,7 @@
                 "column": 1
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/connectivity/index.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/connectivity/index.js"
           },
           "augments": [],
           "examples": [],
@@ -17286,7 +17286,7 @@
                 "column": 1
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/notifications/link/index.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/notifications/link/index.js"
           },
           "augments": [],
           "examples": [],
@@ -18004,7 +18004,7 @@
           "column": 35
         }
       },
-      "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/index.common.js"
+      "file": "/home/circleci/kandy/packages/kandy/src/index.common.js"
     },
     "augments": [],
     "examples": [],
@@ -18191,7 +18191,7 @@
                 "column": 35
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/index.common.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/index.common.js"
           },
           "augments": [],
           "examples": [
@@ -18375,7 +18375,7 @@
           "column": 1
         }
       },
-      "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/logs/interface/api.js"
+      "file": "/home/circleci/kandy/packages/kandy/src/logs/interface/api.js"
     },
     "augments": [],
     "examples": [],
@@ -18531,7 +18531,7 @@
                 "column": 5
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/logs/interface/api.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/logs/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -18973,7 +18973,7 @@
           "column": 36
         }
       },
-      "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/config/interface/api.js"
+      "file": "/home/circleci/kandy/packages/kandy/src/config/interface/api.js"
     },
     "augments": [],
     "examples": [],
@@ -19100,7 +19100,7 @@
                 "column": 5
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/config/interface/api.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/config/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -19302,7 +19302,7 @@
                 "column": 5
               }
             },
-            "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/config/interface/api.js"
+            "file": "/home/circleci/kandy/packages/kandy/src/config/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -19516,7 +19516,7 @@
           "column": 16
         }
       },
-      "file": "/Users/jbassey/Desktop/Kandy.js/packages/kandy/src/errors/index.js"
+      "file": "/home/circleci/kandy/packages/kandy/src/errors/index.js"
     },
     "augments": [],
     "examples": [],
