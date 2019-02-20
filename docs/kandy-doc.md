@@ -435,6 +435,41 @@ Enables or disables connectivity checking.
 
 -   `enable` **[boolean][6]** Whether to enable or disable connectivity checking.
 
+## Notification
+
+### process
+
+Provides an external notification to the system for processing.
+
+**Parameters**
+
+-   `notification` **[Object][5]** 
+-   `channel` **[string][2]?** The channel that the notification came from.
+
+### registerPush
+
+Registers a device token for push notifications.
+
+**Parameters**
+
+-   `params` **[Object][5]** 
+    -   `params.deviceToken` **[string][2]** The device token to be registered.
+    -   `params.services` **[Array][9]&lt;[string][2]>** Array of services to register for.
+    -   `params.pushProvider` **[string][2]** The push provider, can be either 'apple' or 'google'.
+    -   `params.clientCorrelator` **[string][2]** Unique identifier for a client device.
+
+### deregisterPush
+
+Deregisters for push notifications.
+
+### enableWebsocket
+
+Enables, or disables, the processing of websocket notifications.
+
+**Parameters**
+
+-   `enable` **[boolean][6]** Whether the websocket channel should be enabled.
+
 ## sdpHandlers
 
 A set of handlers for manipulating SDP information.
