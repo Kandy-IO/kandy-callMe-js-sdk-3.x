@@ -3468,70 +3468,25 @@
               "description": "Information needed to validate a token anonymous call.",
               "lineNumber": 7,
               "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "object"
-                }
+                "type": "NameExpression",
+                "name": "Object"
               },
               "name": "credentials"
             },
             {
               "title": "param",
-              "description": "The encrypted account token of the account making the call.",
+              "description": "The realm used to encrypt the tokens.",
               "lineNumber": 8,
               "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "object"
-                }
-              },
-              "name": "credentials.accountToken"
-            },
-            {
-              "title": "param",
-              "description": "The encrypted SIP address of the account/caller.",
-              "lineNumber": 9,
-              "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "object"
-                }
-              },
-              "name": "credentials.fromToken"
-            },
-            {
-              "title": "param",
-              "description": "The encrypted SIP address of the callee.",
-              "lineNumber": 10,
-              "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "object"
-                }
-              },
-              "name": "credentials.toToken"
-            },
-            {
-              "title": "param",
-              "description": "The realm used to encrypt the tokens.",
-              "lineNumber": 11,
-              "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "object"
-                }
+                "type": "NameExpression",
+                "name": "Object"
               },
               "name": "credentials.realm"
             },
             {
               "title": "param",
-              "description": "Call options.",
-              "lineNumber": 12,
+              "description": "The encrypted account token of the account making the call.",
+              "lineNumber": 9,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -3539,26 +3494,75 @@
                   "name": "Object"
                 }
               },
+              "name": "credentials.accountToken"
+            },
+            {
+              "title": "param",
+              "description": "The encrypted SIP address of the account/caller.",
+              "lineNumber": 10,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "Object"
+                }
+              },
+              "name": "credentials.fromToken"
+            },
+            {
+              "title": "param",
+              "description": "The encrypted SIP address of the callee.",
+              "lineNumber": 11,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "Object"
+                }
+              },
+              "name": "credentials.toToken"
+            },
+            {
+              "title": "param",
+              "description": "Call options.",
+              "lineNumber": 12,
+              "type": {
+                "type": "NameExpression",
+                "name": "Object"
+              },
               "name": "callOptions"
             },
             {
               "title": "param",
-              "description": "Whether to enable video during the call. If false, you cannot start video mid-call.",
+              "description": "The URI of the user making the call.",
               "lineNumber": 13,
               "type": {
                 "type": "OptionalType",
                 "expression": {
                   "type": "NameExpression",
-                  "name": "boolean"
+                  "name": "string"
                 }
               },
-              "name": "callOptions.isVideoEnabled",
-              "default": "true"
+              "name": "callOptions.from",
+              "default": "'anonymousUser@kandy.callMe'"
+            },
+            {
+              "title": "param",
+              "description": "Object containing firstName and lastName of caller.",
+              "lineNumber": 14,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "Object"
+                }
+              },
+              "name": "callOptions.contact"
             },
             {
               "title": "param",
               "description": "Whether to start the call sending the local video stream.",
-              "lineNumber": 14,
+              "lineNumber": 15,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -3572,7 +3576,7 @@
             {
               "title": "param",
               "description": "Whether to enable audio during the call. Setting this to false will disable audio for the call.",
-              "lineNumber": 15,
+              "lineNumber": 16,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -3585,8 +3589,22 @@
             },
             {
               "title": "param",
+              "description": "Whether to enable video during the call. If false, you cannot start video mid-call.",
+              "lineNumber": 17,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "boolean"
+                }
+              },
+              "name": "callOptions.isVideoEnabled",
+              "default": "true"
+            },
+            {
+              "title": "param",
               "description": "Whether to enable DTLS for WebRTC calls.",
-              "lineNumber": 16,
+              "lineNumber": 18,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -3599,42 +3617,16 @@
             },
             {
               "title": "param",
-              "description": "The object to configure the local video resolution.",
-              "lineNumber": 17,
-              "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "Object"
-                }
-              },
-              "name": "callOptions.videoResolution"
-            },
-            {
-              "title": "param",
-              "description": "The height in pixels of the local video.",
-              "lineNumber": 18,
-              "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "number"
-                }
-              },
-              "name": "callOptions.videoResolution.height"
-            },
-            {
-              "title": "param",
-              "description": "The width in pixels of the local video.",
+              "description": "The HTML element to use as a container for the local video.",
               "lineNumber": 19,
               "type": {
                 "type": "OptionalType",
                 "expression": {
                   "type": "NameExpression",
-                  "name": "number"
+                  "name": "HTMLElement"
                 }
               },
-              "name": "callOptions.videoResolution.width"
+              "name": "callOptions.localVideoContainer"
             },
             {
               "title": "param",
@@ -3651,21 +3643,47 @@
             },
             {
               "title": "param",
-              "description": "The HTML element to use as a container for the local video.",
+              "description": "The object to configure the local video resolution.",
               "lineNumber": 21,
               "type": {
                 "type": "OptionalType",
                 "expression": {
                   "type": "NameExpression",
-                  "name": "HTMLElement"
+                  "name": "Object"
                 }
               },
-              "name": "callOptions.localVideoContainer"
+              "name": "callOptions.videoResolution"
+            },
+            {
+              "title": "param",
+              "description": "The height in pixels of the local video.",
+              "lineNumber": 22,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "number"
+                }
+              },
+              "name": "callOptions.videoResolution.height"
+            },
+            {
+              "title": "param",
+              "description": "The width in pixels of the local video.",
+              "lineNumber": 23,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "number"
+                }
+              },
+              "name": "callOptions.videoResolution.width"
             },
             {
               "title": "param",
               "description": "Custom SIP header parameters for the SIP backend.",
-              "lineNumber": 22,
+              "lineNumber": 24,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -3704,7 +3722,7 @@
             {
               "title": "return",
               "description": "Id of the outgoing call.",
-              "lineNumber": 23,
+              "lineNumber": 25,
               "type": {
                 "type": "NameExpression",
                 "name": "string"
@@ -3713,12 +3731,12 @@
             {
               "title": "example",
               "description": "// Make a basic anonymous call.\nlet callee = 'user1@example.com';\nlet callOptions = { ... };\n\nlet callId = client.call.makeAnonymous(callee, {}, callOptions);",
-              "lineNumber": 24
+              "lineNumber": 26
             },
             {
               "title": "example",
               "description": "// Make a time-limited token anonymous call.\nlet callee = 'user1@example.com';\nlet account = 'user2@example.com';\nlet callOptions = { ...\n    customParameters: [\n      {\n        \"name\": \"X-GPS\",\n        \"value\": \"42.686032,23.344565\"\n      }\n    ],\n    ...\n  };\n\n// Generate / Retrieve the encrypted tokens.\nconst key = 'abc123...';\nconst credentials = {\n     accountToken: createToken(account, key),\n     fromToken: createToken('sip:' + account, key),\n     toToken: createToken('sip:' + callee, key),\n     realm: 'realmAbc123...'\n};\n\nlet callId = client.call.makeAnonymous(callee, credentials, callOptions);",
-              "lineNumber": 30
+              "lineNumber": 32
             }
           ],
           "loc": {
@@ -3727,18 +3745,18 @@
               "column": 2
             },
             "end": {
-              "line": 174,
+              "line": 176,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 175,
+                "line": 178,
                 "column": 2
               },
               "end": {
-                "line": 180,
+                "line": 183,
                 "column": 3
               }
             },
@@ -3872,17 +3890,75 @@
                 }
               },
               "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "object"
-                }
+                "type": "NameExpression",
+                "name": "Object"
               },
               "properties": [
                 {
                   "title": "param",
-                  "name": "credentials.accountToken",
+                  "name": "credentials.realm",
                   "lineNumber": 8,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "The realm used to encrypt the tokens.",
+                            "position": {
+                              "start": {
+                                "line": 1,
+                                "column": 1,
+                                "offset": 0
+                              },
+                              "end": {
+                                "line": 1,
+                                "column": 38,
+                                "offset": 37
+                              },
+                              "indent": []
+                            }
+                          }
+                        ],
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 38,
+                            "offset": 37
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 38,
+                        "offset": 37
+                      }
+                    }
+                  },
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "Object"
+                  }
+                },
+                {
+                  "title": "param",
+                  "name": "credentials.accountToken",
+                  "lineNumber": 9,
                   "description": {
                     "type": "root",
                     "children": [
@@ -3939,14 +4015,14 @@
                     "type": "OptionalType",
                     "expression": {
                       "type": "NameExpression",
-                      "name": "object"
+                      "name": "Object"
                     }
                   }
                 },
                 {
                   "title": "param",
                   "name": "credentials.fromToken",
-                  "lineNumber": 9,
+                  "lineNumber": 10,
                   "description": {
                     "type": "root",
                     "children": [
@@ -4003,14 +4079,14 @@
                     "type": "OptionalType",
                     "expression": {
                       "type": "NameExpression",
-                      "name": "object"
+                      "name": "Object"
                     }
                   }
                 },
                 {
                   "title": "param",
                   "name": "credentials.toToken",
-                  "lineNumber": 10,
+                  "lineNumber": 11,
                   "description": {
                     "type": "root",
                     "children": [
@@ -4067,71 +4143,7 @@
                     "type": "OptionalType",
                     "expression": {
                       "type": "NameExpression",
-                      "name": "object"
-                    }
-                  }
-                },
-                {
-                  "title": "param",
-                  "name": "credentials.realm",
-                  "lineNumber": 11,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "The realm used to encrypt the tokens.",
-                            "position": {
-                              "start": {
-                                "line": 1,
-                                "column": 1,
-                                "offset": 0
-                              },
-                              "end": {
-                                "line": 1,
-                                "column": 38,
-                                "offset": 37
-                              },
-                              "indent": []
-                            }
-                          }
-                        ],
-                        "position": {
-                          "start": {
-                            "line": 1,
-                            "column": 1,
-                            "offset": 0
-                          },
-                          "end": {
-                            "line": 1,
-                            "column": 38,
-                            "offset": 37
-                          },
-                          "indent": []
-                        }
-                      }
-                    ],
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 1,
-                        "offset": 0
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 38,
-                        "offset": 37
-                      }
-                    }
-                  },
-                  "type": {
-                    "type": "OptionalType",
-                    "expression": {
-                      "type": "NameExpression",
-                      "name": "object"
+                      "name": "Object"
                     }
                   }
                 }
@@ -4194,16 +4206,13 @@
                 }
               },
               "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "Object"
-                }
+                "type": "NameExpression",
+                "name": "Object"
               },
               "properties": [
                 {
                   "title": "param",
-                  "name": "callOptions.isVideoEnabled",
+                  "name": "callOptions.from",
                   "lineNumber": 13,
                   "description": {
                     "type": "root",
@@ -4213,7 +4222,7 @@
                         "children": [
                           {
                             "type": "text",
-                            "value": "Whether to enable video during the call. If false, you cannot start video mid-call.",
+                            "value": "The URI of the user making the call.",
                             "position": {
                               "start": {
                                 "line": 1,
@@ -4222,8 +4231,8 @@
                               },
                               "end": {
                                 "line": 1,
-                                "column": 84,
-                                "offset": 83
+                                "column": 37,
+                                "offset": 36
                               },
                               "indent": []
                             }
@@ -4237,8 +4246,8 @@
                           },
                           "end": {
                             "line": 1,
-                            "column": 84,
-                            "offset": 83
+                            "column": 37,
+                            "offset": 36
                           },
                           "indent": []
                         }
@@ -4252,21 +4261,85 @@
                       },
                       "end": {
                         "line": 1,
-                        "column": 84,
-                        "offset": 83
+                        "column": 37,
+                        "offset": 36
                       }
                     }
                   },
                   "type": {
                     "type": "NameExpression",
-                    "name": "boolean"
+                    "name": "string"
                   },
-                  "default": "true"
+                  "default": "'anonymousUser@kandy.callMe'"
+                },
+                {
+                  "title": "param",
+                  "name": "callOptions.contact",
+                  "lineNumber": 14,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "Object containing firstName and lastName of caller.",
+                            "position": {
+                              "start": {
+                                "line": 1,
+                                "column": 1,
+                                "offset": 0
+                              },
+                              "end": {
+                                "line": 1,
+                                "column": 52,
+                                "offset": 51
+                              },
+                              "indent": []
+                            }
+                          }
+                        ],
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 52,
+                            "offset": 51
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 52,
+                        "offset": 51
+                      }
+                    }
+                  },
+                  "type": {
+                    "type": "OptionalType",
+                    "expression": {
+                      "type": "NameExpression",
+                      "name": "Object"
+                    }
+                  }
                 },
                 {
                   "title": "param",
                   "name": "callOptions.sendInitialVideo",
-                  "lineNumber": 14,
+                  "lineNumber": 15,
                   "description": {
                     "type": "root",
                     "children": [
@@ -4328,7 +4401,7 @@
                 {
                   "title": "param",
                   "name": "callOptions.isAudioEnabled",
-                  "lineNumber": 15,
+                  "lineNumber": 16,
                   "description": {
                     "type": "root",
                     "children": [
@@ -4389,8 +4462,70 @@
                 },
                 {
                   "title": "param",
+                  "name": "callOptions.isVideoEnabled",
+                  "lineNumber": 17,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "Whether to enable video during the call. If false, you cannot start video mid-call.",
+                            "position": {
+                              "start": {
+                                "line": 1,
+                                "column": 1,
+                                "offset": 0
+                              },
+                              "end": {
+                                "line": 1,
+                                "column": 84,
+                                "offset": 83
+                              },
+                              "indent": []
+                            }
+                          }
+                        ],
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 84,
+                            "offset": 83
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 84,
+                        "offset": 83
+                      }
+                    }
+                  },
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "boolean"
+                  },
+                  "default": "true"
+                },
+                {
+                  "title": "param",
                   "name": "callOptions.webrtcdtls",
-                  "lineNumber": 16,
+                  "lineNumber": 18,
                   "description": {
                     "type": "root",
                     "children": [
@@ -4451,8 +4586,8 @@
                 },
                 {
                   "title": "param",
-                  "name": "callOptions.videoResolution",
-                  "lineNumber": 17,
+                  "name": "callOptions.localVideoContainer",
+                  "lineNumber": 19,
                   "description": {
                     "type": "root",
                     "children": [
@@ -4461,7 +4596,7 @@
                         "children": [
                           {
                             "type": "text",
-                            "value": "The object to configure the local video resolution.",
+                            "value": "The HTML element to use as a container for the local video.",
                             "position": {
                               "start": {
                                 "line": 1,
@@ -4470,8 +4605,8 @@
                               },
                               "end": {
                                 "line": 1,
-                                "column": 52,
-                                "offset": 51
+                                "column": 60,
+                                "offset": 59
                               },
                               "indent": []
                             }
@@ -4485,8 +4620,8 @@
                           },
                           "end": {
                             "line": 1,
-                            "column": 52,
-                            "offset": 51
+                            "column": 60,
+                            "offset": 59
                           },
                           "indent": []
                         }
@@ -4500,8 +4635,8 @@
                       },
                       "end": {
                         "line": 1,
-                        "column": 52,
-                        "offset": 51
+                        "column": 60,
+                        "offset": 59
                       }
                     }
                   },
@@ -4509,139 +4644,9 @@
                     "type": "OptionalType",
                     "expression": {
                       "type": "NameExpression",
-                      "name": "Object"
+                      "name": "HTMLElement"
                     }
-                  },
-                  "properties": [
-                    {
-                      "title": "param",
-                      "name": "callOptions.videoResolution.height",
-                      "lineNumber": 18,
-                      "description": {
-                        "type": "root",
-                        "children": [
-                          {
-                            "type": "paragraph",
-                            "children": [
-                              {
-                                "type": "text",
-                                "value": "The height in pixels of the local video.",
-                                "position": {
-                                  "start": {
-                                    "line": 1,
-                                    "column": 1,
-                                    "offset": 0
-                                  },
-                                  "end": {
-                                    "line": 1,
-                                    "column": 41,
-                                    "offset": 40
-                                  },
-                                  "indent": []
-                                }
-                              }
-                            ],
-                            "position": {
-                              "start": {
-                                "line": 1,
-                                "column": 1,
-                                "offset": 0
-                              },
-                              "end": {
-                                "line": 1,
-                                "column": 41,
-                                "offset": 40
-                              },
-                              "indent": []
-                            }
-                          }
-                        ],
-                        "position": {
-                          "start": {
-                            "line": 1,
-                            "column": 1,
-                            "offset": 0
-                          },
-                          "end": {
-                            "line": 1,
-                            "column": 41,
-                            "offset": 40
-                          }
-                        }
-                      },
-                      "type": {
-                        "type": "OptionalType",
-                        "expression": {
-                          "type": "NameExpression",
-                          "name": "number"
-                        }
-                      }
-                    },
-                    {
-                      "title": "param",
-                      "name": "callOptions.videoResolution.width",
-                      "lineNumber": 19,
-                      "description": {
-                        "type": "root",
-                        "children": [
-                          {
-                            "type": "paragraph",
-                            "children": [
-                              {
-                                "type": "text",
-                                "value": "The width in pixels of the local video.",
-                                "position": {
-                                  "start": {
-                                    "line": 1,
-                                    "column": 1,
-                                    "offset": 0
-                                  },
-                                  "end": {
-                                    "line": 1,
-                                    "column": 40,
-                                    "offset": 39
-                                  },
-                                  "indent": []
-                                }
-                              }
-                            ],
-                            "position": {
-                              "start": {
-                                "line": 1,
-                                "column": 1,
-                                "offset": 0
-                              },
-                              "end": {
-                                "line": 1,
-                                "column": 40,
-                                "offset": 39
-                              },
-                              "indent": []
-                            }
-                          }
-                        ],
-                        "position": {
-                          "start": {
-                            "line": 1,
-                            "column": 1,
-                            "offset": 0
-                          },
-                          "end": {
-                            "line": 1,
-                            "column": 40,
-                            "offset": 39
-                          }
-                        }
-                      },
-                      "type": {
-                        "type": "OptionalType",
-                        "expression": {
-                          "type": "NameExpression",
-                          "name": "number"
-                        }
-                      }
-                    }
-                  ]
+                  }
                 },
                 {
                   "title": "param",
@@ -4709,7 +4714,7 @@
                 },
                 {
                   "title": "param",
-                  "name": "callOptions.localVideoContainer",
+                  "name": "callOptions.videoResolution",
                   "lineNumber": 21,
                   "description": {
                     "type": "root",
@@ -4719,7 +4724,7 @@
                         "children": [
                           {
                             "type": "text",
-                            "value": "The HTML element to use as a container for the local video.",
+                            "value": "The object to configure the local video resolution.",
                             "position": {
                               "start": {
                                 "line": 1,
@@ -4728,8 +4733,8 @@
                               },
                               "end": {
                                 "line": 1,
-                                "column": 60,
-                                "offset": 59
+                                "column": 52,
+                                "offset": 51
                               },
                               "indent": []
                             }
@@ -4743,8 +4748,8 @@
                           },
                           "end": {
                             "line": 1,
-                            "column": 60,
-                            "offset": 59
+                            "column": 52,
+                            "offset": 51
                           },
                           "indent": []
                         }
@@ -4758,8 +4763,8 @@
                       },
                       "end": {
                         "line": 1,
-                        "column": 60,
-                        "offset": 59
+                        "column": 52,
+                        "offset": 51
                       }
                     }
                   },
@@ -4767,14 +4772,144 @@
                     "type": "OptionalType",
                     "expression": {
                       "type": "NameExpression",
-                      "name": "HTMLElement"
+                      "name": "Object"
                     }
-                  }
+                  },
+                  "properties": [
+                    {
+                      "title": "param",
+                      "name": "callOptions.videoResolution.height",
+                      "lineNumber": 22,
+                      "description": {
+                        "type": "root",
+                        "children": [
+                          {
+                            "type": "paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "The height in pixels of the local video.",
+                                "position": {
+                                  "start": {
+                                    "line": 1,
+                                    "column": 1,
+                                    "offset": 0
+                                  },
+                                  "end": {
+                                    "line": 1,
+                                    "column": 41,
+                                    "offset": 40
+                                  },
+                                  "indent": []
+                                }
+                              }
+                            ],
+                            "position": {
+                              "start": {
+                                "line": 1,
+                                "column": 1,
+                                "offset": 0
+                              },
+                              "end": {
+                                "line": 1,
+                                "column": 41,
+                                "offset": 40
+                              },
+                              "indent": []
+                            }
+                          }
+                        ],
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 41,
+                            "offset": 40
+                          }
+                        }
+                      },
+                      "type": {
+                        "type": "OptionalType",
+                        "expression": {
+                          "type": "NameExpression",
+                          "name": "number"
+                        }
+                      }
+                    },
+                    {
+                      "title": "param",
+                      "name": "callOptions.videoResolution.width",
+                      "lineNumber": 23,
+                      "description": {
+                        "type": "root",
+                        "children": [
+                          {
+                            "type": "paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "The width in pixels of the local video.",
+                                "position": {
+                                  "start": {
+                                    "line": 1,
+                                    "column": 1,
+                                    "offset": 0
+                                  },
+                                  "end": {
+                                    "line": 1,
+                                    "column": 40,
+                                    "offset": 39
+                                  },
+                                  "indent": []
+                                }
+                              }
+                            ],
+                            "position": {
+                              "start": {
+                                "line": 1,
+                                "column": 1,
+                                "offset": 0
+                              },
+                              "end": {
+                                "line": 1,
+                                "column": 40,
+                                "offset": 39
+                              },
+                              "indent": []
+                            }
+                          }
+                        ],
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 40,
+                            "offset": 39
+                          }
+                        }
+                      },
+                      "type": {
+                        "type": "OptionalType",
+                        "expression": {
+                          "type": "NameExpression",
+                          "name": "number"
+                        }
+                      }
+                    }
+                  ]
                 },
                 {
                   "title": "param",
                   "name": "callOptions.customParameters",
-                  "lineNumber": 22,
+                  "lineNumber": 24,
                   "description": {
                     "type": "root",
                     "children": [

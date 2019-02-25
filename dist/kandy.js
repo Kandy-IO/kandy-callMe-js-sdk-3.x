@@ -1,7 +1,7 @@
 /**
  * Kandy.js (Next)
  * kandy.callMe.js
- * Version: 3.2.0-beta.59248
+ * Version: 3.2.0-beta.59409
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -51933,7 +51933,7 @@ function anonymizeAPI({ dispatch, getState }) {
 
   let callMeAPI = (0, _fp.pick)(anonAPIs, api.call);
   let mediaAPI = (0, _fp.pick)(mediaAPIs, api.media);
-
+  /* eslint-disable no-warning-comments */
   /**
    * Starts an outgoing call as an anonymous user.
    * @public
@@ -51941,21 +51941,23 @@ function anonymizeAPI({ dispatch, getState }) {
    * @memberof Calls
    * @method makeAnonymous
    * @param  {string} callee       Full user ID of the call recipient.
-   * @param {object} [credentials]  Information needed to validate a token anonymous call.
-   * @param {object} [credentials.accountToken] The encrypted account token of the account making the call.
-   * @param {object} [credentials.fromToken] The encrypted SIP address of the account/caller.
-   * @param {object} [credentials.toToken] The encrypted SIP address of the callee.
-   * @param {object} [credentials.realm] The realm used to encrypt the tokens.
-   * @param {Object} [callOptions] Call options.
-   * @param {boolean} [callOptions.isVideoEnabled=true] Whether to enable video during the call. If false, you cannot start video mid-call.
+   * @param {Object} credentials  Information needed to validate a token anonymous call.
+   * @param {Object} credentials.realm The realm used to encrypt the tokens.
+   * @param {Object} [credentials.accountToken] The encrypted account token of the account making the call.
+   * @param {Object} [credentials.fromToken] The encrypted SIP address of the account/caller.
+   * @param {Object} [credentials.toToken] The encrypted SIP address of the callee.
+   * @param {Object} callOptions Call options.
+   * @param {string} [callOptions.from='anonymousUser@kandy.callMe'] The URI of the user making the call.
+   * @param {Object} [callOptions.contact] Object containing firstName and lastName of caller.
    * @param {boolean} [callOptions.sendInitialVideo=false]  Whether to start the call sending the local video stream.
    * @param {boolean} [callOptions.isAudioEnabled=true] Whether to enable audio during the call. Setting this to false will disable audio for the call.
+   * @param {boolean} [callOptions.isVideoEnabled=true] Whether to enable video during the call. If false, you cannot start video mid-call.
    * @param {boolean} [callOptions.webrtcdtls=true] Whether to enable DTLS for WebRTC calls.
+   * @param {HTMLElement} [callOptions.localVideoContainer] The HTML element to use as a container for the local video.
+   * @param {HTMLElement} [callOptions.remoteVideoContainer] The HTML element to use as a container for the remote video.
    * @param {Object} [callOptions.videoResolution] The object to configure the local video resolution.
    * @param {number} [callOptions.videoResolution.height] The height in pixels of the local video.
    * @param {number} [callOptions.videoResolution.width] The width in pixels of the local video.
-   * @param {HTMLElement} [callOptions.remoteVideoContainer] The HTML element to use as a container for the remote video.
-   * @param {HTMLElement} [callOptions.localVideoContainer] The HTML element to use as a container for the local video.
    * @param {Array.<{name: string, value:string}>} [callOptions.customParameters] Custom SIP header parameters for the SIP backend.
    * @return {string} Id of the outgoing call.
    * @example
@@ -51989,6 +51991,7 @@ function anonymizeAPI({ dispatch, getState }) {
    *
    * let callId = client.call.makeAnonymous(callee, credentials, callOptions);
    */
+  /* eslint-enable no-warning-comments */
   callMeAPI.makeAnonymous = function (callee, credentials = {}, callOptions = {}) {
     // Create our own call ID for storing in state.
     const callId = (0, _v2.default)();
@@ -61243,7 +61246,7 @@ const factoryDefaults = {
    */
 };function factory(plugins, options = factoryDefaults) {
   // Log the SDK's version (templated by webpack) on initialization.
-  let version = '3.2.0-beta.59248';
+  let version = '3.2.0-beta.59409';
   log.info(`CPaaS SDK version: ${version}`);
 
   var sagas = [];

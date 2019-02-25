@@ -1078,7 +1078,7 @@ SIP users and PSTN phones.</p>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>makeAnonymous(callee, credentials?, callOptions?)</span>
+            <span class='code strong strong truncate'>makeAnonymous(callee, credentials, callOptions)</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -1089,7 +1089,7 @@ SIP users and PSTN phones.</p>
   <p>Starts an outgoing call as an anonymous user.</p>
 
 
-  <div class='pre p1 fill-light mt0'>makeAnonymous(callee: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, credentials: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>?, callOptions: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></div>
+  <div class='pre p1 fill-light mt0'>makeAnonymous(callee: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, credentials: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, callOptions: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></div>
   
   
 
@@ -1115,7 +1115,7 @@ SIP users and PSTN phones.</p>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>credentials</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>?)</code>
+            <span class='code bold'>credentials</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
 	    Information needed to validate a token anonymous call.
 
           </div>
@@ -1134,7 +1134,16 @@ SIP users and PSTN phones.</p>
             <tbody class='mt1'>
               
                 <tr>
-  <td class='break-word'><span class='code bold'>credentials.accountToken</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>?</code>
+  <td class='break-word'><span class='code bold'>credentials.realm</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>
+  </td>
+  <td class='break-word'><span>The realm used to encrypt the tokens.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>credentials.accountToken</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?</code>
   </td>
   <td class='break-word'><span>The encrypted account token of the account making the call.
 </span></td>
@@ -1143,7 +1152,7 @@ SIP users and PSTN phones.</p>
 
               
                 <tr>
-  <td class='break-word'><span class='code bold'>credentials.fromToken</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>?</code>
+  <td class='break-word'><span class='code bold'>credentials.fromToken</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?</code>
   </td>
   <td class='break-word'><span>The encrypted SIP address of the account/caller.
 </span></td>
@@ -1152,18 +1161,9 @@ SIP users and PSTN phones.</p>
 
               
                 <tr>
-  <td class='break-word'><span class='code bold'>credentials.toToken</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>?</code>
+  <td class='break-word'><span class='code bold'>credentials.toToken</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?</code>
   </td>
   <td class='break-word'><span>The encrypted SIP address of the callee.
-</span></td>
-</tr>
-
-
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>credentials.realm</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>?</code>
-  </td>
-  <td class='break-word'><span>The realm used to encrypt the tokens.
 </span></td>
 </tr>
 
@@ -1176,7 +1176,7 @@ SIP users and PSTN phones.</p>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>callOptions</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?)</code>
+            <span class='code bold'>callOptions</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
 	    Call options.
 
           </div>
@@ -1195,11 +1195,20 @@ SIP users and PSTN phones.</p>
             <tbody class='mt1'>
               
                 <tr>
-  <td class='break-word'><span class='code bold'>callOptions.isVideoEnabled</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>
+  <td class='break-word'><span class='code bold'>callOptions.from</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
   
-    (default <code>true</code>)
+    (default <code>&#39;anonymousUser@kandy.callMe&#39;</code>)
   </td>
-  <td class='break-word'><span>Whether to enable video during the call. If false, you cannot start video mid-call.
+  <td class='break-word'><span>The URI of the user making the call.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>callOptions.contact</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?</code>
+  </td>
+  <td class='break-word'><span>Object containing firstName and lastName of caller.
 </span></td>
 </tr>
 
@@ -1228,11 +1237,40 @@ SIP users and PSTN phones.</p>
 
               
                 <tr>
+  <td class='break-word'><span class='code bold'>callOptions.isVideoEnabled</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>
+  
+    (default <code>true</code>)
+  </td>
+  <td class='break-word'><span>Whether to enable video during the call. If false, you cannot start video mid-call.
+</span></td>
+</tr>
+
+
+              
+                <tr>
   <td class='break-word'><span class='code bold'>callOptions.webrtcdtls</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>
   
     (default <code>true</code>)
   </td>
   <td class='break-word'><span>Whether to enable DTLS for WebRTC calls.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>callOptions.localVideoContainer</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/HTML/Element">HTMLElement</a>?</code>
+  </td>
+  <td class='break-word'><span>The HTML element to use as a container for the local video.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>callOptions.remoteVideoContainer</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/HTML/Element">HTMLElement</a>?</code>
+  </td>
+  <td class='break-word'><span>The HTML element to use as a container for the remote video.
 </span></td>
 </tr>
 
@@ -1264,24 +1302,6 @@ SIP users and PSTN phones.</p>
 
 
   
-
-
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>callOptions.remoteVideoContainer</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/HTML/Element">HTMLElement</a>?</code>
-  </td>
-  <td class='break-word'><span>The HTML element to use as a container for the remote video.
-</span></td>
-</tr>
-
-
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>callOptions.localVideoContainer</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/HTML/Element">HTMLElement</a>?</code>
-  </td>
-  <td class='break-word'><span>The HTML element to use as a container for the local video.
-</span></td>
-</tr>
 
 
               
