@@ -3,7 +3,7 @@
 
 ### Npm Install
 
-`$ npm install https://github.com/Kandy-IO/kandy-callMe-js-sdk#v3.1.0`
+`$ npm install https://github.com/Kandy-IO/kandy-callMe-js-sdk#master`
 
 ### Reference
 

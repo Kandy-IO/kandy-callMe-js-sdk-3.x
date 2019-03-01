@@ -98,21 +98,23 @@ Starts an outgoing call as an anonymous user.
 **Parameters**
 
 -   `callee` **[string][2]** Full user ID of the call recipient.
--   `credentials` **[object][5]?** Information needed to validate a token anonymous call.
-    -   `credentials.accountToken` **[object][5]?** The encrypted account token of the account making the call.
-    -   `credentials.fromToken` **[object][5]?** The encrypted SIP address of the account/caller.
-    -   `credentials.toToken` **[object][5]?** The encrypted SIP address of the callee.
-    -   `credentials.realm` **[object][5]?** The realm used to encrypt the tokens.
--   `callOptions` **[Object][5]?** Call options.
-    -   `callOptions.isVideoEnabled` **[boolean][6]** Whether to enable video during the call. If false, you cannot start video mid-call. (optional, default `true`)
+-   `credentials` **[Object][5]** Information needed to validate a token anonymous call.
+    -   `credentials.realm` **[Object][5]** The realm used to encrypt the tokens.
+    -   `credentials.accountToken` **[Object][5]?** The encrypted account token of the account making the call.
+    -   `credentials.fromToken` **[Object][5]?** The encrypted SIP address of the account/caller.
+    -   `credentials.toToken` **[Object][5]?** The encrypted SIP address of the callee.
+-   `callOptions` **[Object][5]** Call options.
+    -   `callOptions.from` **[string][2]** The URI of the user making the call. (optional, default `'anonymousUser@kandy.callMe'`)
+    -   `callOptions.contact` **[Object][5]?** Object containing firstName and lastName of caller.
     -   `callOptions.sendInitialVideo` **[boolean][6]** Whether to start the call sending the local video stream. (optional, default `false`)
     -   `callOptions.isAudioEnabled` **[boolean][6]** Whether to enable audio during the call. Setting this to false will disable audio for the call. (optional, default `true`)
+    -   `callOptions.isVideoEnabled` **[boolean][6]** Whether to enable video during the call. If false, you cannot start video mid-call. (optional, default `true`)
     -   `callOptions.webrtcdtls` **[boolean][6]** Whether to enable DTLS for WebRTC calls. (optional, default `true`)
+    -   `callOptions.localVideoContainer` **[HTMLElement][7]?** The HTML element to use as a container for the local video.
+    -   `callOptions.remoteVideoContainer` **[HTMLElement][7]?** The HTML element to use as a container for the remote video.
     -   `callOptions.videoResolution` **[Object][5]?** The object to configure the local video resolution.
-        -   `callOptions.videoResolution.height` **[number][7]?** The height in pixels of the local video.
-        -   `callOptions.videoResolution.width` **[number][7]?** The width in pixels of the local video.
-    -   `callOptions.remoteVideoContainer` **[HTMLElement][8]?** The HTML element to use as a container for the remote video.
-    -   `callOptions.localVideoContainer` **[HTMLElement][8]?** The HTML element to use as a container for the local video.
+        -   `callOptions.videoResolution.height` **[number][8]?** The height in pixels of the local video.
+        -   `callOptions.videoResolution.width` **[number][8]?** The width in pixels of the local video.
     -   `callOptions.customParameters` **[Array][9]&lt;{name: [string][2], value: [string][2]}>?** Custom SIP header parameters for the SIP backend.
 
 **Examples**
@@ -314,8 +316,8 @@ Start local video stream for an ongoing call.
 -   `callId` **[string][2]** Id of the call being acted on.
 -   `options` **[Object][5]?** Options for the video stream.
     -   `options.videoResolution` **[Object][5]?** The video resolution configuation object.
-        -   `options.videoResolution.height` **[number][7]?** The height of the outoing video in pixels.
-        -   `options.videoResolution.width` **[number][7]?** The width of the outoing video in pixels.
+        -   `options.videoResolution.height` **[number][8]?** The height of the outoing video in pixels.
+        -   `options.videoResolution.width` **[number][8]?** The width of the outoing video in pixels.
 
 ### stopVideo
 
@@ -350,9 +352,9 @@ Starts sharing a screen over a call.
 -   `callId` **[string][2]** Id of the call being acted on.
 -   `options` **[Object][5]** 
     -   `options.mediaSourceId` **[string][2]** Id of the media screen to share.
-    -   `options.height` **[Number][7]** The height of the video stream to send. (optional, default `768`)
-    -   `options.width` **[Number][7]** The width of the video stream to send. (optional, default `1024`)
-    -   `options.frameRate` **[Number][7]** The number of frames per second to request. (optional, default `15`)
+    -   `options.height` **[Number][8]** The height of the video stream to send. (optional, default `768`)
+    -   `options.width` **[Number][8]** The width of the video stream to send. (optional, default `1024`)
+    -   `options.frameRate` **[Number][8]** The number of frames per second to request. (optional, default `15`)
 
 ### stopScreenshare
 
@@ -369,7 +371,7 @@ Send a DTMF tone over a call.
 **Parameters**
 
 -   `callId` **[string][2]** Id of the call being acted on.
--   `tone` **[number][7]** DTMF tone to send. Valid values are [0,1,2,3,4,5,6,7,8,9,#].
+-   `tone` **[number][8]** DTMF tone to send. Valid values are [0,1,2,3,4,5,6,7,8,9,#].
 
 ### sendCustomParameters
 
@@ -412,6 +414,17 @@ client.media.setDefaultDevices({
 
 Retrieves the available media devices for use.
 
+### DEVICE_ERROR
+
+An error occurred while performing a device operation.
+
+Type: [string][2]
+
+**Parameters**
+
+-   `params` **[Object][5]** 
+    -   `params.error` **[BasicError][10]** The Basic error object.
+
 ## Connectivity
 
 The connection feature is used to connect and maintain connections between
@@ -434,6 +447,68 @@ Enables or disables connectivity checking.
 **Parameters**
 
 -   `enable` **[boolean][6]** Whether to enable or disable connectivity checking.
+
+## Notification
+
+### process
+
+Provides an external notification to the system for processing.
+
+**Parameters**
+
+-   `notification` **[Object][5]** 
+-   `channel` **[string][2]?** The channel that the notification came from.
+
+### registerPush
+
+Registers a device token for push notifications.
+
+**Parameters**
+
+-   `params` **[Object][5]** 
+    -   `params.deviceToken` **[string][2]** The device token to be registered.
+    -   `params.services` **[Array][9]&lt;[string][2]>** Array of services to register for.
+    -   `params.pushProvider` **[string][2]** The push provider, can be either 'apple' or 'google'.
+    -   `params.clientCorrelator` **[string][2]** Unique identifier for a client device.
+
+### deregisterPush
+
+Deregisters for push notifications.
+
+### enableWebsocket
+
+Enables, or disables, the processing of websocket notifications.
+
+**Parameters**
+
+-   `enable` **[boolean][6]** Whether the websocket channel should be enabled.
+
+## sdpHandlers
+
+A set of handlers for manipulating SDP information.
+These handlers are used to customize low-level call behaviour for very specific
+environments and/or scenarios. They can be provided during SDK instantiation
+to be used for all calls.
+
+### createCodecRemover
+
+In some scenarios it's necessary to remove certain codecs being offered by the SDK to the remote party. While creating an SDP handler would allow a user to perform this type of manipulation, it is a non-trivial task that requires in-depth knowledge of WebRTC SDP.
+
+To facilitate this common task, the SDK provides a codec removal handler that can be used for this purpose.
+
+The SDP handlers are exposed on the entry point of the SDK. They need to be added to the list of SDP handlers via configuration on creation of an instance of the SDK.
+
+**Examples**
+
+```javascript
+import { create, sdpHandlers } from 'kandy';
+const codecRemover = sdpHandlers.createCodecRemover(['VP8', 'VP9'])
+const client = create({
+  call: {
+    sdpHandlers: [codecRemover]
+  }
+})
+```
 
 ## config
 
@@ -467,13 +542,13 @@ Configuration options for the CallMe Authentication feature.
     -   `authentication.subscription` **[Object][5]** 
         -   `authentication.subscription.protocol` **[string][2]** Protocol to be used for subscription requests. (optional, default `https`)
         -   `authentication.subscription.server` **[string][2]** Server to be used for subscription requests.
-        -   `authentication.subscription.port` **[Number][7]** Port to be used for subscription requests. (optional, default `443`)
+        -   `authentication.subscription.port` **[Number][8]** Port to be used for subscription requests. (optional, default `443`)
         -   `authentication.subscription.version` **[string][2]** Version of the REST API to be used. (optional, default `1`)
         -   `authentication.subscription.service` **[Array][9]?** Services to subscribe to for notifications.
     -   `authentication.websocket` **[Object][5]** 
         -   `authentication.websocket.protocol` **[string][2]** Protocol to be used for websocket notifications. (optional, default `wss`)
         -   `authentication.websocket.server` **[string][2]** Server to be used for websocket notifications.
-        -   `authentication.websocket.port` **[Number][7]** Port to be used for websocket notifications. (optional, default `443`)
+        -   `authentication.websocket.port` **[Number][8]** Port to be used for websocket notifications. (optional, default `443`)
 
 ### config.call
 
@@ -496,13 +571,13 @@ Configuration options for the Connectivity feature.
     -   `connectivity.method` **[Object][5]** Configuration for how connectivity checks should be made.
         -   `connectivity.method.type` **[String][2]** The method of connectivity checking to use: `keepAlive` or `pingPong`. (optional, default `'keepAlive'`)
         -   `connectivity.method.responsibleParty` **[String][2]** Configures who is responsible for initiating the connectivity check: `client` or `server`. (optional, default `'client'`)
-    -   `connectivity.pingInterval` **[Number][7]** Time in between websocket ping attempts (milliseconds). Only used for when the client is responsible for ping/connCheck. (optional, default `30000`)
-    -   `connectivity.reconnectLimit` **[Number][7]** Number of failed reconnect attempts before reporting an error. Can be set to 0 to not limit reconnection attempts. (optional, default `5`)
-    -   `connectivity.reconnectDelay` **[Number][7]** Base time between websocket reconnect attempts (milliseconds). (optional, default `5000`)
-    -   `connectivity.reconnectTimeMultiplier` **[Number][7]** Reconnect delay multiplier for subsequent attempts. The reconnect delay time will be multiplied by this factor after each failed reconnect attempt to increase the delay between attempts. (optional, default `1`)
-    -   `connectivity.reconnectTimeLimit` **[Number][7]** Maximum time delay between reconnect attempts (milliseconds). Used in conjunction with `reconnectTimeMultiplier` to prevent overly long delays between reconnection attempts. (optional, default `640000`)
+    -   `connectivity.pingInterval` **[Number][8]** Time in between websocket ping attempts (milliseconds). Only used for when the client is responsible for ping/connCheck. (optional, default `30000`)
+    -   `connectivity.reconnectLimit` **[Number][8]** Number of failed reconnect attempts before reporting an error. Can be set to 0 to not limit reconnection attempts. (optional, default `5`)
+    -   `connectivity.reconnectDelay` **[Number][8]** Base time between websocket reconnect attempts (milliseconds). (optional, default `5000`)
+    -   `connectivity.reconnectTimeMultiplier` **[Number][8]** Reconnect delay multiplier for subsequent attempts. The reconnect delay time will be multiplied by this factor after each failed reconnect attempt to increase the delay between attempts. (optional, default `1`)
+    -   `connectivity.reconnectTimeLimit` **[Number][8]** Maximum time delay between reconnect attempts (milliseconds). Used in conjunction with `reconnectTimeMultiplier` to prevent overly long delays between reconnection attempts. (optional, default `640000`)
     -   `connectivity.autoReconnect` **[Boolean][6]** Flag to determine whether reconnection will be attempted automatically after connectivity disruptions. (optional, default `true`)
-    -   `connectivity.maxMissedPings` **[Number][7]** Maximum pings sent (without receiving a response) before reporting an error. (optional, default `3`)
+    -   `connectivity.maxMissedPings` **[Number][8]** Maximum pings sent (without receiving a response) before reporting an error. (optional, default `3`)
     -   `connectivity.checkConnectivity` **[Boolean][6]** Flag to determine whether to enable connectivity checking or not. (optional, default `false`)
 
 ### config.notifications
@@ -512,7 +587,7 @@ Configuration options for the notification feature.
 **Parameters**
 
 -   `notifications` **[Object][5]** The notifications configuration object.
-    -   `notifications.idCacheLength` **[number][7]** Default amount of event ids to remember for de-duplication purposes. (optional, default `100`)
+    -   `notifications.idCacheLength` **[number][8]** Default amount of event ids to remember for de-duplication purposes. (optional, default `100`)
     -   `notifications.pushRegistration` **[Object][5]?** Object describing the server to use for push services.
         -   `notifications.pushRegistration.server` **[string][2]?** Hostname for the push registration server.
         -   `notifications.pushRegistration.port` **[string][2]?** Port for the push registration server.
@@ -520,33 +595,6 @@ Configuration options for the notification feature.
         -   `notifications.pushRegistration.version` **[string][2]?** Version for the push registration server.
     -   `notifications.realm` **[string][2]?** The realm used for push notifications
     -   `notifications.bundleId` **[string][2]?** The bundle id used for push notifications
-
-## sdpHandlers
-
-A set of handlers for manipulating SDP information.
-These handlers are used to customize low-level call behaviour for very specific
-environments and/or scenarios. They can be provided during SDK instantiation
-to be used for all calls.
-
-### createCodecRemover
-
-In some scenarios it's necessary to remove certain codecs being offered by the SDK to the remote party. While creating an SDP handler would allow a user to perform this type of manipulation, it is a non-trivial task that requires in-depth knowledge of WebRTC SDP.
-
-To facilitate this common task, the SDK provides a codec removal handler that can be used for this purpose.
-
-The SDP handlers are exposed on the entry point of the SDK. They need to be added to the list of SDP handlers via configuration on creation of an instance of the SDK.
-
-**Examples**
-
-```javascript
-import { create, sdpHandlers } from 'kandy';
-const codecRemover = sdpHandlers.createCodecRemover(['VP8', 'VP9'])
-const client = create({
-  call: {
-    sdpHandlers: [codecRemover]
-  }
-})
-```
 
 ## Logger
 
@@ -609,8 +657,10 @@ The Basic error object. Provides information about an error that occurred in the
 
 [6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
 
-[7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+[7]: https://developer.mozilla.org/docs/Web/HTML/Element
 
-[8]: https://developer.mozilla.org/docs/Web/HTML/Element
+[8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
 
 [9]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[10]: #basicerror
