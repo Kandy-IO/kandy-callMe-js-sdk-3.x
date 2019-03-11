@@ -1,6 +1,6 @@
 /**
  * Kandy.js (Next)
- * kandy.callMe.js
+ * kandy.link.js
  * Version: 3.3.0-beta.61804
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -96,7 +96,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/index.callMe.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/index.link.js");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -49645,247 +49645,6 @@ module.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.c
 
 /***/ }),
 
-/***/ "./src/auth/callMe/index.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = callMeAuth;
-
-var _noop = __webpack_require__("./src/auth/noop/index.js");
-
-var _noop2 = _interopRequireDefault(_noop);
-
-var _sagas = __webpack_require__("./src/auth/callMe/sagas.js");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Configuration options for the CallMe Authentication feature.
- * @public
- * @name config.authentication
- * @memberof config
- * @instance
- * @param {Object} authentication Authentication configs.
- * @param {Object} authentication.subscription
- * @param {string} [authentication.subscription.protocol=https] Protocol to be used for subscription requests.
- * @param {string} authentication.subscription.server Server to be used for subscription requests.
- * @param {Number} [authentication.subscription.port=443] Port to be used for subscription requests.
- * @param {string} [authentication.subscription.version=1] Version of the REST API to be used.
- * @param {Array} [authentication.subscription.service] Services to subscribe to for notifications.
- * @param {Object} authentication.websocket
- * @param {string} [authentication.websocket.protocol=wss] Protocol to be used for websocket notifications.
- * @param {string} authentication.websocket.server Server to be used for websocket notifications.
- * @param {Number} [authentication.websocket.port=443] Port to be used for websocket notifications.
- */
-
-/**
- * Auth plugin factory for callMe scenarios.
- * @method callMeAuth
- * @param  {Object} options Configuration options for authentication. See above.
- * @return {Object} A callMe authentication plugin.
- */
-// Re-use the no-op auth plugin.
-function callMeAuth(options = {}) {
-  // Use the no-op auth plugin as a basis.
-  let authComponents = (0, _noop2.default)(options);
-
-  // Add in the sagas.
-  authComponents.sagas = [_sagas.anonymousConnect, _sagas.anonymousDisconnect];
-
-  return authComponents;
-}
-
-/***/ }),
-
-/***/ "./src/auth/callMe/sagas.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _extends2 = __webpack_require__("../../node_modules/babel-runtime/helpers/extends.js");
-
-var _extends3 = _interopRequireDefault(_extends2);
-
-exports.anonymousConnect = anonymousConnect;
-exports.anonymousDisconnect = anonymousDisconnect;
-
-var _actionTypes = __webpack_require__("./src/auth/interface/actionTypes.js");
-
-var actionTypes = _interopRequireWildcard(_actionTypes);
-
-var _actions = __webpack_require__("./src/auth/interface/actions.js");
-
-var actions = _interopRequireWildcard(_actions);
-
-var _selectors = __webpack_require__("./src/auth/interface/selectors.js");
-
-var _requests = __webpack_require__("./src/auth/subscription/requests.js");
-
-var _sagas = __webpack_require__("./src/auth/link/sagas.js");
-
-var _effects = __webpack_require__("./src/connectivity/interface/effects.js");
-
-var _errors = __webpack_require__("./src/errors/index.js");
-
-var _errors2 = _interopRequireDefault(_errors);
-
-var _logs = __webpack_require__("./src/logs/index.js");
-
-var _effects2 = __webpack_require__("../../node_modules/redux-saga/es/effects.js");
-
-var _constants = __webpack_require__("./src/constants.js");
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// Libraries.
-// Auth plugin.
-const log = (0, _logs.getLogManager)().getLogger('AUTH');
-
-/**
- * Handles anonymous subscription and establishing the websocket.
- * Mocks the connection process using the auth actions to trigger required
- *      side-effects elsewhere.
- * @method anonymousConnect
- * @param  {Object} action A CONNECT action.
- * @return {Object} Response or error object.
- */
-
-
-// Constants
-
-
-// Other plugins.
-function* anonymousConnect() {
-  while (true) {
-    const action = yield (0, _effects2.take)(actionTypes.CONNECT);
-
-    // Retrieve the connection info.
-    const config = yield (0, _effects2.select)(_selectors.getAuthConfig);
-
-    let requestOptions = {
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json'
-      }
-    };
-    const { credentials } = action.payload;
-    if (credentials.realm) {
-      requestOptions.queryParams = {
-        tokenrealm: credentials.realm
-      };
-    }
-
-    const subscriptionInfo = (0, _extends3.default)({}, config.subscription, {
-      isAnonymous: true,
-      // TODO: Hardcode / override this here?
-      service: ['callMe']
-    });
-
-    const response = yield (0, _effects2.call)(_requests.subscribe, subscriptionInfo, credentials, requestOptions);
-
-    if (response.error) {
-      // Subscription failed.
-      yield (0, _effects2.put)(actions.connectFinished(response, _constants.platforms.LINK));
-      return;
-    } else if (!response.subscriptionParams.service.includes('callMe')) {
-      // Subscription was successful, but didn't include the callMe service.
-      log.debug('Call Me service not provided with subscription.');
-      yield (0, _effects2.put)(actions.connectFinished({
-        error: new _errors2.default({
-          message: 'Subscription failed to receive required service: callMe',
-          code: _errors.authCodes.MISSING_SERVICE
-        })
-      }));
-      return;
-    }
-
-    // Connect the websocket.
-    const websocketInfo = (0, _extends3.default)({}, config.websocket, {
-      url: response.subscriptionParams.notificationChannel
-
-      // Request the websocket connection.
-    });const wsResponse = yield (0, _effects.connectWebsocket)(websocketInfo, _constants.platforms.LINK);
-
-    if (wsResponse.error) {
-      // Websocket failed to connect.
-      yield (0, _effects2.put)(actions.connectFinished({
-        error: wsResponse.payload
-      }, _constants.platforms.LINK));
-      return;
-    }
-
-    // Workaround.
-    // FCS anonymous calls is dependent on having a value set in localStorage.
-    //      This value is normally set in FCS' subscription process, but since
-    //      we aren't using FCS for subscription, we need to do it ourselves.
-    // This should be cleared after disconnection.
-    // See: wamcall.js, function addNotificationChannel
-    let notificationId = websocketInfo.url.substr(websocketInfo.url.lastIndexOf('/') + 1);
-    if (window && window.localStorage && window.localStorage.setItem) {
-      let username = action.payload.credentials.username;
-      window.localStorage.setItem(`FCS_${username}_NotificationId`, notificationId);
-    } else {
-      log.error('localStorage not supported in environment; cannot make anonymous calls.');
-      return { error: true };
-    }
-
-    yield (0, _effects2.put)(actions.connectFinished({
-      userInfo: {
-        username: action.payload.credentials.anonUsername
-      },
-      subscription: (0, _extends3.default)({}, response.subscriptionParams, {
-        url: response.subscription
-      }),
-      connection: {
-        server: (0, _extends3.default)({}, config.subscription),
-        username: action.payload.credentials.username,
-        requestOptions,
-        // Store the fact that this is an anonymous subscription as part of
-        //      connection state.
-        isAnonymous: true,
-        realm: action.payload.credentials.realm
-      }
-    }, _constants.platforms.LINK));
-  }
-}
-
-/**
- * Entry saga for disconnection.
- * Anonymous disconnect is no different than regular disconnect,
- *      so re-use the regular logic from link.
- * @method anonymousDisconnect
- */
-function* anonymousDisconnect() {
-  while (true) {
-    yield (0, _effects2.take)(actionTypes.DISCONNECT);
-    let { username } = yield (0, _effects2.select)(_selectors.getConnectionInfo);
-
-    // Call the link disconnect saga.
-    yield (0, _effects2.call)(_sagas.disconnect);
-
-    // Workaround.
-    // This was set in localStorage during anonymous connection. Remove it
-    //      since we're disconnecting.
-    if (window && window.localStorage && window.localStorage.removeItem) {
-      window.localStorage.removeItem(`FCS_${username}_NotificationId`);
-    }
-  }
-}
-
-/***/ }),
-
 /***/ "./src/auth/constants.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -50537,6 +50296,120 @@ function api({ dispatch, getState }) {
 
 /***/ }),
 
+/***/ "./src/auth/interface/eventTypes.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+/**
+ * Authentication state has changed. You can get the new state by calling `getConnection()`.
+ *
+ * @public
+ * @memberof Authentication
+ * @requires connect
+ * @event auth:change
+ * @param {Object} params
+ * @param {boolean} params.forced For a disconnection, whether the change was forced by the system.
+ */
+const AUTH_CHANGE = exports.AUTH_CHANGE = 'auth:change';
+
+/**
+ * There was an error with authentication.
+ *
+ * @public
+ * @memberof Authentication
+ * @requires connect
+ * @event auth:error
+ * @param {Object} params
+ * @param {BasicError} params.error The Basic error object.
+ *
+ */
+const AUTH_ERROR = exports.AUTH_ERROR = 'auth:error';
+
+/**
+ * An attempt to extend the current user's subscription was made.
+ *
+ * In a failure scenario, the current user is still connected, and further
+ * resubscription attempts will be made, but may become disconnected if the
+ * session expires.
+ * @public
+ * @memberof Authentication
+ * @requires connect
+ * @event auth:resub
+ * @param {Object} params
+ * @param {number} params.attemptNum The attempt number of this resubscription.
+ * @param {boolean} params.isFailure Whether the resubscription failed or not.
+ * @param {BasicError} [params.error] The Basic error object.
+ */
+const AUTH_RESUB = exports.AUTH_RESUB = 'auth:resub';
+
+/***/ }),
+
+/***/ "./src/auth/interface/events.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _eventTypes = __webpack_require__("./src/auth/interface/eventTypes.js");
+
+var eventTypes = _interopRequireWildcard(_eventTypes);
+
+var _actionTypes = __webpack_require__("./src/auth/interface/actionTypes.js");
+
+var actionTypes = _interopRequireWildcard(_actionTypes);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function authChangedEvent(action) {
+  return {
+    type: action.error ? eventTypes.AUTH_ERROR : eventTypes.AUTH_CHANGE,
+    args: action.error ? { error: action.payload } : {}
+  };
+}
+
+const eventsMap = {};
+
+eventsMap[actionTypes.CONNECT_FINISHED] = authChangedEvent;
+eventsMap[actionTypes.USER_DETAILS_RECEIVED] = authChangedEvent;
+eventsMap[actionTypes.CONNECT] = authChangedEvent;
+eventsMap[actionTypes.DISCONNECT] = authChangedEvent;
+eventsMap[actionTypes.REFRESH_TOKENS_FINISHED] = authChangedEvent;
+eventsMap[actionTypes.UPDATE_SUBSCRIPTION_FINISH] = authChangedEvent;
+
+eventsMap[actionTypes.DISCONNECT_FINISHED] = function (action) {
+  let discEvent = authChangedEvent(action);
+  discEvent.args.forced = action.payload.forced;
+  return discEvent;
+};
+
+eventsMap[actionTypes.RESUBSCRIPTION_FINISHED] = function (action) {
+  let resubEvent = {
+    type: eventTypes.AUTH_RESUB,
+    args: {
+      attemptNum: action.payload.attemptNum,
+      isFailure: action.error || false
+    }
+  };
+
+  if (action.error) {
+    resubEvent.args.error = action.payload;
+  }
+  return resubEvent;
+};
+
+exports.default = eventsMap;
+
+/***/ }),
+
 /***/ "./src/auth/interface/index.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -50978,6 +50851,128 @@ function getRequestInfo(state, platform) {
 
 /***/ }),
 
+/***/ "./src/auth/link/index.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = authLink;
+
+var _effects = __webpack_require__("../../node_modules/redux-saga/es/effects.js");
+
+var _events = __webpack_require__("./src/auth/interface/events.js");
+
+var _events2 = _interopRequireDefault(_events);
+
+var _actions = __webpack_require__("./src/events/interface/actions.js");
+
+var _interface = __webpack_require__("./src/auth/interface/index.js");
+
+var _actions2 = __webpack_require__("./src/config/interface/actions.js");
+
+var _utils = __webpack_require__("./src/common/utils.js");
+
+var _logs = __webpack_require__("./src/logs/index.js");
+
+var _selectors = __webpack_require__("./src/auth/interface/selectors.js");
+
+var _sagas = __webpack_require__("./src/auth/link/sagas.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// Get the logger
+
+
+/**
+ * selector for exposed authentication state
+ */
+
+
+// Utilities.
+
+
+// The interface to follow.
+
+// Events
+const log = (0, _logs.getLogManager)().getLogger('AUTH');
+
+/**
+ * Configuration options for the Authentication feature.
+ * @public
+ * @name config.authentication
+ * @memberof config
+ * @instance
+ * @param {Object} authentication Authentication configs.
+ * @param {Object} authentication.subscription
+ * @param {string} authentication.subscription.server Hostname of the server to be used for subscription requests.
+ * @param {string} [authentication.subscription.protocol=https] Protocol to be used for subscription requests.
+ * @param {Number} [authentication.subscription.port=443] Port to be used for subscription requests.
+ * @param {string} [authentication.subscription.version=1] Version of the REST API to be used.
+ * @param {Number} [authentication.subscription.expires=3600] Time duration, in seconds, until a subscription should expire.
+ * @param {Array} [authentication.subscription.service] Services to subscribe to for notifications.
+ * @param {Object} authentication.websocket
+ * @param {string} authentication.websocket.server Hostname of the server to be used for websocket notifications.
+ * @param {string} [authentication.websocket.protocol=wss] Protocol to be used for websocket notifications.
+ * @param {Number} [authentication.websocket.port=443] Port to be used for websocket notifications.
+ */
+
+/**
+ * On link authentication implementation factory.
+ * @method authLink
+ * @param {Object} options - Configuration options for authentication. See above.
+ * @return {Object} plugin - An authentication plugin.
+ */
+
+
+// State setters.
+// Redux-Saga
+function authLink(options = {}) {
+  const defaultOptions = {
+    subscription: {
+      protocol: 'https',
+      port: '443',
+      expires: 3600,
+      service: ['IM', 'Presence', 'call'],
+      version: '1'
+    },
+    websocket: {
+      protocol: 'wss',
+      port: '443'
+    }
+  };
+
+  options = (0, _utils.mergeValues)(defaultOptions, options);
+
+  if (!options.subscription.server) {
+    log.error('No server configuration provided. Please provide proper authentication configurations.');
+  }
+
+  function* init() {
+    // Send the provided options to the store.
+    // This will be `state.config[name]`.
+    yield (0, _effects.put)((0, _actions2.update)(options, _interface.name));
+    yield (0, _effects.put)((0, _actions.mapEvents)(_events2.default));
+  }
+
+  const capabilities = ['connect', 'userCredentialsAuth', 'updateConnection', 'services'];
+
+  return {
+    sagas: [_sagas.connectFlow, _sagas.extendSubscription, _sagas.updateSubscription, _sagas.onSubscriptionGone],
+    capabilities,
+    init,
+    api: _interface.api,
+    selector: _selectors.getExposedState,
+    reducer: _interface.reducer,
+    name: _interface.name
+  };
+}
+
+/***/ }),
+
 /***/ "./src/auth/link/sagas.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -51348,79 +51343,6 @@ function* onSubscriptionGone() {
     yield (0, _effects.put)(actions.disconnectFinished({ forced: true }));
   }
 }
-
-/***/ }),
-
-/***/ "./src/auth/noop/index.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = baseAuth;
-
-var _interface = __webpack_require__("./src/auth/interface/index.js");
-
-var _actions = __webpack_require__("./src/config/interface/actions.js");
-
-var _utils = __webpack_require__("./src/common/utils.js");
-
-var _fp = __webpack_require__("../../node_modules/lodash/fp.js");
-
-var _effects = __webpack_require__("../../node_modules/redux-saga/es/effects.js");
-
-/**
- * Basic auth plugin that has exposes no implementation.
- * For use with special case builds which don't use an auth plugin,
- *      but need to store authentication state.
- * @method baseAuth
- * @return {Object} A base authentication plugin.
- */
-
-
-// Other plugins.
-function baseAuth(options = {}) {
-  const defaultOptions = {
-    subscription: {
-      expires: 3600,
-      // Note: No default `service`.
-      protocol: 'https',
-      version: '1',
-      port: '443'
-    },
-    websocket: {
-      protocol: 'wss',
-      port: '443'
-    }
-  };
-  options = (0, _utils.mergeValues)(defaultOptions, options);
-
-  function* init() {
-    yield (0, _effects.put)((0, _actions.update)(options, _interface.name));
-  }
-
-  // Modified auth API. Only exposes state getters.
-  function noopAPI({ dispatch, getState }) {
-    let normalAPI = (0, _interface.api)({ dispatch, getState });
-
-    // Auth APIs that only return state.
-    let apiGetters = ['getUserInfo', 'getConnection', 'getServices'];
-    return (0, _fp.pick)(apiGetters, normalAPI);
-  }
-
-  return {
-    name: _interface.name,
-    reducer: _interface.reducer,
-    init,
-    api: noopAPI
-  };
-}
-
-// Libraries.
-// Auth plugin.
 
 /***/ }),
 
@@ -51813,349 +51735,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * to the SDK.
  */
 exports.default = [{ name: 'logs', fn: _logs2.default }, { name: 'config', fn: _config2.default }, { name: 'events', fn: _events2.default }, { name: 'request', fn: _request2.default }];
-
-/***/ }),
-
-/***/ "./src/call/callMe/index.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _extends2 = __webpack_require__("../../node_modules/babel-runtime/helpers/extends.js");
-
-var _extends3 = _interopRequireDefault(_extends2);
-
-exports.default = anonymousCalls;
-
-var _index = __webpack_require__("./src/call/oldLink/index.js");
-
-var _index2 = _interopRequireDefault(_index);
-
-var _interface = __webpack_require__("./src/call/interface/index.js");
-
-var _interface2 = _interopRequireDefault(_interface);
-
-var _events = __webpack_require__("./src/call/interface/events.js");
-
-var _events2 = _interopRequireDefault(_events);
-
-var _actions = __webpack_require__("./src/call/interface/actions/index.js");
-
-var _sagas = __webpack_require__("./src/call/callMe/sagas.js");
-
-var _constants = __webpack_require__("./src/call/constants.js");
-
-var _actions2 = __webpack_require__("./src/events/interface/actions.js");
-
-var _actions3 = __webpack_require__("./src/config/interface/actions.js");
-
-var _utils = __webpack_require__("./src/common/utils.js");
-
-var _fp = __webpack_require__("../../node_modules/lodash/fp.js");
-
-var _effects = __webpack_require__("../../node_modules/redux-saga/es/effects.js");
-
-var _v = __webpack_require__("../../node_modules/uuid/v4.js");
-
-var _v2 = _interopRequireDefault(_v);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// Documentation block for documentation.js not needed. Since we import the
-//      regular call plugin's index, that documentation is picked up already
-//      and is sufficient for this plugin as well.
-
-/**
- * Call plugin factory for callMe scenarios.
- * @method anonymousCalls
- * @param  {Object} [options={}] Configuration options for calls. See above.
- * @return {Object} A callMe calls plugin.
- */
-
-
-// Libraries.
-
-
-// Other plugins.
-// Call plugin.
-function anonymousCalls(options = {}) {
-  const defaultOptions = {
-    // Values used as defaults for making/answering a call.
-    callDefaults: {
-      isAudioEnabled: true,
-      isVideoEnabled: true,
-      sendInitialVideo: false,
-      remoteVideoContainer: undefined,
-      localVideoContainer: undefined
-    },
-    // Values passed to FCS.
-    webrtcdtls: true,
-    chromeExtensionId: undefined,
-    serverProvidedTurnCredentials: false,
-    iceserver: []
-  };
-
-  options = (0, _utils.mergeValues)(defaultOptions, options);
-
-  function* init() {
-    yield (0, _effects.put)((0, _actions3.update)(options, _interface2.default.name));
-    yield (0, _effects.put)((0, _actions2.mapEvents)(_events2.default));
-  }
-
-  // Get the middleware from the regular call plugin to re-use.
-  let { middleware } = (0, _index2.default)();
-
-  return {
-    name: _interface2.default.name,
-    reducer: _interface2.default.reducer,
-    api: anonymizeAPI,
-    capabilities: ['callMe'],
-    middleware,
-    init,
-    sagas: [_sagas.anonymousCallFlow, _sagas.anonymousCallEnd]
-  };
-}
-
-/**
- * Anonymous Call API
- * Alters the Calls API so that it is suited only for anonymous calls.
- * @method anonymizeAPI
- * @return {Object} Anonymous Call plugin API.
- */
-// TODO: Update when new Link is done.
-function anonymizeAPI({ dispatch, getState }) {
-  // Get the call API.
-  let api = _interface2.default.api({ dispatch, getState });
-
-  // List of APIs that this plugin will take from the interface.
-  //      APIs not included here will not be exposed.
-  // The difference between regular calls and callMe anonymous calls is that:
-  //      1. anon is outgoing only,
-  //      2. anon is basic mid-call operations only (eg. no transfer),
-  //      3. anon's makeCall is not called directly (after login).
-  let anonAPIs = [
-  // Getters.
-  'getAll', 'getById', 'getMediaInfo',
-  // Devices.
-  'changeInputDevices', 'changeSpeaker',
-  // Call functionality.
-  'end', 'mute', 'unmute', 'startVideo', 'stopVideo', 'hold', 'unhold', 'startScreenshare', 'stopScreenshare', 'sendDTMF', 'sendCustomParameters',
-  // Undocumented.
-  'getRemoteVideoResolutions'];
-
-  let mediaAPIs = [
-  // Devices.
-  'setDefaultDevices', 'getDevices', 'init', 'startPreviewVideo', 'stopPreviewVideo', 'promptUserMedia'];
-
-  let callMeAPI = (0, _fp.pick)(anonAPIs, api.call);
-  let mediaAPI = (0, _fp.pick)(mediaAPIs, api.media);
-  /* eslint-disable no-warning-comments */
-  /**
-   * Starts an outgoing call as an anonymous user.
-   * @public
-   * @requires callMe
-   * @memberof Calls
-   * @method makeAnonymous
-   * @param  {string} callee       Full user ID of the call recipient.
-   * @param {Object} credentials  Information needed to validate a token anonymous call.
-   * @param {Object} credentials.realm The realm used to encrypt the tokens.
-   * @param {Object} [credentials.accountToken] The encrypted account token of the account making the call.
-   * @param {Object} [credentials.fromToken] The encrypted SIP address of the account/caller.
-   * @param {Object} [credentials.toToken] The encrypted SIP address of the callee.
-   * @param {Object} callOptions Call options.
-   * @param {string} callOptions.from The URI of the user making the call.
-   * @param {Object} [callOptions.contact] Object containing firstName and lastName of caller.
-   * @param {boolean} [callOptions.sendInitialVideo=false]  Whether to start the call sending the local video stream.
-   * @param {boolean} [callOptions.isAudioEnabled=true] Whether to enable audio during the call. Setting this to false will disable audio for the call.
-   * @param {boolean} [callOptions.isVideoEnabled=true] Whether to enable video during the call. If false, you cannot start video mid-call.
-   * @param {boolean} [callOptions.webrtcdtls=true] Whether to enable DTLS for WebRTC calls.
-   * @param {HTMLElement} [callOptions.localVideoContainer] The HTML element to use as a container for the local video.
-   * @param {HTMLElement} [callOptions.remoteVideoContainer] The HTML element to use as a container for the remote video.
-   * @param {Object} [callOptions.videoResolution] The object to configure the local video resolution.
-   * @param {number} [callOptions.videoResolution.height] The height in pixels of the local video.
-   * @param {number} [callOptions.videoResolution.width] The width in pixels of the local video.
-   * @param {Array.<{name: string, value:string}>} [callOptions.customParameters] Custom SIP header parameters for the SIP backend.
-   * @return {string} Id of the outgoing call.
-   * @example
-   * // Make a basic anonymous call.
-   * let callee = 'user1@example.com';
-   * let callOptions = { ... };
-   *
-   * let callId = client.call.makeAnonymous(callee, {}, callOptions);
-   * @example
-   * // Make a time-limited token anonymous call.
-   * let callee = 'user1@example.com';
-   * let account = 'user2@example.com';
-   * let callOptions = { ...
-   *     customParameters: [
-   *       {
-   *         "name": "X-GPS",
-   *         "value": "42.686032,23.344565"
-   *       }
-   *     ],
-   *     ...
-   *   };
-   *
-   * // Generate / Retrieve the encrypted tokens.
-   * const key = 'abc123...';
-   * const credentials = {
-   *      accountToken: createToken(account, key),
-   *      fromToken: createToken('sip:' + account, key),
-   *      toToken: createToken('sip:' + callee, key),
-   *      realm: 'realmAbc123...'
-   * };
-   *
-   * let callId = client.call.makeAnonymous(callee, credentials, callOptions);
-   */
-  /* eslint-enable no-warning-comments */
-  callMeAPI.makeAnonymous = function (callee, credentials = {}, callOptions = {}) {
-    // Create our own call ID for storing in state.
-    const callId = (0, _v2.default)();
-    dispatch(_actions.callsActions.makeAnonymousCall(callee, callId, credentials, callOptions));
-    return callId;
-  };
-
-  return {
-    // Namespace the API.
-    call: (0, _extends3.default)({}, callMeAPI, {
-      states: _constants.CALL_STATES_FCS
-    }),
-    media: mediaAPI
-  };
-}
-
-/***/ }),
-
-/***/ "./src/call/callMe/sagas.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _extends2 = __webpack_require__("../../node_modules/babel-runtime/helpers/extends.js");
-
-var _extends3 = _interopRequireDefault(_extends2);
-
-exports.anonymousCallFlow = anonymousCallFlow;
-exports.anonymousCallEnd = anonymousCallEnd;
-
-var _actionTypes = __webpack_require__("./src/call/interface/actionTypes.js");
-
-var actionTypes = _interopRequireWildcard(_actionTypes);
-
-var _actions = __webpack_require__("./src/call/interface/actions/index.js");
-
-var _actions2 = __webpack_require__("./src/auth/interface/actions.js");
-
-var authActions = _interopRequireWildcard(_actions2);
-
-var _actionTypes2 = __webpack_require__("./src/auth/interface/actionTypes.js");
-
-var authActionTypes = _interopRequireWildcard(_actionTypes2);
-
-var _effects = __webpack_require__("../../node_modules/redux-saga/es/effects.js");
-
-var _logs = __webpack_require__("./src/logs/index.js");
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// get logger
-
-
-// Libraries.
-
-
-// Other plugins.
-// Calls plugin.
-const log = (0, _logs.getLogManager)().getLogger('CALL');
-
-/**
- * Entry saga for making anonymous / callMe calls.
- * @method anonymousCallFlow
- */
-function* anonymousCallFlow() {
-  while (true) {
-    const action = yield (0, _effects.take)(actionTypes.MAKE_CALL_ANONYMOUS);
-    const anonUser = action.payload.callInfo.from;
-    if (!anonUser) {
-      yield (0, _effects.put)(_actions.callsActions.makeCallFinish(action.payload.callId, action.payload.callInfo, {
-        error: 'callInfo has no `from` property'
-      }));
-      return;
-    }
-    const { realm, accountToken, toToken, fromToken } = action.payload.credentials;
-
-    let account, caller, callee;
-
-    if (realm && accountToken && toToken && fromToken) {
-      // If credentials were provided for a token-limited call.
-      log.debug('Performing time-limited token anonymous call.');
-      account = accountToken;
-      caller = fromToken;
-      callee = toToken;
-    } else {
-      log.debug('Performing anonymous call.');
-      account = action.payload.callee;
-      caller = anonUser;
-      callee = action.payload.callee;
-    }
-
-    const connectChannel = yield (0, _effects.actionChannel)(authActionTypes.CONNECT_FINISHED);
-    yield (0, _effects.put)(authActions.connect({
-      username: account,
-      password: '',
-      // The fake userId of the current, anonymous user.
-      anonUsername: anonUser,
-      realm: action.payload.credentials.realm
-    }));
-    let connectResponse = yield (0, _effects.take)(connectChannel);
-    connectChannel.close();
-
-    if (connectResponse.error) {
-      // Connection failed.
-      // TODO: Improve this error scenario when call actions use BasicError properly.
-      yield (0, _effects.put)(_actions.callsActions.makeCallFinish(action.payload.callId, action.payload.callInfo, {
-        error: connectResponse.payload
-      }));
-      continue;
-    }
-
-    // Make the call normally after we're subscribed.
-    yield (0, _effects.put)(_actions.callsActions.makeCall(callee, action.payload.callId, (0, _extends3.default)({}, action.payload.callInfo, {
-      from: caller
-    })));
-  }
-}
-
-/**
- * Entry saga for handling the "end of call" operations.
- * @method anonymousCallEnd
- */
-function* anonymousCallEnd() {
-  // Redux-saga take() pattern.
-  // Take 'call end' actions.
-  function takeEndCall(action) {
-    return action.type === actionTypes.CALL_STATE_CHANGE && action.payload.state === 'ENDED';
-  }
-
-  while (true) {
-    yield (0, _effects.take)(takeEndCall);
-
-    // When the call ends, we want to disconnect the user.
-    yield (0, _effects.put)(authActions.disconnect());
-  }
-}
 
 /***/ }),
 
@@ -58781,6 +58360,1525 @@ function normalizeSipUri(address, domain) {
 
 /***/ }),
 
+/***/ "./src/callHistory/index.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = callHistory;
+
+var _interface = __webpack_require__("./src/callHistory/interface/index.js");
+
+var _sagas = __webpack_require__("./src/callHistory/sagas/index.js");
+
+var sagas = _interopRequireWildcard(_sagas);
+
+var _events = __webpack_require__("./src/callHistory/interface/events.js");
+
+var _events2 = _interopRequireDefault(_events);
+
+var _actions = __webpack_require__("./src/events/interface/actions.js");
+
+var _fp = __webpack_require__("../../node_modules/lodash/fp.js");
+
+var _effects = __webpack_require__("../../node_modules/redux-saga/es/effects.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+/**
+ * Call History plugin factory.
+ * @method callHistory
+ * @return {Object} plugin - An sdk plugin.
+ */
+
+
+// Libraries.
+// Call History plugin.
+function callHistory() {
+  function* init() {
+    yield (0, _effects.put)((0, _actions.mapEvents)(_events2.default));
+  }
+
+  return {
+    name: _interface.name,
+    capabilities: ['callHistory'],
+    init,
+    api: _interface.api,
+    reducer: _interface.reducer,
+    sagas: (0, _fp.values)(sagas)
+  };
+}
+
+// Other plugins.
+
+/***/ }),
+
+/***/ "./src/callHistory/interface/actionTypes.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+const prefix = '@@KANDY/';
+
+const FETCH_CALL_HISTORY = exports.FETCH_CALL_HISTORY = prefix + 'FETCH_CALL_HISTORY';
+const FETCH_CALL_HISTORY_FINISH = exports.FETCH_CALL_HISTORY_FINISH = prefix + 'FETCH_CALL_HISTORY_FINISH';
+
+const DELETE_CALL_HISTORY = exports.DELETE_CALL_HISTORY = prefix + 'DELETE_CALL_HISTORY';
+const DELETE_CALL_HISTORY_FINISH = exports.DELETE_CALL_HISTORY_FINISH = prefix + 'DELETE_CALL_HISTORY_FINISH';
+
+const ADD_CALL_HISTORY_ENTRY = exports.ADD_CALL_HISTORY_ENTRY = prefix + 'ADD_CALL_HISTORY_ENTRY';
+
+const SET_CACHE = exports.SET_CACHE = prefix + 'SET_CACHE';
+
+/***/ }),
+
+/***/ "./src/callHistory/interface/actions.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.retrieveCallLogs = retrieveCallLogs;
+exports.retrieveCallLogsFinish = retrieveCallLogsFinish;
+exports.removeCallLogs = removeCallLogs;
+exports.removeCallLogsFinish = removeCallLogsFinish;
+exports.addCallLogEntry = addCallLogEntry;
+exports.setCache = setCache;
+
+var _actionTypes = __webpack_require__("./src/callHistory/interface/actionTypes.js");
+
+var actionTypes = _interopRequireWildcard(_actionTypes);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+/**
+ * Represents a request to fetch call logs.
+ * @method retrieveCallLogs
+ * @param  {number} amount The number of records to retrieve.
+ * @param  {number} offset Starting offset for records to retrieve.
+ * @return {Object} A flux standard action.
+ */
+function retrieveCallLogs(amount, offset) {
+  return {
+    type: actionTypes.FETCH_CALL_HISTORY,
+    payload: {
+      amount,
+      offset
+    }
+  };
+}
+
+/**
+ * Represents a received response from fetching call logs.
+ * @method retrieveCallLogsFinish
+ * @param  {Object} $0
+ * @param  {Object} $0.logs Retrieved call logs.
+ * @param  {BasicError} $0.error  Error object, in the case of an error.
+ * @return {Object} A flux standard action.
+ */
+function retrieveCallLogsFinish({ logs, error }) {
+  return {
+    type: actionTypes.FETCH_CALL_HISTORY_FINISH,
+    error: !!error,
+    payload: error || logs
+  };
+}
+
+/**
+ * Represents a request to delete call logs.
+ * @method removeCallLogs
+ * @param  {number} recordId Which logs to delete.
+ * @return {Object} A flux standard action.
+ */
+function removeCallLogs(recordId) {
+  return {
+    type: actionTypes.DELETE_CALL_HISTORY,
+    payload: recordId
+  };
+}
+
+/**
+ * Represents a received response from deleting call logs.
+ * @method removeCallLogsFinish
+ * @param  {Object} $0
+ * @param  {number|string} $0.recordId The ID of the removed record. Can also be 'all'.
+ * @param  {BasicError} $0.error  Error object, in the case of an error.
+ * @return {Object} A flux standard action.
+ */
+function removeCallLogsFinish({ recordId, error }) {
+  return {
+    type: actionTypes.DELETE_CALL_HISTORY_FINISH,
+    error: !!error,
+    payload: error || recordId
+  };
+}
+
+/**
+ * Represents a request to add a new entry to the call logs.
+ * @method addCallLogEntry
+ * @param  {Object} $0 The call log entry to add
+ * @return {Object} A flux standard action.
+ */
+function addCallLogEntry(logEntry) {
+  return {
+    type: actionTypes.ADD_CALL_HISTORY_ENTRY,
+    payload: logEntry
+  };
+}
+
+/**
+ * Represents a call to set the cache in the call history
+ * @method setCache
+ * @param  {Object} $0 call log state to hydrate into app state
+ * @return {Object} A flux standard action.
+ */
+function setCache(data) {
+  return {
+    type: actionTypes.SET_CACHE,
+    payload: data
+  };
+}
+
+/***/ }),
+
+/***/ "./src/callHistory/interface/api.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _stringify = __webpack_require__("../../node_modules/babel-runtime/core-js/json/stringify.js");
+
+var _stringify2 = _interopRequireDefault(_stringify);
+
+exports.default = api;
+
+var _actions = __webpack_require__("./src/callHistory/interface/actions.js");
+
+var actions = _interopRequireWildcard(_actions);
+
+var _selectors = __webpack_require__("./src/callHistory/interface/selectors.js");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Call History API.
+ * @method api
+ * @param  {Function} $0
+ * @param  {Function} $0.dispatch The redux store's dispatch function.
+ * @param {Function} $0.getState - The redux store's getState function.
+ * @return {Object} API.
+ */
+/**
+ * The call history feature is used to retrieve and inspect the authenticated
+ * users call logs.
+ *
+ * CallHistory functions are all part of the 'call.history' namespace.
+ *
+ * @public
+ * @module CallHistory
+ */
+
+// Call History interface.
+function api({ dispatch, getState }) {
+  const callHistoryApi = {
+    /**
+     * Fetches the list of call logs and stores them locally. The API
+     * `getCallLogs` can then be used to get the logs from local state after
+     * it has been updated.
+     * @public
+     * @memberof CallHistory
+     * @requires callHistory
+     * @method fetch
+     * @param  {number} [amount=50] The number of records to retrieve.
+     * @param  {number} [offset=0] Starting offset for records to retrieve.
+     */
+    fetch(amount = 50, offset = 0) {
+      dispatch(actions.retrieveCallLogs(amount, offset));
+    },
+
+    /**
+     * Deletes the specified call log.
+     * @public
+     * @memberof CallHistory
+     * @requires callHistory
+     * @method remove
+     * @param  {number} recordId The ID of the call log to be removed.
+     */
+    remove(recordId) {
+      dispatch(actions.removeCallLogs(recordId));
+    },
+
+    /**
+     * Deletes all call logs.
+     * @public
+     * @memberof CallHistory
+     * @requires callHistory
+     * @method clear
+     */
+    clear() {
+      dispatch(actions.removeCallLogs('all'));
+    },
+
+    /**
+     * Gets the list of call logs cached locally. The event
+     * `callHistory:changed` is used to indicate the local state of logs
+     * has been updated.
+     * @public
+     * @memberof CallHistory
+     * @requires callHistory
+     * @method get
+     * @example
+     * client.on('callHistory:change', function() {
+     *     // Get all call logs when they've been updated.
+     *     let callLogs = client.call.history.get();
+     * });
+     * @returns {Array} A list of call log records, ordered by latest first.
+     */
+    get() {
+      return (0, _selectors.getCallHistory)(getState());
+    },
+
+    /**
+     * Gets the cached call history data and returns stringified data.
+     * @public
+     * @memberof CallHistory
+     * @requires callHistory
+     * @method getCache
+     * @returns {Array} A list of call log records from the cache, ordered by latest first.
+     */
+    getCache() {
+      return (0, _stringify2.default)((0, _selectors.getCachedHistory)(getState()));
+    },
+
+    /**
+     * Sets the cached call history data, expects stringified data as it will be parsed.
+     * @public
+     * @memberof CallHistory
+     * @requires callHistory
+     * @method setCache
+     * @param {*} data The data to restore in the cache.
+     */
+    setCache(data) {
+      dispatch(actions.setCache(JSON.parse(data)));
+    }
+  };
+
+  return { call: { history: callHistoryApi } };
+}
+
+/***/ }),
+
+/***/ "./src/callHistory/interface/eventTypes.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+/**
+ * Call history state has been updated. See `getCallLogs()` to retrieve new state.
+ * @public
+ * @memberof CallHistory
+ * @event callHistory:change
+ */
+const CALL_HISTORY_CHANGE = exports.CALL_HISTORY_CHANGE = 'callHistory:change';
+
+/**
+ * An error occured while performing a call history operation.
+ * @public
+ * @memberof CallHistory
+ * @event callHistory:error
+ * @param {Object} params
+ * @param {BasicError} params.error The Basic error object.
+ */
+const CALL_HISTORY_ERROR = exports.CALL_HISTORY_ERROR = 'callHistory:error';
+
+/**
+ * Call history cached state has been updated
+ * @public
+ * @memberof CallHistory
+ * @event callHistoryCache:change
+ */
+const CALL_HISTORY_CACHE_CHANGE = exports.CALL_HISTORY_CACHE_CHANGE = 'callHistoryCache:change';
+
+/***/ }),
+
+/***/ "./src/callHistory/interface/events.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _eventTypes = __webpack_require__("./src/callHistory/interface/eventTypes.js");
+
+var eventTypes = _interopRequireWildcard(_eventTypes);
+
+var _actionTypes = __webpack_require__("./src/callHistory/interface/actionTypes.js");
+
+var actionTypes = _interopRequireWildcard(_actionTypes);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function callHistoryEvent(action) {
+  if (!action.error) {
+    return [{
+      type: eventTypes.CALL_HISTORY_CHANGE,
+      args: {}
+    }, {
+      type: eventTypes.CALL_HISTORY_CACHE_CHANGE,
+      args: {}
+    }];
+  } else {
+    return {
+      type: eventTypes.CALL_HISTORY_ERROR,
+      args: { error: action.payload }
+    };
+  }
+}
+
+var events = {};
+
+events[actionTypes.FETCH_CALL_HISTORY_FINISH] = callHistoryEvent;
+events[actionTypes.DELETE_CALL_HISTORY_FINISH] = callHistoryEvent;
+events[actionTypes.ADD_CALL_HISTORY_ENTRY] = callHistoryEvent;
+
+exports.default = events;
+
+/***/ }),
+
+/***/ "./src/callHistory/interface/index.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.reducer = exports.api = exports.name = undefined;
+
+var _api = __webpack_require__("./src/callHistory/interface/api.js");
+
+var _api2 = _interopRequireDefault(_api);
+
+var _reducers = __webpack_require__("./src/callHistory/interface/reducers.js");
+
+var _reducers2 = _interopRequireDefault(_reducers);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const name = 'callHistory';
+
+exports.name = name;
+exports.api = _api2.default;
+exports.reducer = _reducers2.default;
+
+/***/ }),
+
+/***/ "./src/callHistory/interface/reducers.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _actionTypes = __webpack_require__("./src/callHistory/interface/actionTypes.js");
+
+var actionTypes = _interopRequireWildcard(_actionTypes);
+
+var _reduxActions = __webpack_require__("../../node_modules/redux-actions/es/index.js");
+
+var _fp = __webpack_require__("../../node_modules/lodash/fp.js");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+const reducers = {};
+
+reducers[actionTypes.FETCH_CALL_HISTORY_FINISH] = {
+  next(state, action) {
+    // Note: If a conflict occurs in the below unionBy, the newer log is
+    //      preferred over the older log. This is because SPiDR only keeps
+    //      50 records at a time, and it re-uses old recordIds when it
+    //      creates new record logs. It's stupid.
+
+    // Get local Logs. Local logs are identified by having a recordID of 16 characters
+    let localLogs = state.filter(function (log) {
+      return log.recordId.length === 36 && log.duration !== '0';
+    });
+
+    // Remove the local logs
+    let localLogsRemoved = state.filter(function (log) {
+      return log.resourceLocation !== '';
+    });
+
+    // Generate a list of unique logs (ie; not found in server logs)
+    let uniqueLogs = localLogs.filter(function (log) {
+      var result = action.payload.some(isSimilar, log);
+      return !result;
+    });
+
+    // Combine server logs and new logs.
+    let newLogs = (0, _fp.concat)((0, _fp.unionBy)('recordId', action.payload, localLogsRemoved), uniqueLogs);
+
+    // Sort start time, in descending order.
+    return (0, _fp.reverse)((0, _fp.sortBy)('startTime', newLogs));
+  }
+};
+
+reducers[actionTypes.DELETE_CALL_HISTORY_FINISH] = {
+  next(state, action) {
+    if (action.payload === 'all') {
+      return [];
+    } else {
+      return state.map(function (log) {
+        return log.recordId !== action.payload;
+      });
+    }
+  }
+};
+
+reducers[actionTypes.ADD_CALL_HISTORY_ENTRY] = {
+  next(state, action) {
+    return (0, _fp.concat)(action.payload, state);
+  }
+};
+
+// rehydrate cache with previously stored data
+reducers[actionTypes.SET_CACHE] = {
+  next(state, action) {
+    return action.payload;
+  }
+};
+
+// Call History default state is an empty array.
+const reducer = (0, _reduxActions.handleActions)(reducers, []);
+exports.default = reducer;
+
+/*
+ * A helper function to determine if 2 log entries are similar.
+ * A log is considered similar under the following conditions:
+ *   - the startTime is within 10 seconds
+ *   - the duration is within 5 seconds
+ *   - the direction is the same
+ */
+
+let isSimilar = function (serverLogEntry) {
+  const startTimePadding = 10000;
+  const durationPadding = 5000;
+
+  if (Math.abs(serverLogEntry.startTime - this.startTime) > startTimePadding) {
+    return false;
+  }
+  if (Math.abs(serverLogEntry.duration - this.duration) > durationPadding) {
+    return false;
+  }
+  if (serverLogEntry.direction !== this.direction) {
+    return false;
+  }
+  return true;
+};
+
+/***/ }),
+
+/***/ "./src/callHistory/interface/selectors.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getCallHistory = getCallHistory;
+exports.getCachedHistory = getCachedHistory;
+
+var _fp = __webpack_require__("../../node_modules/lodash/fp.js");
+
+/**
+ * Retrieves call history stored in state.
+ * @method getCallHistory
+ * @param  {Object} state Redux state.
+ * @return {Array}
+ */
+function getCallHistory(state) {
+  return (0, _fp.cloneDeep)(state.callHistory);
+}
+
+/**
+ * Retrieves call history stored in state
+ * @method getCachedHistory
+ * @param  {Object} state Redux state.
+ * @return {Array}
+ */
+function getCachedHistory(state) {
+  return (0, _fp.cloneDeep)(state.callHistory);
+}
+
+/***/ }),
+
+/***/ "./src/callHistory/sagas/client.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.storeCallLogs = storeCallLogs;
+
+var _actions = __webpack_require__("./src/callHistory/interface/actions.js");
+
+var _selectors = __webpack_require__("./src/call/interface/selectors.js");
+
+var _constants = __webpack_require__("./src/call/constants.js");
+
+var _logs = __webpack_require__("./src/logs/index.js");
+
+var _effects = __webpack_require__("../../node_modules/redux-saga/es/effects.js");
+
+// Helpers.
+
+
+// Other plugins.
+const log = (0, _logs.getLogManager)().getLogger('CALLHISTORY');
+
+/**
+ * Saga for storing call event in the local call history.
+ * @method storeCallLogs
+ * @param {Object} action A `CALL_STATE_CHANGE` action representing a call end.
+ */
+
+
+// Libraries
+/**
+ * Sagas related to client generated call history.
+ */
+
+// Call History plugin.
+function* storeCallLogs(action) {
+  // Make sure this is a call end state change.
+  if (action.payload.state !== _constants.CALL_STATES_FCS['ENDED']) {
+    return;
+  }
+
+  let call = yield (0, _effects.select)(_selectors.getCallById, action.payload.callId);
+
+  if (!call) {
+    log.debug(`Call info (${action.payload.callId}) not in state to create local log.`);
+    return;
+  }
+
+  var logEntry = {
+    recordId: action.payload.callId,
+    startTime: '' + call.startTime,
+    duration: '' + (call.endTime - call.startTime),
+    callerDisplayNumber: call.from,
+    calleeDisplayNumber: call.to,
+    calleeName: call.calleeName,
+    remoteParticipant: call.remoteParticipant,
+    originalRemoteParticipant: call.originalRemoteParticipant,
+    resourceLocation: ''
+  };
+  if (call.direction === 'incoming') {
+    // If the previous state was ringing, and the change was not because the call was
+    //      answered by another device (ie. code 9904), then it is a missed call.
+    if (action.payload.transition.prevState === _constants.CALL_STATES_FCS['RINGING'] && action.payload.transition.code !== '9904') {
+      logEntry.direction = 'missed';
+    } else {
+      logEntry.direction = 'incoming';
+    }
+    logEntry.callerName = call.callerName;
+  } else {
+    logEntry.direction = 'outgoing';
+    // Use the contact name provided to the call as the current user's name.
+    let contactName = (call.contact.firstName + ' ' + call.contact.lastName).trim();
+    logEntry.callerName = contactName || call.from.split('@')[0];
+  }
+  log.debug('Adding call event to the local call history:', logEntry);
+  yield (0, _effects.put)((0, _actions.addCallLogEntry)(logEntry));
+}
+
+/***/ }),
+
+/***/ "./src/callHistory/sagas/index.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.fetchLogs = fetchLogs;
+exports.removeLogs = removeLogs;
+exports.createLocalLog = createLocalLog;
+
+var _server = __webpack_require__("./src/callHistory/sagas/server.js");
+
+var _client = __webpack_require__("./src/callHistory/sagas/client.js");
+
+var _actionTypes = __webpack_require__("./src/callHistory/interface/actionTypes.js");
+
+var actionTypes = _interopRequireWildcard(_actionTypes);
+
+var _actionTypes2 = __webpack_require__("./src/call/interface/actionTypes.js");
+
+var _constants = __webpack_require__("./src/call/constants.js");
+
+var _effects = __webpack_require__("../../node_modules/redux-saga/es/effects.js");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+/**
+ * Fetch server call history.
+ * @method fetchLogs
+ */
+/**
+ * Call History saga index.
+ * Defines which actions trigger which sagas.
+ */
+
+// Call History plugin.
+function* fetchLogs() {
+  yield (0, _effects.takeEvery)(actionTypes.FETCH_CALL_HISTORY, _server.retrieveCallLogs);
+}
+
+/**
+ * Delete server call history.
+ * @method removeLogs
+ */
+
+
+// Libraries.
+
+
+// Other plugins.
+function* removeLogs() {
+  yield (0, _effects.takeEvery)(actionTypes.DELETE_CALL_HISTORY, _server.removeCallLogs);
+}
+
+/**
+ * Create local call log after call end.
+ * @method createLocalLog
+ */
+function* createLocalLog() {
+  // Redux-saga take() pattern.
+  function callEndedPattern(action) {
+    return action.type === _actionTypes2.CALL_STATE_CHANGE && action.payload.state === _constants.CALL_STATES_FCS['ENDED'];
+  }
+
+  yield (0, _effects.takeEvery)(callEndedPattern, _client.storeCallLogs);
+}
+
+/***/ }),
+
+/***/ "./src/callHistory/sagas/server.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.retrieveCallLogs = retrieveCallLogs;
+exports.removeCallLogs = removeCallLogs;
+
+var _actions = __webpack_require__("./src/callHistory/interface/actions.js");
+
+var actions = _interopRequireWildcard(_actions);
+
+var _selectors = __webpack_require__("./src/auth/interface/selectors.js");
+
+var _logs = __webpack_require__("./src/logs/index.js");
+
+var _effects = __webpack_require__("./src/request/effects.js");
+
+var _effects2 = _interopRequireDefault(_effects);
+
+var _errors = __webpack_require__("./src/errors/index.js");
+
+var _errors2 = _interopRequireDefault(_errors);
+
+var _fp = __webpack_require__("../../node_modules/lodash/fp.js");
+
+var _effects3 = __webpack_require__("../../node_modules/redux-saga/es/effects.js");
+
+var _constants = __webpack_require__("./src/constants.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+// Helpers.
+/**
+ * Sagas related to server call history.
+ */
+
+// Call History plugin.
+const log = (0, _logs.getLogManager)().getLogger('CALLHISTORY');
+
+/**
+ * Saga for fetching call log records.
+ * @method retrieveCallLogs
+ * @param {Object} action Action of type `FETCH_CALL_HISTORY`.
+ */
+
+
+// Constants
+
+
+// Libraries.
+
+
+// Other plugins.
+function* retrieveCallLogs(action) {
+  log.debug(`Attempting to retrieve ${action.payload.amount} call log(s),` + ` offset of ${action.payload.offset}.`);
+
+  // Catch invalid input (which breaks SPiDR) before making the request.
+  if (!(0, _fp.isNumber)(action.payload.amount) || action.payload.amount < 0 || !(0, _fp.isNumber)(action.payload.offset)) {
+    log.info('Could not retrieve log(s): Invalid input.');
+    yield (0, _effects3.put)(actions.retrieveCallLogsFinish({
+      error: new _errors2.default({
+        code: _errors.callHistoryCodes.BAD_REQUEST,
+        message: 'Could not retrieve call logs: Invalid input.'
+      })
+    }));
+    return;
+  }
+
+  // TODO: Break the callHistory requests into its own file.
+  const requestInfo = yield (0, _effects3.select)(_selectors.getRequestInfo);
+  let platform = yield (0, _effects3.select)(_selectors.getPlatform);
+  const version = platform === _constants.platforms.CPAAS ? 1 : requestInfo.version;
+  let url = `${requestInfo.baseURL}/rest/version/${version}/user/${requestInfo.username}/logHistory`;
+
+  let queryParams = {
+    startIndex: action.payload.offset,
+    count: action.payload.amount
+  };
+
+  let response = yield (0, _effects2.default)({
+    url,
+    queryParams,
+    method: 'GET'
+  }, requestInfo.requestOptions);
+
+  if (response.error) {
+    let error;
+    if (response.payload.body) {
+      // Handle errors from the server.
+      let { statusCode } = response.payload.body.logHistory;
+      log.debug(`Failed to retrieve call logs with status code ${statusCode}.`);
+
+      error = new _errors2.default({
+        code: statusCode === 37 ? _errors.callHistoryCodes.BAD_REQUEST : _errors.callHistoryCodes.UNKNOWN_ERROR,
+        message: `Failed to retrieve call logs. Code: ${statusCode}.`
+      });
+    } else {
+      // Handle errrs from the request helper.
+      let { message } = response.payload.result;
+      log.debug('Failed call log retrieval', message);
+
+      error = new _errors2.default({
+        code: _errors.callHistoryCodes.UNKNOWN_ERROR,
+        message: `Call log fetch failed: ${message}.`
+      });
+    }
+
+    yield (0, _effects3.put)(actions.retrieveCallLogsFinish({ error }));
+  } else {
+    log.info('Successfully retrieved log(s) from call history.');
+    // Massage the call logs into a more concise format.
+    let logs = response.payload.body.logHistory.logItems.map(function (log) {
+      if (log.type === 'CallLog') {
+        return log.params;
+      }
+    });
+
+    // Massage the call logs to include the remoteParticipant property.
+    logs = logs.map(function (log) {
+      /**
+       * There is a bug in SPiDR where it always uses the keys `callerName` and
+       * `callerDisplayNumber` for ALL logs, instead of only incoming logs.
+       * Because of this, callerDisplayNumber is always the remote participant,
+       * even when the local user is the caller.
+       * This if statement is a workaround for this problem.
+       * // TODO: Remove this if when the SPiDR issue is resolved.
+       */
+      if (log.direction === 'outgoing' && !log.calleeDisplayNumber && !log.calleeName) {
+        log.calleeDisplayNumber = log.callerDisplayNumber;
+        log.calleeName = log.callerName;
+        // Keep callerDisplayNumber and callerName properties unchanged for
+        //    backwards compatibility.
+      }
+
+      if (log.direction === 'outgoing') {
+        log.remoteParticipant = {
+          displayName: log.calleeName,
+          displayNumber: log.calleeDisplayNumber
+        };
+      } else {
+        log.remoteParticipant = {
+          displayName: log.callerName,
+          displayNumber: log.callerDisplayNumber
+        };
+      }
+      return log;
+    });
+
+    yield (0, _effects3.put)(actions.retrieveCallLogsFinish({ logs }));
+  }
+}
+
+/**
+ * Saga for deleting call logs.
+ * @method removeCallLogs
+ * @param {Object} action Action of type `DELETE_CALL_HISTORY`.
+ */
+function* removeCallLogs(action) {
+  log.debug(`Attempting to remove call log(s): ${action.payload}.`);
+
+  if (!action.payload) {
+    log.info('Could not remove call logs from history: Invalid input.');
+    yield (0, _effects3.put)(actions.removeCallLogsFinish({
+      error: new _errors2.default({
+        code: _errors.callHistoryCodes.BAD_REQUEST,
+        message: 'Could not remove call logs: Invalid input.'
+      })
+    }));
+    return;
+  }
+
+  const requestInfo = yield (0, _effects3.select)(_selectors.getRequestInfo);
+  let platform = yield (0, _effects3.select)(_selectors.getPlatform);
+  const version = platform === _constants.platforms.CPAAS ? 1 : requestInfo.version;
+  let url = `${requestInfo.baseURL}/rest/version/${version}/user/${requestInfo.username}/`;
+
+  if (action.payload === 'all') {
+    url += 'logHistory';
+  } else {
+    url += `logRecord/${action.payload}`;
+  }
+
+  let response = yield (0, _effects2.default)({
+    url,
+    method: 'DELETE'
+  }, requestInfo.requestOptions);
+
+  if (response.error) {
+    let error;
+    if (response.payload.body) {
+      // Handle errors from the server.
+      let { statusCode } = response.payload.body.logRecord;
+      log.info(`Failed to remove log(s) from call history (status ${statusCode}).`);
+
+      error = new _errors2.default({
+        code: statusCode === 42 ? _errors.callHistoryCodes.NOT_FOUND : _errors.callHistoryCodes.UNKNOWN_ERROR,
+        message: `Failed to remove call log. Code: ${statusCode}.`
+      });
+    } else {
+      // Handle errrs from the request helper.
+      let { message } = response.payload.result;
+      log.debug('Failed call log removal.', message);
+
+      error = new _errors2.default({
+        code: _errors.callHistoryCodes.UNKNOWN_ERROR,
+        message: `Call log removal failed: ${message}.`
+      });
+    }
+
+    yield (0, _effects3.put)(actions.removeCallLogsFinish({ error }));
+  } else {
+    log.info('Successfully removed log(s) from call history.');
+    yield (0, _effects3.put)(actions.removeCallLogsFinish({ recordId: action.payload.body }));
+  }
+}
+
+/***/ }),
+
+/***/ "./src/clickToCall/index.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = clickToCallImplementation;
+
+var _interface = __webpack_require__("./src/clickToCall/interface/index.js");
+
+var _interface2 = _interopRequireDefault(_interface);
+
+var _sagas = __webpack_require__("./src/clickToCall/sagas.js");
+
+var _events = __webpack_require__("./src/clickToCall/interface/events.js");
+
+var _events2 = _interopRequireDefault(_events);
+
+var _actions = __webpack_require__("./src/events/interface/actions.js");
+
+var _effects = __webpack_require__("../../node_modules/redux-saga/es/effects.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * clickToCall Plugin (that is implemented using a saga).
+ *
+ * @method clickToCallImplementation
+ * @return {Object} An instance of the "clickToCall" plugin.
+ */
+
+
+// Other plugins.
+
+
+// Sagas
+function clickToCallImplementation() {
+  function* init() {
+    // Map events
+    yield (0, _effects.put)((0, _actions.mapEvents)(_events2.default));
+  }
+
+  return {
+    // Interface Components:
+    name: _interface2.default.name,
+    capabilities: ['clickToCall'],
+    api: _interface2.default.api,
+    reducer: _interface2.default.reducer,
+    // Implementation Components
+    sagas: [_sagas.clickToCallSaga],
+    init
+  };
+}
+
+// Libraries.
+
+
+// Events
+/**
+ * This file is a plugin for the "clickToCall" feature. It is meant to connect two specified devices
+ * Reference info: https://confluence.genband.com/display/KSDK/Plugins
+ */
+
+/***/ }),
+
+/***/ "./src/clickToCall/interface/actionTypes.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+const PREFIX = '@@KANDY/';
+
+const CLICK_TO_CALL = exports.CLICK_TO_CALL = PREFIX + 'CLICK_TO_CALL';
+const CLICK_TO_CALL_FINISH = exports.CLICK_TO_CALL_FINISH = PREFIX + 'CLICK_TO_CALL_FINISH';
+
+/***/ }),
+
+/***/ "./src/clickToCall/interface/actions.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.clickToCall = clickToCall;
+exports.clickToCallFinish = clickToCallFinish;
+
+var _actionTypes = __webpack_require__("./src/clickToCall/interface/actionTypes.js");
+
+var actionTypes = _interopRequireWildcard(_actionTypes);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+/**
+ * Represents a request to POST clickToCall data.
+ * @method clickToCall
+ * @param  {string} callId
+ * @param  {string} caller
+ * @param  {string} callee
+ * @return {Action} A redux action.
+ */
+function clickToCall(callId, caller, callee) {
+  return {
+    type: actionTypes.CLICK_TO_CALL,
+    payload: {
+      callId,
+      caller,
+      callee
+    }
+  };
+}
+
+/**
+ * Represents that a response was received for a clickToCall request.
+ * @method clickToCallFinish
+ * @param  {string} callId
+ * @param  {string} caller
+ * @param  {string} callee
+ * @param  {number} requestTime time that the request was made at
+ * @param  {Boolean}  [error] A parameter to indicate if there was an issue.
+ * @return {Action} A redux action.
+ */
+function clickToCallFinish({ callId, caller, callee, requestTime, error }) {
+  if (error) {
+    return {
+      type: actionTypes.CLICK_TO_CALL_FINISH,
+      error: true,
+      payload: {
+        error
+      }
+    };
+  } else {
+    return {
+      type: actionTypes.CLICK_TO_CALL_FINISH,
+      error: false,
+      payload: {
+        callId,
+        caller,
+        callee,
+        requestTime
+      }
+    };
+  }
+}
+
+/***/ }),
+
+/***/ "./src/clickToCall/interface/api.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = api;
+
+var _actions = __webpack_require__("./src/clickToCall/interface/actions.js");
+
+var actions = _interopRequireWildcard(_actions);
+
+var _selectors = __webpack_require__("./src/clickToCall/interface/selectors.js");
+
+var _v = __webpack_require__("../../node_modules/uuid/v4.js");
+
+var _v2 = _interopRequireDefault(_v);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function api(context) {
+  const clickToCallApi = {
+    /**
+     * Attempts to establish a call between two specified devices
+     *
+     * @public
+     * @memberof ClickToCall
+     * @method clickToCall
+     * @param  {string} caller A string representing the person making the call
+     * @param  {string} callee A string representing the person receiving the call
+     * @returns {string} callId A unique id representing the call
+     */
+    make: function (caller, callee) {
+      const callId = (0, _v2.default)();
+      context.dispatch(actions.clickToCall(callId, caller, callee));
+      return callId;
+    },
+    /**
+     * Gets all local clickToCall calls
+     *
+     * @public
+     * @memberof ClickToCall
+     * @requires clickToCall
+     * @method get
+     * @returns {Array} A list of clickToCall records, ordered by earliest requestTime
+     */
+    get: function () {
+      return (0, _selectors.getAll)(context.getState());
+    }
+  };
+
+  return {
+    clickToCall: clickToCallApi
+  };
+} /**
+   * The clickToCall feature is used to bridge a call between two specified devices
+   *
+   * @public
+   * @module ClickToCall
+   * @requires clickToCall
+   */
+
+/***/ }),
+
+/***/ "./src/clickToCall/interface/eventTypes.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+/**
+ * ClickToCall has successfully started.
+ *
+ * @public
+ * @memberof ClickToCall
+ * @requires clickToCall
+ * @event clickToCall:start
+ * @param {Object} params
+ * @param {string} params.callId A unique id representing the call made
+ */
+const CLICK_TO_CALL_STARTED = exports.CLICK_TO_CALL_STARTED = 'clickToCall:start';
+
+/**
+ * ClickToCall had an error.
+ *
+ * @public
+ * @memberof ClickToCall
+ * @requires clickToCall
+ * @event clickToCall:error
+ * @param {Object} params
+ * @param {string} params.callId A unique id representing the call made
+ * @param {BasicError} params.error The Basic error object.
+ *
+ */
+const CLICK_TO_CALL_ERROR = exports.CLICK_TO_CALL_ERROR = 'clickToCall:error';
+
+/***/ }),
+
+/***/ "./src/clickToCall/interface/events.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _eventTypes = __webpack_require__("./src/clickToCall/interface/eventTypes.js");
+
+var eventTypes = _interopRequireWildcard(_eventTypes);
+
+var _actionTypes = __webpack_require__("./src/clickToCall/interface/actionTypes.js");
+
+var actionTypes = _interopRequireWildcard(_actionTypes);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+/**
+ * Helper function for clickToCall error events.
+ *
+ * @method clickToCallEvent
+ * @param  {Object} action
+ * @return {Object}
+ */
+function clickToCallEvent(action) {
+  if (!action.error) {
+    return {
+      type: eventTypes.CLICK_TO_CALL_STARTED,
+      args: {
+        callId: action.payload.callId
+      }
+    };
+  } else {
+    return {
+      type: eventTypes.CLICK_TO_CALL_ERROR,
+      args: {
+        callId: action.payload.callId,
+        error: action.payload
+      }
+    };
+  }
+}
+
+var events = {};
+
+events[actionTypes.CLICK_TO_CALL_FINISH] = clickToCallEvent;
+
+exports.default = events;
+
+/***/ }),
+
+/***/ "./src/clickToCall/interface/index.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _api = __webpack_require__("./src/clickToCall/interface/api.js");
+
+var _api2 = _interopRequireDefault(_api);
+
+var _reducers = __webpack_require__("./src/clickToCall/interface/reducers.js");
+
+var _reducers2 = _interopRequireDefault(_reducers);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * This interface is for a clickToCall plugin.
+ * @type {string}
+ */
+const name = 'clickToCall';
+
+exports.default = {
+  reducer: _reducers2.default,
+  name,
+  api: _api2.default
+};
+
+/***/ }),
+
+/***/ "./src/clickToCall/interface/reducers.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reduxActions = __webpack_require__("../../node_modules/redux-actions/es/index.js");
+
+var _actionTypes = __webpack_require__("./src/clickToCall/interface/actionTypes.js");
+
+var actionTypes = _interopRequireWildcard(_actionTypes);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+/**
+ * clicktoCall Plugin.
+ *
+ * Handles the clicktoCall plugin substate. Defines how to communicate back to
+ * the Interface (ie. which actions to use).
+ * @param  {Object} [state={}] Default state for the reducer is an empty object.
+ * @param  {Action} action A dispatched action.
+ * @return {Object} state The new example sub-state.
+ */
+
+const reducers = {};
+
+reducers[actionTypes.CLICK_TO_CALL_FINISH] = {
+  next(state, action) {
+    if (action.error) {
+      return state;
+    } else {
+      return state.concat({
+        callId: action.payload.callId,
+        caller: action.payload.caller,
+        callee: action.payload.callee,
+        requestTime: action.payload.requestTime
+      });
+    }
+  }
+};
+
+// clickToCall default state is empty array
+const reducer = (0, _reduxActions.handleActions)(reducers, []);
+exports.default = reducer;
+
+/***/ }),
+
+/***/ "./src/clickToCall/interface/selectors.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getAll = getAll;
+
+var _fp = __webpack_require__("../../node_modules/lodash/fp.js");
+
+/**
+ * Retrieves clickToCall calls stored in state
+ *
+ * @method getAll
+ * @param  {Object} state Redux state.
+ * @return {Array}
+ */
+function getAll(state) {
+  return (0, _fp.cloneDeep)(state.clickToCall);
+} // Other Libraries
+
+/***/ }),
+
+/***/ "./src/clickToCall/sagas.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _stringify = __webpack_require__("../../node_modules/babel-runtime/core-js/json/stringify.js");
+
+var _stringify2 = _interopRequireDefault(_stringify);
+
+exports.clickToCallSaga = clickToCallSaga;
+
+var _actionTypes = __webpack_require__("./src/clickToCall/interface/actionTypes.js");
+
+var actionTypes = _interopRequireWildcard(_actionTypes);
+
+var _actions = __webpack_require__("./src/clickToCall/interface/actions.js");
+
+var actions = _interopRequireWildcard(_actions);
+
+var _selectors = __webpack_require__("./src/auth/interface/selectors.js");
+
+var _effects = __webpack_require__("../../node_modules/redux-saga/es/effects.js");
+
+var _logs = __webpack_require__("./src/logs/index.js");
+
+var _effects2 = __webpack_require__("./src/request/effects.js");
+
+var _effects3 = _interopRequireDefault(_effects2);
+
+var _errors = __webpack_require__("./src/errors/index.js");
+
+var _errors2 = _interopRequireDefault(_errors);
+
+var _constants = __webpack_require__("./src/constants.js");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// Get the logger
+
+
+// Error handling
+// clickToCall plugin.
+const log = (0, _logs.getLogManager)().getLogger('CLICKTOCALL');
+
+// Other plugins.
+
+
+// Libraries.
+function* clickToCallSaga() {
+  while (true) {
+    // wait for CLICK_TO_CALL action dispatch.
+    const action = yield (0, _effects.take)(actionTypes.CLICK_TO_CALL);
+
+    // ensure both caller and callee are provided in payload.
+    if (!action.payload.caller || !action.payload.callee) {
+      log.info('Missing call particiant information');
+      yield (0, _effects.put)(actions.clickToCallFinish({
+        payload: {
+          error: new _errors2.default({
+            message: 'callee or caller were not provided in CLICK_TO_CALL action payload',
+            code: _errors.clickToCallCodes.MISSING_ARGS
+          }),
+          callId: action.payload.callId
+        }
+      }));
+      continue;
+    }
+
+    const conn = yield (0, _effects.select)(_selectors.getConnectionInfo);
+    const platform = yield (0, _effects.select)(_selectors.getPlatform);
+
+    const { server, username, requestOptions } = conn;
+
+    const version = platform === _constants.platforms.CPAAS ? 1 : server.version;
+
+    const url = `${server.protocol}://${server.server}:${server.port}/rest/version/${version}/user/${username}/clicktocall`;
+
+    const data = {
+      clickToCallRequest: {
+        callingParty: action.payload.caller,
+        calledParty: action.payload.callee
+      }
+    };
+
+    const options = {
+      url,
+      method: 'POST',
+      body: (0, _stringify2.default)(data)
+    };
+
+    const requestTime = new Date().getTime();
+    // wait until we get a response from /clicktocall service
+    const response = yield (0, _effects3.default)(options, requestOptions);
+
+    // determine what type of response was received.
+    if (response.error) {
+      yield (0, _effects.put)(actions.clickToCallFinish({
+        payload: {
+          error: new _errors2.default({
+            message: response.payload.result.message,
+            code: _errors.clickToCallCodes.RESPONSE_ERROR
+          }),
+          callId: action.payload.callId
+        }
+      }));
+    } else {
+      yield (0, _effects.put)(actions.clickToCallFinish({
+        callId: action.payload.callId,
+        caller: action.payload.caller,
+        callee: action.payload.callee,
+        requestTime
+      }));
+    }
+  }
+}
+
+/***/ }),
+
 /***/ "./src/common/utils.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -61559,59 +62657,6 @@ const factoryDefaults = {
 
 /***/ }),
 
-/***/ "./src/index.callMe.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _index = __webpack_require__("./src/index.common.js");
-
-var _index2 = _interopRequireDefault(_index);
-
-var _basePlugins = __webpack_require__("./src/basePlugins.js");
-
-var _basePlugins2 = _interopRequireDefault(_basePlugins);
-
-var _callMe = __webpack_require__("./src/auth/callMe/index.js");
-
-var _callMe2 = _interopRequireDefault(_callMe);
-
-var _callMe3 = __webpack_require__("./src/call/callMe/index.js");
-
-var _callMe4 = _interopRequireDefault(_callMe3);
-
-var _connectivity = __webpack_require__("./src/connectivity/index.js");
-
-var _connectivity2 = _interopRequireDefault(_connectivity);
-
-var _link = __webpack_require__("./src/notifications/link/index.js");
-
-var _link2 = _interopRequireDefault(_link);
-
-var _codecRemover = __webpack_require__("../fcs/src/js/sdp/codecRemover.js");
-
-var _codecRemover2 = _interopRequireDefault(_codecRemover);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-const defaultPlugins = [..._basePlugins2.default, { name: 'authentication', fn: _callMe2.default }, { name: 'call', fn: _callMe4.default }, { name: 'connectivity', fn: _connectivity2.default }, { name: 'notifications', fn: _link2.default }];
-
-function root(options = {}, plugins = []) {
-  return (0, _index2.default)(options, [...defaultPlugins, ...plugins]);
-}
-
-// Alias 'create' to be equal to the root function
-root.create = root;
-
-root.sdpHandlers = {
-  createCodecRemover: _codecRemover2.default
-  // Export this way as a work-around, so it can be used as `<export>();`.
-  // See: https://github.com/webpack/webpack/issues/706
-};module.exports = root;
-
-/***/ }),
-
 /***/ "./src/index.common.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -61701,6 +62746,89 @@ function commonIndex(options = {}, plugins = []) {
 
   return (0, _factory.factory)(pluginInstances, options.common);
 }
+
+/***/ }),
+
+/***/ "./src/index.link.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _index = __webpack_require__("./src/index.common.js");
+
+var _index2 = _interopRequireDefault(_index);
+
+var _basePlugins = __webpack_require__("./src/basePlugins.js");
+
+var _basePlugins2 = _interopRequireDefault(_basePlugins);
+
+var _link = __webpack_require__("./src/auth/link/index.js");
+
+var _link2 = _interopRequireDefault(_link);
+
+var _oldLink = __webpack_require__("./src/call/oldLink/index.js");
+
+var _oldLink2 = _interopRequireDefault(_oldLink);
+
+var _callHistory = __webpack_require__("./src/callHistory/index.js");
+
+var _callHistory2 = _interopRequireDefault(_callHistory);
+
+var _clickToCall = __webpack_require__("./src/clickToCall/index.js");
+
+var _clickToCall2 = _interopRequireDefault(_clickToCall);
+
+var _connectivity = __webpack_require__("./src/connectivity/index.js");
+
+var _connectivity2 = _interopRequireDefault(_connectivity);
+
+var _link3 = __webpack_require__("./src/messaging/link/index.js");
+
+var _link4 = _interopRequireDefault(_link3);
+
+var _link5 = __webpack_require__("./src/mwi/link/index.js");
+
+var _link6 = _interopRequireDefault(_link5);
+
+var _link7 = __webpack_require__("./src/notifications/link/index.js");
+
+var _link8 = _interopRequireDefault(_link7);
+
+var _link9 = __webpack_require__("./src/presence/link/index.js");
+
+var _link10 = _interopRequireDefault(_link9);
+
+var _sipEvents = __webpack_require__("./src/sipEvents/index.js");
+
+var _sipEvents2 = _interopRequireDefault(_sipEvents);
+
+var _link11 = __webpack_require__("./src/users/link.js");
+
+var _link12 = _interopRequireDefault(_link11);
+
+var _codecRemover = __webpack_require__("../fcs/src/js/sdp/codecRemover.js");
+
+var _codecRemover2 = _interopRequireDefault(_codecRemover);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// TODO: Update when new Link is done.
+const defaultPlugins = [..._basePlugins2.default, { name: 'authentication', fn: _link2.default }, { name: 'call', fn: _oldLink2.default }, { name: 'callHistory', fn: _callHistory2.default }, { name: 'clickToCall', fn: _clickToCall2.default }, { name: 'connectivity', fn: _connectivity2.default }, { name: 'messaging', fn: _link4.default }, { name: 'mwi', fn: _link6.default }, { name: 'notifications', fn: _link8.default }, { name: 'presence', fn: _link10.default }, { name: 'sipEvents', fn: _sipEvents2.default }, { name: 'users', fn: _link12.default }];
+
+function root(options = {}, plugins = []) {
+  return (0, _index2.default)(options, [...defaultPlugins, ...plugins]);
+}
+
+// Alias 'create' to be equal to the root function
+root.create = root;
+
+root.sdpHandlers = {
+  createCodecRemover: _codecRemover2.default
+
+  // Export this way as a work-around, so it can be used as `<export>();`.
+  // See: https://github.com/webpack/webpack/issues/706
+};module.exports = root;
 
 /***/ }),
 
@@ -62427,6 +63555,2504 @@ function titleFormatter(action, time, took) {
   parts.push('(in ' + took.toFixed(2) + ' ms)');
 
   return parts.join(' ');
+}
+
+/***/ }),
+
+/***/ "./src/messaging/interface/actionTypes.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+const PREFIX = '@@KANDY/';
+
+const CREATE_CONVERSATION = exports.CREATE_CONVERSATION = PREFIX + 'CREATE_CONVERSATION';
+const SEND_MESSAGE = exports.SEND_MESSAGE = PREFIX + 'SEND_MESSAGE';
+const SEND_MESSAGE_FINISH = exports.SEND_MESSAGE_FINISH = PREFIX + 'SEND_MESSAGE_FINISH';
+const MESSAGE_RECEIVED = exports.MESSAGE_RECEIVED = PREFIX + 'MESSAGE_RECEIVED';
+const INCOMING_MESSAGE_READ = exports.INCOMING_MESSAGE_READ = PREFIX + 'INCOMING_MESSAGE_READ';
+const SEND_MESSAGE_READ = exports.SEND_MESSAGE_READ = PREFIX + 'SEND_MESSAGE_READ';
+const SEND_MESSAGE_READ_FINISH = exports.SEND_MESSAGE_READ_FINISH = PREFIX + 'SEND_MESSAGE_READ_FINISH';
+
+const CLEAR_MESSAGES = exports.CLEAR_MESSAGES = PREFIX + 'CLEAR_MESSAGES';
+const CLEAR_MESSAGES_FINISH = exports.CLEAR_MESSAGES_FINISH = PREFIX + 'CLEAR_MESSAGES_FINISH';
+
+const DELETE_CONVERSATION = exports.DELETE_CONVERSATION = PREFIX + 'DELETE_CONVERSATION';
+const DELETE_CONVERSATION_FINISH = exports.DELETE_CONVERSATION_FINISH = PREFIX + 'DELETE_CONVERSATION_FINISH';
+
+const DELETE_MESSAGE = exports.DELETE_MESSAGE = PREFIX + 'DELETE_MESSAGES';
+const DELETE_MESSAGE_FINISH = exports.DELETE_MESSAGE_FINISH = PREFIX + 'DELETE_MESSAGES_FINISH';
+
+const FETCH_CONVERSATIONS = exports.FETCH_CONVERSATIONS = PREFIX + 'FETCH_CONVERSATIONS';
+const FETCH_CONVERSATIONS_FINISHED = exports.FETCH_CONVERSATIONS_FINISHED = PREFIX + 'FETCH_CONVERSATIONS_FINISHED';
+
+const UPDATE_CONVERSATION = exports.UPDATE_CONVERSATION = PREFIX + 'UPDATE_CONVERSATION';
+
+const FETCH_MESSAGES = exports.FETCH_MESSAGES = PREFIX + 'FETCH_MESSAGES';
+const FETCH_MESSAGES_FINISHED = exports.FETCH_MESSAGES_FINISHED = PREFIX + 'FETCH_MESSAGES_FINISHED';
+
+const FILE_UPLOAD_FAIL = exports.FILE_UPLOAD_FAIL = PREFIX + 'FILE_UPLOAD_FAIL';
+
+/***/ }),
+
+/***/ "./src/messaging/interface/actions/conversations.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends2 = __webpack_require__("../../node_modules/babel-runtime/helpers/extends.js");
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+exports.createConversation = createConversation;
+exports.fetchConversations = fetchConversations;
+exports.fetchConversationsFinished = fetchConversationsFinished;
+exports.updateConversation = updateConversation;
+exports.deleteConversation = deleteConversation;
+exports.deleteConversationFinish = deleteConversationFinish;
+
+var _actionTypes = __webpack_require__("./src/messaging/interface/actionTypes.js");
+
+var actionTypes = _interopRequireWildcard(_actionTypes);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Conversation actions.
+ * Actions relating to the creation/management of conversation objects.
+ */
+
+/**
+ * Creates a create conversation action. Triggered when the user creates a new conversation object.
+ *
+ * @method createConversation
+ * @param {Array} destination An array of destinations for messages created in this conversation.
+ * @param {Object} options The options object can contain any keys an app may want passed along into the conversation object in the store.
+ * @returns {Object} A flux standard action representing the create conversation action.
+ */
+function createConversation(destination, options) {
+  return {
+    type: actionTypes.CREATE_CONVERSATION,
+    payload: (0, _extends3.default)({
+      destination: destination,
+      messages: [],
+      isTypingList: []
+    }, options)
+  };
+}
+
+/**
+ * Creates a fetch conversations action. This is dispatched by the API directly.
+ * @param {Object} [options] An optional configuration object to query for more specific results. If no object is passed, all threads will be retrieved
+ * @method fetchConversations
+ * @returns {Object} A flux standard action representing the fetch conversations action.
+ */
+function fetchConversations(options) {
+  return {
+    type: actionTypes.FETCH_CONVERSATIONS,
+    payload: (0, _extends3.default)({}, options)
+  };
+}
+
+/**
+ * Creates a fetch conversations finished action.
+ * @method fetchConversationsFinished
+ * @param {Object} $0
+ * @param {Array} [$0.conversations] An array of conversation objects, if fetch was successful
+ * @param {Object} [$0.error] An error object, only included if fetchConversations implementation had an error.
+ * @returns {Object} A flux standard action representing the fetch conversations finished action.
+ */
+function fetchConversationsFinished({ conversations, error }) {
+  return {
+    type: actionTypes.FETCH_CONVERSATIONS_FINISHED,
+    payload: error || { conversations },
+    error: Boolean(error)
+  };
+}
+
+/**
+ * Creates an update conversation action.
+ *
+ * @method updateConversation
+ * @param {Object} conversation The conversation object
+ * @param {Array} conversation.destination An array of strings representing the destinations for messages that are sent from this conversation object. This property is always required, as it is the primary property by which conversations are organized in messaging plugin
+ * @param {number} [conversation.id] The conversation object's corresponding thread ID
+ * @param {string} [conversation.type] The conversation type, which is expected to be one of: "im", "sms", "group".
+ * @returns {Object} A flux standard action representing the create conversation action.
+ */
+function updateConversation(conversation) {
+  return {
+    type: actionTypes.UPDATE_CONVERSATION,
+    payload: conversation
+  };
+}
+
+/**
+ * Request to delete all the messages from a conversation.
+ * @method deleteConversation
+ * @param  {string} destination The destination for messages created in this conversation.
+ * @param {string} type The type of conversation: can be one of "im", "sms", "group" or "other"
+ * @returns {Object} A flux standard action.
+ */
+function deleteConversation(destination, type) {
+  return {
+    type: actionTypes.DELETE_CONVERSATION,
+    payload: {
+      destination: destination,
+      type: type
+    }
+  };
+}
+
+/**
+ * Creates a fetch messages finished action.
+ * @method deleteConversationFinish
+ * @param {Object} $0
+ * @param {Array} $0.destination An array of destinations for messages created in this conversation.
+ * @param {string} $0.type The type of conversation: can be one of "im", "sms", "group" or "other"
+ * @param {Object} [$0.error] An error object, only present if an error occurred.
+ * @returns {Object} A flux standard action representing the fetch messages finished action.
+ */
+function deleteConversationFinish({ destination, type, error }) {
+  return {
+    type: actionTypes.DELETE_CONVERSATION_FINISH,
+    payload: error || { destination, type },
+    error: !!error
+  };
+}
+
+/***/ }),
+
+/***/ "./src/messaging/interface/actions/index.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.convoActions = exports.messageActions = undefined;
+
+var _messages = __webpack_require__("./src/messaging/interface/actions/messages.js");
+
+var messageActionsImport = _interopRequireWildcard(_messages);
+
+var _conversations = __webpack_require__("./src/messaging/interface/actions/conversations.js");
+
+var convoActionsImport = _interopRequireWildcard(_conversations);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+// Apparently the following doesn't work:
+//      export * as newName from './place';
+// So import everything from each file, then re-export.
+
+/**
+ * The messaging plugin's actions are organized into three types:
+ *  - message actions: those which act on message object,
+ *  - convo actions: those which act on conversation objects,
+ *  - group actions: those which manage groups.
+ */
+const messageActions = exports.messageActions = messageActionsImport;
+const convoActions = exports.convoActions = convoActionsImport;
+
+/***/ }),
+
+/***/ "./src/messaging/interface/actions/messages.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.sendMessageRead = exports.incomingMessageRead = exports.sendMessageFinish = exports.sendMessage = undefined;
+exports.messageReceived = messageReceived;
+exports.sendMessageReadFinish = sendMessageReadFinish;
+exports.fetchMessages = fetchMessages;
+exports.fetchMessagesFinished = fetchMessagesFinished;
+exports.clearMessages = clearMessages;
+exports.deleteMessage = deleteMessage;
+exports.deleteMessageFinish = deleteMessageFinish;
+
+var _actionTypes = __webpack_require__("./src/messaging/interface/actionTypes.js");
+
+var actionTypes = _interopRequireWildcard(_actionTypes);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+/**
+ * Action helper functions.
+ */
+
+function sendMessageHelper(actionType, destination, parts, timestamp, type, id) {
+  return {
+    type: actionType,
+    payload: {
+      destination,
+      id: id,
+      message: {
+        timestamp,
+        isPending: true,
+        read: false,
+        parts,
+        type
+      }
+    }
+  };
+}
+
+function messageReadHelper(actionType, messageId, participant) {
+  return {
+    type: actionType,
+    payload: { messageId, participant }
+  };
+}
+
+/**
+ * Message actions.
+ * Actions about the CRUD of message objects.
+ */
+
+/**
+ * Creates a send message action. Triggered when the user initiates the send message process.
+ *
+ * @method sendMessage
+ * @param {Array} destination An array of destinations for messages created in this conversation.
+ * @param {Array} parts The message parts, as a formatted object.
+ * @param {number} timestamp A timestamp for the sent message in seconds.
+ * @param {number} id The ID of the conversation as it exists in the back end.
+ * @param {string} type Type of message. 'im', 'group' or 'sms'.
+ * @returns {Object} A flux standard action representing the send message action.
+ */
+const sendMessage = exports.sendMessage = (destination, parts, timestamp, type, id) => sendMessageHelper(actionTypes.SEND_MESSAGE, destination, parts, timestamp, type, id);
+
+/**
+ * Creates a send message finished action. Trigged when a message send function has received a success response.
+ *
+ * @method sendMessageFinish
+ * @param {Object} $0
+ * @param {Array} $0.destination An array of destinations for messages created in this conversation.
+ * @param {string} $0.sender The sender of the outgoing message.
+ * @param {string} $0.type The type of conversation: can be one of 'im', 'sms' or 'group'
+ * @param {Array} $0.parts The message parts.
+ * @param {number} $0.timestamp A timestamp for the sent message in seconds.
+ * @param {string} [$0.messageId] The returned messageId of the message if sent successfully.
+ * @param {string} [$0.deliveryStatus] The status of sent message
+ * @param {Object} [$0.error] A basic error object
+ * @returns {Object} A flux standard action representing the send message finished action.
+ */
+const sendMessageFinish = exports.sendMessageFinish = ({
+  destination,
+  sender,
+  type,
+  parts,
+  timestamp,
+  messageId,
+  deliveryStatus,
+  error
+}) => {
+  return {
+    type: actionTypes.SEND_MESSAGE_FINISH,
+    payload: { destination, sender, type, parts, timestamp, messageId, deliveryStatus, error },
+    error: Boolean(error)
+  };
+};
+
+/**
+ * Creates a message received action. Triggered when the websocket receives a chat message.
+ *
+ * @method messageReceived
+ * @param {Array} destination An array of destinations for messages created in this conversation.
+ * @param {Array} parts The message parts.
+ * @param {string} messageId The messageId of the message that has been received.
+ * @param {string} sender The user who sent the message. This is the user who the conversation is with.
+ * @param {number} timestamp A timestamp for the sent message.
+ * @param {Object} meta - A meta object.
+ * @param {string} meta.type The type of conversation: can be one of "im", "sms", "group" or "other"
+ * @param {boolean} meta.newConversation - A boolean value indicating whether the message corresponds to a conversation not yet in the store.
+ * @returns {Object} A flux standard action representing the message received action.
+ */
+function messageReceived(destination, parts, messageId, sender, timestamp, meta = { type: 'im', newConversation: false }) {
+  return {
+    type: actionTypes.MESSAGE_RECEIVED,
+    meta: meta,
+    payload: {
+      destination: destination,
+      message: {
+        timestamp: timestamp,
+        isPending: false,
+        read: false,
+        parts: parts,
+        sender: sender,
+        messageId: messageId
+      }
+    }
+  };
+}
+
+/**
+ * Creates an incoming message read action. This triggers when we receive a "Message Read" notification over the websocket.
+ *
+ * @method incomingMessageRead
+ * @param {string} messageId The unique id of the message being marked as read.
+ * @param {string} participant The other pariticipant of the conversation.
+ * @returns {Object} A flux standard action representing the incoming message read action.
+ */
+const incomingMessageRead = exports.incomingMessageRead = (messageId, participant) => messageReadHelper(actionTypes.INCOMING_MESSAGE_READ, messageId, participant);
+
+/**
+ * Creates a send message read action. This should send a "mark message as read" request to the server.
+ *
+ * @method sendMessageRead
+ * @param {string} messageId The unique id of the message being marked as read.
+ * @param {string} participant The other pariticipant of the conversation.
+ * @returns {Object} A flux standard action representing the send message read action.
+ */
+const sendMessageRead = exports.sendMessageRead = (messageId, participant) => messageReadHelper(actionTypes.SEND_MESSAGE_READ, messageId, participant);
+
+/**
+ * Creates a send message read finish action. This triggers on server response when attempting to mark a message read.
+ *
+ * @method sendMessageReadFinish
+ * @param {Object} $0
+ * @param {string} $0.messageId The unique id of the message being marked as read.
+ * @param {string} $0.participant The other participant of the conversation.
+ * @param {Object} $0.error A Basic error object.
+ * @returns {Object} A flux standard action representing the send message read finish action.
+ */
+function sendMessageReadFinish({ messageId, participant, error }) {
+  return {
+    type: actionTypes.SEND_MESSAGE_READ_FINISH,
+    payload: error || { messageId, participant },
+    error: Boolean(error)
+  };
+}
+
+/**
+ * Creates a fetch messages action. This is dispatched by the API directly.
+ * @method fetchMessages
+ * @param {Array} destination An array of destinations for messages created in this conversation.
+ * @param {number} amount A number representing the amount of messages to fetch.
+ * @returns {Object} A flux standard action representing the fetch messages action.
+ */
+function fetchMessages(destination, amount, type) {
+  return {
+    type: actionTypes.FETCH_MESSAGES,
+    payload: { destination, amount, type }
+  };
+}
+
+/**
+ * Creates a fetch messages finished action.
+ * @method fetchMessagesFinished
+ * @param {Array} destination An array of destinations for messages created in this conversation.
+ * @param {string} type The type of conversation: can be one of "im", "sms", "group" or "other"
+ * @param {Array} messages An array of formatted messages to put into the store.
+ * @param {Object} [error] An error object, only present if an error occurred.
+ * @returns {Object} A flux standard action representing the fetch messages finished action.
+ */
+function fetchMessagesFinished(destination, type, messages, error) {
+  return {
+    type: actionTypes.FETCH_MESSAGES_FINISHED,
+    payload: error || { destination, type, messages },
+    error: !!error
+  };
+}
+
+/**
+ * Request to clear messages from a conversation's state.
+ * @method clearMessages
+ * @param  {string} destination The destination for messages created in this conversation.
+ * @param {string} type The type of conversation: can be one of "im", "sms", "group" or "other"
+ * @returns {Object} A flux standard action.
+ */
+function clearMessages(destination, type) {
+  return {
+    type: actionTypes.CLEAR_MESSAGES,
+    payload: {
+      destination: destination,
+      type: type
+    }
+  };
+}
+
+/**
+ * Request to delete all the messages from a conversation.
+ * @method deleteMessage
+ * @param  {string} destination The destination for messages created in this conversation.
+ * @param {string} type The type of conversation: can be one of "im", "sms", "group" or "other"
+ * @param {string} messageId The ID of the message targeted for deletion
+ * @returns {Object} A flux standard action.
+ */
+function deleteMessage(destination, type, messageId) {
+  return {
+    type: actionTypes.DELETE_MESSAGE,
+    payload: {
+      destination: destination,
+      type: type,
+      messageId: messageId
+    }
+  };
+}
+
+/**
+ * Creates a fetch messages finished action.
+ * @method deleteMessagesFinish
+ * @param {Object} $0
+ * @param {Array} $0.destination An array of destinations for messages created in this conversation.
+ * @param {string} $0.type The type of conversation: can be one of "im", "sms", "group" or "other"
+ * @param {string} $0.messageId The ID of the message that was targeted for deletion
+ * @param {Object} [$0.error] An error object, only present if an error occurred.
+ * @returns {Object} A flux standard action representing the fetch messages finished action.
+ */
+function deleteMessageFinish({ destination, type, messageId, error }) {
+  return {
+    type: actionTypes.DELETE_MESSAGE_FINISH,
+    payload: error || { destination, type, messageId },
+    error: !!error
+  };
+}
+
+/***/ }),
+
+/***/ "./src/messaging/interface/api.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = api;
+
+var _actions = __webpack_require__("./src/messaging/interface/actions/index.js");
+
+var _selectors = __webpack_require__("./src/messaging/interface/selectors.js");
+
+var _logs = __webpack_require__("./src/logs/index.js");
+
+// Retrieve logger
+const log = (0, _logs.getLogManager)().getLogger('Messaging'); /**
+                                                                * The messaging feature revolves around a "conversation" structure. It is responsible to store the conversations
+                                                                * and its messages, and return conversation objects when requested.
+                                                                *
+                                                                * See the "Conversation" and "Message" sections of the documentation for more details.
+                                                                *
+                                                                *
+                                                                * Messaging functions are all part of the 'conversation' namespace. Ex: client.conversation.get('id').
+                                                                *
+                                                                * @public
+                                                                * @module Messaging
+                                                                */
+
+function api(context) {
+  const messagingApi = {
+    // TODO: Revise this API's argument, since it is using names that are defined by CIM  they are not very descriptive.
+    /**
+     * Attempts to retrieve a list of conversations that the current user is a part of.
+     * These conversations can then be retrieved from the store using get().
+     *
+     * @public
+     * @param {Object} [options] An optional configuration object to query for more specific results.
+     * If no object is passed, all threads will be retrieved.
+     * @param {string} [options.touched] The unix timestamp in seconds representing the date from which
+     *  to return any threads that have changed. Can also pass the string literal "lastcheck", resulting in
+     *  the back-end making use of the most recent date value provided in a previous request
+     * @param {string} [options.type] Limit results to one of: "internal", "sms", "group" or "unknown".
+     * @param {string|number} [options.thread] Limit results to one thread specified by its thread handle.
+     * @memberof Messaging
+     * @requires fetchConversations
+     * @method fetch
+     */
+    fetch: function (options = {}) {
+      context.dispatch(_actions.convoActions.fetchConversations(options));
+    },
+    /**
+     * Get a conversation object matching the user ID provided
+     * If successful, the event 'conversations:change' will be emitted.
+     * If a conversation with the given user ID already exists in the store, it will be returned; otherwise, a new conversation will be created.
+     *
+     * @public
+     * @memberof Messaging
+     * @requires onlyInternalMessaging
+     * @method get
+     * @param {string} destination The destination for messages created in this conversation. This will
+     * be a user's sip address.
+     * @returns {Conversation} A Conversation object.
+     */
+    /**
+     * Get a conversation object matching the user IDs provided.
+     * If successful, the event 'conversations:change' will be emitted.
+     * Multi-user conversations have a destination comprised of multiple user IDs.
+     *
+     * @public
+     * @memberof Messaging
+     * @requires multiUserConversation
+     * @method get
+     * @param {Array} destination An array of destinations for messages created in this conversation.
+     * These will be a user's sip address.
+     * @returns {Conversation} A Conversation object.
+     */
+    /**
+     * Get a conversation object matching the user ID provided.
+     *
+     * If a conversation with the given user ID already exists in the store, it will be returned; otherwise, a new conversation will be created
+     *
+     * @public
+     * @memberof Messaging
+     * @requires internalAndSmsMessaging
+     * @method get
+     * @param {string} recipient The destination for messages created in this conversation. This
+     * will be a user's sip address.
+     * @param {string} type The type of conversation to create. Can be one of "im", "sms" or "other"
+     * @returns {Object} A Conversation object.
+     */
+    get: function (recipient, options = { type: 'im' }) {
+      let destination = Array.isArray(recipient) ? [...recipient] : [recipient];
+      let description = 'Conversation';
+      let messages;
+      let id;
+
+      const conversation = (0, _selectors.findConversation)(context.getState(), destination, options.type);
+      if (conversation) {
+        if (options.type === conversation.type) {
+          description = conversation.description;
+          messages = conversation.messages;
+          id = conversation.id;
+
+          return context.primitives.Conversation({
+            destination,
+            type: options.type,
+            id: id,
+            description,
+            messages: messages,
+            isTypingList: conversation.isTypingList,
+            lastReceived: conversation ? conversation.lastReceived : undefined,
+            lastPull: conversation ? conversation.lastPull : undefined
+          });
+        } else {
+          log.info('Conversation found with matching destination, but conversation type does not match the type requested. Please specify the appropriate type, or call client.conversation.create() for a new type of conversation');
+        }
+      } else {
+        log.info('Requested conversation not in state. Please use the create function if you would like a new conversation object');
+      }
+      return undefined;
+    },
+    /**
+     * Create and return a new conversation object. Any messages being sent through this conversation
+     * object will be sent to the destination provided
+     *
+     * @public
+     * @memberof Messaging
+     * @requires internalAndSmsMessaging
+     * @method create
+     * @param {string} recipient
+     * @param options
+     * @returns {Object} a Conversation object
+     */
+    /**
+     * Create and return a new conversation object. Any messages being sent through this conversation
+     * object will be sent to the destinations provided
+     *
+     * @public
+     * @memberof Messaging
+     * @requires multiUserConversation
+     * @method create
+     * @param {Array} recipient An array of destinations for messages created in this conversation. These will be a user's sip address.
+     * @param {string} type The type of conversation to create. Can be one of "im", "sms", "group" or "other"
+     * @param options
+     * @returns {Object} a Conversation object
+     */
+    create: function (recipient, options = { type: 'im' }) {
+      const destination = Array.isArray(recipient) ? recipient : [recipient];
+      const prevConv = (0, _selectors.findConversation)(context.getState(), destination, options.type);
+
+      if (!prevConv) {
+        context.dispatch(_actions.convoActions.createConversation(destination, options));
+      }
+
+      return context.primitives.Conversation({
+        destination,
+        type: options.type
+      });
+    },
+    /**
+     * Returns all conversations currently tracked by the SDK
+     *
+     * @public
+     * @memberof Messaging
+     * @requires internalAndSmsMessaging
+     * @method getAll
+     * @returns {Array} An array of conversation objects.
+     */
+    getAll: function () {
+      return (0, _selectors.getConversations)(context.getState());
+    }
+  };
+  return { conversation: messagingApi };
+}
+
+/***/ }),
+
+/***/ "./src/messaging/interface/eventTypes.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+/**
+ * A new conversation has been created and added to the state.
+ *
+ * @public
+ * @memberof Messaging
+ * @event conversations:new
+ */
+const CONVERSATIONS_NEW = exports.CONVERSATIONS_NEW = 'conversations:new';
+
+/**
+ * A change has occured in the conversation list.
+ *
+ * @public
+ * @memberof Messaging
+ * @event conversations:change
+ * @param {Array} params An array of objects containing information about the conversations that have changed
+ * @param {Array} params.destination The destination for messages created in this conversation.
+ * @param {string} params.type The type of conversation to create. Can be one of "chat", "im", "sms" or "group"
+ */
+const CONVERSATIONS_CHANGE = exports.CONVERSATIONS_CHANGE = 'conversations:change';
+
+/**
+ * A change has occured in a specific conversations message list.
+ * If a single message was affected/created, `messageId` will be present
+ * as part of the event argument.
+ *
+ * @public
+ * @memberof Messaging
+ * @event messages:change
+ * @param {Object} params
+ * @param {string} params.destination The destination for messages created in this conversation.
+ * @param {string} params.type The type of conversation to create. Can be one of "chat", "im", "sms" or "group"
+ * @param {string} [params.messageId] The ID of the message affected.
+ * @param {string} [params.sender] The username of the sender of the message which caused the `messages:change` event to be triggered.
+ */
+const MESSAGES_CHANGE = exports.MESSAGES_CHANGE = 'messages:change';
+
+/**
+ * An error occured with messaging.
+ *
+ * @public
+ * @memberof Messaging
+ * @event messages:error
+ * @param {Object} params
+ * @param {BasicError} params.error The Basic error object.
+ */
+const MESSAGES_ERROR = exports.MESSAGES_ERROR = 'messages:error';
+
+/***/ }),
+
+/***/ "./src/messaging/interface/events.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _actionTypes = __webpack_require__("./src/messaging/interface/actionTypes.js");
+
+var actionTypes = _interopRequireWildcard(_actionTypes);
+
+var _eventTypes = __webpack_require__("./src/messaging/interface/eventTypes.js");
+
+var eventTypes = _interopRequireWildcard(_eventTypes);
+
+var _fp = __webpack_require__("../../node_modules/lodash/fp.js");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+const eventsMap = {};
+
+eventsMap[actionTypes.CREATE_CONVERSATION] = function (action) {
+  return {
+    type: eventTypes.CONVERSATIONS_NEW
+  };
+};
+
+eventsMap[actionTypes.SEND_MESSAGE_FINISH] = function (action) {
+  return {
+    type: eventTypes.MESSAGES_CHANGE,
+    args: {
+      destination: action.payload.destination,
+      type: action.payload.type,
+      messageId: action.payload.messageId,
+      sender: action.payload.sender
+    }
+  };
+};
+
+eventsMap[actionTypes.MESSAGE_RECEIVED] = function (action) {
+  let { meta, payload } = action;
+  if (meta.newConversation) {
+    return {
+      type: eventTypes.CONVERSATIONS_CHANGE,
+      args: [{
+        destination: payload.destination,
+        type: action.meta.type
+      }]
+    };
+  }
+  return {
+    type: eventTypes.MESSAGES_CHANGE,
+    args: {
+      destination: payload.destination,
+      messageId: payload.message.messageId,
+      type: action.meta.type
+    }
+  };
+};
+
+eventsMap[actionTypes.FETCH_CONVERSATIONS_FINISHED] = function (action) {
+  if (action.error) {
+    return {
+      type: eventTypes.MESSAGING_ERROR,
+      args: { error: action.payload }
+    };
+  } else {
+    return {
+      type: eventTypes.CONVERSATIONS_CHANGE,
+      args: action.payload.conversations.map(conversation => {
+        return {
+          destination: conversation.destination,
+          type: conversation.type
+        };
+      })
+    };
+  }
+};
+
+eventsMap[actionTypes.DELETE_CONVERSATION_FINISH] = function (action, { state }) {
+  if (action.error) {
+    return {
+      type: eventTypes.MESSAGES_ERROR,
+      args: { error: action.payload }
+    };
+  } else {
+    return {
+      type: eventTypes.CONVERSATIONS_CHANGE,
+      args: state.messaging.conversations.map(conversation => {
+        if (!((0, _fp.isEqual)(conversation.destination, action.payload.destination) && conversation.type === action.payload.type)) {
+          return {
+            destination: conversation.destination,
+            type: conversation.type
+          };
+        }
+      })
+    };
+  }
+};
+
+eventsMap[actionTypes.FETCH_MESSAGES_FINISHED] = function (action) {
+  if (action.error) {
+    return {
+      type: eventTypes.MESSAGING_ERROR,
+      args: action.payload
+    };
+  } else {
+    return {
+      type: eventTypes.MESSAGES_CHANGE,
+      args: {
+        destination: action.payload.destination,
+        type: action.payload.type
+      }
+    };
+  }
+};
+
+eventsMap[actionTypes.CLEAR_MESSAGES] = function (action) {
+  return {
+    type: eventTypes.MESSAGES_CHANGE,
+    args: action.payload
+  };
+};
+
+eventsMap[actionTypes.DELETE_MESSAGE_FINISH] = function (action) {
+  if (action.error) {
+    return {
+      type: eventTypes.MESSAGES_ERROR,
+      args: action.payload
+    };
+  } else {
+    return {
+      type: eventTypes.MESSAGES_CHANGE,
+      args: {
+        destination: action.payload.destination,
+        type: action.payload.type
+      }
+    };
+  }
+};
+
+exports.default = eventsMap;
+
+/***/ }),
+
+/***/ "./src/messaging/interface/index.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _api = __webpack_require__("./src/messaging/interface/api.js");
+
+var _api2 = _interopRequireDefault(_api);
+
+var _reducers = __webpack_require__("./src/messaging/interface/reducers.js");
+
+var _reducers2 = _interopRequireDefault(_reducers);
+
+var _mixins = __webpack_require__("./src/messaging/interface/mixins.js");
+
+var _mixins2 = _interopRequireDefault(_mixins);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * This interface is for a messaging plugin.
+ * @type {string}
+ */
+const name = 'messaging'; // Import the components of the interface.
+exports.default = {
+  name,
+  api: _api2.default,
+  reducer: _reducers2.default,
+  mixins: _mixins2.default
+};
+
+/***/ }),
+
+/***/ "./src/messaging/interface/mixins.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _getPrototypeOf = __webpack_require__("../../node_modules/babel-runtime/core-js/object/get-prototype-of.js");
+
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+var _fp = __webpack_require__("../../node_modules/lodash/fp.js");
+
+var _actions = __webpack_require__("./src/messaging/interface/actions/index.js");
+
+var _selectors = __webpack_require__("./src/messaging/interface/selectors.js");
+
+var _selectors2 = __webpack_require__("./src/auth/interface/selectors.js");
+
+var _compose = __webpack_require__("../../node_modules/stampit/compose.js");
+
+var _compose2 = _interopRequireDefault(_compose);
+
+var _actions2 = __webpack_require__("./src/events/interface/actions.js");
+
+var _eventTypes = __webpack_require__("./src/messaging/interface/eventTypes.js");
+
+var _logs = __webpack_require__("./src/logs/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * A Conversation object represents a conversation between either two users, or a
+ * user and a group. A Conversation can create messages via the conversation's
+ * createMessage() function.
+ * @public
+ * @module Conversation
+ * @requires richMessagingWithoutLocation
+ * @property {string} destination The Id of the remote user with which the current user is having a conversation.
+ * @property {number} lastReceived The timestamp (milliseconds since epoch) of when a message was last received in this conversation.
+ * @type {Object}
+ */
+// `features` and `lastPull` are not documented because they're intended to be internal
+// `type` is not documented because as of now there are no types other than 'im'
+
+/**
+ * A Conversation object represents a conversation between either two users, or a
+ * user and a group. A Conversation can create messages via the conversation's
+ * createMessage() function.
+ * @public
+ * @module Conversation
+ * @requires simpleMessagingOnly
+ * @property {string} destination The id of the remote user with which the current user is having a conversation.
+ * @type {Object}
+ */
+
+/**
+ * A Message object represents an individual message. Messages have parts
+ * which represent pieces of a message, such as a text part or a file part. Once
+ * all the desired parts have been added, a message can be sent with the send()
+ * function.
+ * @public
+ * @module Message
+ * @type {Object}
+ */
+
+const log = (0, _logs.getLogManager)().getLogger('MESSAGING');
+
+/**
+ * Base conversation stamp
+ * @param {Array} destination The Destination for messages being sent through
+ * this conversation in this instance of the SDK. This should be an Array with any number of user IDs
+ */
+
+// Events
+const conversationBase = {
+  initializers: [function ({
+    destination,
+    type = 'im',
+    id = undefined,
+    description = '',
+    messages = [],
+    isTypingList = [],
+    lastReceived,
+    lastPull
+  }) {
+    this.destination = destination;
+    this.type = type;
+    this.description = description;
+    this.messages = messages;
+    this.isTypingList = isTypingList;
+    this.id = id;
+    const features = (0, _selectors.getMessagingConfig)(this.context.getState()).features;
+    if (this.destination.length === 1) {
+      const groupIndex = features.indexOf('group');
+      if (groupIndex > -1) {
+        features.splice(groupIndex, 1);
+      }
+    }
+    this.features = features;
+    this.lastReceived = lastReceived;
+    this.lastPull = lastPull;
+    this.isPending = false;
+  }],
+
+  methods: {
+    /**
+     * Create and return a message object. You must specify the part. If this is a simple text message, provide a `text` part as demonstrated in the example.
+     *
+     * @public
+     * @memberof Conversation
+     * @requires richMessaging
+     * @constructs Message
+     * @param {Object} part The part to add to the message.
+     * @param {string} part.type The type of part. Can be "text", "json", "file", or "location".
+     * @param {string} [part.text] The text of the part. Must be a part of type "text".
+     * @param {Object} [part.json] The json of the part. Must be a part of type "json".
+     * @param {File} [part.file] The file of the part. Must be a part of type "file".
+     * @param {Object} [part.location] The location of the part. Must be a part of type "location".
+     * @param {number} [part.location.longitude] The longitude of the location.
+     * @param {number} [part.location.latitude] The latitude of the location.
+     * @returns {Object} The newly created Message object.
+     *
+     * @example
+     * conversation.createMessage({type: 'text', text: 'This is the message'});
+     */
+    /**
+     * Create and return a message object. You must specify the part. If this is a simple text message, provide a `text` part as demonstrated in the example.
+     *
+     * @public
+     * @memberof Conversation
+     * @requires richMessagingWithoutLocation
+     * @constructs Message
+     * @param {Object} part The part to add to the message.
+     * @param {string} part.type The type of part. Can be "text", "json", "file".
+     * @param {string} [part.text] The text of the part. Must be a part of type "text".
+     * @param {Object} [part.json] The json of the part. Must be a part of type "json".
+     * @param {File} [part.file] The file of the part. Must be a part of type "file".
+     * @returns {Message} The newly created Message object.
+     *
+     * @example
+     * conversation.createMessage({type: 'text', text: 'This is the message'});
+     */
+    /**
+     * Create and return a message object. You must provide a `text` part as demonstrated in the example.
+     *
+     * @public
+     * @memberof Conversation
+     * @requires simpleMessagingOnly
+     * @param {Object} part The part to add to the message.
+     * @param {string} part.type The type of part. Must be "text".
+     * @param {string} part.text The text of the part. Must be a part of type "text".
+     * @returns {Message} The newly created Message object.
+     *
+     * @example
+     * conversation.createMessage({type: 'text', text: 'This is the message'});
+     */
+    createMessage(part) {
+      const messageContext = {
+        features: this.features,
+        isGroup: this.destination.length > 1,
+        id: this.id,
+        type: this.type
+      };
+      return this.context.primitives.Message({
+        destination: this.destination,
+        part,
+        context: messageContext,
+        type: this.type
+      });
+    },
+
+    /**
+     * Clears all messages in this conversation from local state.
+     * @public
+     * @memberof Conversation
+     * @method clearMessages
+     */
+    clearMessages() {
+      this.context.dispatch(_actions.messageActions.clearMessages(this.destination, this.type));
+    },
+
+    /**
+     * Get the messages associated with this conversation.
+     *
+     * @public
+     * @memberof Conversation
+     * @returns {Object[]} messages An array containing the conversation's messages.
+     * @returns {Function} messages.markRead Marks the message as read.
+     * @returns {Function} messages.forward Forward the message to another user.
+     * @returns {string} messages.messageId The Id of the message.
+     * @returns {string} messages.sender The user Id of the user who sent the message.
+     * @returns {number} messages.timestamp The time at which the message was sent.
+     * @returns {boolean} messages.read Whether the message has been marked as read.
+     * @returns {boolean} messages.isPending Whether the message has finished being sent to the server.
+     * @returns {Array} messages.parts The parts of the message.
+     */
+    getMessages: function () {
+      const convo = (0, _selectors.findConversation)(this.context.getState(), this.destination, this.type);
+
+      return convo.messages.map(message => {
+        message.forward = participant => {
+          this.context.dispatch(_actions.messageActions.sendMessage(participant, message.parts, Date.now(), this.type, this.id));
+        };
+
+        const userInfo = (0, _selectors2.getUserInfo)(this.context.getState());
+        // Only allow the end user to markRead on message that were incoming.
+        if (message.sender !== userInfo.username) {
+          message.markRead = () => {
+            this.context.dispatch(_actions.messageActions.sendMessageRead(message.messageId, this.destination));
+          };
+        }
+        return message;
+      });
+    },
+
+    /**
+     * Get a specific message from this conversation.
+     * @public
+     * @method getMessage
+     * @memberof Conversation
+     * @param {string} messageId ID of the message to retrieve.
+     * @return {Object} A message object.
+     */
+    getMessage(messageId) {
+      const convo = (0, _selectors.findConversation)(this.context.getState(), this.destination, this.type);
+      const message = (0, _fp.find)(message => message.messageId === messageId)(convo.messages);
+
+      if (!message) {
+        log.debug(`Message (${messageId}) not found in conversation (${this.destination}).`);
+        return;
+      }
+
+      // TODO: Have a helper that "augments" messages.
+      // "Augment" the message like we do in `getMessages`.
+      message.forward = participant => {
+        this.context.dispatch(_actions.messageActions.sendMessage(participant, message.parts, Date.now(), this.type, this.id));
+      };
+      // Only allow the end user to markRead on message that were incoming.
+      const userInfo = (0, _selectors2.getUserInfo)(this.context.getState());
+      if (message.sender !== userInfo.username) {
+        message.markRead = () => {
+          this.context.dispatch(_actions.messageActions.sendMessageRead(message.messageId, this.destination));
+        };
+      }
+      return message;
+    },
+
+    /**
+     * Delete messages from this conversation. Provide an array of message IDs representing the messages for which the DELETE_MESSAGE action will be dispatched. If no message IDs are provided, all of the messages will be deleted.
+     * @public
+     * @memberof Conversation
+     * @requires richMessaging
+     * @method deleteMessages
+     * @param {Array} messageIds An array of message IDs
+     */
+    deleteMessages: function (messageIds = []) {
+      if (messageIds.length === 0) {
+        // If this method was called without providing any specific message IDs, we will assume that all messages should be deleted
+        this.messages.forEach(message => messageIds.push(message.messageId));
+      }
+      messageIds.forEach(messageId => {
+        this.context.dispatch(_actions.messageActions.deleteMessage(this.destination, this.type, messageId));
+      });
+    },
+
+    /**
+     * Delete this conversation on the server
+     *
+     * @public
+     * @memberof Conversation
+     * @requires richMessaging
+     * @method delete
+     */
+    delete: function () {
+      this.context.dispatch(_actions.convoActions.deleteConversation(this.destination, this.type));
+    },
+
+    /**
+     * Subscribe to this conversations messages array.
+     *
+     * @public
+     * @memberof Conversation
+     * @param {Function} subscriber A subscriber function to be triggered when the messages array of this conversation is updated.
+     * @param {string} subscriber.conversationId The conversation participant.
+     * @param {string} subscriber.messageId The ID of the message that caused the event.
+     * @return {Function} The unsubscribe function.
+     */
+    subscribe: function (subscriber) {
+      if (subscriber) {
+        // Create a subscriber wrapper to properly determine if this messages:change event is relevant to this convo
+        // TODO: we might need to change the name of `conversationId` as it is used here. Conversations have actual IDs in the backend, which are an integer value rather than an array of strings, as is the case with destination. We track conversation IDs, as they exist in the back end, as we are required to identify the conversation by `id` when performing actions in the backend on a Group Conversation.
+        const subscriberWrapper = ({ conversationId, messageId }) => {
+          if (conversationId === this.destination) {
+            subscriber({ conversationId, messageId });
+          }
+        };
+        // Subscribe to the messages:change event with the wrapped subscriber
+        this.context.api.on('messages:change', subscriberWrapper);
+
+        // Return the unsubscribe function
+        return () => {
+          this.context.api.off('messages:change', subscriberWrapper);
+        };
+      }
+    }
+  }
+
+  /*
+   * Conversation history stamp. Handles any functions that retrieve history from the server concerning conversations.
+   */
+};const conversationHistory = {
+  initializers: [function () {
+    const features = (0, _selectors.getMessagingConfig)(this.context.getState()).features;
+    if (!(0, _fp.includes)('history', features)) {
+      const prototype = (0, _getPrototypeOf2.default)(this);
+      delete prototype.fetchMessages;
+    }
+    return this;
+  }],
+  methods: {
+    /**
+     * Allows the user to fetch messages associated with a specific conversation from the server.
+     * When the operation is complete, a NEW_MESSAGE event will be emitted.
+     * Messages can then be retrieved using getMessages.
+     *
+     * @public
+     * @memberof Conversation
+     * @method fetchMessages
+     * @param {number} [amount=50] An amount of messages to fetch.
+     */
+    fetchMessages: function (amount = 50) {
+      this.context.dispatch(_actions.messageActions.fetchMessages(this.destination, amount, this.type));
+    }
+  }
+
+  /*
+   * base Message stamp
+   * @param {string} destination The Destination for messages being sent through
+   * this conversation in this instance of the SDK. This can be one or many users,
+   * separated by commas `,`
+   * @param  {Object} part - Initial part to the message.
+   * @param  {Object} context - Information and capabilities for how the message will act with regard to the conversation.
+   * @param  {Array} context.features - List of features the conversation supports.
+   * @param  {Function} context.send - Function for sending the message.
+   * @param  {string} type=im - The type of the message
+   */
+};const messageBase = {
+  initializers: [function ({ destination, part, context, type = 'im' }) {
+    this.destination = Array.isArray(destination) ? destination : [destination];
+    this.convoContext = context;
+    this.type = destination.length > 1 ? 'group' : type;
+    if (typeof part === 'string') {
+      part = { type: 'text', text: part };
+    }
+    this.parts = [part];
+  }],
+  methods: {
+    /**
+     * Sends the message.
+     *
+     * @public
+     * @method send
+     * @memberof Message
+     */
+    send() {
+      log.debug('Send message', this);
+      this.context.dispatch(_actions.messageActions.sendMessage(this.destination, this.parts, Date.now(), this.type, this.convoContext.id));
+    }
+  }
+
+  /**
+   * stamp to add message parts capabilities to a Message primitive
+   * @name withParts
+   * @param  {Object} context - Information and capabilities for how the message will act with regard to the conversation.
+   * @param  {Array} context.features - List of features the conversation supports.
+   */
+};const withParts = {
+  initializers: [function ({ context: { features = [] } }) {
+    if (!(0, _fp.includes)('parts', features)) {
+      const prototype = (0, _getPrototypeOf2.default)(this);
+      delete prototype.addPart;
+    }
+    return this;
+  }],
+  methods: {
+    /**
+     * Add an additional part to a message.
+     *
+     * @public
+     * @memberof Message
+     * @requires richMessaging
+     * @memberof withParts
+     * @param {Object} part The part to add to the message.
+     * @param {string} part.type The type of part. Can be "text", "json", "file", or "location".
+     * @param {string} [part.text] The text of the part. Must be a part of type "text".
+     * @param {Object} [part.json] The json of the part. Must be a part of type "json".
+     * @param {File} [part.file] The file of the part. Must be a part of type "file".
+     * @param {Object} [part.location] The location of the part. Must be a part of type "location".
+     * @param {number} [part.location.longitude] The longitude of the location.
+     * @param {number} [part.location.latitude] The latitude of the location.
+     */
+    /**
+     * Add an additional part to a message.
+     *
+     * @public
+     * @memberof Message
+     * @requires richMessagingWithoutLocation
+     * @param {Object} part The part to add to the message.
+     * @param {string} part.type The type of part. Can be "text", "json", "file", or "location".
+     * @param {string} [part.text] The text of the part. Must be a part of type "text".
+     * @param {Object} [part.json] The json of the part. Must be a part of type "json".
+     * @param {File} [part.file] The file of the part. Must be a part of type "file".
+     */
+    addPart(part) {
+      // Validate the part. If not valid, returns an error.
+      const validationResponse = validatePart(part, this.convoContext.features);
+      if (validationResponse instanceof Error) {
+        this.context.dispatch((0, _actions2.emitEvent)(_eventTypes.MESSAGING_ERROR, { error: validationResponse.message }));
+      }
+      this.parts.push(part);
+    }
+  }
+
+  /*
+   * A helper function to validate inputs. Will be progressively updated as we
+   * allow for more and more input types.
+   */
+};let validatePart = function (part, features) {
+  if (part.hasOwnProperty('type')) {
+    if (part.hasOwnProperty(part.type)) {
+      let validTypeFlag = false;
+      switch (part.type) {
+        case 'text':
+          validTypeFlag = true;
+          break;
+        case 'file':
+          validTypeFlag = features.indexOf('rich') !== -1;
+          break;
+        case 'location':
+          validTypeFlag = features.indexOf('rich') !== -1;
+          break;
+        case 'json':
+          validTypeFlag = features.indexOf('rich') !== -1;
+      }
+      return validTypeFlag || new Error(`Part of type "${part.type}" is not supported`);
+    } else {
+      return new Error('A message part must have a payload corresponding with its declared type');
+    }
+  } else {
+    return new Error('A message part must have a type. Options are: [text, file, location, json]');
+  }
+};
+
+exports.default = {
+  Conversation: (0, _compose2.default)(conversationBase, conversationHistory),
+  Message: (0, _compose2.default)(messageBase, withParts)
+};
+
+/***/ }),
+
+/***/ "./src/messaging/interface/reducers.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends2 = __webpack_require__("../../node_modules/babel-runtime/helpers/extends.js");
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+var _actionTypes = __webpack_require__("./src/messaging/interface/actionTypes.js");
+
+var actionTypes = _interopRequireWildcard(_actionTypes);
+
+var _reduxActions = __webpack_require__("../../node_modules/redux-actions/es/index.js");
+
+var _fp = __webpack_require__("../../node_modules/lodash/fp.js");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const reducers = {};
+
+reducers[actionTypes.CREATE_CONVERSATION] = {
+  next(state, action) {
+    return (0, _extends3.default)({}, state, {
+      conversations: [...state.conversations, (0, _extends3.default)({}, action.payload)]
+    });
+  }
+};
+
+reducers[actionTypes.FETCH_CONVERSATIONS_FINISHED] = {
+  next(state, action) {
+    // TODO: does not persist conversations unique to local state
+    return (0, _extends3.default)({}, state, {
+      conversations: (0, _fp.unionWith)((a, b) => (0, _fp.isEqual)(a.destination, b.destination) && a.type === b.type, // Comparator
+      action.payload.conversations, state.conversations // Conversation arrays
+      )
+    });
+  }
+};
+
+reducers[actionTypes.UPDATE_CONVERSATION] = {
+  next(state, action) {
+    return (0, _extends3.default)({}, state, {
+      conversations: state.conversations.map(conversation => {
+        if ((0, _fp.isEqual)(conversation.destination, action.payload.destination) && conversation.type === action.payload.type) {
+          return (0, _extends3.default)({}, conversation, action.payload);
+        }
+        return conversation;
+      })
+    });
+  }
+};
+
+reducers[actionTypes.FETCH_MESSAGES] = {
+  next(state, action) {
+    return (0, _extends3.default)({}, state, {
+      conversations: state.conversations.map(conversation => {
+        if ((0, _fp.isEqual)(conversation.destination, action.payload.destination) && conversation.type === action.payload.type) {
+          return (0, _extends3.default)({}, conversation, {
+            isPending: true
+          });
+        }
+        return conversation;
+      })
+    });
+  }
+};
+
+reducers[actionTypes.FETCH_MESSAGES_FINISHED] = {
+  next(state, action) {
+    return (0, _extends3.default)({}, state, {
+      conversations: state.conversations.map(conversation => {
+        if ((0, _fp.isEqual)(conversation.destination, action.payload.destination) && conversation.type === action.payload.type) {
+          return (0, _extends3.default)({}, conversation, {
+            messages: (0, _fp.sortBy)('timestamp', (0, _fp.unionBy)('messageId', action.payload.messages, conversation.messages)),
+            isTypingList: [],
+            isPending: false
+          });
+        }
+        return conversation;
+      })
+    });
+  }
+};
+
+reducers[actionTypes.SEND_MESSAGE] = {
+  next(state, action) {
+    return (0, _extends3.default)({}, state, {
+      conversations: state.conversations.map(conversation => {
+        if ((0, _fp.isEqual)(conversation.destination, action.payload.destination) && conversation.type === action.payload.message.type) {
+          return (0, _extends3.default)({}, conversation, {
+            messages: [...conversation.messages, action.payload.message]
+          });
+        }
+        return conversation;
+      })
+    });
+  }
+};
+
+reducers[actionTypes.INCOMING_MESSAGE_READ] = {
+  next(state, action) {
+    return (0, _extends3.default)({}, state, {
+      conversations: state.conversations.map(conversation => {
+        if ((0, _fp.isEqual)(conversation.destination, action.payload.destination) && conversation.type === action.payload.type) {
+          return (0, _extends3.default)({}, conversation, {
+            messages: conversation.messages.map(message => {
+              if (message.messageId === action.payload.messageId) {
+                return (0, _extends3.default)({}, message, { read: true });
+              }
+              return message;
+            })
+          });
+        }
+        return conversation;
+      })
+    });
+  }
+};
+
+reducers[actionTypes.SEND_MESSAGE_READ_FINISH] = {
+  next(state, action) {
+    return (0, _extends3.default)({}, state, {
+      conversations: state.conversations.map(conversation => {
+        if ((0, _fp.isEqual)(conversation.destination, action.payload.destination) && conversation.type === action.payload.type) {
+          return (0, _extends3.default)({}, conversation, {
+            messages: conversation.messages.map(message => {
+              if (message.messageId === action.payload.messageId) {
+                return (0, _extends3.default)({}, message, { read: true });
+              }
+              return message;
+            })
+          });
+        }
+        return conversation;
+      })
+    });
+  }
+};
+
+reducers[actionTypes.MESSAGE_RECEIVED] = {
+  next(state, action) {
+    if (action.meta.newConversation) {
+      return (0, _extends3.default)({}, state, {
+        conversations: [...state.conversations, {
+          destination: action.payload.destination,
+          messages: [action.payload.message],
+          type: action.meta.type,
+          lastReceived: action.payload.message.timestamp
+        }]
+      });
+    } else {
+      return (0, _extends3.default)({}, state, {
+        conversations: state.conversations.map(conversation => {
+          if ((0, _fp.isEqual)(conversation.destination, action.payload.destination) && conversation.type === action.meta.type) {
+            return (0, _extends3.default)({}, conversation, {
+              messages: [...conversation.messages, action.payload.message],
+              lastReceived: action.payload.message.timestamp
+            });
+          }
+          return conversation;
+        })
+      });
+    }
+  }
+};
+
+reducers[actionTypes.SEND_MESSAGE_FINISH] = (state, action) => {
+  return (0, _extends3.default)({}, state, {
+    conversations: state.conversations.map(conversation => {
+      if ((0, _fp.isEqual)(conversation.destination, action.payload.destination) && conversation.type === action.payload.type) {
+        return (0, _extends3.default)({}, conversation, {
+          messages: conversation.messages.map(message => sendMessageFinishHelper(message, action))
+        });
+      }
+      return conversation;
+    })
+  });
+};
+
+// Remove all messages from the specified conversation.
+reducers[actionTypes.CLEAR_MESSAGES] = {
+  next(state, action) {
+    return (0, _extends3.default)({}, state, {
+      conversations: state.conversations.map(conversation => {
+        if ((0, _fp.isEqual)(conversation.destination, action.payload.destination) && conversation.type === action.payload.type) {
+          return (0, _extends3.default)({}, conversation, {
+            messages: []
+          });
+        }
+        return conversation;
+      })
+    });
+  }
+};
+
+reducers[actionTypes.DELETE_MESSAGE_FINISH] = {
+  next(state, action) {
+    return (0, _extends3.default)({}, state, {
+      conversations: state.conversations.map(conversation => {
+        if ((0, _fp.isEqual)(conversation.destination, action.payload.destination) && conversation.type === action.payload.type) {
+          return (0, _extends3.default)({}, conversation, {
+            messages: conversation.messages.filter(message => message.messageId !== action.payload.messageId)
+          });
+        }
+        return conversation;
+      })
+    });
+  },
+  throw(state, action) {
+    return (0, _extends3.default)({}, state, {
+      errors: state.errors.concat(action.payload)
+    });
+  }
+};
+
+reducers[actionTypes.DELETE_CONVERSATION_FINISH] = {
+  next(state, action) {
+    return (0, _extends3.default)({}, state, {
+      conversations: state.conversations.filter(conversation => !((0, _fp.isEqual)(conversation.destination, action.payload.destination) && conversation.type === action.payload.type))
+    });
+  },
+  throw(state, action) {
+    return (0, _extends3.default)({}, state, {
+      errors: state.errors.concat(action.payload)
+    });
+  }
+};
+
+/*
+ * Combine all of reducers into a single reducer, with
+ *      a default state of an empty array.
+ */
+const reducer = (0, _reduxActions.handleActions)(reducers, { conversations: [], errors: [] });
+exports.default = reducer;
+
+/**
+ * sendMessageFinishHelper
+ *
+ * A helper function to make dealing with the messages array in SEND_MESSAGE_FINISH
+ * a little bit easier.
+ *
+ * @param {Object} message
+ * @param {Object} action
+ */
+
+function sendMessageFinishHelper(message, action) {
+  if (message.timestamp === action.payload.timestamp) {
+    if (action.payload.error) {
+      message = (0, _extends3.default)({}, message, {
+        sender: action.payload.sender,
+        isPending: false,
+        messageId: null,
+        error: action.payload.error
+      });
+    } else {
+      message = (0, _extends3.default)({}, message, {
+        sender: action.payload.sender,
+        isPending: false,
+        messageId: action.payload.messageId,
+        parts: action.payload.parts
+      });
+    }
+    if (action.payload.deliveryStatus) {
+      message.deliveryStatus = action.payload.deliveryStatus;
+    }
+  } else {
+    message = (0, _extends3.default)({}, message);
+  }
+  return message;
+}
+
+/***/ }),
+
+/***/ "./src/messaging/interface/selectors.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getMessagingConfig = getMessagingConfig;
+exports.getConversations = getConversations;
+exports.getMessages = getMessages;
+exports.findConversation = findConversation;
+exports.findMember = findMember;
+
+var _fp = __webpack_require__("../../node_modules/lodash/fp.js");
+
+/*
+ * Redux-saga selector functions.
+ * Used with the `select` effect in sagas to retrieve
+ *      specific portions of the state.
+ */
+
+/**
+ * Retrieves the config options provided by the messaging plugin.
+ * @method getMessagingConfig
+ * @return {Object}
+ */
+function getMessagingConfig(state) {
+  return (0, _fp.cloneDeep)(state.config.messaging);
+}
+
+/**
+ * Retrieves conversations from the store pertaining to messaging.
+ * @method getConversations
+ * @return {Object}
+ */
+function getConversations(state) {
+  return (0, _fp.cloneDeep)(state.messaging.conversations);
+}
+
+/**
+ * Retrieves the messages from the store pertaining to a specific messaging
+ * conversation.
+ * @method getMessages
+ * @return {Object}
+ */
+function getMessages(state, conversationId) {
+  return (0, _fp.cloneDeep)(state.messaging.conversations[conversationId].messages);
+}
+
+/**
+ * Searches for a conversation by its destination, which represents the destination
+ * for all messages being sent to this conversation from this instance of the SDK
+ *
+ * @param state
+ * @param {Array} destination A subscriber handle or a comma-separated list
+ * of subscriber handles
+ * @param {string} type The type of conversation: can be one of 'im', 'sms' or 'group'
+ * @returns {Object}
+ */
+function findConversation(state, destination, type = 'im') {
+  return (0, _fp.cloneDeep)(state.messaging.conversations.find(conversation => {
+    return (0, _fp.isEqual)(conversation.destination, destination) && conversation.type === type;
+  }));
+}
+
+/**
+ * Searches for a member in a conversation and returns their name
+ *
+ * @param state
+ * @param {string} destination A subscriber handle or a comma-separated list
+ * of subscriber handles
+ * @param id {number} User ID for the specific conversation member for whom we are searching
+ * @returns {*}
+ */
+function findMember(state, destination, id) {
+  const conv = state.messaging.conversations.find(conversation => conversation.destination === destination);
+  if (conv) {
+    return (0, _fp.cloneDeep)(conv.members.find(member => member.id === id));
+  }
+}
+
+/***/ }),
+
+/***/ "./src/messaging/link/index.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = linkMessaging;
+
+var _effects = __webpack_require__("../../node_modules/redux-saga/es/effects.js");
+
+var _events = __webpack_require__("./src/messaging/interface/events.js");
+
+var _events2 = _interopRequireDefault(_events);
+
+var _actions = __webpack_require__("./src/events/interface/actions.js");
+
+var _actions2 = __webpack_require__("./src/config/interface/actions.js");
+
+var _logs = __webpack_require__("./src/logs/index.js");
+
+var _fp = __webpack_require__("../../node_modules/lodash/fp.js");
+
+var _sagas = __webpack_require__("./src/messaging/link/sagas.js");
+
+var _interface = __webpack_require__("./src/messaging/interface/index.js");
+
+var _interface2 = _interopRequireDefault(_interface);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// Get the logger
+// Redux-Saga
+const log = (0, _logs.getLogManager)().getLogger('MESSAGING');
+
+// The interface to implement.
+
+// Events
+function linkMessaging(options = {}) {
+  const defaultOptions = {
+    features: ['base']
+  };
+  options = (0, _fp.defaults)(defaultOptions, options);
+
+  if (options.features.length > 1 || options.features[0] !== defaultOptions.features[0]) {
+    log.warn('Link messaging is not compatible with add-on ' + 'features. Reverting to base messaging.');
+    options.features = defaultOptions.features;
+  }
+  log.info('Messaging features in use: ' + options.features);
+
+  function* init() {
+    yield (0, _effects.put)((0, _actions2.update)(options, _interface2.default.name));
+    yield (0, _effects.put)((0, _actions.mapEvents)(_events2.default));
+  }
+
+  const capabilities = ['simpleMessagingOnly', 'onlyInternalMessaging'];
+
+  return {
+    sagas: [_sagas.sendMessage, _sagas.receiveMessage],
+    capabilities,
+    init,
+    api: _interface2.default.api,
+    name: _interface2.default.name,
+    reducer: _interface2.default.reducer,
+    mixins: _interface2.default.mixins
+  };
+}
+
+/***/ }),
+
+/***/ "./src/messaging/link/sagas.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _stringify = __webpack_require__("../../node_modules/babel-runtime/core-js/json/stringify.js");
+
+var _stringify2 = _interopRequireDefault(_stringify);
+
+exports.sendMessage = sendMessage;
+exports.receiveMessage = receiveMessage;
+
+var _effects = __webpack_require__("../../node_modules/redux-saga/es/effects.js");
+
+var _actionTypes = __webpack_require__("./src/messaging/interface/actionTypes.js");
+
+var actionTypes = _interopRequireWildcard(_actionTypes);
+
+var _actions = __webpack_require__("./src/messaging/interface/actions/index.js");
+
+var _selectors = __webpack_require__("./src/messaging/interface/selectors.js");
+
+var _selectors2 = __webpack_require__("./src/auth/interface/selectors.js");
+
+var _actionTypes2 = __webpack_require__("./src/notifications/interface/actionTypes.js");
+
+var _predicates = __webpack_require__("./src/predicates.js");
+
+var P = _interopRequireWildcard(_predicates);
+
+var _effects2 = __webpack_require__("./src/request/effects.js");
+
+var _effects3 = _interopRequireDefault(_effects2);
+
+var _errors = __webpack_require__("./src/errors/index.js");
+
+var _errors2 = _interopRequireDefault(_errors);
+
+var _logs = __webpack_require__("./src/logs/index.js");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// Error
+
+// Auth
+const log = (0, _logs.getLogManager)().getLogger('MESSAGING');
+
+/**
+ * Link send message saga.
+ * Performs the workflow of sending a message using SPiDR/Link.
+ * @method sendMessage
+ */
+
+// Logs
+
+// Request
+
+// Messaging
+function* sendMessage() {
+  const sendMessageChannel = yield (0, _effects.actionChannel)([actionTypes.SEND_MESSAGE]);
+  while (true) {
+    const action = yield (0, _effects.take)(sendMessageChannel);
+    const destination = action.payload.destination[0];
+    const parts = action.payload.message.parts;
+    const timestamp = action.payload.message.timestamp;
+    const { server, username, requestOptions } = yield (0, _effects.select)(_selectors2.getConnectionInfo);
+
+    const response = yield (0, _effects3.default)({
+      url: `${server.protocol}://${server.server}:${server.port}/rest/version/${server.version}/user/${username}/instantmessage`,
+      method: 'POST',
+      body: (0, _stringify2.default)({
+        imRequest: {
+          charset: 'UTF-8',
+          toUrl: destination,
+          message: parts[0].text,
+          type: 'A2'
+        }
+      })
+    }, requestOptions);
+
+    if (response.error) {
+      let error;
+      if (response.payload.body) {
+        // Handle errors from the server.
+        let { statusCode } = response.payload.body.imResponse;
+        log.debug(`Failed to send message with status code ${statusCode}.`);
+
+        error = new _errors2.default({
+          code: _errors.messagingCodes.SEND_MESSAGE_FAIL,
+          message: `Failed to send message. Code: ${statusCode}.`
+        });
+      } else {
+        // Handler errors from the request helper.
+        let { message } = response.payload.result;
+        log.debug('Send message request failed', message);
+
+        error = new _errors2.default({
+          code: _errors.messagingCodes.SEND_MESSAGE_FAIL,
+          message: `Send message request failed: ${message}.`
+        });
+      }
+      yield (0, _effects.put)(_actions.messageActions.sendMessageFinish({
+        sender: username,
+        destination: destination,
+        type: 'im',
+        parts: parts,
+        timestamp: timestamp,
+        error
+      }));
+    } else if (response.payload.body.imResponse && response.payload.body.imResponse.messageId) {
+      yield (0, _effects.put)(_actions.messageActions.sendMessageFinish({
+        sender: username,
+        destination: destination,
+        type: 'im',
+        parts: parts,
+        timestamp: timestamp,
+        messageId: response.payload.body.imResponse.messageId
+      }));
+    } else {
+      // Unknown error scenario.
+    }
+  }
+}
+/**
+ * Link receive message saga.
+ * Performs the workflow of receiving messages over the SPiDR websocket.
+ * @method receiveMessage
+ */
+function* receiveMessage() {
+  // Redux-saga take() pattern.
+  // Using predicates directly doesn't work... so wrap it.
+  // TODO: Fix this properly.
+  function receiveMessagePattern(action) {
+    return P.and(P.type(_actionTypes2.NOTIFICATION_RECEIVED)(action) && P.link)(action);
+  }
+
+  while (true) {
+    const action = yield (0, _effects.take)(receiveMessagePattern);
+
+    if (action.payload.notificationMessage) {
+      if (action.payload.notificationMessage.eventType === 'IM') {
+        const message = action.payload.notificationMessage.imnotificationParams.msgText;
+        const sender = action.payload.notificationMessage.imnotificationParams.primaryContact.split('sip:')[1];
+        const messageId = action.payload.notificationMessage.eventId;
+        const conversations = yield (0, _effects.select)(_selectors.getConversations);
+
+        if (conversations.hasOwnProperty(sender)) {
+          yield (0, _effects.put)(_actions.messageActions.messageReceived([sender], [{ mimeType: 'text/plain', text: message }], messageId, sender, Date.now(), {
+            newConversation: false,
+            type: 'im'
+          }));
+        } else {
+          // Add the new message to the convo in the store
+          yield (0, _effects.put)(_actions.messageActions.messageReceived([sender], [{ mimeType: 'text/plain', text: message }], messageId, sender, Date.now(), {
+            newConversation: true,
+            type: 'im'
+          }));
+        }
+      }
+    }
+  }
+}
+
+/***/ }),
+
+/***/ "./src/mwi/interface/actionTypes.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+const PREFIX = '@@KANDY/';
+
+const MWI_UPDATE = exports.MWI_UPDATE = PREFIX + 'MWI_UPDATE';
+const FETCH_MWI = exports.FETCH_MWI = PREFIX + 'FETCH_MWI';
+
+/***/ }),
+
+/***/ "./src/mwi/interface/actions.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends2 = __webpack_require__("../../node_modules/babel-runtime/helpers/extends.js");
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+exports.mwiUpdate = mwiUpdate;
+exports.fetchMwi = fetchMwi;
+
+var _actionTypes = __webpack_require__("./src/mwi/interface/actionTypes.js");
+
+var actionTypes = _interopRequireWildcard(_actionTypes);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Creates a message waiting indicator update action.
+ *
+ * @method mwiUpdate
+ * @param {Object} $0
+ * @param {string} $0.mwiEvent An mwiEvent object from spidr.
+ * @param {Object} $0.error A Basic error object.
+ * @returns {Object} A flux standard action.
+ */
+function mwiUpdate({ mwiData, error }) {
+  if (error) {
+    return {
+      type: actionTypes.MWI_UPDATE,
+      payload: error,
+      error: true
+    };
+  } else {
+    return {
+      type: actionTypes.MWI_UPDATE,
+      payload: (0, _extends3.default)({}, mwiData)
+    };
+  }
+}
+
+/**
+ * Creates a fetch message waiting indicator action.
+ *
+ * @method fetchMwi
+ * @returns {Object} A flux standard action.
+ */
+function fetchMwi() {
+  return {
+    type: actionTypes.FETCH_MWI
+  };
+}
+
+/***/ }),
+
+/***/ "./src/mwi/interface/api.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = api;
+
+var _actions = __webpack_require__("./src/mwi/interface/actions.js");
+
+var actions = _interopRequireWildcard(_actions);
+
+var _selectors = __webpack_require__("./src/mwi/interface/selectors.js");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+/**
+ * The voicemail features are used to retrieve and view
+ * voicemail indicators.
+ *
+ * Voicemail functions are all part of the 'voicemail' namespace.
+ *
+ * @public
+ * @requires voicemail
+ * @module Voicemail
+ */
+
+function api({ dispatch, getState }) {
+  const mwiApi = {
+    /**
+     * Attempts to retrieve voicemail information from the server.
+     * A `voicemail:new` event is emitted upon completion.
+     *
+     * @public
+     * @requires voicemail
+     * @memberof Voicemail
+     * @method fetch
+     */
+    fetch() {
+      dispatch(actions.fetchMwi());
+    },
+
+    /**
+     * Returns voicemail data from the store.
+     *
+     * @public
+     * @requires voicemail
+     * @memberof Voicemail
+     * @method get
+     */
+    get() {
+      return (0, _selectors.getMwi)(getState());
+    }
+  };
+
+  return { voicemail: mwiApi };
+}
+
+/***/ }),
+
+/***/ "./src/mwi/interface/eventTypes.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+// TODO: Fix params in this file, move to voicemail over MWI on all public wording.
+/**
+ * A voicemail event has been received.
+ *
+ * @requires voicemail
+ * @public
+ * @memberof Voicemail
+ * @event voicemail:change
+ * @param {Object} params An object containing voicemail info.
+ * @param {number} params.lastUpdated Timestamp of the last time voicemail data was checked.
+ * @param {boolean} params.newMessagesWaiting Whether there are new messages.
+ * @param {number} params.totalVoice The total number of voicemail messages.
+ * @param {number} params.unheardVoice Number of unheard voicemail messages.
+ * @param {Object} params.voice Object containing individual counts of new, old, urgent voicemails.
+ * @param {Object} params.fax Object containing individual counts of new, old, urgent faxes.
+ * @param {Object} params.multimedia Object containing individual counts of new, old, urgent multimedia messages.
+ */
+const MWI_CHANGE = exports.MWI_CHANGE = 'voicemail:change';
+
+/**
+ * An error has occured while attempting to retrieve voicemail data.
+ *
+ * @requires voicemail
+ * @public
+ * @memberof Voicemail
+ * @event voicemail:error
+ * @param {Object} params
+ * @param {BasicError} params.error The Basic error object.
+ */
+const MWI_ERROR = exports.MWI_ERROR = 'voicemail:error';
+
+/***/ }),
+
+/***/ "./src/mwi/interface/events.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _actionTypes = __webpack_require__("./src/mwi/interface/actionTypes.js");
+
+var actionTypes = _interopRequireWildcard(_actionTypes);
+
+var _eventTypes = __webpack_require__("./src/mwi/interface/eventTypes.js");
+
+var eventTypes = _interopRequireWildcard(_eventTypes);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+const eventsMap = {};
+
+eventsMap[actionTypes.MWI_UPDATE] = function (action) {
+  if (action.error) {
+    return {
+      type: eventTypes.MWI_ERROR,
+      args: { error: action.payload }
+    };
+  } else {
+    return {
+      type: eventTypes.MWI_CHANGE,
+      args: {
+        lastUpdated: action.payload.lastUpdated,
+        newMessagesWaiting: action.payload.newMessagesWaiting,
+        totalVoice: action.payload.totalVoice,
+        unheardVoice: action.payload.unheardVoice,
+        voice: action.payload.voice,
+        fax: action.payload.fax,
+        multimedia: action.payload.multimedia
+      }
+    };
+  }
+};
+
+exports.default = eventsMap;
+
+/***/ }),
+
+/***/ "./src/mwi/interface/index.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _api = __webpack_require__("./src/mwi/interface/api.js");
+
+var _api2 = _interopRequireDefault(_api);
+
+var _reducers = __webpack_require__("./src/mwi/interface/reducers.js");
+
+var _reducers2 = _interopRequireDefault(_reducers);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * This interface is for a mwi plugin.
+ * @type {string}
+ */
+// Import the components of the interface.
+const name = 'mwi';
+
+exports.default = {
+  name,
+  api: _api2.default,
+  reducer: _reducers2.default
+};
+
+/***/ }),
+
+/***/ "./src/mwi/interface/reducers.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends2 = __webpack_require__("../../node_modules/babel-runtime/helpers/extends.js");
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+var _actionTypes = __webpack_require__("./src/mwi/interface/actionTypes.js");
+
+var actionTypes = _interopRequireWildcard(_actionTypes);
+
+var _reduxActions = __webpack_require__("../../node_modules/redux-actions/es/index.js");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const reducers = {};
+
+reducers[actionTypes.MWI_UPDATE] = {
+  next(state, action) {
+    return (0, _extends3.default)({}, action.payload);
+  }
+};
+
+const reducer = (0, _reduxActions.handleActions)(reducers, {});
+exports.default = reducer;
+
+/***/ }),
+
+/***/ "./src/mwi/interface/selectors.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getMwi = getMwi;
+
+var _fp = __webpack_require__("../../node_modules/lodash/fp.js");
+
+/*
+ * Redux-saga selector functions.
+ * Used with the `select` effect in sagas to retrieve
+ *      specific portions of the state.
+ */
+
+/**
+ * Retrieves the message waiting indicator data from the state.
+ * @method getMwi
+ * @return {Object}
+ */
+function getMwi(state) {
+  return (0, _fp.cloneDeep)(state.mwi);
+}
+
+/***/ }),
+
+/***/ "./src/mwi/link/index.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = mwiLink;
+
+var _effects = __webpack_require__("../../node_modules/redux-saga/es/effects.js");
+
+var _events = __webpack_require__("./src/mwi/interface/events.js");
+
+var _events2 = _interopRequireDefault(_events);
+
+var _actions = __webpack_require__("./src/events/interface/actions.js");
+
+var _interface = __webpack_require__("./src/mwi/interface/index.js");
+
+var _interface2 = _interopRequireDefault(_interface);
+
+var _sagas = __webpack_require__("./src/mwi/link/sagas.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Plugin for voicemail service.
+ * Provides the SDK with the Voicemail feature.
+ */
+
+
+// Import the interface to implement.
+
+// Events
+function mwiLink() {
+  function* init() {
+    yield (0, _effects.put)((0, _actions.mapEvents)(_events2.default));
+  }
+
+  const capabilities = ['voicemail'];
+
+  return {
+    capabilities,
+    api: _interface2.default.api,
+    name: _interface2.default.name,
+    reducer: _interface2.default.reducer,
+    init,
+    sagas: [_sagas.mwiReceived, _sagas.fetchMwi]
+  };
+}
+
+/***/ }),
+
+/***/ "./src/mwi/link/sagas.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends2 = __webpack_require__("../../node_modules/babel-runtime/helpers/extends.js");
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+exports.mwiReceived = mwiReceived;
+exports.fetchMwi = fetchMwi;
+
+var _effects = __webpack_require__("../../node_modules/redux-saga/es/effects.js");
+
+var _selectors = __webpack_require__("./src/auth/interface/selectors.js");
+
+var _actionTypes = __webpack_require__("./src/notifications/interface/actionTypes.js");
+
+var _actions = __webpack_require__("./src/mwi/interface/actions.js");
+
+var actions = _interopRequireWildcard(_actions);
+
+var _actionTypes2 = __webpack_require__("./src/mwi/interface/actionTypes.js");
+
+var actionTypes = _interopRequireWildcard(_actionTypes2);
+
+var _effects2 = __webpack_require__("./src/request/effects.js");
+
+var _effects3 = _interopRequireDefault(_effects2);
+
+var _errors = __webpack_require__("./src/errors/index.js");
+
+var _errors2 = _interopRequireDefault(_errors);
+
+var _constants = __webpack_require__("./src/constants.js");
+
+var _logs = __webpack_require__("./src/logs/index.js");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// Constants
+
+// Request
+
+// MWI Actions
+
+// Auth
+const log = (0, _logs.getLogManager)().getLogger('MWI');
+
+// Logs
+
+// Errors
+
+// Notifications
+function* mwiReceived() {
+  const mwiEventChannel = (0, _effects.actionChannel)(action => action.type === _actionTypes.NOTIFICATION_RECEIVED && action.payload.notificationMessage && action.payload.notificationMessage.eventType === 'mwi');
+  const mwiReceived = yield mwiEventChannel;
+  while (true) {
+    const action = yield (0, _effects.take)(mwiReceived);
+
+    // Parse the mwi data
+    let mwiData = (0, _extends3.default)({}, action.payload.notificationMessage.mwiNotificationParams);
+    mwiData.newMessagesWaiting = mwiData.mwi === 'yes';
+    delete mwiData.mwi;
+    mwiData.lastUpdated = action.payload.notificationMessage.time;
+
+    yield (0, _effects.put)(actions.mwiUpdate({ mwiData }));
+  }
+}
+
+function* fetchMwi() {
+  while (true) {
+    const action = yield (0, _effects.take)(actionTypes.FETCH_MWI);
+    const connInfo = yield (0, _effects.select)(_selectors.getConnectionInfo);
+    const options = (0, _extends3.default)({}, action.payload, connInfo);
+
+    let platform = yield (0, _effects.select)(_selectors.getPlatform);
+    const version = platform === _constants.platforms.CPAAS ? 1 : options.server.version;
+    const response = yield (0, _effects3.default)({
+      url: `${options.server.protocol}://${options.server.server}:${options.server.port}/rest/version/${version}/user/${options.username}/voicemail`,
+      method: 'GET'
+    }, connInfo.requestOptions);
+
+    if (response.error) {
+      let error;
+      if (response.payload.body) {
+        // Handle errors from the server.
+        let { statusCode } = response.payload.body.mwiresponse;
+        log.debug(`Failed to fetch voicemails with status code ${statusCode}.`);
+
+        error = new _errors2.default({
+          code: _errors.mwiCodes.FETCH_MWI_FAIL,
+          message: `Failed to fetch voicemail. Code: ${statusCode}.`
+        });
+      } else {
+        // Handle errors from the request helper.
+        let { message } = response.payload.result;
+        log.debug('Fetch voicemail request failed.', message);
+
+        error = new _errors2.default({
+          code: _errors.mwiCodes.FETCH_MWI_FAIL,
+          message: `Fetch voicemail request failed: ${message}.`
+        });
+      }
+
+      yield (0, _effects.put)(actions.mwiUpdate({ error }));
+    } else {
+      let mwiData = {};
+      if (response.payload.body.mwiresponse.statusCode === 52) {
+        // This statusCode means this user has absolutely no messages, new or old.
+        // It is therefore accompanied with absolutely no data, so we make some for the store.
+        mwiData = {
+          lastUpdated: Date.now(),
+          newMessagesWaiting: false,
+          totalVoice: '0',
+          unheardVoice: '0'
+        };
+      } else {
+        mwiData = (0, _extends3.default)({}, response.payload.body.mwiresponse);
+        delete mwiData.statusCode;
+
+        // Parse the mwi data
+        mwiData.newMessagesWaiting = mwiData.mwi === 'yes';
+        delete mwiData.mwi;
+        mwiData.lastUpdated = Date.now();
+      }
+      yield (0, _effects.put)(actions.mwiUpdate({ mwiData }));
+    }
+  }
 }
 
 /***/ }),
@@ -63525,6 +67151,1094 @@ function* enableWebsocketChannel() {
 
 /***/ }),
 
+/***/ "./src/predicates.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.link = exports.types = exports.platform = exports.type = exports.or = exports.and = exports.matches = undefined;
+
+var _fp = __webpack_require__("../../node_modules/lodash/fp.js");
+
+var _constants = __webpack_require__("./src/constants.js");
+
+exports.matches = _fp.matches;
+// Constants
+
+const and = exports.and = (...operands) => (0, _fp.overEvery)(operands);
+const or = exports.or = (...operands) => (0, _fp.overSome)(operands);
+const type = exports.type = type => (0, _fp.matches)({ type });
+const platform = exports.platform = platform => (0, _fp.matches)({ meta: { platform } });
+const types = exports.types = (...types) => (0, _fp.overSome)((0, _fp.map)(type, types));
+
+const link = exports.link = platform(_constants.platforms.LINK);
+
+/***/ }),
+
+/***/ "./src/presence/interface/actionTypes.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+const prefix = '@@KANDY/PRESENCE/';
+
+const UPDATE = exports.UPDATE = prefix + 'UPDATE';
+const UPDATE_FINISH = exports.UPDATE_FINISH = prefix + 'UPDATE_FINISH';
+const GET = exports.GET = prefix + 'GET';
+const GET_FINISH = exports.GET_FINISH = prefix + 'GET_FINISH';
+const SUBSCRIBE = exports.SUBSCRIBE = prefix + 'SUBSCRIBE';
+const SUBSCRIBE_FINISH = exports.SUBSCRIBE_FINISH = prefix + 'SUBSCRIBE_FINISH';
+const UNSUBSCRIBE = exports.UNSUBSCRIBE = prefix + 'UNSUBSCRIBE';
+const UNSUBSCRIBE_FINISH = exports.UNSUBSCRIBE_FINISH = prefix + 'UNSUBSCRIBE_FINISH';
+const RECEIVED = exports.RECEIVED = prefix + 'RECEIVED';
+const CREATE_PRESENCE_LIST = exports.CREATE_PRESENCE_LIST = prefix + 'CREATE_PRESENCE_LIST';
+const CREATE_PRESENCE_LIST_FINISH = exports.CREATE_PRESENCE_LIST_FINISH = prefix + 'CREATE_PRESENCE_LIST_FINISH';
+const DELETE_PRESENCE_LIST = exports.DELETE_PRESENCE_LIST = prefix + 'DELETE_PRESENCE_LIST';
+const GET_PRESENCE_LIST = exports.GET_PRESENCE_LIST = prefix + 'GET_PRESENCE_LIST';
+
+/***/ }),
+
+/***/ "./src/presence/interface/actions.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.updatePresence = updatePresence;
+exports.updatePresenceFinish = updatePresenceFinish;
+exports.getPresence = getPresence;
+exports.getPresenceFinish = getPresenceFinish;
+exports.subscribePresence = subscribePresence;
+exports.subscribePresenceFinish = subscribePresenceFinish;
+exports.unsubscribePresence = unsubscribePresence;
+exports.unsubscribePresenceFinish = unsubscribePresenceFinish;
+exports.createPresenceList = createPresenceList;
+exports.deletePresenceList = deletePresenceList;
+exports.getPresenceList = getPresenceList;
+exports.createListFinish = createListFinish;
+exports.presenceReceived = presenceReceived;
+
+var _actionTypes = __webpack_require__("./src/presence/interface/actionTypes.js");
+
+var actionTypes = _interopRequireWildcard(_actionTypes);
+
+var _errors = __webpack_require__("./src/errors/index.js");
+
+var _errors2 = _interopRequireDefault(_errors);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+/**
+ * Update the presence for the current user
+ * @param  {string} status   The status of the presence state
+ * @param  {string} activity The activity to be shown as presence state
+ * @param  {string} note     The note to be shown as alternative presence state
+ *                           which is determined by the user. The note entry is
+ *                           effective on the remote sip client when the
+ *                           activity is “other”.
+ * @return {Object}          A Flux Standard Action for UPDATE_PRESENCE
+ */
+// Presence plugin.
+function updatePresence(status, activity, note) {
+  return {
+    type: actionTypes.UPDATE,
+    payload: {
+      status,
+      activity,
+      note
+    }
+  };
+}
+
+// Other plugins.
+function updatePresenceFinish(payload) {
+  return {
+    type: actionTypes.UPDATE_FINISH,
+    error: payload instanceof Error || payload instanceof _errors2.default,
+    payload
+  };
+}
+
+/**
+ * Get the presence for the given user(s)
+ * @param  {string} users  A user id or an array of user ids.
+ * @return {Object}        A Flux Standard Action for GET_PRESENCE
+ */
+function getPresence(users) {
+  return {
+    type: actionTypes.GET,
+    payload: users
+  };
+}
+
+function getPresenceFinish(payload) {
+  return {
+    type: actionTypes.GET_FINISH,
+    error: payload instanceof Error || payload instanceof _errors2.default,
+    payload
+  };
+}
+
+/**
+ * Subscribe to the presence for the given user(s)
+ * @param  {string} users  A user id or an array of user ids.
+ * @return {Object}        A Flux Standard Action for SUBSCRIBE_PRESENCE
+ */
+function subscribePresence(users) {
+  return {
+    type: actionTypes.SUBSCRIBE,
+    payload: users
+  };
+}
+
+function subscribePresenceFinish(payload) {
+  return {
+    type: actionTypes.SUBSCRIBE_FINISH,
+    error: payload instanceof Error || payload instanceof _errors2.default,
+    payload
+  };
+}
+
+/**
+ * Unsubscribe from the presence for the given user(s)
+ * @param  {string} users  A user id or an array of user ids.
+ * @return {Object}        A Flux Standard Action for UNSUBSCRIBE_PRESENCE
+ */
+function unsubscribePresence(users) {
+  return {
+    type: actionTypes.UNSUBSCRIBE,
+    payload: users
+  };
+}
+
+function unsubscribePresenceFinish(payload) {
+  return {
+    type: actionTypes.UNSUBSCRIBE_FINISH,
+    error: payload instanceof Error || payload instanceof _errors2.default,
+    payload
+  };
+}
+
+/**
+ * Create a new presence list
+ * @param  {string} users  A user id or an array of user ids.
+ * @return {Object}        A Flux Standard Action for UNSUBSCRIBE_PRESENCE
+ */
+function createPresenceList(users) {
+  return {
+    type: actionTypes.CREATE_PRESENCE_LIST,
+    payload: users
+  };
+}
+
+/**
+ * Delete a presence list
+ * @param  {string} presenceListId  The ID of the presence list to delete.
+ * @return {Object}                 A Flux Standard Action for UNSUBSCRIBE_PRESENCE
+ */
+function deletePresenceList(presenceListId) {
+  return {
+    type: actionTypes.DELETE_PRESENCE_LIST,
+    payload: presenceListId
+  };
+}
+
+/**
+ * Retrieve a presence list
+ * @param  {string} presenceListId  The ID of the presence list to delete.
+ * @return {Object}                 A Flux Standard Action for UNSUBSCRIBE_PRESENCE
+ */
+function getPresenceList(presenceListId) {
+  return {
+    type: actionTypes.GET_PRESENCE_LIST,
+    payload: presenceListId
+  };
+}
+
+function createListFinish(payload) {
+  return {
+    type: actionTypes.CREATE_LIST_FINISH,
+    error: payload instanceof Error || payload instanceof _errors2.default,
+    payload
+  };
+}
+
+function presenceReceived(presence) {
+  return {
+    type: actionTypes.RECEIVED,
+    payload: presence
+  };
+}
+
+/***/ }),
+
+/***/ "./src/presence/interface/api.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function (context) {
+  const presenceApi = {
+    /**
+     * Update the presence for the current user.
+     * Other users subscribed for this user's presence will receive the update.
+     *
+     * @public
+     * @memberof Presence
+     * @requires presence
+     * @method update
+     * @param  {string} status The status of the presence state.
+     * @param  {string} activity The activity to be shown as presence state
+     * @param  {string} [note] An additional note to be provided when the activity is "other".
+     */
+    update(status, activity, note) {
+      context.dispatch(actions.updatePresence(status, activity, note));
+    },
+
+    /**
+     * Retrieve the presence information for specified users.
+     *
+     * @public
+     * @memberof Presence
+     * @requires presence
+     * @method get
+     * @param  {Array<string>|string} users  A user id or an array of user ids.
+     * @return {Array} List of user presence information.
+     */
+    get(user) {
+      const users = Array.isArray(user) ? user : [user];
+      const storedUsers = selectors.getPresence(context.getState(), users);
+      // return something sensible based on the input
+      if (!Array.isArray(users)) {
+        if (storedUsers.length) {
+          return storedUsers[0];
+        }
+        return undefined;
+      }
+      return storedUsers;
+    },
+
+    /**
+     * Retrieve the presence information for all users.
+     *
+     * @public
+     * @memberof Presence
+     * @requires presence
+     * @method getAll
+     * @return {Array} List of user presence information.
+     */
+    getAll() {
+      return selectors.getAllPresence(context.getState());
+    },
+
+    /**
+     * Retrieves the presence information for the current user.
+     *
+     * @public
+     * @memberof Presence
+     * @requires presence
+     * @method getSelf
+     * @return {Object}
+     */
+    getSelf() {
+      return selectors.getSelfPresence(context.getState());
+    },
+
+    /**
+     * Fetch (from the server) the presence for the given users.
+     * This will update the store with the retrieved values, which can then
+     * be accessed using `get`.
+     *
+     * @public
+     * @memberof Presence
+     * @requires presence
+     * @method fetch
+     * @param  {Array<string>|string} users  A user id or an array of user ids.
+     */
+    fetch(user) {
+      const users = Array.isArray(user) ? user : [user];
+      context.dispatch(actions.getPresence(users));
+    },
+
+    /**
+     * Subscribe to retrieve presence updates about specified user.
+     *
+     * @public
+     * @memberof Presence
+     * @requires presence
+     * @method subscribe
+     * @param  {string} user  The ID of the user to subscribe to.
+     */
+    subscribe(users) {
+      context.dispatch(actions.subscribePresence(users));
+    },
+
+    /**
+     * Unsubscribe from presence updates about specified user.
+     *
+     * @public
+     * @memberof Presence
+     * @requires presence
+     * @method unsubscribe
+     * @param  {string} user  The ID of the user to unsubscribe from.
+     */
+    unsubscribe(users) {
+      context.dispatch(actions.unsubscribePresence(users));
+    }
+  };
+  return { presence: presenceApi };
+};
+
+var _actions = __webpack_require__("./src/presence/interface/actions.js");
+
+var actions = _interopRequireWildcard(_actions);
+
+var _selectors = __webpack_require__("./src/presence/interface/selectors.js");
+
+var selectors = _interopRequireWildcard(_selectors);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+/***/ }),
+
+/***/ "./src/presence/interface/eventTypes.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+/**
+ * A presence update has been received from a subscribed user.
+ *
+ * @public
+ * @memberof Presence
+ * @requires presence
+ * @event presence:change
+ * @param {Object} params A presence object containing data.
+ * @param {string} params.userId The ID of the user.
+ * @param {string} params.status The presence status of the user.
+ * @param {string} params.activity The activity of the user.
+ * @param {string} params.note A custom note provided by the user.
+ */
+const RECEIVED = exports.RECEIVED = 'presence:change';
+
+/**
+ * The user's self presence information has changed.
+ *
+ * @public
+ * @memberof Presence
+ * @requires presence
+ * @event presence:selfChange
+ */
+const SELF_CHANGE = exports.SELF_CHANGE = 'presence:selfChange';
+
+/**
+ * An error occured with presence.
+ *
+ * @public
+ * @memberof Presence
+ * @requires presence
+ * @event presence:error
+ * @param {Object} params
+ * @param {BasicError} params.error The Basic error object.
+ */
+const ERROR = exports.ERROR = 'presence:error';
+
+/***/ }),
+
+/***/ "./src/presence/interface/events.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _actionTypes = __webpack_require__("./src/presence/interface/actionTypes.js");
+
+var actionTypes = _interopRequireWildcard(_actionTypes);
+
+var _eventTypes = __webpack_require__("./src/presence/interface/eventTypes.js");
+
+var eventTypes = _interopRequireWildcard(_eventTypes);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+// Helper function for error events.
+function presenceError(action) {
+  if (action.error) {
+    return {
+      type: eventTypes.ERROR,
+      args: { error: action.payload }
+    };
+  }
+}
+
+const eventsMap = {};
+
+eventsMap[actionTypes.RECEIVED] = action => ({
+  type: eventTypes.RECEIVED,
+  args: {
+    userId: action.payload.userId,
+    status: action.payload.status,
+    activity: action.payload.activity,
+    note: action.payload.note
+  }
+});
+
+eventsMap[actionTypes.UPDATE_FINISH] = action => {
+  if (action.error) {
+    return presenceError(action);
+  } else {
+    return {
+      type: eventTypes.SELF_CHANGE
+    };
+  }
+};
+
+// TODO: Should have events to notifiy of successful operations for these actions.
+eventsMap[actionTypes.GET_FINISH] = presenceError;
+eventsMap[actionTypes.SUBSCRIBE_FINISH] = presenceError;
+eventsMap[actionTypes.UNSUBSCRIBE_FINISH] = presenceError;
+eventsMap[actionTypes.CREATE_PRESENCE_LIST_FINISH] = presenceError;
+
+exports.default = eventsMap;
+
+/***/ }),
+
+/***/ "./src/presence/interface/index.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _api = __webpack_require__("./src/presence/interface/api.js");
+
+Object.defineProperty(exports, 'api', {
+  enumerable: true,
+  get: function () {
+    return _interopRequireDefault(_api).default;
+  }
+});
+
+var _reducers = __webpack_require__("./src/presence/interface/reducers.js");
+
+Object.defineProperty(exports, 'reducer', {
+  enumerable: true,
+  get: function () {
+    return _interopRequireDefault(_reducers).default;
+  }
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ }),
+
+/***/ "./src/presence/interface/reducers.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends2 = __webpack_require__("../../node_modules/babel-runtime/helpers/extends.js");
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+var _actionTypes = __webpack_require__("./src/presence/interface/actionTypes.js");
+
+var actionTypes = _interopRequireWildcard(_actionTypes);
+
+var _reduxActions = __webpack_require__("../../node_modules/redux-actions/es/index.js");
+
+var _fp = __webpack_require__("../../node_modules/lodash/fp.js");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// Libraries
+const reducers = {};
+
+reducers[actionTypes.UPDATE] = {
+  next(state) {
+    return (0, _extends3.default)({}, state, {
+      self: (0, _extends3.default)({}, state.self, {
+        loading: true,
+        error: false
+      })
+    });
+  }
+};
+
+reducers[actionTypes.UPDATE_FINISH] = {
+  next(state, action) {
+    let result = (0, _extends3.default)({}, state, {
+      self: {
+        loading: false,
+        error: false,
+        status: action.payload.status,
+        activity: action.payload.activity
+      }
+    });
+    if (action.payload.note) {
+      result.self.note = action.payload.note;
+    }
+    return result;
+  },
+  throw(state, action) {
+    return (0, _extends3.default)({}, state, {
+      self: (0, _extends3.default)({}, state.self, {
+        loading: false,
+        error: action.payload
+      })
+    });
+  }
+};
+
+reducers[actionTypes.GET] = {
+  next(state, { payload: userIds }) {
+    const users = (0, _extends3.default)({}, state.users);
+    for (let userId of userIds) {
+      users[userId] = {
+        userId,
+        loading: true
+      };
+    }
+    return (0, _extends3.default)({}, state, { users });
+  }
+};
+
+reducers[actionTypes.GET_FINISH] = {
+  next(state, { payload }) {
+    if (!payload.presenceContact) {
+      return (0, _extends3.default)({}, state);
+    }
+
+    let users = {};
+    for (let contact of payload.presenceContact) {
+      let presenceObject = {};
+      presenceObject.userId = contact.presentityUserId;
+      presenceObject.activity = contact.presence.person.activities.activityValue;
+      presenceObject.status = contact.presence.person['overriding-willingness'].overridingWillingnessValue;
+      presenceObject.note = contact.presence.person.activities.other;
+      presenceObject.loading = false;
+      users[contact.presentityUserId] = presenceObject;
+    }
+    return (0, _extends3.default)({}, state, {
+      users: (0, _extends3.default)({}, state.users, users)
+    });
+  },
+  throw(state, action) {
+    return (0, _extends3.default)({}, state);
+  }
+};
+
+reducers[actionTypes.RECEIVED] = {
+  next(state, { payload }) {
+    return (0, _extends3.default)({}, state, {
+      users: (0, _extends3.default)({}, state.users, {
+        [payload.userId]: {
+          userId: payload.userId, // optimize for filtering by userId
+          status: payload.status,
+          activity: payload.activity,
+          note: payload.note,
+          loading: false
+        }
+      })
+    });
+  }
+};
+
+reducers[actionTypes.UNSUBSCRIBE_FINISH] = {
+  next(state, { payload }) {
+    return (0, _extends3.default)({}, state, {
+      users: (0, _fp.omit)(payload, state.users)
+    });
+  }
+};
+
+const reducer = (0, _reduxActions.handleActions)(reducers, { self: {}, users: {} });
+exports.default = reducer;
+
+/***/ }),
+
+/***/ "./src/presence/interface/selectors.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _values = __webpack_require__("../../node_modules/babel-runtime/core-js/object/values.js");
+
+var _values2 = _interopRequireDefault(_values);
+
+exports.getPresence = getPresence;
+exports.getAllPresence = getAllPresence;
+exports.getSelfPresence = getSelfPresence;
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function getPresence(state, users) {
+  // If no users specified, return them all
+  if (!users) {
+    return state.presence.users;
+  }
+
+  // Grab all users that match the passed in IDs, return
+  return (0, _values2.default)(state.presence.users).filter(user => users.indexOf(user.userId) !== -1);
+}
+
+/**
+ * Retrieves presence information for all users.
+ * @method getAllPresence
+ * @param  {Object} state Redux state.
+ * @return {Array}  List of presence information for users.
+ */
+function getAllPresence(state) {
+  return (0, _values2.default)(state.presence.users);
+}
+
+/**
+ * Retrieves the current user's self presence.
+ * @method getSelfPresence
+ * @param  {Object} state Redux state.
+ * @return {Object} Self-presence information.
+ */
+function getSelfPresence(state) {
+  return state.presence.self;
+}
+
+/***/ }),
+
+/***/ "./src/presence/link/constants.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+/**
+ * The status of the presence state
+ * @name STATUS
+ */
+const STATUS = exports.STATUS = {
+  OPEN: 'open',
+  CLOSED: 'closed'
+
+  /**
+   * The presence activity
+   * @name ACTIVITY
+   */
+};const ACTIVITY = exports.ACTIVITY = {
+  ACTIVE: 'active',
+  IDLE: 'idle',
+  AWAY: 'away',
+  LUNCH: 'lunch',
+  OTHER: 'other',
+  BUSY: 'busy',
+  VACATION: 'vacation',
+  ON_THE_PHONE: 'on-the-phone',
+  UNKNOWN: 'unknown'
+};
+
+/***/ }),
+
+/***/ "./src/presence/link/index.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = linkPresence;
+
+var _interface = __webpack_require__("./src/presence/interface/index.js");
+
+var _sagas = __webpack_require__("./src/presence/link/sagas.js");
+
+var sagas = _interopRequireWildcard(_sagas);
+
+var _events = __webpack_require__("./src/presence/interface/events.js");
+
+var _events2 = _interopRequireDefault(_events);
+
+var _constants = __webpack_require__("./src/presence/link/constants.js");
+
+var _actions = __webpack_require__("./src/events/interface/actions.js");
+
+var _effects = __webpack_require__("../../node_modules/redux-saga/es/effects.js");
+
+var _fp = __webpack_require__("../../node_modules/lodash/fp.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+// Libraries
+const name = 'presence';
+
+// Other plugins.
+// Presence plugin.
+
+
+const capabilities = ['presence'];
+
+/**
+ * Link Presence plugin factory.
+ * @method linkPresence
+ * @return {Object} A plugin.
+ */
+function linkPresence() {
+  // Add plugin-specific things to the API.
+  function augmentedApi(context) {
+    const newApi = (0, _interface.api)(context);
+
+    /**
+     * Possible status values.
+     * @public
+     * @memberof Presence
+     * @type {Object}
+     * @property {string} OPEN
+     * @property {string} CLOSED
+     * @example
+     * const { statuses, activities } = client.presence
+     * // Use the values when updating presence.
+     * client.presence.update(statuses.OPEN, activities.AVAILABLE)
+     */
+    newApi.presence.statuses = _constants.STATUS;
+
+    /**
+     * Possible activity values.
+     * @public
+     * @memberof Presence
+     * @type {Object}
+     * @property {string} AVAILABLE
+     * @property {string} IDLE
+     * @property {string} AWAY
+     * @property {string} LUNCH
+     * @property {string} BUSY
+     * @property {string} VACATION
+     * @property {string} ON_THE_PHONE
+     * @property {string} UNKNOWN
+     */
+    newApi.presence.activities = _constants.ACTIVITY;
+    return newApi;
+  }
+
+  return {
+    name,
+    capabilities,
+    api: augmentedApi,
+    reducer: _interface.reducer,
+    init: () => [(0, _effects.put)((0, _actions.mapEvents)(_events2.default))],
+    sagas: (0, _fp.values)(sagas)
+  };
+}
+
+/***/ }),
+
+/***/ "./src/presence/link/requests.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _stringify = __webpack_require__("../../node_modules/babel-runtime/core-js/json/stringify.js");
+
+var _stringify2 = _interopRequireDefault(_stringify);
+
+exports.updatePresenceRequest = updatePresenceRequest;
+exports.watchPresenceRequest = watchPresenceRequest;
+
+var _effects = __webpack_require__("./src/request/effects.js");
+
+var _effects2 = _interopRequireDefault(_effects);
+
+var _logs = __webpack_require__("./src/logs/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// Request
+const log = (0, _logs.getLogManager)().getLogger('PRESENCE');
+// Logs
+function* updatePresenceRequest({ status, activity, note }, requestInfo) {
+  let url = `${requestInfo.baseURL}/rest/version/${requestInfo.version}/user/${requestInfo.username}/presence`;
+
+  const data = { status, activity };
+  if (note) {
+    data.note = note;
+  }
+  const body = (0, _stringify2.default)({ presenceRequest: data });
+
+  const method = 'POST';
+
+  const response = yield (0, _effects2.default)({ url, body, method }, requestInfo.requestOptions);
+
+  if (response.error) {
+    if (response.payload.body) {
+      // Handle errors from the server.
+      let { statusCode } = response.payload.body.presenceResponse;
+      log.debug(`Failed to update presence with status code ${statusCode}.`);
+
+      // TODO: Proper error.
+      return new Error(`Failed to update presence with status code ${statusCode}.`);
+    } else {
+      // Handle errors from the request helper.
+      let { message } = response.payload.result;
+      log.debug(`Update presence request failed: ${message}.`);
+
+      // TODO: Proper error.
+      return new Error(`Update presence request failed: ${message}.`);
+    }
+  } else {
+    if (response.payload.body.presenceResponse.statusCode === 0) {
+      return true; // success!
+    }
+    return new Error('Failed to update presence. Code: ' + response.payload.body.presenceResponse.statusCode + '.');
+  }
+}
+
+/**
+ * Make a request to the presenceWatcher resource
+ * @param  {array<User>}  users  a lits of users for the watch request
+ * @param  {string}       action watch     Starts watching the presence updates
+ *                                         for the users in the users array.
+ *                               stopwatch Stops watching the presence updates
+ *                                         for the users in the users array.
+ *                               get       Gets the presence updates one time
+ *                                         only for the users in the users array.
+ */
+function* watchPresenceRequest(users, action, requestInfo) {
+  let url = `${requestInfo.baseURL}/rest/version/${requestInfo.version}/user/${requestInfo.username}/presenceWatcher`;
+
+  const body = (0, _stringify2.default)({
+    presenceWatcherRequest: {
+      userList: users,
+      action
+    }
+  });
+
+  const method = 'POST';
+
+  const response = yield (0, _effects2.default)({ url, method, body }, requestInfo.requestOptions);
+
+  if (response.error) {
+    if (response.payload.body) {
+      // Handle errors from the server.
+      let { statusCode } = response.payload.body.presenceWatcherResponse;
+      log.debug(`Failed to watch presence with status code ${statusCode}.`);
+
+      // TODO: Proper error.
+      return new Error(`Failed to watch presence with status code ${statusCode}.`);
+    } else {
+      // Handle errors from the request helper.
+      let { message } = response.payload.result;
+      log.debug(`Watch presence request failed: ${message}.`);
+
+      // TODO: Proper error.
+      return new Error(`Watch presence request failed: ${message}.`);
+    }
+  } else {
+    if (response.payload.body.presenceWatcherResponse.statusCode === 0) {
+      return response.payload.body; // success!
+    }
+    return new Error('Failed to execute presence operation (' + action + '). Code: ' + response.payload.body.presenceResponse.statusCode + '.');
+  }
+}
+
+/***/ }),
+
+/***/ "./src/presence/link/sagas.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _values = __webpack_require__("../../node_modules/babel-runtime/core-js/object/values.js");
+
+var _values2 = _interopRequireDefault(_values);
+
+exports.presenceUpdateSaga = presenceUpdateSaga;
+exports.presenceGetSaga = presenceGetSaga;
+exports.presenceSubscribeSaga = presenceSubscribeSaga;
+exports.presenceUnsubscribeSaga = presenceUnsubscribeSaga;
+exports.presenceReceivedSaga = presenceReceivedSaga;
+
+var _actionTypes = __webpack_require__("./src/presence/interface/actionTypes.js");
+
+var actionTypes = _interopRequireWildcard(_actionTypes);
+
+var _actions = __webpack_require__("./src/presence/interface/actions.js");
+
+var actions = _interopRequireWildcard(_actions);
+
+var _requests = __webpack_require__("./src/presence/link/requests.js");
+
+var _selectors = __webpack_require__("./src/auth/interface/selectors.js");
+
+var _actionTypes2 = __webpack_require__("./src/notifications/interface/actionTypes.js");
+
+var _effects = __webpack_require__("../../node_modules/redux-saga/es/effects.js");
+
+var _errors = __webpack_require__("./src/errors/index.js");
+
+var _errors2 = _interopRequireDefault(_errors);
+
+var _constants = __webpack_require__("./src/presence/link/constants.js");
+
+var _constants2 = __webpack_require__("./src/constants.js");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// Constants
+
+// Libraries.
+
+// Other plugins.
+function* presenceUpdateSaga() {
+  yield (0, _effects.takeEvery)(actionTypes.UPDATE, updatePresence);
+}
+// Helpers
+// Presence plugin.
+function* presenceGetSaga() {
+  yield (0, _effects.takeEvery)(actionTypes.GET, getPresence);
+}
+
+function* presenceSubscribeSaga() {
+  yield (0, _effects.takeEvery)(actionTypes.SUBSCRIBE, subscribePresence);
+}
+
+function* presenceUnsubscribeSaga() {
+  yield (0, _effects.takeEvery)(actionTypes.UNSUBSCRIBE, unsubscribePresence);
+}
+
+function* presenceReceivedSaga() {
+  yield (0, _effects.takeEvery)(action => action.type === _actionTypes2.NOTIFICATION_RECEIVED && action.payload.notificationMessage && action.payload.notificationMessage.eventType === 'presenceWatcher', receivePresence);
+}
+
+function* updatePresence({ payload }) {
+  // Verify that the status value is a valid
+  if ((0, _values2.default)(_constants.STATUS).indexOf(payload.status) === -1) {
+    yield (0, _effects.put)(actions.updatePresenceFinish({
+      error: new _errors2.default({
+        code: _errors.presenceCodes.INVALID_STATUS,
+        message: 'Invalid status in presence update request.'
+      })
+    }));
+    return;
+  }
+
+  // Verify that the activity value is a valid
+  if ((0, _values2.default)(_constants.ACTIVITY).indexOf(payload.activity) === -1) {
+    yield (0, _effects.put)(actions.updatePresenceFinish({
+      error: new _errors2.default({
+        code: _errors.presenceCodes.INVALID_ACTIVITY,
+        message: 'Invalid activity in presence update request.'
+      })
+    }));
+    return;
+  }
+
+  const requestInfo = yield (0, _effects.select)(_selectors.getRequestInfo);
+  let platform = yield (0, _effects.select)(_selectors.getPlatform);
+  requestInfo.version = platform === _constants2.platforms.CPAAS ? 1 : requestInfo.version;
+  const res = yield (0, _effects.call)(_requests.updatePresenceRequest, payload, requestInfo);
+  if (res instanceof Error) {
+    yield (0, _effects.put)(actions.updatePresenceFinish(res));
+  } else {
+    yield (0, _effects.put)(actions.updatePresenceFinish(payload));
+  }
+}
+
+function* getPresence({ payload }) {
+  const users = Array.isArray(payload) ? payload : [payload];
+  const requestInfo = yield (0, _effects.select)(_selectors.getRequestInfo);
+  let platform = yield (0, _effects.select)(_selectors.getPlatform);
+  requestInfo.version = platform === _constants2.platforms.CPAAS ? 1 : requestInfo.version;
+  const res = yield (0, _effects.call)(_requests.watchPresenceRequest, users, 'get', requestInfo);
+  yield (0, _effects.put)(actions.getPresenceFinish(res));
+}
+
+function* subscribePresence({ payload }) {
+  const users = Array.isArray(payload) ? payload : [payload];
+  const requestInfo = yield (0, _effects.select)(_selectors.getRequestInfo);
+  let platform = yield (0, _effects.select)(_selectors.getPlatform);
+  requestInfo.version = platform === _constants2.platforms.CPAAS ? 1 : requestInfo.version;
+  const res = yield (0, _effects.call)(_requests.watchPresenceRequest, users, 'watch', requestInfo);
+  yield (0, _effects.put)(actions.subscribePresenceFinish(res));
+}
+
+function* unsubscribePresence({ payload }) {
+  const users = Array.isArray(payload) ? payload : [payload];
+  const requestInfo = yield (0, _effects.select)(_selectors.getRequestInfo);
+  let platform = yield (0, _effects.select)(_selectors.getPlatform);
+  requestInfo.version = platform === _constants2.platforms.CPAAS ? 1 : requestInfo.version;
+  const res = yield (0, _effects.call)(_requests.watchPresenceRequest, users, 'stopwatch', requestInfo);
+  yield (0, _effects.put)(actions.unsubscribePresenceFinish(res));
+}
+
+function* receivePresence(wsAction) {
+  const params = wsAction.payload.notificationMessage.presenceWatcherNotificationParams;
+  const presence = {
+    userId: params.name,
+    activity: params.activity,
+    status: params.status,
+    note: params.note
+  };
+  yield (0, _effects.put)(actions.presenceReceived(presence));
+}
+
+/***/ }),
+
 /***/ "./src/request/effects.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -63847,8 +68561,2734 @@ function response(requestId, result, error = false) {
   };
 }
 
+/***/ }),
+
+/***/ "./src/sipEvents/index.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = sipEvents;
+
+var _interface = __webpack_require__("./src/sipEvents/interface/index.js");
+
+var _interface2 = _interopRequireDefault(_interface);
+
+var _sagas = __webpack_require__("./src/sipEvents/sagas.js");
+
+var sagas = _interopRequireWildcard(_sagas);
+
+var _events = __webpack_require__("./src/sipEvents/interface/events.js");
+
+var _events2 = _interopRequireDefault(_events);
+
+var _actions = __webpack_require__("./src/events/interface/actions.js");
+
+var _effects = __webpack_require__("../../node_modules/redux-saga/es/effects.js");
+
+var _fp = __webpack_require__("../../node_modules/lodash/fp.js");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Sip Events Plugin Factory.
+ * @method sipEvents
+ * @return {Object} Sip Events plugin.
+ */
+
+
+// Libraries.
+// Sip Events plugin.
+function sipEvents() {
+  const { name, api, reducer } = _interface2.default;
+  const capabilities = ['sipEvents'];
+
+  function* init() {
+    yield (0, _effects.put)((0, _actions.mapEvents)(_events2.default));
+  }
+
+  return {
+    name,
+    init,
+    api,
+    reducer,
+    capabilities,
+    sagas: (0, _fp.values)(sagas)
+  };
+}
+
+// Other plugins.
+
+/***/ }),
+
+/***/ "./src/sipEvents/interface/actionTypes.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+const PREFIX = '@@KANDY/';
+
+const SIP_EVENT_SUBSCRIBE = exports.SIP_EVENT_SUBSCRIBE = PREFIX + 'SIP_EVENT_SUBSCRIBE';
+const SIP_EVENT_SUBSCRIBE_FINISH = exports.SIP_EVENT_SUBSCRIBE_FINISH = PREFIX + 'SIP_EVENT_SUBSCRIBE_FINISH';
+
+const SIP_EVENT_UPDATE = exports.SIP_EVENT_UPDATE = PREFIX + 'SIP_EVENT_UPDATE';
+const SIP_EVENT_UPDATE_FINISH = exports.SIP_EVENT_UPDATE_FINISH = PREFIX + 'SIP_EVENT_UPDATE_FINISH';
+
+const SIP_EVENT_UNSUBSCRIBE = exports.SIP_EVENT_UNSUBSCRIBE = PREFIX + 'SIP_EVENT_UNSUBSCRIBE';
+const SIP_EVENT_UNSUBSCRIBE_FINISH = exports.SIP_EVENT_UNSUBSCRIBE_FINISH = PREFIX + 'SIP_EVENT_UNSUBSCRIBE_FINISH';
+
+const SIP_EVENT_RECEIVED = exports.SIP_EVENT_RECEIVED = PREFIX + 'SIP_EVENT_RECEIVED';
+
+/***/ }),
+
+/***/ "./src/sipEvents/interface/actions.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _keys = __webpack_require__("../../node_modules/babel-runtime/core-js/object/keys.js");
+
+var _keys2 = _interopRequireDefault(_keys);
+
+exports.sipEventSubscribe = sipEventSubscribe;
+exports.sipEventSubscribeFinish = sipEventSubscribeFinish;
+exports.sipEventUpdate = sipEventUpdate;
+exports.sipEventUpdateFinish = sipEventUpdateFinish;
+exports.sipEventUnsubscribe = sipEventUnsubscribe;
+exports.sipEventUnsubscribeFinish = sipEventUnsubscribeFinish;
+exports.sipEventReceived = sipEventReceived;
+
+var _actionTypes = __webpack_require__("./src/sipEvents/interface/actionTypes.js");
+
+var actionTypes = _interopRequireWildcard(_actionTypes);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// Helper function for formatting _FINISH actions.
+function finishActionHelper(actionType, { response, error }) {
+  return {
+    type: actionType,
+    error: !!error,
+    payload: error || response
+  };
+}
+
+/**
+ * Represents a request to subscribe to a specific sip event.
+ * @method sipEventSubscribe
+ * @param  {string} eventType
+ * @param  {Array}  subscribeUserList
+ * @param  {string} clientCorrelator
+ * @param  {Object} customParameters
+ * @returns {Object} A flux standard action.
+ */
+function sipEventSubscribe(eventType, subscribeUserList, clientCorrelator, customParameters) {
+  return {
+    type: actionTypes.SIP_EVENT_SUBSCRIBE,
+    payload: {
+      eventType,
+      subscribeUserList,
+      clientCorrelator,
+      customParameters
+    }
+  };
+}
+
+/**
+ * Represents the response/error of a sip event subscription request.
+ * @method sipEventSubscribeFinish
+ * @param  {Object} $0
+ * @param  {Object} $0.response Information about the subscription response.
+ * @param  {BasicError} $0.error An error object, in the case of an issue.
+ * @returns {Object} A flux standard action.
+ */
+function sipEventSubscribeFinish({ response, error }) {
+  return finishActionHelper(actionTypes.SIP_EVENT_SUBSCRIBE_FINISH, {
+    response,
+    error
+  });
+}
+
+/**
+ * Represents a request to update a sip event subscription or resubscribe for it.
+ * @method sipEventUpdate
+ * @param  {string} eventType
+ * @param  {Object} userLists
+ * @param  {Object} customParameters
+ * @returns {Object} A flux standard action.
+ */
+function sipEventUpdate(eventType, userLists = {}, customParameters) {
+  // If no userList changes, this should just be a resubscription.
+  let isResub = (0, _keys2.default)(userLists).length === 0;
+  return {
+    type: actionTypes.SIP_EVENT_UPDATE,
+    payload: {
+      eventType,
+      subscribeUserList: userLists.subscribeUserList || [],
+      unsubscribeUserList: userLists.unsubscribeUserList || [],
+      customParameters
+    },
+    meta: isResub ? { isResub: true } : {}
+  };
+}
+
+/**
+ * Represents the response/error of a sip event update/resub request.
+ * @method sipEventUpdateFinish
+ * @param  {Object} $0
+ * @param  {Object} $0.response Information about the update/resub response.
+ * @param  {BasicError} $0.error An error object, in the case of an issue.
+ * @returns {Object} A flux standard action.
+ */
+function sipEventUpdateFinish({ response, error }) {
+  return finishActionHelper(actionTypes.SIP_EVENT_UPDATE_FINISH, {
+    response,
+    error
+  });
+}
+
+/**
+ * Represents a request to unsubscribe from sip event subscriptions.
+ * @method sipEventUnsubscribe
+ * @param  {string} eventType The sip event subscription to unsubscribe from.
+ * @returns {Object} A flux standard action.
+ */
+function sipEventUnsubscribe(eventType) {
+  return {
+    type: actionTypes.SIP_EVENT_UNSUBSCRIBE,
+    payload: eventType
+  };
+}
+
+/**
+ * Represents the response/error of a sip event unsubscribe request.
+ * @method sipEventUnsubscribeFinish
+ * @param  {Object} $0
+ * @param  {Object} $0.response Information about the unsubscribe response.
+ * @param  {BasicError} $0.error An error object, in the case of an issue.
+ * @returns {Object} A flux standard action.
+ */
+function sipEventUnsubscribeFinish({ response, error }) {
+  return finishActionHelper(actionTypes.SIP_EVENT_UNSUBSCRIBE_FINISH, {
+    response,
+    error
+  });
+}
+
+/**
+ * Represents that a sip event notification has been received.
+ * @method sipEventReceived
+ * @param  {Object} sipEvent
+ * @returns {Object} A flux standard action.
+ */
+function sipEventReceived(sipEvent) {
+  return {
+    type: actionTypes.SIP_EVENT_RECEIVED,
+    payload: sipEvent
+  };
+}
+
+/***/ }),
+
+/***/ "./src/sipEvents/interface/api.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = api;
+
+var _selectors = __webpack_require__("./src/sipEvents/interface/selectors.js");
+
+var _actions = __webpack_require__("./src/sipEvents/interface/actions.js");
+
+var actions = _interopRequireWildcard(_actions);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+/**
+ * Sip Events API.
+ * @method api
+ * @param  {Object} $0
+ * @param  {Function} $0.dispatch Redux dispatch.
+ * @param  {Function} $0.getState Redux getState.
+ * @return {Object} Sip Events' plugin API.
+ */
+/**
+ * Allows a user to subscribe to, and receive notifications for, sip events.
+ *
+ * SipEvents functions are all part of the 'sip' namespace.
+ *
+ * @public
+ * @requires sipEvents
+ * @module SipEvents
+ */
+
+function api({ dispatch, getState }) {
+  var api = {
+    /**
+     * Subscribe for a sip event.
+     * @public
+     * @method subscribe
+     * @requires sipEvents
+     * @memberof SipEvents
+     * @param  {string} eventType The sip event type to subscribe for.
+     * @param  {Array}  subscribeUserList The list of users to subcribe to.
+     * @param  {string} clientCorrelator
+     * @param  {Array} [customParameters] List of custom options provided as part of the subscription.
+     */
+    subscribe(eventType, subscribeUserList, clientCorrelator, customParameters = []) {
+      dispatch(actions.sipEventSubscribe(eventType, subscribeUserList, clientCorrelator, customParameters));
+    },
+
+    /**
+     * Update a subscription for a sip event.
+     * @public
+     * @method update
+     * @requires sipEvents
+     * @memberof SipEvents
+     * @param  {string} eventType The sip event subscription to update.
+     * @param  {Object} userLists
+     * @param  {Array}  userLists.subscribeUserList The list of users to subcribe to.
+     * @param  {Array}  userLists.unsubscribeUserList The list of users to unsubscribe from. If all users are unsubscribed from, the event subscription is removed completly.
+     * @param  {Array} [customParameters] List of custom options provided as part of the subscription.
+     */
+    update(eventType, userLists, customParameters = []) {
+      dispatch(actions.sipEventUpdate(eventType, userLists, customParameters));
+    },
+
+    /**
+     * Unsubscribe from a sip event.
+     * @public
+     * @method unsubscribe
+     * @requires sipEvents
+     * @memberof SipEvents
+     * @param  {string} eventType The sip event to unsubscribe from.
+     */
+    unsubscribe(eventType) {
+      dispatch(actions.sipEventUnsubscribe(eventType));
+    },
+
+    /**
+     * Retrieve information about a specified sip event.
+     * @public
+     * @method getDetails
+     * @requires sipEvents
+     * @memberof SipEvents
+     * @param  {string} [eventType] Type of sip event to retrieve.
+     * @return {Object} Returns all information related to the chosen eventType that is contained in the store. If no eventType is specified, it will return information for all eventTypes.
+     */
+    getDetails(eventType) {
+      return (0, _selectors.getSipEventInfo)(getState(), eventType);
+    }
+  };
+
+  // Namespace the API.
+  return { sip: api };
+}
+
+/***/ }),
+
+/***/ "./src/sipEvents/interface/eventTypes.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+/**
+ * A change in SIP event subscriptions has occurred.
+ * @public
+ * @requires sipEvents
+ * @memberof SipEvents
+ * @event sip:subscriptionChange
+ * @param {Object} params
+ * @param {string} params.eventType The type of sip event.
+ * @param {Object} params.change The change operation that occurred.
+ * @param {Array} params.subscribedUsers Users that were subscribed to.
+ * @param {Array} params.unsubscribedUsers Users that were unsubscribed from.
+ */
+const EVENT_SUBSCRIPTION_CHANGED = exports.EVENT_SUBSCRIPTION_CHANGED = 'sip:subscriptionChange';
+
+/**
+ * An error occurred while performing a SIP event action.
+ * @public
+ * @requires sipEvents
+ * @memberof SipEvents
+ * @event sip:error
+ * @param {Object} params
+ * @param {BasicError} params.error The Basic error object.
+ */
+const EVENT_ERROR = exports.EVENT_ERROR = 'sip:error';
+
+/**
+ * A SIP event notification has been received.
+ * @public
+ * @requires sipEvents
+ * @memberof SipEvents
+ * @event sip:eventsChange
+ * @param {Object} params Information about the notification.
+ * @param {string} params.eventType The type of sip event.
+ * @param {string} params.eventId The ID of the event.
+ * @param {Object} params.event The full event object.
+ */
+const EVENT_RECEIVED = exports.EVENT_RECEIVED = 'sip:eventsChange';
+
+/***/ }),
+
+/***/ "./src/sipEvents/interface/events.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _eventTypes = __webpack_require__("./src/sipEvents/interface/eventTypes.js");
+
+var eventTypes = _interopRequireWildcard(_eventTypes);
+
+var _actionTypes = __webpack_require__("./src/sipEvents/interface/actionTypes.js");
+
+var actionTypes = _interopRequireWildcard(_actionTypes);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+// Helper function for formatting "changed" events.
+function subscriptionChange({ change, action }) {
+  if (action.error) {
+    return {
+      type: eventTypes.EVENT_ERROR,
+      args: { error: action.payload }
+    };
+  } else {
+    return {
+      type: eventTypes.EVENT_SUBSCRIPTION_CHANGED,
+      args: {
+        eventType: action.payload.eventType,
+        change,
+        subscribedUsers: action.payload.subscribedUsers,
+        unsubscribedUsers: action.payload.unsubscribedUsers
+      }
+    };
+  }
+}
+
+var events = {};
+
+events[actionTypes.SIP_EVENT_SUBSCRIBE_FINISH] = function (action) {
+  return subscriptionChange({
+    change: 'newSubscription',
+    action
+  });
+};
+
+events[actionTypes.SIP_EVENT_UPDATE_FINISH] = function (action) {
+  return subscriptionChange({
+    change: 'updateSubscription',
+    action
+  });
+};
+
+events[actionTypes.SIP_EVENT_UNSUBSCRIBE_FINISH] = function (action) {
+  return subscriptionChange({
+    change: 'unsubscribe',
+    action
+  });
+};
+
+events[actionTypes.SIP_EVENT_RECEIVED] = function (action) {
+  // Pass the notification straight through.
+  return {
+    type: eventTypes.EVENT_RECEIVED,
+    args: {
+      eventType: action.payload.eventType,
+      eventId: action.payload.eventId,
+      event: action.payload
+    }
+  };
+};
+
+exports.default = events;
+
+/***/ }),
+
+/***/ "./src/sipEvents/interface/index.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _api = __webpack_require__("./src/sipEvents/interface/api.js");
+
+var _api2 = _interopRequireDefault(_api);
+
+var _reducer = __webpack_require__("./src/sipEvents/interface/reducer.js");
+
+var _reducer2 = _interopRequireDefault(_reducer);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// Import the components of the interface.
+const name = 'sipEvents';
+
+exports.default = {
+  name,
+  api: _api2.default,
+  reducer: _reducer2.default
+};
+
+/***/ }),
+
+/***/ "./src/sipEvents/interface/reducer.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends2 = __webpack_require__("../../node_modules/babel-runtime/helpers/extends.js");
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+var _actionTypes = __webpack_require__("./src/sipEvents/interface/actionTypes.js");
+
+var actionTypes = _interopRequireWildcard(_actionTypes);
+
+var _reduxActions = __webpack_require__("../../node_modules/redux-actions/es/index.js");
+
+var _fp = __webpack_require__("../../node_modules/lodash/fp.js");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const reducers = {};
+
+// Libraries.
+
+
+reducers[actionTypes.SIP_EVENT_SUBSCRIBE_FINISH] = {
+  next(state, action) {
+    return (0, _extends3.default)({}, state, {
+      // Add a new sip event section to state.
+      [action.payload.eventType]: {
+        sessionData: action.payload.sessionData,
+        subscribedUsers: action.payload.subscribedUsers
+      }
+    });
+  }
+};
+
+reducers[actionTypes.SIP_EVENT_UPDATE_FINISH] = {
+  next(state, action) {
+    let subscribedUsers = state[action.payload.eventType].subscribedUsers;
+    // Add the new subscribed users.
+    subscribedUsers = (0, _fp.union)(action.payload.subscribeUserList, subscribedUsers);
+    // Remove the unsubscribed users.
+    subscribedUsers = (0, _fp.without)(action.payload.unsubscribeUserList, subscribedUsers);
+
+    // Update the subscribed users for the sip event section.
+    if (subscribedUsers.length === 0) {
+      // If there are no subscribed users for this session, the session is deleted.
+      let newState = (0, _extends3.default)({}, state);
+      delete newState[action.payload.eventType];
+      return newState;
+    } else {
+      return (0, _extends3.default)({}, state, {
+        [action.payload.eventType]: (0, _extends3.default)({}, state[action.payload.eventType], {
+          subscribedUsers
+        })
+      });
+    }
+  }
+};
+
+reducers[actionTypes.SIP_EVENT_UNSUBSCRIBE_FINISH] = {
+  next(state, action) {
+    // Remove the specified sip event section.
+    return (0, _fp.omit)(action.payload.eventType, state);
+  }
+};
+
+reducers[actionTypes.SIP_EVENT_RECEIVED] = function (state, action) {
+  // Ensure everything is defined.
+  let eventInfo = state[action.payload.eventType] || {};
+  let notifications = eventInfo.notifications || [];
+  // Concat the notification to the specified sip event section.
+  return (0, _extends3.default)({}, state, {
+    [action.payload.eventType]: (0, _extends3.default)({}, state[action.payload.eventType], {
+      notifications: (0, _fp.concat)(notifications, action.payload)
+    })
+  });
+};
+
+const reducer = (0, _reduxActions.handleActions)(reducers, {});
+exports.default = reducer;
+
+/***/ }),
+
+/***/ "./src/sipEvents/interface/selectors.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getSipEventInfo = getSipEventInfo;
+
+var _fp = __webpack_require__("../../node_modules/lodash/fp.js");
+
+/**
+ * Retrieves information about a sip event.
+ * @method getSipEventInfo
+ * @param  {string} eventType
+ * @return {Object}
+ */
+function getSipEventInfo(state, eventType) {
+  if (eventType) {
+    return (0, _fp.cloneDeep)(state.sipEvents[eventType]);
+  } else {
+    return (0, _fp.cloneDeep)(state.sipEvents);
+  }
+}
+
+/***/ }),
+
+/***/ "./src/sipEvents/sagas.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends2 = __webpack_require__("../../node_modules/babel-runtime/helpers/extends.js");
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+var _stringify = __webpack_require__("../../node_modules/babel-runtime/core-js/json/stringify.js");
+
+var _stringify2 = _interopRequireDefault(_stringify);
+
+exports.sipEventSubscribe = sipEventSubscribe;
+exports.sipEventUpdate = sipEventUpdate;
+exports.sipEventUnsubscribe = sipEventUnsubscribe;
+exports.receiveEventNotify = receiveEventNotify;
+
+var _actionTypes = __webpack_require__("./src/sipEvents/interface/actionTypes.js");
+
+var actionTypes = _interopRequireWildcard(_actionTypes);
+
+var _actions = __webpack_require__("./src/sipEvents/interface/actions.js");
+
+var actions = _interopRequireWildcard(_actions);
+
+var _selectors = __webpack_require__("./src/sipEvents/interface/selectors.js");
+
+var _selectors2 = __webpack_require__("./src/auth/interface/selectors.js");
+
+var _actionTypes2 = __webpack_require__("./src/notifications/interface/actionTypes.js");
+
+var _effects = __webpack_require__("./src/request/effects.js");
+
+var _effects2 = _interopRequireDefault(_effects);
+
+var _errors = __webpack_require__("./src/errors/index.js");
+
+var _errors2 = _interopRequireDefault(_errors);
+
+var _effects3 = __webpack_require__("../../node_modules/redux-saga/es/effects.js");
+
+var _logs = __webpack_require__("./src/logs/index.js");
+
+var _fp = __webpack_require__("../../node_modules/lodash/fp.js");
+
+var _constants = __webpack_require__("./src/constants.js");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// Get the logger
+
+
+// Libraries.
+
+
+// Other plugins.
+const log = (0, _logs.getLogManager)().getLogger('SIPEVENTS');
+
+/**
+ * Saga for subscribing to specified Sip Events.
+ * @method sipEventSubscribe
+ */
+
+
+// Constants
+
+
+// Logs
+// Sip Events plugin.
+function* sipEventSubscribe() {
+  while (true) {
+    const action = yield (0, _effects3.take)(actionTypes.SIP_EVENT_SUBSCRIBE);
+    // TODO: Have the client correlator be provided as a config, not through the API.
+    log.debug(`Subscribing for sip ${action.payload.eventType}.`, action.payload.clientCorrelator);
+
+    // Determine if the user is subscribed to the specified sip event.
+    let { received: subscribedServices } = yield (0, _effects3.select)(_selectors2.getServices);
+    let sipEvents = subscribedServices.filter(service => service.startsWith('event:'));
+
+    if (!(0, _fp.includes)(action.payload.eventType, sipEvents)) {
+      log.info(`Cannot subcribe to sip ${action.payload.eventType}; service not provisioned.`);
+      yield (0, _effects3.put)(actions.sipEventSubscribeFinish({
+        error: new _errors2.default({
+          code: _errors.sipEventCodes.NOT_PROVISIONED,
+          message: 'Cannot subscribe to sip event; service was not provisioned during connection.'
+        })
+      }));
+      continue;
+    }
+
+    // Use the same subscription duration as the auth subscription.
+    let { expires } = yield (0, _effects3.select)(_selectors2.getSubscriptionInfo);
+
+    let platform = yield (0, _effects3.select)(_selectors2.getPlatform);
+    let { server, username, token, accessToken, requestOptions: commonOptions } = yield (0, _effects3.select)(_selectors2.getConnectionInfo);
+
+    // TODO: CPaaS should store it's token the same way as Link.
+    if (platform === _constants.platforms.CPAAS && !token) {
+      token = accessToken;
+    }
+
+    const requestOptions = {};
+    requestOptions.method = 'POST';
+
+    requestOptions.url = `${server.protocol}://${server.server}:${server.port}/` + `rest/version/${server.version}/` + `user/${username}/` + 'eventSubscription';
+
+    requestOptions.body = {
+      eventSubscriptionRequest: {
+        subscribeUserList: action.payload.subscribeUserList,
+        clientCorrelator: action.payload.clientCorrelator,
+        eventType: action.payload.eventType,
+        expires
+      }
+    };
+    if (action.payload.customParameters.length) {
+      requestOptions.body.eventSubscriptionRequest.customParameters = action.payload.customParameters;
+    }
+    requestOptions.body = (0, _stringify2.default)(requestOptions.body);
+
+    const response = yield (0, _effects2.default)(requestOptions, commonOptions);
+
+    if (response.error) {
+      let error;
+      if (response.payload.body) {
+        // Handle errors from the server.
+        let { statusCode } = response.payload.body.eventSubscriptionResponse;
+        log.info(`Failed to subscribe to sip event ${action.payload.eventType}, ` + `status code ${statusCode}`);
+
+        error = new _errors2.default({
+          code: _errors.sipEventCodes.UNKNOWN_ERROR,
+          message: `Failed to subscribe to sip event ${action.payload.eventType}, ` + `status code ${statusCode}`
+        });
+      } else {
+        // Handler errors from the request helper.
+        let { message } = response.payload.result;
+        log.info(`SIP event subscription request failed: ${message}.`);
+
+        error = new _errors2.default({
+          code: _errors.sipEventCodes.UNKNOWN_ERROR,
+          message: `SIP event subscription request failed: ${message}.`
+        });
+      }
+
+      yield (0, _effects3.put)(actions.sipEventSubscribeFinish({ error }));
+    } else {
+      log.info(`Successfully subscribed to sip event ${action.payload.eventType}.`);
+      let finishAction = actions.sipEventSubscribeFinish({
+        response: (0, _extends3.default)({}, response.payload.body.eventSubscriptionResponse, {
+          eventType: action.payload.eventType,
+          subscribedUsers: action.payload.subscribeUserList
+        })
+      });
+      // Spawn a non-blocking saga to handle resubscriptions.
+      yield (0, _effects3.spawn)(sipEventResub, finishAction);
+      yield (0, _effects3.put)(finishAction);
+    }
+  }
+}
+
+/**
+ * Saga to handle automatic resubscription to subscribed sip event.
+ * @method sipEventResub
+ * @param  {Object} action A SIP_EVENT_SUBSCRIBE_FINISH action.
+ */
+function* sipEventResub(action) {
+  let shouldResub = true;
+  while (shouldResub) {
+    const resubDelay = action.payload.expires * 1000 / 2;
+    // Wait for either the resub delay or an unsubscribe action.
+    const { expiry } = yield (0, _effects3.race)({
+      expiry: (0, _effects3.delay)(resubDelay),
+      unsubscribe: (0, _effects3.take)(unsubAction => {
+        return unsubAction.type === actionTypes.SIP_EVENT_UNSUBSCRIBE_FINISH && unsubAction.payload.eventType === action.payload.eventType;
+      })
+    });
+
+    // If the resubDelay has elapsed, attempt resubscribe.
+    if (expiry) {
+      let eventInfo = yield (0, _effects3.select)(_selectors.getSipEventInfo, action.payload.eventType);
+
+      if (eventInfo) {
+        log.info(`Re-subscribing for sip ${action.payload.eventType}.`);
+        yield (0, _effects3.put)(actions.sipEventUpdate(action.payload.eventType, {}));
+      } else {
+        shouldResub = false;
+      }
+    } else {
+      shouldResub = false;
+    }
+  }
+}
+
+/**
+ * Saga to update/resubscribe to a subscribed sip event.
+ * @method sipEventUpdate
+ */
+function* sipEventUpdate() {
+  while (true) {
+    const action = yield (0, _effects3.take)(actionTypes.SIP_EVENT_UPDATE);
+    log.debug(`Updating sip event subscription: ${action.payload.eventType}.`);
+    let eventInfo = yield (0, _effects3.select)(_selectors.getSipEventInfo, action.payload.eventType);
+
+    if (!eventInfo) {
+      if (action.meta.isResub) {
+        // Don't need to resub, since we're not subscribed anymore.
+        // TODO: Tech-Debt: BasicError isn't very useful for these scenarios. The emitted event provides
+        //      the BasicError, except there's no (easy to use) info indicating _which_ event was being
+        //      acted on. BasicError needs the ability to provide extra information.
+        const error = new _errors2.default({
+          code: _errors.sipEventCodes.NOT_SUBSCRIBED,
+          message: `Cannot resubscribe for ${action.payload.eventType} subscription; user not subscribed.`
+        });
+        yield (0, _effects3.put)(actions.sipEventUpdateFinish({ error }));
+      } else {
+        // Error: Not subscribed to this sip event. Cannot update.
+        const error = new _errors2.default({
+          code: _errors.sipEventCodes.NOT_SUBSCRIBED,
+          message: `Cannot update subscription for ${action.payload.eventType}; user not subscribed.`
+        });
+        yield (0, _effects3.put)(actions.sipEventUpdateFinish({ error }));
+      }
+      continue;
+    }
+
+    let platform = yield (0, _effects3.select)(_selectors2.getPlatform);
+    let { server, username, token, accessToken, requestOptions: commonOptions } = yield (0, _effects3.select)(_selectors2.getConnectionInfo);
+
+    // TODO: CPaaS should store it's token the same way as Link.
+    if (platform === _constants.platforms.CPAAS && !token) {
+      token = accessToken;
+    }
+
+    const requestOptions = {};
+    requestOptions.method = 'PUT';
+
+    requestOptions.url = `${server.protocol}://${server.server}:${server.port}/` + `rest/version/${server.version}/` + `user/${username}/` + `eventSubscription/${eventInfo.sessionData}`;
+
+    // Only include user lists in the request body if there are entries.
+    let userLists = {};
+    if (action.payload.subscribeUserList.length > 0) {
+      userLists.subscribeUserList = action.payload.subscribeUserList;
+    }
+    if (action.payload.unsubscribeUserList.length > 0) {
+      userLists.unsubscribeUserList = action.payload.unsubscribeUserList;
+    }
+
+    requestOptions.body = (0, _stringify2.default)({
+      eventSubscriptionRequest: (0, _extends3.default)({}, userLists, {
+        eventType: action.payload.eventType,
+        customParameters: action.payload.customParameters,
+        expires: eventInfo.expires
+      })
+    });
+
+    const response = yield (0, _effects2.default)(requestOptions, commonOptions);
+
+    if (response.error) {
+      let error;
+      if (response.payload.body) {
+        // Handle errors from the server.
+        let { statusCode } = response.payload.body.eventSubscriptionResponse;
+        log.info(`Failed to update sip event subscription; ${action.payload.eventType}, ` + `status code ${statusCode}`);
+
+        error = new _errors2.default({
+          code: _errors.sipEventCodes.UNKNOWN_ERROR,
+          message: `Failed to update to sip event subscription; ${action.payload.eventType}, ` + `status code ${statusCode}`
+        });
+      } else {
+        // Handler errors from the request helper.
+        let { message } = response.payload.result;
+        log.info(`SIP event update subscription request failed: ${message}.`);
+
+        error = new _errors2.default({
+          code: _errors.sipEventCodes.UNKNOWN_ERROR,
+          message: `SIP event update subscription request failed: ${message}.`
+        });
+      }
+
+      yield (0, _effects3.put)(actions.sipEventUpdateFinish({ error }));
+    } else {
+      log.info(`Updated sip event subscription: ${action.payload.eventType}.`);
+      yield (0, _effects3.put)(actions.sipEventUpdateFinish({
+        response: (0, _extends3.default)({}, response.payload.body.eventSubscriptionResponse, {
+          eventType: action.payload.eventType,
+          subscribeUserList: action.payload.subscribeUserList || [],
+          unsubscribeUserList: action.payload.unsubscribeUserList || []
+        })
+      }));
+    }
+  }
+}
+
+/**
+ * Saga to unsubscribe from [all currently subscribed] sip events.
+ * @method sipEventUnsubscribe
+ */
+function* sipEventUnsubscribe() {
+  while (true) {
+    const action = yield (0, _effects3.take)(actionTypes.SIP_EVENT_UNSUBSCRIBE);
+    log.debug(`Unsubscribing from sip event subscriptions: ${action.payload}.`);
+    let eventInfo = yield (0, _effects3.select)(_selectors.getSipEventInfo, action.payload);
+
+    if (!eventInfo) {
+      log.info(`Cannot unsubscribe from sip event ${action.payload}; no subscription exists.`);
+      const error = new _errors2.default({
+        code: _errors.sipEventCodes.NOT_SUBSCRIBED,
+        message: `Cannot unsubscribe from ${action.payload}; no subscription found.`
+      });
+      yield (0, _effects3.put)(actions.sipEventUnsubscribeFinish({ error }));
+      continue;
+    }
+
+    let platform = yield (0, _effects3.select)(_selectors2.getPlatform);
+    let { server, username, token, accessToken, requestOptions: commonOptions } = yield (0, _effects3.select)(_selectors2.getConnectionInfo);
+
+    // TODO: CPaaS should store it's token the same way as Link.
+    if (platform === _constants.platforms.CPAAS && !token) {
+      token = accessToken;
+    }
+
+    const requestOptions = {};
+    requestOptions.method = 'DELETE';
+
+    requestOptions.url = `${server.protocol}://${server.server}:${server.port}/` + `rest/version/${server.version}/` + `user/${username}/` + `eventSubscription/${eventInfo.sessionData}`;
+
+    const response = yield (0, _effects2.default)(requestOptions, commonOptions);
+
+    if (response.error) {
+      let error;
+      if (response.payload.body) {
+        // Handle errors from the server.
+        let { statusCode } = response.payload.body.eventSubscriptionResponse;
+        log.info(`Failed to unsubscribe from sip event ${action.payload.eventType}, ` + `status code ${statusCode}`);
+
+        error = new _errors2.default({
+          code: _errors.sipEventCodes.UNKNOWN_ERROR,
+          message: `Failed to unsubscribe from sip event ${action.payload.eventType}, ` + `status code ${statusCode}`
+        });
+      } else {
+        // Handler errors from the request helper.
+        let { message } = response.payload.result;
+        log.info(`SIP event unsubscription request failed: ${message}.`);
+
+        error = new _errors2.default({
+          code: _errors.sipEventCodes.UNKNOWN_ERROR,
+          message: `SIP event unsubscription request failed: ${message}.`
+        });
+      }
+
+      yield (0, _effects3.put)(actions.sipEventUnsubscribeFinish({ error }));
+    } else {
+      log.info(`Successfully unsubscribed from sip ${action.payload}.`);
+      yield (0, _effects3.put)(actions.sipEventUnsubscribeFinish({
+        response: {
+          eventType: action.payload
+        }
+      }));
+    }
+  }
+}
+
+/**
+ * Saga to handle received sip event notifications.
+ * @method receiveEventNotify
+ */
+function* receiveEventNotify() {
+  // Redux-saga take() pattern.
+  // Take notification actions that MAY be for sip events.
+  function receiveEventNotifyPattern(action) {
+    return action.type === _actionTypes2.NOTIFICATION_RECEIVED && action.payload.notificationMessage.hasOwnProperty('genericNotificationParams');
+  }
+
+  while (true) {
+    const action = yield (0, _effects3.take)(receiveEventNotifyPattern);
+
+    // Determine which sip events the user is subscribed/connected for.
+    let { received: subscribedServices } = yield (0, _effects3.select)(_selectors2.getServices);
+    let sipEvents = subscribedServices.filter(service => service.startsWith('event:'));
+
+    let notification = action.payload.notificationMessage;
+
+    // Determine if this notification is for a sip event the user subscribed/connected for.
+    if ((0, _fp.includes)(notification.eventType, sipEvents)) {
+      let eventInfo = yield (0, _effects3.select)(_selectors.getSipEventInfo, notification.eventType);
+
+      // Determine if there is a subscription for this sip event in state.
+      if (eventInfo) {
+        log.info(`Received sip event notification of type ${notification.eventType}.`);
+        yield (0, _effects3.put)(actions.sipEventReceived(notification));
+      } else {
+        // Subscribed to sip event, but received a notification for it?
+        log.debug('Received sip event notification for untracked event.', notification);
+      }
+    } else {
+      // Not subscribed to sip event, but received a notification for it?
+      log.debug('Received sip event notification without subscription.', action.payload.eventType);
+    }
+  }
+}
+
+/***/ }),
+
+/***/ "./src/users/interface/actions/actionTypes.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+const prefix = '@@KANDY/';
+
+/**
+ * Contact Actions
+ *
+ * Action types associated with the operations of methods on the contacts namespace
+ */
+const ADD_CONTACT = exports.ADD_CONTACT = prefix + 'ADD_CONTACT';
+const ADD_CONTACT_FINISH = exports.ADD_CONTACT_FINISH = prefix + 'ADD_CONTACT_FINISH';
+
+const REFRESH_CONTACTS = exports.REFRESH_CONTACTS = prefix + 'REFRESH_CONTACTS';
+const REFRESH_CONTACTS_FINISH = exports.REFRESH_CONTACTS_FINISH = prefix + 'REFRESH_CONTACTS_FINISH';
+
+const REMOVE_CONTACT = exports.REMOVE_CONTACT = prefix + 'REMOVE_CONTACT';
+const REMOVE_CONTACT_FINISH = exports.REMOVE_CONTACT_FINISH = prefix + 'REMOVE_CONTACT_FINISH';
+
+const UPDATE_CONTACT = exports.UPDATE_CONTACT = prefix + 'UPDATE_CONTACT';
+const UPDATE_CONTACT_FINISH = exports.UPDATE_CONTACT_FINISH = prefix + 'UPDATE_CONTACT_FINISH';
+
+const FETCH_CONTACT = exports.FETCH_CONTACT = prefix + 'FETCH_CONTACT';
+const FETCH_CONTACT_FINISH = exports.FETCH_CONTACT_FINISH = prefix + 'FETCH_CONTACT_FINISH';
+
+/**
+ * User Actions
+ *
+ * Action types associated with the operations of methods on the users namespace
+ */
+const FETCH_USER = exports.FETCH_USER = prefix + 'FETCH_USER';
+const FETCH_USER_FINISH = exports.FETCH_USER_FINISH = prefix + 'FETCH_USER_FINISH';
+
+const FETCH_SELF_INFO = exports.FETCH_SELF_INFO = prefix + 'FETCH_SELF_INFO';
+const FETCH_SELF_INFO_FINISH = exports.FETCH_SELF_INFO_FINISH = prefix + 'FETCH_SELF_INFO_FINISH';
+
+const SEARCH_DIRECTORY = exports.SEARCH_DIRECTORY = prefix + 'SEARCH_DIRECTORY';
+const SEARCH_DIRECTORY_FINISH = exports.SEARCH_DIRECTORY_FINISH = prefix + 'SEARCH_DIRECTORY_FINISH';
+
+/***/ }),
+
+/***/ "./src/users/interface/actions/contacts.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.refreshContacts = refreshContacts;
+exports.refreshContactsFinish = refreshContactsFinish;
+exports.addContact = addContact;
+exports.addContactFinish = addContactFinish;
+exports.fetchContact = fetchContact;
+exports.fetchContactFinish = fetchContactFinish;
+exports.removeContact = removeContact;
+exports.removeContactFinish = removeContactFinish;
+exports.updateContact = updateContact;
+exports.updateContactFinish = updateContactFinish;
+
+var _actionTypes = __webpack_require__("./src/users/interface/actions/actionTypes.js");
+
+var actionTypes = _interopRequireWildcard(_actionTypes);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+/**
+ * Refresh the contact list.
+ * @returns {Object} A flux standard action representing the REFRESH_CONTACTS action.
+ */
+function refreshContacts() {
+  return {
+    type: actionTypes.REFRESH_CONTACTS,
+    payload: null
+  };
+}
+
+/**
+ * The finishing action which follows the REFRESH_CONTACTS action
+ * @param {Object} $0
+ * @param  {Array} [$0.contacts] An array of contact objects.
+ * @param  {Object} [$0.error] An error object. Only present if an error occurred.
+ * @returns {Object} A flux standard action representing the REFRESH_CONTACTS_FINISH action.
+ */
+function refreshContactsFinish({ contacts, error }) {
+  return {
+    type: actionTypes.REFRESH_CONTACTS_FINISH,
+    payload: error || contacts,
+    error: Boolean(error)
+  };
+}
+
+/**
+ * Adds a contact to the Address Book
+ * @param {Object} contact The contact object.
+ * @returns {Object} A flux standard action representing the ADD_CONTACT action.
+ */
+function addContact(contact) {
+  return {
+    type: actionTypes.ADD_CONTACT,
+    payload: contact
+  };
+}
+
+/**
+ * The finishing action which follows the ADD_CONTACT action
+ * @param {Object} $0
+ * @param {Object} [$0.contact] The contact object.
+ * @param {Object} [$0.error] An error object. Only present if an error occurred.
+ * @returns {Object} A flux standard action representing the ADD_CONTACT_FINISH action.
+ */
+function addContactFinish({ contact, error }) {
+  return {
+    payload: error || contact,
+    error: Boolean(error),
+    type: actionTypes.ADD_CONTACT_FINISH
+  };
+}
+
+/**
+ * Fetch a contact from the user's personal address book
+ * @param {string} contactId The ID of the contact to be fetched
+ * @returns {Object} A flux standard action representing the FETCH_CONTACT action.
+ */
+function fetchContact(contactId) {
+  return {
+    type: actionTypes.FETCH_CONTACT,
+    payload: contactId
+  };
+}
+
+/**
+ * The finishing action which follows a FETCH_CONTACT action
+ * @param {Object} $0
+ * @param {Object} [$0.contact] The contact object.
+ * @param {Object} [$0.error] A Basic error object
+ * @returns {Object} A flux standard action representing the FETCH_CONTACT_FINISH action.
+ */
+function fetchContactFinish({ contact, error }) {
+  return {
+    type: actionTypes.FETCH_CONTACT_FINISH,
+    payload: error || contact,
+    error: Boolean(error)
+  };
+}
+
+/**
+ * Removes a contact from the Address Book
+ * @param {string} contactId The id of the contact whom it has been requested to delete from the address book
+ * @returns {Object} A flux standard action representing the REMOVE_CONTACT action.
+ */
+function removeContact(contactId) {
+  return {
+    type: actionTypes.REMOVE_CONTACT,
+    payload: contactId
+  };
+}
+
+/**
+ * The finishing action which follows a REMOVE_CONTACT action
+ * @param {Object} $0
+ * @param {string} [$0.contactId] The id of the contact whom it has been requested to delete from the address book
+ * @param {Object} [$0.error] An error object. Only present if an error occurred.
+ * @returns {Object} A flux standard action representing the REMOVE_CONTACT_FINISH action.
+ */
+function removeContactFinish({ contactId, error }) {
+  return {
+    type: actionTypes.REMOVE_CONTACT_FINISH,
+    payload: contactId
+  };
+}
+
+/**
+ * Updates the data for a contact in the Address Book
+ * @param {string} contactId The ID of the contact being targeted for an update action
+ * @param {Object} contact The contact object.
+ * @returns {Object} A flux standard action representing the UPDATE_CONTACT action.
+ */
+function updateContact(contactId, contact) {
+  return {
+    type: actionTypes.UPDATE_CONTACT,
+    payload: { contactId, contact }
+  };
+}
+
+/**
+ * The finishing action which follows a UPDATE_CONTACT action
+ * @param {Object} $0
+ * @param {Object} [$0.contact] The contact object.
+ * @param {Object} [$0.error] A Basic error object
+ * @returns {Object} A flux standard action representing the UPDATE_CONTACT_FINISH action.
+ */
+function updateContactFinish({ contact, error }) {
+  return {
+    type: actionTypes.UPDATE_CONTACT_FINISH,
+    payload: error || contact,
+    error: !!error
+  };
+}
+
+/***/ }),
+
+/***/ "./src/users/interface/actions/users.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.fetchSelfInfo = fetchSelfInfo;
+exports.fetchSelfInfoFinish = fetchSelfInfoFinish;
+exports.fetchUser = fetchUser;
+exports.fetchUserFinish = fetchUserFinish;
+exports.searchDirectory = searchDirectory;
+exports.searchDirectoryFinish = searchDirectoryFinish;
+
+var _actionTypes = __webpack_require__("./src/users/interface/actions/actionTypes.js");
+
+var actionTypes = _interopRequireWildcard(_actionTypes);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+/**
+ * Action for fetching the current user's profile data.
+ * @returns {Object} A flux standard action
+ */
+function fetchSelfInfo() {
+  return {
+    type: actionTypes.FETCH_SELF_INFO
+  };
+}
+
+/**
+ * The finishing action to follow the FETCH_SELF_INFO action
+ * @returns {Object} A flux standard action representing the FETCH_SELF_INFO_FINISH action
+ */
+function fetchSelfInfoFinish(self, error) {
+  return {
+    type: actionTypes.FETCH_SELF_INFO_FINISH,
+    payload: error || self,
+    error: Boolean(error)
+  };
+}
+
+/**
+ *
+ * @param {string} userId The URI uniquely identifying the user.
+ * @returns {Object} A flux standard action representing the FETCH_USER action
+ */
+function fetchUser(userId) {
+  return {
+    type: actionTypes.FETCH_USER,
+    payload: userId
+  };
+}
+
+/**
+ * Create a finish action to follow a FETCH_USER action.
+ *
+ * @param {Object} user A user object
+ * @param {Object} [error] An error object.
+ * @returns {Object} A flux standard action representing the USER_FETCH_FINISH action.
+ */
+function fetchUserFinish(user, error) {
+  return {
+    type: actionTypes.FETCH_USER_FINISH,
+    payload: error || user,
+    error: Boolean(error)
+  };
+}
+
+/**
+ * Create an action that searches the directory.
+ *
+ * @param {Object} filters Query filter options.
+ * @param {string} [filters.name] Matches firstName or lastName.
+ * @param {string} [filters.firstName] Matches firstName.
+ * @param {string} [filters.lastName] Matches lastName.
+ * @param {string} [filters.userName] Matches userName.
+ * @param {string} [filters.phoneNumber] Matches phoneNumber.
+ * @param {Object} [options] Sorting options
+ * @param {string} [options.sortBy] The attribute upon which to sort results. This can be any of the above listed filters which describe a user attribute.
+ * @param {string} [options.order] Order by which to return results. Can be one of "asc" or "desc".
+ * @param {number} [options.max] The maximmum number of results to return.
+ * @param {string} [options.next] The pointer for a chunk of results, which may be returned from other a previous query.
+ * @returns {Object} A flux standard action representing the SEARCH_DIRECTORY action.
+ */
+function searchDirectory(filters, options) {
+  return {
+    type: actionTypes.SEARCH_DIRECTORY,
+    payload: { filters, options }
+  };
+}
+
+/**
+ * Create a finish action to follow the SEARCH_DIRECTORY action.
+ *
+ * @param {Object} $0 A dictionary object of parameters
+ * @param {Array} [$0.users] The user objects
+ * @param {Object} [$0.error] An error object.
+ * @returns {Object} A flux standard action representing the DIRECTORY_CHANGED action.
+ */
+function searchDirectoryFinish({ users, error }) {
+  return {
+    type: actionTypes.SEARCH_DIRECTORY_FINISH,
+    payload: error || users,
+    error: Boolean(error)
+  };
+}
+
+/***/ }),
+
+/***/ "./src/users/interface/api/contacts.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = contactsAPI;
+
+var _contacts = __webpack_require__("./src/users/interface/actions/contacts.js");
+
+var actions = _interopRequireWildcard(_contacts);
+
+var _selectors = __webpack_require__("./src/users/interface/selectors.js");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+// Users plugin.
+function contactsAPI({ dispatch, getState, primitives }) {
+  /**
+   * The Contacts feature allows users to store personal contacts to their account.
+   *
+   * These functions are namespaced beneath 'contacts' on the API.
+   * @public
+   * @module Contacts
+   */
+
+  return {
+    /**
+     * Add a contact to a user's personal address book.
+     * Will trigger the `contacts:new` event.
+     *
+     * @public
+     * @memberof Contacts
+     * @method add
+     * @param {Object} contact The contact object.
+     * @param {string} contact.primaryContact The primary userId for the contact
+     * @param {string} [contact.name] The name for the contact entry
+     * @param {string} [contact.firstName] The contact's first name
+     * @param {string} [contact.lastName] The contact's last name
+     * @param {string} [contact.contactId] The contact's unique contact ID
+     * @param {string} [contact.email] The contact's email address
+     * @param {string} [contact.homePhoneNumber] The contact's home phone number
+     * @param {string} [contact.businessPhoneNumber] The contact's business phone number
+     * @param {string} [contact.mobilePhoneNumber] The contact's mobile phone number
+     * @param {string} [contact.list] The name of the contact list for which to add this contact to ("friends" by default)
+     * @param {boolean} [contact.buddy] Indicates whether or not the contact is a friend of the user
+     */
+    add(contact) {
+      dispatch(actions.addContact(contact));
+    },
+
+    /**
+     * Retrieves local information about a contact.
+     *
+     * @public
+     * @memberof Contacts
+     * @method get
+     * @param {string} contactId The unique contact ID of the contact.
+     * @return {Object} Contact information.
+     */
+    get(contactId) {
+      return (0, _selectors.getContact)(getState(), contactId);
+    },
+
+    /**
+     * Retrieves local information about all contacts.
+     *
+     * @public
+     * @memberof Contacts
+     * @method getAll
+     * @return {Array} List of contact information.
+     */
+    getAll() {
+      return (0, _selectors.getContacts)(getState());
+    },
+
+    /**
+     * Refreshes the local information about contacts. This will get new contacts from the platform.
+     * Will trigger the `contacts:change` event.
+     *
+     * @public
+     * @memberof Contacts
+     * @method refresh
+     */
+    refresh() {
+      dispatch(actions.refreshContacts());
+    },
+
+    /**
+     * Remove a contact from a personal address book.
+     * Will trigger the `contacts:change` event.
+     *
+     * @public
+     * @memberof Contacts
+     * @method remove
+     * @param  {string} id The Id of the contact that will be removed.
+     */
+    remove(id) {
+      dispatch(actions.removeContact(id));
+    },
+
+    /**
+     * Update a contact from the user's personal address book.
+     * Will trigger the `contacts:change` event.
+     *
+     * @public
+     * @memberof Contacts
+     * @method update
+     * @param  {string} contactId The unique contact ID.
+     * @param  {Object} contact The contact object.
+     */
+    update(contactId, contact) {
+      dispatch(actions.updateContact(contactId, contact));
+    },
+
+    /**
+     * Fetch a contact from the user's personal address book.
+     * Will trigger the `contacts:change` event.
+     *
+     * @public
+     * @memberof Contacts
+     * @method fetch
+     * @param  {string} contactId The unique contact ID of the contact.
+     */
+    fetch(contactId) {
+      dispatch(actions.fetchContact(contactId));
+    }
+  };
+}
+
+/***/ }),
+
+/***/ "./src/users/interface/api/index.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = api;
+
+var _users = __webpack_require__("./src/users/interface/api/users.js");
+
+var _users2 = _interopRequireDefault(_users);
+
+var _contacts = __webpack_require__("./src/users/interface/api/contacts.js");
+
+var _contacts2 = _interopRequireDefault(_contacts);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Users API index.
+ * APIs are organized by their namespacing.
+ * @method api
+ * @param {Object} context
+ * @param {Function} context.dispatch The redux store's dispatch function.
+ * @param {Function} context.getState The redux store's getState function.
+ * @param {Object} context.primitives Primitive types designed for use in the SDK
+ * @return {Object} The plugin's API object.
+ */
+function api(context) {
+  return {
+    contacts: (0, _contacts2.default)(context),
+    user: (0, _users2.default)(context)
+  };
+}
+
+/***/ }),
+
+/***/ "./src/users/interface/api/users.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = usersAPI;
+
+var _users = __webpack_require__("./src/users/interface/actions/users.js");
+
+var actions = _interopRequireWildcard(_users);
+
+var _selectors = __webpack_require__("./src/users/interface/selectors.js");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+// Users plugin.
+function usersAPI({ dispatch, getState, primitives }) {
+  /**
+   * The Users feature allows access to user information for users within the same domain.
+   *
+   * These functions are namespaced beneath 'user' on the API.
+   * @public
+   * @module Users
+   */
+
+  return {
+    /**
+     * Fetches information about a specified user from the platform.
+     * Will trigger a `directory:change` event.
+     *
+     * @public
+     * @memberof Users
+     * @method fetch
+     *
+     * @param {string} primaryContact The URI uniquely identifying the user.
+     */
+    fetch(primaryContact) {
+      dispatch(actions.fetchUser(primaryContact));
+    },
+
+    /**
+     * Fetches information about the current user's profile data from the platform.
+     * Will trigger a `directory:change` event.
+     *
+     * @public
+     * @memberof Users
+     * @method fetchSelfInfo
+     */
+    fetchSelfInfo() {
+      dispatch(actions.fetchSelfInfo());
+    },
+
+    /**
+     * Retrieves local information about a previously fetched user.
+     * @public
+     * @memberof Users
+     * @method get
+     * @param {string} primaryContact The URI uniquely identifying the user.
+     */
+    get(primaryContact) {
+      return (0, _selectors.getUser)(getState(), primaryContact);
+    },
+
+    /**
+     * Retrieves local information about previously fetched users.
+     * @public
+     * @memberof Users
+     * @method getAll
+     */
+    getAll() {
+      return (0, _selectors.getUsers)(getState());
+    },
+
+    /**
+     * Search the users in the directory.
+     * Will trigger a `directory:change` event.
+     *
+     * @public
+     * @memberof Users
+     * @method search
+     * @param {Object} filters Query filter options.
+     * @param {string} [filters.userId] Matches the unique URI identifying the user.
+     * @param {string} [filters.name] Matches firstName or lastName.
+     * @param {string} [filters.firstName] Matches firstName.
+     * @param {string} [filters.lastName] Matches lastName.
+     * @param {string} [filters.userName] Matches userName.
+     * @param {string} [filters.phoneNumber] Matches phoneNumber.
+     * @param {Object} [options] Sorting options
+     * @param {string} [options.sortBy] The attribute upon which to sort results. This can be any of the above listed filters which describe a user attribute.
+     * @param {string} [options.order] Order by which to return results. Can be one of "asc" or "desc".
+     * @param {number} [options.max] The maximmum number of results to return.
+     * @param {string} [options.next] The pointer for a chunk of results, which may be returned from other a previous query.
+     */
+    search(filters = {}, options = {}) {
+      dispatch(actions.searchDirectory(filters, options));
+    }
+  };
+}
+
+/***/ }),
+
+/***/ "./src/users/interface/events/contacts.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _actionTypes = __webpack_require__("./src/users/interface/actions/actionTypes.js");
+
+var actionTypes = _interopRequireWildcard(_actionTypes);
+
+var _eventTypes = __webpack_require__("./src/users/interface/events/eventTypes.js");
+
+var eventTypes = _interopRequireWildcard(_eventTypes);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+const eventsMap = {};
+
+const contactNewEvent = action => {
+  return {
+    type: eventTypes.CONTACTS_CHANGE,
+    args: action.payload
+  };
+};
+
+const contactsChangeEvent = action => {
+  if (action.error) {
+    return {
+      type: eventTypes.CONTACTS_ERROR,
+      args: { error: action.payload }
+    };
+  } else {
+    return {
+      type: eventTypes.CONTACTS_CHANGE
+    };
+  }
+};
+
+const addContactFinishActions = action => {
+  if (action.error) {
+    return contactsChangeEvent(action);
+  }
+  return [contactNewEvent(action), contactsChangeEvent(action)];
+};
+
+eventsMap[actionTypes.ADD_CONTACT_FINISH] = addContactFinishActions;
+eventsMap[actionTypes.REFRESH_CONTACTS_FINISH] = contactsChangeEvent;
+eventsMap[actionTypes.REMOVE_CONTACT_FINISH] = contactsChangeEvent;
+eventsMap[actionTypes.UPDATE_CONTACT_FINISH] = contactsChangeEvent;
+eventsMap[actionTypes.FETCH_CONTACT_FINISH] = contactsChangeEvent;
+
+exports.default = eventsMap;
+
+/***/ }),
+
+/***/ "./src/users/interface/events/eventTypes.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+// Contacts actions
+/**
+ * A new contact has been added to the address book.
+ * @public
+ * @memberof Contacts
+ * @event contacts:new
+ * @param {Object} contact The new contact.
+ */
+const CONTACTS_NEW = exports.CONTACTS_NEW = 'contacts:new';
+
+/**
+ * An error occurred while performing a contact operation.
+ * @public
+ * @memberof Contacts
+ * @event contacts:error
+ * @param {Object} params
+ * @param {Object} params.error The Basic error object.
+ */
+const CONTACTS_ERROR = exports.CONTACTS_ERROR = 'contacts:error';
+
+/**
+ * The contacts list has changed.
+ * @public
+ * @memberof Contacts
+ * @event contacts:change
+ * @example
+ * client.on('contacts:change', function () {
+ *    // Get the updated list of contacts.
+ *    const contacts = client.contacts.getAll()
+ *    ...
+ * })
+ */
+const CONTACTS_CHANGE = exports.CONTACTS_CHANGE = 'contacts:change';
+
+// Users actions
+/**
+ * The directory has changed.
+ * @public
+ * @memberof Users
+ * @event directory:change
+ * @param {Object} params
+ * @param {Array} params.results The results of the directory search.
+ */
+const DIRECTORY_CHANGE = exports.DIRECTORY_CHANGE = 'directory:change';
+
+/**
+ * An error occurred while performing a directory operation.
+ * @public
+ * @memberof Users
+ * @event directory:error
+ * @param {Object} params
+ * @param {Object} params.error The Basic error object.
+ */
+const DIRECTORY_ERROR = exports.DIRECTORY_ERROR = 'directory:error';
+
+/***/ }),
+
+/***/ "./src/users/interface/events/users.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _actionTypes = __webpack_require__("./src/users/interface/actions/actionTypes.js");
+
+var actionTypes = _interopRequireWildcard(_actionTypes);
+
+var _eventTypes = __webpack_require__("./src/users/interface/events/eventTypes.js");
+
+var eventTypes = _interopRequireWildcard(_eventTypes);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+const eventsMap = {};
+
+eventsMap[actionTypes.SEARCH_DIRECTORY_FINISH] = function (action) {
+  if (action.error) {
+    return {
+      type: eventTypes.DIRECTORY_ERROR,
+      args: { error: action.payload }
+    };
+  } else {
+    return {
+      type: eventTypes.DIRECTORY_CHANGE,
+      args: { results: action.payload }
+    };
+  }
+};
+
+eventsMap[actionTypes.FETCH_USER_FINISH] = eventsMap[actionTypes.FETCH_SELF_INFO_FINISH] = function (action) {
+  if (action.error) {
+    return {
+      type: eventTypes.DIRECTORY_ERROR,
+      args: { error: action.payload }
+    };
+  } else {
+    return {
+      type: eventTypes.DIRECTORY_CHANGE,
+      args: { results: [action.payload] }
+    };
+  }
+};
+
+exports.default = eventsMap;
+
+/***/ }),
+
+/***/ "./src/users/interface/index.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _api = __webpack_require__("./src/users/interface/api/index.js");
+
+var _api2 = _interopRequireDefault(_api);
+
+var _reducers = __webpack_require__("./src/users/interface/reducers/index.js");
+
+var _reducers2 = _interopRequireDefault(_reducers);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * This interface is for a users plugin.
+ * @type {string}
+ */
+// Import the components of the interface.
+const name = 'users';
+
+// Export the interface as a single object.
+exports.default = { name, api: _api2.default, reducer: _reducers2.default };
+
+/***/ }),
+
+/***/ "./src/users/interface/reducers/contacts.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends2 = __webpack_require__("../../node_modules/babel-runtime/helpers/extends.js");
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+var _actionTypes = __webpack_require__("./src/users/interface/actions/actionTypes.js");
+
+var actionTypes = _interopRequireWildcard(_actionTypes);
+
+var _fp = __webpack_require__("../../node_modules/lodash/fp.js");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const reducers = {};
+
+const contactsPendingReducer = {
+  next(state) {
+    return (0, _extends3.default)({}, state, {
+      isPending: true
+    });
+  }
+};
+
+reducers[actionTypes.ADD_CONTACT] = contactsPendingReducer;
+reducers[actionTypes.REFRESH_CONTACTS] = contactsPendingReducer;
+reducers[actionTypes.FETCH_CONTACT] = contactsPendingReducer;
+reducers[actionTypes.UPDATE_CONTACT] = contactsPendingReducer;
+
+reducers[actionTypes.ADD_CONTACT_FINISH] = {
+  next(state, action) {
+    return (0, _extends3.default)({}, state, {
+      contacts: (0, _extends3.default)({}, state.contacts, {
+        [action.payload.contactId]: action.payload
+      }),
+      isPending: false
+    });
+  },
+  throw(state, action) {
+    return (0, _extends3.default)({}, state, {
+      isPending: false,
+      errors: state.errors.concat(action.payload)
+    });
+  }
+};
+
+reducers[actionTypes.REFRESH_CONTACTS_FINISH] = {
+  next(state, action) {
+    const contacts = {};
+    for (let contact of action.payload) {
+      contacts[contact.contactId] = contact;
+    }
+    return (0, _extends3.default)({}, state, {
+      contacts: contacts,
+      isPending: false
+    });
+  },
+  throw(state, action) {
+    return (0, _extends3.default)({}, state, {
+      isPending: false,
+      errors: state.errors.concat(action.payload)
+    });
+  }
+};
+
+reducers[actionTypes.FETCH_CONTACT_FINISH] = {
+  next(state, action) {
+    return (0, _extends3.default)({}, state, {
+      contacts: (0, _extends3.default)({}, state.contacts, {
+        [action.payload.contactId]: action.payload
+      }),
+      isPending: false
+    });
+  },
+  throw(state, action) {
+    return (0, _extends3.default)({}, state, {
+      isPending: false,
+      errors: state.errors.concat(action.payload)
+    });
+  }
+};
+
+reducers[actionTypes.REMOVE_CONTACT_FINISH] = {
+  next(state, action) {
+    return (0, _extends3.default)({}, state, {
+      contacts: (0, _fp.unset)(action.payload, state.contacts), // Remove the property from state.contacts whose key is equal to action.payload
+      isPending: false
+    });
+  },
+  throw(state, action) {
+    return (0, _extends3.default)({}, state, {
+      isPending: false,
+      errors: state.errors.concat(action.payload)
+    });
+  }
+};
+
+reducers[actionTypes.UPDATE_CONTACT_FINISH] = {
+  next(state, action) {
+    return (0, _extends3.default)({}, state, {
+      contacts: (0, _extends3.default)({}, state.contacts, {
+        [action.payload.contactId]: action.payload
+      }),
+      isPending: false
+    });
+  },
+  throw(state, action) {
+    return (0, _extends3.default)({}, state, {
+      isPending: false,
+      errors: state.errors.concat(action.payload)
+    });
+  }
+};
+
+exports.default = reducers;
+
+/***/ }),
+
+/***/ "./src/users/interface/reducers/index.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends2 = __webpack_require__("../../node_modules/babel-runtime/helpers/extends.js");
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+var _contacts = __webpack_require__("./src/users/interface/reducers/contacts.js");
+
+var _contacts2 = _interopRequireDefault(_contacts);
+
+var _users = __webpack_require__("./src/users/interface/reducers/users.js");
+
+var _users2 = _interopRequireDefault(_users);
+
+var _reduxActions = __webpack_require__("../../node_modules/redux-actions/es/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/*
+ * Combine all of reducers into a single reducer, defaulting to an empty Object for each
+ * substate of contacts and users
+ */
+const reducer = (0, _reduxActions.handleActions)((0, _extends3.default)({}, _contacts2.default, _users2.default), {
+  errors: [],
+  contacts: {},
+  users: {},
+  isPending: true
+});
+exports.default = reducer;
+
+/***/ }),
+
+/***/ "./src/users/interface/reducers/users.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends2 = __webpack_require__("../../node_modules/babel-runtime/helpers/extends.js");
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+var _actionTypes = __webpack_require__("./src/users/interface/actions/actionTypes.js");
+
+var actionTypes = _interopRequireWildcard(_actionTypes);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const reducers = {};
+
+reducers[actionTypes.FETCH_USER_FINISH] = {
+  next(state, action) {
+    const user = action.payload;
+    return (0, _extends3.default)({}, state, {
+      users: (0, _extends3.default)({}, state.users, {
+        [user.userId]: user
+      })
+    });
+  },
+  throw(state, action) {
+    return (0, _extends3.default)({}, state, {
+      isPending: false,
+      errors: state.errors.concat(action.payload)
+    });
+  }
+};
+
+reducers[actionTypes.FETCH_SELF_INFO_FINISH] = {
+  next(state, action) {
+    const self = action.payload;
+    return (0, _extends3.default)({}, state, {
+      users: (0, _extends3.default)({}, state.users, {
+        [self.userId]: self
+      })
+    });
+  },
+  throw(state, action) {
+    return (0, _extends3.default)({}, state, {
+      isPending: false,
+      errors: state.errors.concat(action.payload)
+    });
+  }
+};
+
+reducers[actionTypes.SEARCH_DIRECTORY_FINISH] = {
+  next(state, action) {
+    const users = {};
+    for (let user of action.payload) {
+      users[user.userId] = user;
+    }
+    return (0, _extends3.default)({}, state, {
+      users: (0, _extends3.default)({}, state.users, users),
+      isPending: false
+    });
+  },
+  throw(state, action) {
+    return (0, _extends3.default)({}, state, {
+      isPending: false,
+      errors: state.errors.concat(action.payload)
+    });
+  }
+};
+
+exports.default = reducers;
+
+/***/ }),
+
+/***/ "./src/users/interface/selectors.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getContacts = getContacts;
+exports.getContact = getContact;
+exports.getUsers = getUsers;
+exports.getUser = getUser;
+
+var _fp = __webpack_require__("../../node_modules/lodash/fp.js");
+
+/*
+ * Redux-saga selector functions.
+ * Used with the `select` effect in sagas to Retrieves
+ *      specific portions of the state.
+ */
+
+/**
+ * Gets the contacts from state.
+ * @method getContacts
+ * @return {Object}
+ */
+function getContacts(state) {
+  return (0, _fp.cloneDeep)(state.users.contacts);
+}
+
+/**
+ * Gets a contact from the state whose ID matches the supplied parameter
+ * @method getContact
+ * @return {Object}
+ */
+function getContact(state, id) {
+  return (0, _fp.cloneDeep)(state.users.contacts[id]);
+}
+
+/**
+ * Gets the users from state.
+ * @method getUsers
+ * @return {Object}
+ */
+function getUsers(state) {
+  return (0, _fp.cloneDeep)(state.users.users);
+}
+
+/**
+ * Gets the users from state.
+ * @method getUser
+ * @return {Object}
+ */
+function getUser(state, name) {
+  return (0, _fp.cloneDeep)(state.users.users[name]);
+}
+
+/***/ }),
+
+/***/ "./src/users/link.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _keys = __webpack_require__("../../node_modules/babel-runtime/core-js/object/keys.js");
+
+var _keys2 = _interopRequireDefault(_keys);
+
+var _stringify = __webpack_require__("../../node_modules/babel-runtime/core-js/json/stringify.js");
+
+var _stringify2 = _interopRequireDefault(_stringify);
+
+var _extends2 = __webpack_require__("../../node_modules/babel-runtime/helpers/extends.js");
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+exports.default = usersLink;
+exports.contactRequest = contactRequest;
+exports.fetchSelfInfo = fetchSelfInfo;
+exports.fetchUserLocale = fetchUserLocale;
+
+var _actionTypes = __webpack_require__("./src/users/interface/actions/actionTypes.js");
+
+var actionTypes = _interopRequireWildcard(_actionTypes);
+
+var _users = __webpack_require__("./src/users/interface/actions/users.js");
+
+var userActions = _interopRequireWildcard(_users);
+
+var _contacts = __webpack_require__("./src/users/interface/actions/contacts.js");
+
+var contactActions = _interopRequireWildcard(_contacts);
+
+var _selectors = __webpack_require__("./src/auth/interface/selectors.js");
+
+var _interface = __webpack_require__("./src/users/interface/index.js");
+
+var _interface2 = _interopRequireDefault(_interface);
+
+var _contacts2 = __webpack_require__("./src/users/interface/events/contacts.js");
+
+var _contacts3 = _interopRequireDefault(_contacts2);
+
+var _users2 = __webpack_require__("./src/users/interface/events/users.js");
+
+var _users3 = _interopRequireDefault(_users2);
+
+var _actions = __webpack_require__("./src/events/interface/actions.js");
+
+var _effects = __webpack_require__("./src/request/effects.js");
+
+var _effects2 = _interopRequireDefault(_effects);
+
+var _logs = __webpack_require__("./src/logs/index.js");
+
+var _effects3 = __webpack_require__("../../node_modules/redux-saga/es/effects.js");
+
+var _constants = __webpack_require__("./src/constants.js");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// Get the logger
+
+// Request
+const log = (0, _logs.getLogManager)().getLogger('USERS');
+
+// Constants
+
+
+// Logs
+
+
+const { api, name, reducer } = _interface2.default;
+
+function usersLink() {
+  function* init() {
+    yield (0, _effects3.put)((0, _actions.mapEvents)((0, _extends3.default)({}, _contacts3.default, _users3.default)));
+  }
+
+  function* refreshContacts() {
+    while (true) {
+      const action = yield (0, _effects3.take)([actionTypes.REFRESH_CONTACTS]);
+      if (action.error) {
+        continue;
+      }
+
+      const connection = yield (0, _effects3.select)(_selectors.getConnectionInfo);
+      const res = yield (0, _effects3.call)(contactRequest, 'GET', connection);
+      if (res.error) {
+        yield (0, _effects3.put)(contactActions.refreshContactsFinish({ error: res.error }));
+      } else {
+        var contacts = res.result.addressBookEntries ? res.result.addressBookEntries.map(localContactFromRemote) : [];
+        yield (0, _effects3.put)(contactActions.refreshContactsFinish({
+          contacts: contacts
+        }));
+      }
+    }
+  }
+
+  /**
+   * fetch a contact from the user's Personal Address Book.
+   *
+   * @return {Generator} [description]
+   */
+  function* fetchContact() {
+    while (true) {
+      const action = yield (0, _effects3.take)([actionTypes.FETCH_CONTACT]);
+
+      if (action.error) {
+        log.debug(action.error);
+      }
+
+      const connection = yield (0, _effects3.select)(_selectors.getConnectionInfo);
+      const res = yield (0, _effects3.call)(contactRequest, 'GET', connection, `contacts/${action.payload}`);
+
+      if (res.error) {
+        const error = new Error(res.error);
+        yield (0, _effects3.put)(contactActions.fetchContactFinish({ error }));
+      } else {
+        const contact = localContactFromRemote(res.result.addressBookEntries[0]);
+        yield (0, _effects3.put)(contactActions.fetchContactFinish({ contact }));
+      }
+    }
+  }
+
+  function* addContact() {
+    while (true) {
+      try {
+        // Wait for ADD_CONTACT action.
+        const action = yield (0, _effects3.take)(actionTypes.ADD_CONTACT);
+
+        var contactData = {
+          addressBookRequest: {
+            addressBookEntries: [remoteContactFromLocal((0, _extends3.default)({}, action.payload))]
+          }
+        };
+        const connection = yield (0, _effects3.select)(_selectors.getConnectionInfo);
+        const res = yield (0, _effects3.call)(contactRequest, 'POST', connection, 'contacts/', (0, _stringify2.default)(contactData));
+        if (res.error) {
+          throw new Error(res.error);
+        } else {
+          const contact = localContactFromRemote(action.payload);
+          yield (0, _effects3.put)(contactActions.addContactFinish({ contact }));
+        }
+      } catch (error) {
+        yield (0, _effects3.put)(contactActions.addContactFinish({ error }));
+      }
+    }
+  }
+
+  function* removeContact() {
+    while (true) {
+      try {
+        // Wait for REMOVE_CONTACT action.
+        const action = yield (0, _effects3.take)(actionTypes.REMOVE_CONTACT);
+        const connection = yield (0, _effects3.select)(_selectors.getConnectionInfo);
+        const res = yield (0, _effects3.call)(contactRequest, 'DELETE', connection, 'contacts/' + encodeURIComponent(action.payload));
+
+        if (res.error) {
+          throw new Error(res.error);
+        }
+        yield (0, _effects3.put)(contactActions.removeContactFinish({ contactId: action.payload }));
+      } catch (err) {
+        yield (0, _effects3.put)(contactActions.removeContactFinish({ error: err }));
+      }
+    }
+  }
+
+  function* updateContact() {
+    while (true) {
+      try {
+        const action = yield (0, _effects3.take)(actionTypes.UPDATE_CONTACT);
+        const { contactId, contact } = action.payload;
+        const contactRestObject = remoteContactFromLocal((0, _extends3.default)({}, contact));
+        var contactData = {
+          addressBookRequest: {
+            addressBookEntries: [contactRestObject]
+          }
+        };
+        const connection = yield (0, _effects3.select)(_selectors.getConnectionInfo);
+        const res = yield (0, _effects3.call)(contactRequest, 'PUT', connection, 'contacts/' + contactId, (0, _stringify2.default)(contactData));
+        if (res.error) {
+          throw new Error(res.error);
+        }
+        yield (0, _effects3.put)(contactActions.updateContactFinish({ contact }));
+      } catch (error) {
+        yield (0, _effects3.put)(contactActions.updateContactFinish({ error }));
+      }
+    }
+  }
+
+  function* searchDirectory() {
+    while (true) {
+      // Wait for SEARCH_DIRECTORY action.
+      const action = yield (0, _effects3.take)(actionTypes.SEARCH_DIRECTORY);
+      // TODO: Ensure the value is defined.
+      const type = (0, _keys2.default)(action.payload.filters)[0];
+
+      var body = {
+        searchCriteria: action.payload.filters[type],
+        searchType: searchTypeInteger(type)
+      };
+      const connection = yield (0, _effects3.select)(_selectors.getConnectionInfo);
+      const res = yield (0, _effects3.call)(getDirectory, connection, body);
+      if (res.error) {
+        const error = new Error(res.error);
+        yield (0, _effects3.put)(userActions.searchDirectoryFinish({ error }));
+      } else {
+        var users = res.result.directoryItems || [];
+        yield (0, _effects3.put)(userActions.searchDirectoryFinish({ users: users.map(localUserFromRemote) }));
+      }
+    }
+  }
+
+  /**
+   * On-Premises fetchUser saga
+   * Performs to uworkflow of caching a user.
+   * @return {Generator} [description]
+   */
+  function* fetchUser() {
+    while (true) {
+      // Wait for SEARCH_DIRECTORY action.
+      const { payload: userId } = yield (0, _effects3.take)(actionTypes.FETCH_USER);
+      var body = {
+        searchCriteria: userId,
+        searchType: searchTypeInteger('user_id')
+      };
+      const connection = yield (0, _effects3.select)(_selectors.getConnectionInfo);
+      const res = yield (0, _effects3.call)(getDirectory, connection, body);
+      if (res.error) {
+        yield (0, _effects3.put)(userActions.fetchUserFinish(new Error(res.error)));
+      } else {
+        if (res.result.directoryItems) {
+          yield (0, _effects3.put)(userActions.fetchUserFinish(res.result.directoryItems[0]));
+        } else {
+          log.debug('Fetch user request was successful, but result was empty');
+        }
+      }
+    }
+  }
+
+  /**
+   * On-Premises getUserDetails saga.
+   * Performs the workflow of fetching user profile data for the currently logged in user.
+   * @method getUserDetails
+   */
+  function* fetchSelf() {
+    while (true) {
+      // Wait for a GET_USER_DETAILS action.
+      const action = yield (0, _effects3.take)(actionTypes.FETCH_SELF_INFO);
+      const userData = {};
+
+      if (action.error) {
+        continue;
+      }
+
+      const connection = yield (0, _effects3.select)(_selectors.getConnectionInfo);
+      // Fetch the user details
+      const { userProfile, currentLocale } = yield (0, _effects3.all)({
+        userProfile: (0, _effects3.call)(fetchSelfInfo, connection),
+        currentLocale: (0, _effects3.call)(fetchUserLocale, connection)
+      });
+
+      // Set as much user data as possible, but log an error if any of our calls failed
+      if (!userProfile.error) {
+        userData.data = userProfile;
+      } else {
+        log.debug('Error retrieving user profile informaion', userProfile.text);
+      }
+
+      if (!currentLocale.error) {
+        userData.currentLocale = currentLocale;
+      } else {
+        log.debug('Error retrieving user locale', currentLocale.text);
+      }
+      userData.primaryContact = connection.username;
+
+      yield (0, _effects3.put)(userActions.fetchUserFinish(userData));
+    }
+  }
+
+  return {
+    sagas: [refreshContacts, addContact, removeContact, updateContact, fetchContact, searchDirectory, fetchUser, fetchSelf],
+    api,
+    name,
+    init,
+    reducer
+  };
+}
+
+function* contactRequest(method, conn, extraURL, body) {
+  let platform = yield (0, _effects3.select)(_selectors.getPlatform);
+  const version = platform === _constants.platforms.CPAAS ? 1 : conn.server.version;
+  var url;
+  if (extraURL) {
+    url = `${conn.server.protocol}://${conn.server.server}:${conn.server.port}/rest/version/${version}/user/${conn.username}/addressbook/${extraURL}`;
+  } else {
+    url = `${conn.server.protocol}://${conn.server.server}:${conn.server.port}/rest/version/${version}/user/${conn.username}/addressbook`;
+  }
+  const options = {
+    method: method
+  };
+  if (body) {
+    options.body = body;
+  }
+
+  const response = yield (0, _effects2.default)((0, _extends3.default)({ url }, options), conn.requestOptions);
+
+  if (response.error) {
+    if (response.payload.body) {
+      // Handle errors from the server.
+      let statusCode, errorMessage;
+      if (response.payload.body.addressBookResponse) {
+        statusCode = response.payload.body.addressBookResponse.statusCode;
+      } else if (response.payload.body.message && response.payload.result.code) {
+        statusCode = response.payload.result.code;
+        errorMessage = response.payload.body.message;
+      }
+      log.debug(`Failed to search addressbook with status code ${statusCode}.`);
+      // TODO: Proper errors.
+      return {
+        error: new Error(`Failed to search addressbook; status ${statusCode}.\n message ${errorMessage}`)
+      };
+    } else {
+      // Handle errors from the request helper.
+      let { message } = response.payload.result;
+      log.debug(`Addressbook search request failed: ${message}`);
+      // TODO: Proper errors.
+      return {
+        error: new Error(`Addressbook search request failed: ${message}`)
+      };
+    }
+  } else if (response.payload.body && response.payload.body.addressBookResponse.statusCode === 0) {
+    return { result: response.payload.body.addressBookResponse || {} };
+  } else {
+    // Unknown case.
+    log.debug('Unknown error case for addressbook search.');
+    let err = new Error('Unknown error.');
+    return { error: err };
+  }
+}
+
+// see SPiDR 4.3 REST API Documentation - 12.11.3
+function searchTypeInteger(searchType) {
+  switch (searchType) {
+    case 'first_name':
+    case 'firstName':
+    case 'FIRSTNAME':
+      return 1;
+    case 'last_name':
+    case 'lastName':
+    case 'LASTNAME':
+      return 2;
+    case 'name':
+    case 'NAME':
+      return 3;
+    case 'phone_number':
+    case 'phoneNumber':
+    case 'PHONENUMBER':
+      return 4;
+    case 'user_id':
+    case 'userId':
+    case 'USERID':
+    case 'user_name':
+    case 'userName':
+    case 'USERNAME':
+      return 5;
+  }
+}
+
+function* getDirectory(conn, params = {}) {
+  let platform = yield (0, _effects3.select)(_selectors.getPlatform);
+  const version = platform === _constants.platforms.CPAAS ? 1 : conn.server.version;
+  var url = `${conn.server.protocol}://${conn.server.server}:${conn.server.port}/rest/version/${version}/user/${conn.username}/directory`;
+
+  let queryParams = {};
+  if (params.searchType) {
+    queryParams['criteria'] = params.searchCriteria;
+    queryParams['criteriaType'] = params.searchType;
+  } else if (params.searchCriteria) {
+    queryParams['criteria'] = params.searchCriteria;
+  }
+  const method = 'GET';
+
+  const response = yield (0, _effects2.default)({ url, queryParams, method }, conn.requestOptions);
+
+  if (response.error) {
+    if (response.payload.body) {
+      // Handle errors from the server.
+      let { statusCode } = response.payload.body.directory;
+      log.debug(`Failed to search directory with status code ${statusCode}.`);
+      // TODO: Proper errors.
+      return {
+        error: new Error(`Failed to search directory; status ${statusCode}.`)
+      };
+    } else {
+      // Handle errors from the request helper.
+      let { message } = response.payload.result;
+      log.debug(`Directory search request failed: ${message}`);
+      // TODO: Proper errors.
+      return { error: new Error(`Directory search request failed: ${message}`) };
+    }
+  } else if (response.payload.body && response.payload.body.directory.statusCode === 0) {
+    // Request was successful.
+    return { result: response.payload.body.directory || {} };
+  } else {
+    // Unknown case.
+    log.debug('Unknown error case for directory search.');
+    let err = new Error('Unknown error.');
+    return { error: err };
+  }
+}
+
+/**
+ * Fetch userProfileData from SPiDR with the provided connection info.
+ * @param  {Object}     connection Connection information for the platform in use.
+ * @return {Object}            Fetch request's response, parsed.
+ */
+function* fetchSelfInfo(connection) {
+  let platform = yield (0, _effects3.select)(_selectors.getPlatform);
+  const version = platform === _constants.platforms.CPAAS ? 1 : connection.server.version;
+  var url = `${connection.server.protocol}://${connection.server.server}:${connection.server.port}/rest/version/${version}/user/${connection.username}/userProfileData`;
+
+  var params = {
+    method: 'GET'
+  };
+
+  const response = yield (0, _effects2.default)((0, _extends3.default)({ url }, params), connection.requestOptions);
+
+  if (response.error) {
+    if (response.payload.body) {
+      // Handle errors from the server.
+      let { statusCode } = response.payload.body.userProfileData;
+      log.debug(`Failed to fetch user details with status code ${statusCode}.`);
+      // TODO: Proper errors.
+      return {
+        error: true,
+        status: statusCode,
+        text: `Failed to fetch user details with status code ${statusCode}.`
+      };
+    } else {
+      // Handle errors from the request helper.
+      let { message } = response.payload.result;
+      log.debug(`User details fetch request failed: ${message}`);
+      // TODO: Proper errors.
+      return {
+        error: true,
+        text: `User details fetch request failed: ${message}`
+      };
+    }
+  } else if (response.payload.body && response.payload.body.userProfileData && response.payload.body.userProfileData.statusCode === 0) {
+    // Request was successful.
+    return response.payload.body.userProfileData;
+  } else {
+    // Unknown case.
+    log.debug('Unknown error case for user details fetch.');
+    return {
+      error: true,
+      text: 'Unknown error case fetching user details.'
+    };
+  }
+}
+
+/**
+ * Fetch user localeinformation from SPiDR with the provided connection info.
+ * @param  {Object}     connection Connection information for the platform in use.
+ * @return {Object}            Fetch request's response.
+ */
+function* fetchUserLocale(connection) {
+  let platform = yield (0, _effects3.select)(_selectors.getPlatform);
+  const version = platform === _constants.platforms.CPAAS ? 1 : connection.server.version;
+  const url = `${connection.server.protocol}://${connection.server.server}:${connection.server.port}/rest/version/${version}/localization`;
+
+  var params = {
+    method: 'GET'
+  };
+
+  const response = yield (0, _effects2.default)((0, _extends3.default)({ url }, params), connection.requestOptions);
+  if (response.error) {
+    if (response.payload.body) {
+      // Handle errors from the server.
+      log.debug(`Failed to fetch user locale.`);
+      // TODO: Proper errors.
+      return {
+        error: true,
+        text: `Failed to fetch user locale .`
+      };
+    } else {
+      // Handle errors from the request helper.
+      let { message } = response.payload.result;
+      log.debug(`User locale fetch request failed: ${message}`);
+      // TODO: Proper errors.
+      return {
+        error: true,
+        text: `User locale fetch request failed: ${message}`
+      };
+    }
+  } else if (response.payload.body && response.payload.body.acceptLanguage) {
+    // Locale request was successful.
+    return response.payload.body.acceptLanguage;
+  } else {
+    // Unknown case.
+    log.debug('Unknown error case for user locale fetch.');
+    return {
+      error: true,
+      text: 'Unknown error case fetching user locale.'
+    };
+  }
+}
+
+/**
+ * remoteContactFromLocal
+ *
+ * At the time of development, `nickName` is the property by which contact resources are keyed in the back end. Since the manner in which a `nickName` is used and regarded in common practice suggests that it can be changed, we are exposing it as a property named `contactId` and informing developers that this is a unique property. This function is used to normalize the naming convention when preparing contact data to be sent for a REST request
+ *
+ * @param {Object} contact A contact object
+ */
+function remoteContactFromLocal(contact) {
+  if ('contactId' in contact) {
+    contact.nickname = contact.contactId;
+    delete contact.contactId;
+  }
+  // We must remove all empty values, as the back end servicing Link does not permit them
+  for (let prop in contact) {
+    if (!contact[prop] || contact[prop].length === 0) {
+      delete contact[prop];
+    }
+  }
+  return contact;
+}
+
+/**
+ * localContactFromRemote
+ *
+ * Convert a contact object from the back end format used in REST calls, to the format maintained in the state
+ *
+ * @param {Object} contact A contact object
+ */
+function localContactFromRemote(contact) {
+  if ('nickname' in contact) {
+    contact.contactId = contact.nickname;
+    delete contact.nickname;
+  }
+  return contact;
+}
+
+/**
+ * localUserFromRemote
+ *
+ * Converts a user object from the back end format used in REST calls, to the format maintained in the state. In particular, it ensures that the user object has a `userId` property, as this is the property by which users are keyed in our state.
+ *
+ * @param {Object} user A user object
+ * @returns {Object} The user object
+ */
+function localUserFromRemote(user) {
+  return (0, _extends3.default)({}, user, {
+    userId: user.primaryContact || user.userId
+  });
+}
+
 /***/ })
 
 /******/ });
 });
-//# sourceMappingURL=kandy.callMe.js.map
+//# sourceMappingURL=kandy.link.js.map
