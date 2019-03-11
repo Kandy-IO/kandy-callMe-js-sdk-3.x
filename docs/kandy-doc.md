@@ -82,6 +82,98 @@ Removes a global event listener
 
 -   Throws **[Error][4]** Listener not a function
 
+## Authentication
+
+The authentication feature handles connecting and disconnecting from any
+backend services that the SDK deals with. As well, it handles and stores
+authentication information on the behalf of the user. This allows the user to
+interact with the server without worrying about authenticating.
+
+### connect
+
+Connect with user credentials.
+
+**Parameters**
+
+-   `credentials` **[Object][5]** The credentials object.
+    -   `credentials.username` **[string][2]** The username including the application's domain.
+    -   `credentials.password` **[string][2]** The user's password.
+    -   `credentials.authname` **[string][2]?** The user's authorization name.
+
+**Examples**
+
+```javascript
+client.connect({
+  username: 'alfred@example.com',
+  password: '********'
+  authname: '********'
+});
+```
+
+### disconnect
+
+Disconnects from the backend. This will close the websocket and you will stop receiving events.
+
+### updateConnection
+
+Updates the current connection.
+
+**Parameters**
+
+-   `connection` **[Object][5]** 
+    -   `connection.services` **[Array][6]** Services to subscribe to for notifications.
+
+**Examples**
+
+```javascript
+client.updateConnection({
+  services: ['IM', 'Presence', 'call']
+})
+```
+
+### getUserInfo
+
+Retrieves information about the current user.
+
+Returns **[Object][5]** user The user data.
+
+Returns **[string][2]** user.username The username of the current user. Note that this username can take different encoded forms.
+                                It's not meant to be displayed to a user.
+
+Returns **[string][2]** user.token The current access token.
+
+### getConnection
+
+Get the connection state.
+
+Returns **[Object][5]** connection The connection state.
+
+Returns **[boolean][7]** connection.isConnected Whether the authenticated user is currently connected.
+
+Returns **[boolean][7]** connection.isPending Whether the authenticated user's connection is currently pending.
+
+Returns **[Object][5]** connection.error The error object if an error occured.
+
+Returns **[string][2]** connection.error.message The error message.
+
+Returns **[string][2]** connection.error.stack The stack trace of the error.
+
+### getServices
+
+Retrieves the services that the user is subscribed for.
+
+Returns **[Array][6]** A list of subscribed-to services.
+
+### subscriptionStates
+
+Possible subscription states of the user.
+
+**Properties**
+
+-   `FULL` **[string][2]** All requested feature subscriptions exist.
+-   `PARTIAL` **[string][2]** Some feature subscriptions exist.
+-   `NONE` **[string][2]** No feature subscriptions exist.
+
 ## Calls
 
 The call feature is used to make audio and video calls to and from
@@ -90,70 +182,6 @@ SIP users and PSTN phones.
 Call functions are all part of the 'call' namespace.
 
 Whenever 'user' is mentioned as input parameter within this API, it needs to be provided in the user@domain format.
-
-### makeAnonymous
-
-Starts an outgoing call as an anonymous user.
-
-**Parameters**
-
--   `callee` **[string][2]** Full user ID of the call recipient.
--   `credentials` **[Object][5]** Information needed to validate a token anonymous call.
-    -   `credentials.realm` **[Object][5]** The realm used to encrypt the tokens.
-    -   `credentials.accountToken` **[Object][5]?** The encrypted account token of the account making the call.
-    -   `credentials.fromToken` **[Object][5]?** The encrypted SIP address of the account/caller.
-    -   `credentials.toToken` **[Object][5]?** The encrypted SIP address of the callee.
--   `callOptions` **[Object][5]** Call options.
-    -   `callOptions.from` **[string][2]** The URI of the user making the call.
-    -   `callOptions.contact` **[Object][5]?** Object containing firstName and lastName of caller.
-    -   `callOptions.sendInitialVideo` **[boolean][6]** Whether to start the call sending the local video stream. (optional, default `false`)
-    -   `callOptions.isAudioEnabled` **[boolean][6]** Whether to enable audio during the call. Setting this to false will disable audio for the call. (optional, default `true`)
-    -   `callOptions.isVideoEnabled` **[boolean][6]** Whether to enable video during the call. If false, you cannot start video mid-call. (optional, default `true`)
-    -   `callOptions.webrtcdtls` **[boolean][6]** Whether to enable DTLS for WebRTC calls. (optional, default `true`)
-    -   `callOptions.localVideoContainer` **[HTMLElement][7]?** The HTML element to use as a container for the local video.
-    -   `callOptions.remoteVideoContainer` **[HTMLElement][7]?** The HTML element to use as a container for the remote video.
-    -   `callOptions.videoResolution` **[Object][5]?** The object to configure the local video resolution.
-        -   `callOptions.videoResolution.height` **[number][8]?** The height in pixels of the local video.
-        -   `callOptions.videoResolution.width` **[number][8]?** The width in pixels of the local video.
-    -   `callOptions.customParameters` **[Array][9]&lt;{name: [string][2], value: [string][2]}>?** Custom SIP header parameters for the SIP backend.
-
-**Examples**
-
-```javascript
-// Make a basic anonymous call.
-let callee = 'user1@example.com';
-let callOptions = { ... };
-
-let callId = client.call.makeAnonymous(callee, {}, callOptions);
-```
-
-```javascript
-// Make a time-limited token anonymous call.
-let callee = 'user1@example.com';
-let account = 'user2@example.com';
-let callOptions = { ...
-    customParameters: [
-      {
-        "name": "X-GPS",
-        "value": "42.686032,23.344565"
-      }
-    ],
-    ...
-  };
-
-// Generate / Retrieve the encrypted tokens.
-const key = 'abc123...';
-const credentials = {
-     accountToken: createToken(account, key),
-     fromToken: createToken('sip:' + account, key),
-     toToken: createToken('sip:' + callee, key),
-     realm: 'realmAbc123...'
-};
-
-let callId = client.call.makeAnonymous(callee, credentials, callOptions);
-```
-
-Returns **[string][2]** Id of the outgoing call.
 
 ### getAll
 
@@ -168,7 +196,7 @@ let currentCalls = calls.filter(call => {
 });
 ```
 
-Returns **[Array][9]** Call objects.
+Returns **[Array][6]** Call objects.
 
 ### getById
 
@@ -234,6 +262,81 @@ State of the media connection within a call.
 -   `DISCONNECTED` **[string][2]** The media connection has lost its connection and is trying to recover.
 -   `CLOSED` **[string][2]** The media connection has shut down.
 
+### make
+
+Start an outgoing call.
+
+**Parameters**
+
+-   `callee` **[string][2]** Full user ID of the call recipient.
+-   `options` **[Object][5]?** Call options.
+    -   `options.from` **[string][2]?** Sets the display name of the caller to be sent alongside the username of the user.
+    -   `options.isVideoEnabled` **[boolean][7]** Whether to enable video during the call. If false, you cannot start video mid-call. (optional, default `true`)
+    -   `options.contact` **[Object][5]?** Object containing firstName and lastName of caller.
+    -   `options.sendInitialVideo` **[boolean][7]** Whether to start the call sending the local video stream. (optional, default `false`)
+    -   `options.isAudioEnabled` **[boolean][7]** Whether to enable audio during the call. Setting this to false will disable audio for the call. (optional, default `true`)
+    -   `options.webrtcdtls` **[boolean][7]** Whether to enable DTLS for WebRTC calls. (optional, default `true`)
+    -   `options.videoResolution` **[Object][5]?** The object to configure the local video resolution.
+        -   `options.videoResolution.height` **[number][8]?** The height in pixels of the local video.
+        -   `options.videoResolution.width` **[number][8]?** The width in pixels of the local video.
+    -   `options.customParameters` **[Array][6]&lt;{name: [string][2], value: [string][2]}>?** Custom SIP header parameters for the SIP backend.
+    -   `options.remoteVideoContainer` **[HTMLElement][9]?** The HTML element to use as a container for the remote video.
+    -   `options.localVideoContainer` **[HTMLElement][9]?** The HTML element to use as a container for the local video.
+    -   `options.normalizeAddress` **[boolean][7]** Whether to enable normalization of callee address. (optional, default `false`)
+
+**Examples**
+
+```javascript
+let remoteContainer = document.getElementById('remote-container');
+// Start a video call that only shows the remote media (not local).
+let callId = client.call.make('sampleUser@example.com', {
+    isVideoEnabled: true,
+    sendInitialVideo: true,
+    remoteVideoContainer: remoteContainer,
+    customParameters: [
+      {
+        "name": "X-GPS",
+        "value": "42.686032,23.344565"
+      }
+    ]
+});
+```
+
+Returns **[string][2]** Id of the outgoing call.
+
+### answer
+
+Answer an incoming call.
+
+**Parameters**
+
+-   `callId` **[string][2]** The ID of the call to answer.
+-   `options` **[Object][5]?** Call options.
+    -   `options.isVideoEnabled` **[boolean][7]?** Whether to enable video during the call. If false, you cannot start video mid-call.
+    -   `options.sendInitialVideo` **[boolean][7]?** Whether to start the call sending the local video stream.
+    -   `options.isAudioEnabled` **[boolean][7]** Whether to enable audio during the call. Setting this to false will disable audio for the call. (optional, default `true`)
+    -   `options.videoResolution` **[Object][5]?** The object to configure the local video resolution.
+        -   `options.videoResolution.height` **[number][8]?** The height in pixels of the local video.
+        -   `options.videoResolution.width` **[number][8]?** The width in pixels of the local video.
+    -   `options.localVideoContainer` **[HTMLElement][9]?** The HTML element to use as a container for the local video.
+    -   `options.remoteVideoContainer` **[HTMLElement][9]?** The HTML element to use as a container for the remote video.
+
+### ignore
+
+Ignore an incoming call.
+
+**Parameters**
+
+-   `callId` **[string][2]** The ID of the call to ignore.
+
+### reject
+
+Reject an incoming call.
+
+**Parameters**
+
+-   `callId` **[string][2]** The ID of the call to reject.
+
 ### end
 
 End an on-going call.
@@ -282,7 +385,7 @@ Retrieves a call's customParameters.
 
 -   `callId` **[string][2]** The ID of the call to retrieve custom parameters.
 
-Returns **[Array][9]&lt;{name: [string][2], value: [string][2]}>** Custom parameters of the call.
+Returns **[Array][6]&lt;{name: [string][2], value: [string][2]}>** Custom parameters of the call.
 
 ### setCustomParameters
 
@@ -291,7 +394,7 @@ Set custom parameters on an ongoing call.
 **Parameters**
 
 -   `callId` **[string][2]** The ID of the call being acted on.
--   `customParameters` **[Array][9]&lt;{name: [string][2], value: [string][2]}>** Custom parameters for the call.
+-   `customParameters` **[Array][6]&lt;{name: [string][2], value: [string][2]}>** Custom parameters for the call.
 
 **Examples**
 
@@ -381,6 +484,42 @@ Explicitly send the current custom parameters for a call.
 
 -   `callId` **[string][2]** Id of the call being acted on.
 
+### forwardCall
+
+Forward an incoming call to another user.
+
+**Parameters**
+
+-   `callId` **[string][2]** Id of the call being acted on.
+-   `destination` **[string][2]** The user to forward the call to.
+
+### directTransfer
+
+Transfer a call to another user.
+
+**Parameters**
+
+-   `callId` **[string][2]** Id of the call being acted on.
+-   `destination` **[string][2]** The user to transfer the call to.
+
+### consultativeTransfer
+
+Transfer a call to another user.
+
+**Parameters**
+
+-   `callId` **[string][2]** Id of the call being acted on.
+-   `destinationCallId` **[string][2]** The callId to transfer the call to.
+
+### join
+
+Join two calls (both must be on hold and audio only). The joined call can be referenced via callId.
+
+**Parameters**
+
+-   `callId` **[string][2]** Id of the call being acted on.
+-   `destinationCallId` **[string][2]** The callId to join the call with.
+
 ## Media
 
 The SDK's media features are used to control WebRTC Media Devices.
@@ -414,6 +553,37 @@ client.media.setDefaultDevices({
 
 Retrieves the available media devices for use.
 
+### startPreviewVideo
+
+Starts the local video stream and displays it to the user.
+
+**Parameters**
+
+-   `videoContainer` **[HTMLElement][9]?** The container to use for local video.
+
+**Examples**
+
+````javascript
+``` javascript
+ var container = document.getElementById('local-video');
+ client.media.startPreviewVideo(container);
+```
+````
+
+### stopPreviewVideo
+
+Stops the local video stream created in `startPreviewVideo`.
+
+### promptUserMedia
+
+Prompt the user for permission to use their audio and/or video devices.
+
+**Parameters**
+
+-   `options` **[Object][5]?** 
+    -   `options.video` **[boolean][7]?** Whether to get permission for video.
+    -   `options.audio` **[boolean][7]?** Whether to get permission for audio.
+
 ### DEVICE_ERROR
 
 An error occurred while performing a device operation.
@@ -424,6 +594,347 @@ Type: [string][2]
 
 -   `params` **[Object][5]** 
     -   `params.error` **[BasicError][10]** The Basic error object.
+
+## CallHistory
+
+The call history feature is used to retrieve and inspect the authenticated
+users call logs.
+
+CallHistory functions are all part of the 'call.history' namespace.
+
+### fetch
+
+Fetches the list of call logs and stores them locally. The API
+`getCallLogs` can then be used to get the logs from local state after
+it has been updated.
+
+**Parameters**
+
+-   `amount` **[number][8]** The number of records to retrieve. (optional, default `50`)
+-   `offset` **[number][8]** Starting offset for records to retrieve. (optional, default `0`)
+
+### remove
+
+Deletes the specified call log.
+
+**Parameters**
+
+-   `recordId` **[number][8]** The ID of the call log to be removed.
+
+### clear
+
+Deletes all call logs.
+
+### get
+
+Gets the list of call logs cached locally. The event
+`callHistory:changed` is used to indicate the local state of logs
+has been updated.
+
+**Examples**
+
+```javascript
+client.on('callHistory:change', function() {
+    // Get all call logs when they've been updated.
+    let callLogs = client.call.history.get();
+});
+```
+
+Returns **[Array][6]** A list of call log records, ordered by latest first.
+
+### getCache
+
+Gets the cached call history data and returns stringified data.
+
+Returns **[Array][6]** A list of call log records from the cache, ordered by latest first.
+
+### setCache
+
+Sets the cached call history data, expects stringified data as it will be parsed.
+
+**Parameters**
+
+-   `data` **any** The data to restore in the cache.
+
+## Messaging
+
+The messaging feature revolves around a "conversation" structure. It is responsible to store the conversations
+and its messages, and return conversation objects when requested.
+
+See the "Conversation" and "Message" sections of the documentation for more details.
+
+Messaging functions are all part of the 'conversation' namespace. Ex: client.conversation.get('id').
+
+### get
+
+Get a conversation object matching the user ID provided
+If successful, the event 'conversations:change' will be emitted.
+If a conversation with the given user ID already exists in the store, it will be returned; otherwise, a new conversation will be created.
+
+**Parameters**
+
+-   `destination` **[string][2]** The destination for messages created in this conversation. This will
+    be a user's sip address.
+
+Returns **[Conversation][11]** A Conversation object.
+
+## Conversation
+
+A Conversation object represents a conversation between either two users, or a
+user and a group. A Conversation can create messages via the conversation's
+createMessage() function.
+
+**Properties**
+
+-   `destination` **[string][2]** The id of the remote user with which the current user is having a conversation.
+
+### createMessage
+
+Create and return a message object. You must provide a `text` part as demonstrated in the example.
+
+**Parameters**
+
+-   `part` **[Object][5]** The part to add to the message.
+    -   `part.type` **[string][2]** The type of part. Must be "text".
+    -   `part.text` **[string][2]** The text of the part. Must be a part of type "text".
+
+**Examples**
+
+```javascript
+conversation.createMessage({type: 'text', text: 'This is the message'});
+```
+
+Returns **[Message][12]** The newly created Message object.
+
+### clearMessages
+
+Clears all messages in this conversation from local state.
+
+### getMessages
+
+Get the messages associated with this conversation.
+
+Returns **[Array][6]&lt;[Object][5]>** messages An array containing the conversation's messages.
+
+Returns **[Function][3]** messages.markRead Marks the message as read.
+
+Returns **[Function][3]** messages.forward Forward the message to another user.
+
+Returns **[string][2]** messages.messageId The Id of the message.
+
+Returns **[string][2]** messages.sender The user Id of the user who sent the message.
+
+Returns **[number][8]** messages.timestamp The time at which the message was sent.
+
+Returns **[boolean][7]** messages.read Whether the message has been marked as read.
+
+Returns **[boolean][7]** messages.isPending Whether the message has finished being sent to the server.
+
+Returns **[Array][6]** messages.parts The parts of the message.
+
+### getMessage
+
+Get a specific message from this conversation.
+
+**Parameters**
+
+-   `messageId` **[string][2]** ID of the message to retrieve.
+
+Returns **[Object][5]** A message object.
+
+### subscribe
+
+Subscribe to this conversations messages array.
+
+**Parameters**
+
+-   `subscriber` **[Function][3]** A subscriber function to be triggered when the messages array of this conversation is updated.
+    -   `subscriber.conversationId` **[string][2]** The conversation participant.
+    -   `subscriber.messageId` **[string][2]** The ID of the message that caused the event.
+
+Returns **[Function][3]** The unsubscribe function.
+
+### fetchMessages
+
+Allows the user to fetch messages associated with a specific conversation from the server.
+When the operation is complete, a NEW_MESSAGE event will be emitted.
+Messages can then be retrieved using getMessages.
+
+**Parameters**
+
+-   `amount` **[number][8]** An amount of messages to fetch. (optional, default `50`)
+
+## Message
+
+A Message object represents an individual message. Messages have parts
+which represent pieces of a message, such as a text part or a file part. Once
+all the desired parts have been added, a message can be sent with the send()
+function.
+
+### send
+
+Sends the message.
+
+## Presence
+
+The presence features are used to update the authenticated users presence
+on the server, as well as retrieve other users presence information.
+
+Presence functions are all part of the 'presence' namespace.
+
+### statuses
+
+Possible status values.
+
+**Properties**
+
+-   `OPEN` **[string][2]** 
+-   `CLOSED` **[string][2]** 
+
+**Examples**
+
+```javascript
+const { statuses, activities } = client.presence
+// Use the values when updating presence.
+client.presence.update(statuses.OPEN, activities.AVAILABLE)
+```
+
+### activities
+
+Possible activity values.
+
+**Properties**
+
+-   `AVAILABLE` **[string][2]** 
+-   `IDLE` **[string][2]** 
+-   `AWAY` **[string][2]** 
+-   `LUNCH` **[string][2]** 
+-   `BUSY` **[string][2]** 
+-   `VACATION` **[string][2]** 
+-   `ON_THE_PHONE` **[string][2]** 
+-   `UNKNOWN` **[string][2]** 
+
+### update
+
+Update the presence for the current user.
+Other users subscribed for this user's presence will receive the update.
+
+**Parameters**
+
+-   `status` **[string][2]** The status of the presence state.
+-   `activity` **[string][2]** The activity to be shown as presence state
+-   `note` **[string][2]?** An additional note to be provided when the activity is "other".
+
+### get
+
+Retrieve the presence information for specified users.
+
+**Parameters**
+
+-   `users` **([Array][6]&lt;[string][2]> | [string][2])** A user id or an array of user ids.
+
+Returns **[Array][6]** List of user presence information.
+
+### getAll
+
+Retrieve the presence information for all users.
+
+Returns **[Array][6]** List of user presence information.
+
+### getSelf
+
+Retrieves the presence information for the current user.
+
+Returns **[Object][5]** 
+
+### fetch
+
+Fetch (from the server) the presence for the given users.
+This will update the store with the retrieved values, which can then
+be accessed using `get`.
+
+**Parameters**
+
+-   `users` **([Array][6]&lt;[string][2]> | [string][2])** A user id or an array of user ids.
+
+### subscribe
+
+Subscribe to retrieve presence updates about specified user.
+
+**Parameters**
+
+-   `user` **[string][2]** The ID of the user to subscribe to.
+
+### unsubscribe
+
+Unsubscribe from presence updates about specified user.
+
+**Parameters**
+
+-   `user` **[string][2]** The ID of the user to unsubscribe from.
+
+## Voicemail
+
+The voicemail features are used to retrieve and view
+voicemail indicators.
+
+Voicemail functions are all part of the 'voicemail' namespace.
+
+### fetch
+
+Attempts to retrieve voicemail information from the server.
+A `voicemail:new` event is emitted upon completion.
+
+### get
+
+Returns voicemail data from the store.
+
+## SipEvents
+
+Allows a user to subscribe to, and receive notifications for, sip events.
+
+SipEvents functions are all part of the 'sip' namespace.
+
+### subscribe
+
+Subscribe for a sip event.
+
+**Parameters**
+
+-   `eventType` **[string][2]** The sip event type to subscribe for.
+-   `subscribeUserList` **[Array][6]** The list of users to subcribe to.
+-   `clientCorrelator` **[string][2]** 
+-   `customParameters` **[Array][6]?** List of custom options provided as part of the subscription.
+
+### update
+
+Update a subscription for a sip event.
+
+**Parameters**
+
+-   `eventType` **[string][2]** The sip event subscription to update.
+-   `userLists` **[Object][5]** 
+    -   `userLists.subscribeUserList` **[Array][6]** The list of users to subcribe to.
+    -   `userLists.unsubscribeUserList` **[Array][6]** The list of users to unsubscribe from. If all users are unsubscribed from, the event subscription is removed completly.
+-   `customParameters` **[Array][6]?** List of custom options provided as part of the subscription.
+
+### unsubscribe
+
+Unsubscribe from a sip event.
+
+**Parameters**
+
+-   `eventType` **[string][2]** The sip event to unsubscribe from.
+
+### getDetails
+
+Retrieve information about a specified sip event.
+
+**Parameters**
+
+-   `eventType` **[string][2]?** Type of sip event to retrieve.
+
+Returns **[Object][5]** Returns all information related to the chosen eventType that is contained in the store. If no eventType is specified, it will return information for all eventTypes.
 
 ## Connectivity
 
@@ -446,7 +957,7 @@ Enables or disables connectivity checking.
 
 **Parameters**
 
--   `enable` **[boolean][6]** Whether to enable or disable connectivity checking.
+-   `enable` **[boolean][7]** Whether to enable or disable connectivity checking.
 
 ## Notification
 
@@ -467,7 +978,7 @@ Registers a device token for push notifications.
 
 -   `params` **[Object][5]** 
     -   `params.deviceToken` **[string][2]** The device token to be registered.
-    -   `params.services` **[Array][9]&lt;[string][2]>** Array of services to register for.
+    -   `params.services` **[Array][6]&lt;[string][2]>** Array of services to register for.
     -   `params.pushProvider` **[string][2]** The push provider, can be either 'apple' or 'google'.
     -   `params.clientCorrelator` **[string][2]** Unique identifier for a client device.
 
@@ -481,93 +992,134 @@ Enables, or disables, the processing of websocket notifications.
 
 **Parameters**
 
--   `enable` **[boolean][6]** Whether the websocket channel should be enabled.
+-   `enable` **[boolean][7]** Whether the websocket channel should be enabled.
 
-## config
+## Users
 
-The configuration object. This object defines what different configuration
-values you can use when instantiating the SDK.
+The Users feature allows access to user information for users within the same domain.
 
-### config.logs
+These functions are namespaced beneath 'user' on the API.
 
-Configuration options for the Logs feature.
+### fetch
 
-**Parameters**
-
--   `logs` **[Object][5]** Logs configs.
-    -   `logs.logLevel` **[string][2]** Log level to be set. See `logger.levels`. (optional, default `debug`)
-    -   `logs.flatten` **[boolean][6]** Whether all logs should be output in a string-only format. (optional, default `false`)
-    -   `logs.logActions` **[Object][5]?** Options specifically for action logs when logLevel is at DEBUG+ levels. Set this to false to not output action logs.
-        -   `logs.logActions.actionOnly` **[boolean][6]** Only output information about the action itself. Omits the SDK context for when it occurred. (optional, default `true`)
-        -   `logs.logActions.collapsed` **[boolean][6]** Whether logs should be minimized when initially output. The full log is still output and can be inspected on the console. (optional, default `false`)
-        -   `logs.logActions.diff` **[boolean][6]** Include a diff of what SDK context was changed by the action. (optional, default `false`)
-        -   `logs.logActions.exposePayloads` **[boolean][6]** Allow action payloads to be exposed in the logs, potentially displaying sensitive information (optional, default `false`)
-    -   `logs.enableFcsLogs` **[boolean][6]** Enable the detailed call logger. (optional, default `true`)
-    -   `logs.enableGrouping` **[boolean][6]** Whether to group information about an action log together in the console. (optional, default `true`)
-
-### config.authentication
-
-Configuration options for the CallMe Authentication feature.
+Fetches information about a specified user from the platform.
+Will trigger a `directory:change` event.
 
 **Parameters**
 
--   `authentication` **[Object][5]** Authentication configs.
-    -   `authentication.subscription` **[Object][5]** 
-        -   `authentication.subscription.protocol` **[string][2]** Protocol to be used for subscription requests. (optional, default `https`)
-        -   `authentication.subscription.server` **[string][2]** Server to be used for subscription requests.
-        -   `authentication.subscription.port` **[Number][8]** Port to be used for subscription requests. (optional, default `443`)
-        -   `authentication.subscription.version` **[string][2]** Version of the REST API to be used. (optional, default `1`)
-        -   `authentication.subscription.service` **[Array][9]?** Services to subscribe to for notifications.
-    -   `authentication.websocket` **[Object][5]** 
-        -   `authentication.websocket.protocol` **[string][2]** Protocol to be used for websocket notifications. (optional, default `wss`)
-        -   `authentication.websocket.server` **[string][2]** Server to be used for websocket notifications.
-        -   `authentication.websocket.port` **[Number][8]** Port to be used for websocket notifications. (optional, default `443`)
+-   `primaryContact` **[string][2]** The URI uniquely identifying the user.
 
-### config.call
+### fetchSelfInfo
 
-Configuration options for the call feature.
+Fetches information about the current user's profile data from the platform.
+Will trigger a `directory:change` event.
+
+### get
+
+Retrieves local information about a previously fetched user.
 
 **Parameters**
 
--   `call` **[Object][5]** The call configuration object.
-    -   `call.callDefaults` **[Object][5]?** Default options to be used when making/answering a call.
-    -   `call.chromeExtensionId` **[string][2]?** ID of the screenshare extension being used for screenshare of Google Chrome.
-    -   `call.webrtcdtls` **[boolean][6]** Whether to enable the webRTC DTLS setting for calls. (optional, default `true`)
+-   `primaryContact` **[string][2]** The URI uniquely identifying the user.
 
-### config.connectivity
+### getAll
 
-Configuration options for the Connectivity feature.
+Retrieves local information about previously fetched users.
 
-**Parameters**
+### search
 
--   `connectivity` **[Object][5]** Connectivity configs.
-    -   `connectivity.method` **[Object][5]** Configuration for how connectivity checks should be made.
-        -   `connectivity.method.type` **[String][2]** The method of connectivity checking to use: `keepAlive` or `pingPong`. (optional, default `'keepAlive'`)
-        -   `connectivity.method.responsibleParty` **[String][2]** Configures who is responsible for initiating the connectivity check: `client` or `server`. (optional, default `'client'`)
-    -   `connectivity.pingInterval` **[Number][8]** Time in between websocket ping attempts (milliseconds). Only used for when the client is responsible for ping/connCheck. (optional, default `30000`)
-    -   `connectivity.reconnectLimit` **[Number][8]** Number of failed reconnect attempts before reporting an error. Can be set to 0 to not limit reconnection attempts. (optional, default `5`)
-    -   `connectivity.reconnectDelay` **[Number][8]** Base time between websocket reconnect attempts (milliseconds). (optional, default `5000`)
-    -   `connectivity.reconnectTimeMultiplier` **[Number][8]** Reconnect delay multiplier for subsequent attempts. The reconnect delay time will be multiplied by this factor after each failed reconnect attempt to increase the delay between attempts. (optional, default `1`)
-    -   `connectivity.reconnectTimeLimit` **[Number][8]** Maximum time delay between reconnect attempts (milliseconds). Used in conjunction with `reconnectTimeMultiplier` to prevent overly long delays between reconnection attempts. (optional, default `640000`)
-    -   `connectivity.autoReconnect` **[Boolean][6]** Flag to determine whether reconnection will be attempted automatically after connectivity disruptions. (optional, default `true`)
-    -   `connectivity.maxMissedPings` **[Number][8]** Maximum pings sent (without receiving a response) before reporting an error. (optional, default `3`)
-    -   `connectivity.checkConnectivity` **[Boolean][6]** Flag to determine whether to enable connectivity checking or not. (optional, default `false`)
-
-### config.notifications
-
-Configuration options for the notification feature.
+Search the users in the directory.
+Will trigger a `directory:change` event.
 
 **Parameters**
 
--   `notifications` **[Object][5]** The notifications configuration object.
-    -   `notifications.idCacheLength` **[number][8]** Default amount of event ids to remember for de-duplication purposes. (optional, default `100`)
-    -   `notifications.pushRegistration` **[Object][5]?** Object describing the server to use for push services.
-        -   `notifications.pushRegistration.server` **[string][2]?** Hostname for the push registration server.
-        -   `notifications.pushRegistration.port` **[string][2]?** Port for the push registration server.
-        -   `notifications.pushRegistration.protocol` **[string][2]?** Protocol for the push registration server.
-        -   `notifications.pushRegistration.version` **[string][2]?** Version for the push registration server.
-    -   `notifications.realm` **[string][2]?** The realm used for push notifications
-    -   `notifications.bundleId` **[string][2]?** The bundle id used for push notifications
+-   `filters` **[Object][5]** Query filter options.
+    -   `filters.userId` **[string][2]?** Matches the unique URI identifying the user.
+    -   `filters.name` **[string][2]?** Matches firstName or lastName.
+    -   `filters.firstName` **[string][2]?** Matches firstName.
+    -   `filters.lastName` **[string][2]?** Matches lastName.
+    -   `filters.userName` **[string][2]?** Matches userName.
+    -   `filters.phoneNumber` **[string][2]?** Matches phoneNumber.
+-   `options` **[Object][5]?** Sorting options
+    -   `options.sortBy` **[string][2]?** The attribute upon which to sort results. This can be any of the above listed filters which describe a user attribute.
+    -   `options.order` **[string][2]?** Order by which to return results. Can be one of "asc" or "desc".
+    -   `options.max` **[number][8]?** The maximmum number of results to return.
+    -   `options.next` **[string][2]?** The pointer for a chunk of results, which may be returned from other a previous query.
+
+## Contacts
+
+The Contacts feature allows users to store personal contacts to their account.
+
+These functions are namespaced beneath 'contacts' on the API.
+
+### add
+
+Add a contact to a user's personal address book.
+Will trigger the `contacts:new` event.
+
+**Parameters**
+
+-   `contact` **[Object][5]** The contact object.
+    -   `contact.primaryContact` **[string][2]** The primary userId for the contact
+    -   `contact.name` **[string][2]?** The name for the contact entry
+    -   `contact.firstName` **[string][2]?** The contact's first name
+    -   `contact.lastName` **[string][2]?** The contact's last name
+    -   `contact.contactId` **[string][2]?** The contact's unique contact ID
+    -   `contact.email` **[string][2]?** The contact's email address
+    -   `contact.homePhoneNumber` **[string][2]?** The contact's home phone number
+    -   `contact.businessPhoneNumber` **[string][2]?** The contact's business phone number
+    -   `contact.mobilePhoneNumber` **[string][2]?** The contact's mobile phone number
+    -   `contact.list` **[string][2]?** The name of the contact list for which to add this contact to ("friends" by default)
+    -   `contact.buddy` **[boolean][7]?** Indicates whether or not the contact is a friend of the user
+
+### get
+
+Retrieves local information about a contact.
+
+**Parameters**
+
+-   `contactId` **[string][2]** The unique contact ID of the contact.
+
+Returns **[Object][5]** Contact information.
+
+### getAll
+
+Retrieves local information about all contacts.
+
+Returns **[Array][6]** List of contact information.
+
+### refresh
+
+Refreshes the local information about contacts. This will get new contacts from the platform.
+Will trigger the `contacts:change` event.
+
+### remove
+
+Remove a contact from a personal address book.
+Will trigger the `contacts:change` event.
+
+**Parameters**
+
+-   `id` **[string][2]** The Id of the contact that will be removed.
+
+### update
+
+Update a contact from the user's personal address book.
+Will trigger the `contacts:change` event.
+
+**Parameters**
+
+-   `contactId` **[string][2]** The unique contact ID.
+-   `contact` **[Object][5]** The contact object.
+
+### fetch
+
+Fetch a contact from the user's personal address book.
+Will trigger the `contacts:change` event.
+
+**Parameters**
+
+-   `contactId` **[string][2]** The unique contact ID of the contact.
 
 ## sdpHandlers
 
@@ -595,6 +1147,93 @@ const client = create({
   }
 })
 ```
+
+## config
+
+The configuration object. This object defines what different configuration
+values you can use when instantiating the SDK.
+
+### config.logs
+
+Configuration options for the Logs feature.
+
+**Parameters**
+
+-   `logs` **[Object][5]** Logs configs.
+    -   `logs.logLevel` **[string][2]** Log level to be set. See `logger.levels`. (optional, default `debug`)
+    -   `logs.flatten` **[boolean][7]** Whether all logs should be output in a string-only format. (optional, default `false`)
+    -   `logs.logActions` **[Object][5]?** Options specifically for action logs when logLevel is at DEBUG+ levels. Set this to false to not output action logs.
+        -   `logs.logActions.actionOnly` **[boolean][7]** Only output information about the action itself. Omits the SDK context for when it occurred. (optional, default `true`)
+        -   `logs.logActions.collapsed` **[boolean][7]** Whether logs should be minimized when initially output. The full log is still output and can be inspected on the console. (optional, default `false`)
+        -   `logs.logActions.diff` **[boolean][7]** Include a diff of what SDK context was changed by the action. (optional, default `false`)
+        -   `logs.logActions.exposePayloads` **[boolean][7]** Allow action payloads to be exposed in the logs, potentially displaying sensitive information (optional, default `false`)
+    -   `logs.enableFcsLogs` **[boolean][7]** Enable the detailed call logger. (optional, default `true`)
+    -   `logs.enableGrouping` **[boolean][7]** Whether to group information about an action log together in the console. (optional, default `true`)
+
+### config.authentication
+
+Configuration options for the Authentication feature.
+
+**Parameters**
+
+-   `authentication` **[Object][5]** Authentication configs.
+    -   `authentication.subscription` **[Object][5]** 
+        -   `authentication.subscription.server` **[string][2]** Hostname of the server to be used for subscription requests.
+        -   `authentication.subscription.protocol` **[string][2]** Protocol to be used for subscription requests. (optional, default `https`)
+        -   `authentication.subscription.port` **[Number][8]** Port to be used for subscription requests. (optional, default `443`)
+        -   `authentication.subscription.version` **[string][2]** Version of the REST API to be used. (optional, default `1`)
+        -   `authentication.subscription.expires` **[Number][8]** Time duration, in seconds, until a subscription should expire. (optional, default `3600`)
+        -   `authentication.subscription.service` **[Array][6]?** Services to subscribe to for notifications.
+    -   `authentication.websocket` **[Object][5]** 
+        -   `authentication.websocket.server` **[string][2]** Hostname of the server to be used for websocket notifications.
+        -   `authentication.websocket.protocol` **[string][2]** Protocol to be used for websocket notifications. (optional, default `wss`)
+        -   `authentication.websocket.port` **[Number][8]** Port to be used for websocket notifications. (optional, default `443`)
+
+### config.call
+
+Configuration options for the call feature.
+
+**Parameters**
+
+-   `call` **[Object][5]** The call configuration object.
+    -   `call.callDefaults` **[Object][5]?** Default options to be used when making/answering a call.
+    -   `call.chromeExtensionId` **[string][2]?** ID of the screenshare extension being used for screenshare of Google Chrome.
+    -   `call.webrtcdtls` **[boolean][7]** Whether to enable the webRTC DTLS setting for calls. (optional, default `true`)
+
+### config.connectivity
+
+Configuration options for the Connectivity feature.
+
+**Parameters**
+
+-   `connectivity` **[Object][5]** Connectivity configs.
+    -   `connectivity.method` **[Object][5]** Configuration for how connectivity checks should be made.
+        -   `connectivity.method.type` **[String][2]** The method of connectivity checking to use: `keepAlive` or `pingPong`. (optional, default `'keepAlive'`)
+        -   `connectivity.method.responsibleParty` **[String][2]** Configures who is responsible for initiating the connectivity check: `client` or `server`. (optional, default `'client'`)
+    -   `connectivity.pingInterval` **[Number][8]** Time in between websocket ping attempts (milliseconds). Only used for when the client is responsible for ping/connCheck. (optional, default `30000`)
+    -   `connectivity.reconnectLimit` **[Number][8]** Number of failed reconnect attempts before reporting an error. Can be set to 0 to not limit reconnection attempts. (optional, default `5`)
+    -   `connectivity.reconnectDelay` **[Number][8]** Base time between websocket reconnect attempts (milliseconds). (optional, default `5000`)
+    -   `connectivity.reconnectTimeMultiplier` **[Number][8]** Reconnect delay multiplier for subsequent attempts. The reconnect delay time will be multiplied by this factor after each failed reconnect attempt to increase the delay between attempts. (optional, default `1`)
+    -   `connectivity.reconnectTimeLimit` **[Number][8]** Maximum time delay between reconnect attempts (milliseconds). Used in conjunction with `reconnectTimeMultiplier` to prevent overly long delays between reconnection attempts. (optional, default `640000`)
+    -   `connectivity.autoReconnect` **[Boolean][7]** Flag to determine whether reconnection will be attempted automatically after connectivity disruptions. (optional, default `true`)
+    -   `connectivity.maxMissedPings` **[Number][8]** Maximum pings sent (without receiving a response) before reporting an error. (optional, default `3`)
+    -   `connectivity.checkConnectivity` **[Boolean][7]** Flag to determine whether to enable connectivity checking or not. (optional, default `false`)
+
+### config.notifications
+
+Configuration options for the notification feature.
+
+**Parameters**
+
+-   `notifications` **[Object][5]** The notifications configuration object.
+    -   `notifications.idCacheLength` **[number][8]** Default amount of event ids to remember for de-duplication purposes. (optional, default `100`)
+    -   `notifications.pushRegistration` **[Object][5]?** Object describing the server to use for push services.
+        -   `notifications.pushRegistration.server` **[string][2]?** Hostname for the push registration server.
+        -   `notifications.pushRegistration.port` **[string][2]?** Port for the push registration server.
+        -   `notifications.pushRegistration.protocol` **[string][2]?** Protocol for the push registration server.
+        -   `notifications.pushRegistration.version` **[string][2]?** Version for the push registration server.
+    -   `notifications.realm` **[string][2]?** The realm used for push notifications
+    -   `notifications.bundleId` **[string][2]?** The bundle id used for push notifications
 
 ## Logger
 
@@ -645,6 +1284,114 @@ The Basic error object. Provides information about an error that occurred in the
 -   `code` **[string][2]** The code of the error. If no code is known, this will be a string 'NO_CODE'.
 -   `message` **[string][2]** A human-readable message to describe the error. If no message is known, this will be a string 'An error occured'.
 
+## AudioBridge
+
+The audio bridge feature allows multiple audio calls to be bridged together
+for a local three-way call.
+
+Audio bridge functions are all part of the 'audioBridge' namespace.
+
+### create
+
+Creates a local bridge that can be used to join audio calls.
+
+Returns **[string][2]** ID used to identify the bridge.
+
+### close
+
+Closes an existing audio bridge.
+
+**Parameters**
+
+-   `bridgeId` **[string][2]** Identifier for the bridge to act on.
+
+### addCall
+
+Adds a call to the specified local audio bridge.
+
+**Parameters**
+
+-   `bridgeId` **[string][2]** Identifier for the bridge to act on.
+-   `callId` **[string][2]** Identifier for the call to add.
+
+### removeCall
+
+Remove a specified call from the local audio bridge.
+
+**Parameters**
+
+-   `bridgeId` **[string][2]** Identifier for the bridge to act on.
+-   `callId` **[string][2]** Identifier for the call to remove.
+
+### mute
+
+Mute the local audio for all of the calls on the bridge.
+
+**Parameters**
+
+-   `bridgeId` **[string][2]** Identifier for the bridge to act on.
+
+### unmute
+
+Unmute the local audio for all of the calls on the bridge.
+
+**Parameters**
+
+-   `bridgeId` **[string][2]** Identifier for the bridge to act on.
+
+### silence
+
+Silence the remote audio for all of the calls on the bridge.
+
+**Parameters**
+
+-   `bridgeId` **[string][2]** Identifier for the bridge to act on.
+
+### unsilence
+
+Un-silence the remote audio for all of the calls on the bridge.
+
+**Parameters**
+
+-   `bridgeId` **[string][2]** Identifier for the bridge to act on.
+
+### getAll
+
+Retrieve information about audio bridges.
+
+Returns **[Array][6]** List of active audio bridges.
+
+### getBridgeCalls
+
+Retrieve all calls currently part of an audio bridge.
+
+**Parameters**
+
+-   `bridgeId` **[string][2]** The ID of the bridge whose calls we wish to retrieve
+
+Returns **[Array][6]** List of calls currently part of the specified audio bridge.
+
+## ClickToCall
+
+The clickToCall feature is used to bridge a call between two specified devices
+
+### clickToCall
+
+Attempts to establish a call between two specified devices
+
+**Parameters**
+
+-   `caller` **[string][2]** A string representing the person making the call
+-   `callee` **[string][2]** A string representing the person receiving the call
+
+Returns **[string][2]** callId A unique id representing the call
+
+### get
+
+Gets all local clickToCall calls
+
+Returns **[Array][6]** A list of clickToCall records, ordered by earliest requestTime
+
 [1]: #config
 
 [2]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
@@ -655,12 +1402,16 @@ The Basic error object. Provides information about an error that occurred in the
 
 [5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 
-[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
 
-[7]: https://developer.mozilla.org/docs/Web/HTML/Element
+[7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
 
 [8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
 
-[9]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+[9]: https://developer.mozilla.org/docs/Web/HTML/Element
 
 [10]: #basicerror
+
+[11]: #conversation
+
+[12]: #message
