@@ -1,4 +1,4 @@
-@kandy-io/callme-sdk
+# @kandy-io/callme-sdk
 
 ### Npm Install
 
