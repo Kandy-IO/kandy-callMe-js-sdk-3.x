@@ -17,7 +17,7 @@ Install with the beta branch or a particular build with the Github URL
 The information about tutorials and documents can be found in the links below
 
 * `Documents`: [docs](/docs).
-* `Tutorials`: [tutorials]().
+* `Tutorials`: [TUTORIALS_INDEX]().
 
 
 
