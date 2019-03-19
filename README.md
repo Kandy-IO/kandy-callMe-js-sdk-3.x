@@ -1,9 +1,9 @@
-@kandy-io/link-sdk
+@kandy-io/callMe-sdk
 ========
 
 ### Npm Install
 
-`$ npm install https://github.com/Kandy-IO/kandy-link-js-sdk#beta`
+`$ npm install https://github.com/Kandy-IO/kandy-callMe-js-sdk#beta`
 
 ### Reference
 
