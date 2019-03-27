@@ -5,37 +5,11 @@ Kandy.js change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
-## 4.2.0-beta
-
-## 4.1.0 - 2019-03-01
-
-### Added
-- Added new Presence event, `presence:selfChange`, to notify when self-presence information has changed. `KAA-1153`
-- Added Presence APIs for retrieving presence information. See `kandy.presence.getAll` and `kandy.presence.getSelf`. KAA-1152.
-- Added Presence constants to the API. See `kandy.presence.statuses` and `kandy.presence.activities`. `KAA-1151`
-
-### Fixed
-- Fixed an issue where the states property was not being defined on the call namespace (kandy.call.states). `KAA-1349`
-- Fixed a crash when using the Presence `fetch` API and receiving no data. `KAA-1169`.
-
-### Changed
-- Changed the default sdpSemantics to "unified-plan". `KAA-1427`
-
-## 4.0.0 - 2019-02-01
-
-### Compatibility Warning
-Version 4.0.0 has many breaking changes for call APIs. Please see the API reference documentation to see the new Call API.
-
-### Added
-- Added support to make calls on Safari 12.
-
-### Changed
-- Refactored all of the WebRTC-related code.
-
 ## 3.3.0-beta
 
 ### Changed
 - Changed the callOptions parameter for the makeAnonymous API function of the CallMe SDK. It must now include a `from` property (callOptions.from), indicating the URI of the caller, as it no longer receives a default value of `anonymousUser@kandy.callMe`. `KAA-1350`
+- Changed the callMe REST routes to use proper case letters, so that all routes (in this category) are generated consistently. `KAA-1544`
 
 ## 3.2.0 - 2019-03-01
 
