@@ -8,7 +8,7 @@
           "children": [
             {
               "type": "text",
-              "value": "The SDK creation factory. Create an instance of the SDK by calling this factory with the the desired configurations.",
+              "value": "The SDK creation factory. Create an instance of the SDK by calling this factory with the desired configurations.",
               "position": {
                 "start": {
                   "line": 1,
@@ -17,8 +17,8 @@
                 },
                 "end": {
                   "line": 1,
-                  "column": 117,
-                  "offset": 116
+                  "column": 113,
+                  "offset": 112
                 },
                 "indent": []
               }
@@ -32,8 +32,8 @@
             },
             "end": {
               "line": 1,
-              "column": 117,
-              "offset": 116
+              "column": 113,
+              "offset": 112
             },
             "indent": []
           }
@@ -47,8 +47,8 @@
         },
         "end": {
           "line": 1,
-          "column": 117,
-          "offset": 116
+          "column": 113,
+          "offset": 112
         }
       }
     },
@@ -3537,14 +3537,10 @@
               "description": "The URI of the user making the call.",
               "lineNumber": 13,
               "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "string"
-                }
+                "type": "NameExpression",
+                "name": "string"
               },
-              "name": "callOptions.from",
-              "default": "'anonymousUser@kandy.callMe'"
+              "name": "callOptions.from"
             },
             {
               "title": "param",
@@ -4269,8 +4265,7 @@
                   "type": {
                     "type": "NameExpression",
                     "name": "string"
-                  },
-                  "default": "'anonymousUser@kandy.callMe'"
+                  }
                 },
                 {
                   "title": "param",
@@ -16039,14 +16034,20 @@
               "lineNumber": 4
             },
             {
+              "title": "requires",
+              "description": null,
+              "lineNumber": 5,
+              "name": "logs"
+            },
+            {
               "title": "instance",
               "description": null,
-              "lineNumber": 5
+              "lineNumber": 6
             },
             {
               "title": "param",
               "description": "Logs configs.",
-              "lineNumber": 6,
+              "lineNumber": 7,
               "type": {
                 "type": "NameExpression",
                 "name": "Object"
@@ -16056,7 +16057,7 @@
             {
               "title": "param",
               "description": "Log level to be set. See `logger.levels`.",
-              "lineNumber": 7,
+              "lineNumber": 8,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -16070,7 +16071,7 @@
             {
               "title": "param",
               "description": "Whether all logs should be output in a string-only format.",
-              "lineNumber": 8,
+              "lineNumber": 9,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -16084,7 +16085,7 @@
             {
               "title": "param",
               "description": "Options specifically for action logs when logLevel is at DEBUG+ levels. Set this to false to not output action logs.",
-              "lineNumber": 9,
+              "lineNumber": 10,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -16097,7 +16098,7 @@
             {
               "title": "param",
               "description": "Only output information about the action itself. Omits the SDK context for when it occurred.",
-              "lineNumber": 10,
+              "lineNumber": 11,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -16111,7 +16112,7 @@
             {
               "title": "param",
               "description": "Whether logs should be minimized when initially output. The full log is still output and can be inspected on the console.",
-              "lineNumber": 11,
+              "lineNumber": 12,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -16125,7 +16126,7 @@
             {
               "title": "param",
               "description": "Include a diff of what SDK context was changed by the action.",
-              "lineNumber": 12,
+              "lineNumber": 13,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -16139,7 +16140,7 @@
             {
               "title": "param",
               "description": "Allow action payloads to be exposed in the logs, potentially displaying sensitive information",
-              "lineNumber": 13,
+              "lineNumber": 14,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -16153,7 +16154,7 @@
             {
               "title": "param",
               "description": "Enable the detailed call logger.",
-              "lineNumber": 14,
+              "lineNumber": 15,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -16167,7 +16168,7 @@
             {
               "title": "param",
               "description": "Whether to group information about an action log together in the console.",
-              "lineNumber": 15,
+              "lineNumber": 16,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -16185,18 +16186,18 @@
               "column": 0
             },
             "end": {
-              "line": 62,
+              "line": 63,
               "column": 3
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 70,
+                "line": 71,
                 "column": 0
               },
               "end": {
-                "line": 138,
+                "line": 145,
                 "column": 1
               }
             },
@@ -16208,7 +16209,7 @@
             {
               "title": "param",
               "name": "logs",
-              "lineNumber": 6,
+              "lineNumber": 7,
               "description": {
                 "type": "root",
                 "children": [
@@ -16269,7 +16270,7 @@
                 {
                   "title": "param",
                   "name": "logs.logLevel",
-                  "lineNumber": 7,
+                  "lineNumber": 8,
                   "description": {
                     "type": "root",
                     "children": [
@@ -16365,7 +16366,7 @@
                 {
                   "title": "param",
                   "name": "logs.flatten",
-                  "lineNumber": 8,
+                  "lineNumber": 9,
                   "description": {
                     "type": "root",
                     "children": [
@@ -16427,7 +16428,7 @@
                 {
                   "title": "param",
                   "name": "logs.logActions",
-                  "lineNumber": 9,
+                  "lineNumber": 10,
                   "description": {
                     "type": "root",
                     "children": [
@@ -16491,7 +16492,7 @@
                     {
                       "title": "param",
                       "name": "logs.logActions.actionOnly",
-                      "lineNumber": 10,
+                      "lineNumber": 11,
                       "description": {
                         "type": "root",
                         "children": [
@@ -16553,7 +16554,7 @@
                     {
                       "title": "param",
                       "name": "logs.logActions.collapsed",
-                      "lineNumber": 11,
+                      "lineNumber": 12,
                       "description": {
                         "type": "root",
                         "children": [
@@ -16615,7 +16616,7 @@
                     {
                       "title": "param",
                       "name": "logs.logActions.diff",
-                      "lineNumber": 12,
+                      "lineNumber": 13,
                       "description": {
                         "type": "root",
                         "children": [
@@ -16677,7 +16678,7 @@
                     {
                       "title": "param",
                       "name": "logs.logActions.exposePayloads",
-                      "lineNumber": 13,
+                      "lineNumber": 14,
                       "description": {
                         "type": "root",
                         "children": [
@@ -16741,7 +16742,7 @@
                 {
                   "title": "param",
                   "name": "logs.enableFcsLogs",
-                  "lineNumber": 14,
+                  "lineNumber": 15,
                   "description": {
                     "type": "root",
                     "children": [
@@ -16803,7 +16804,7 @@
                 {
                   "title": "param",
                   "name": "logs.enableGrouping",
-                  "lineNumber": 15,
+                  "lineNumber": 16,
                   "description": {
                     "type": "root",
                     "children": [
@@ -20330,6 +20331,12 @@
         "lineNumber": 10,
         "type": null,
         "name": "Logger"
+      },
+      {
+        "title": "requires",
+        "description": null,
+        "lineNumber": 11,
+        "name": "logs"
       }
     ],
     "loc": {
@@ -20338,18 +20345,18 @@
         "column": 0
       },
       "end": {
-        "line": 12,
+        "line": 13,
         "column": 3
       }
     },
     "context": {
       "loc": {
         "start": {
-          "line": 14,
+          "line": 15,
           "column": 0
         },
         "end": {
-          "line": 38,
+          "line": 39,
           "column": 1
         }
       },
@@ -20490,22 +20497,22 @@
           ],
           "loc": {
             "start": {
-              "line": 16,
+              "line": 17,
               "column": 4
             },
             "end": {
-              "line": 25,
+              "line": 26,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 26,
+                "line": 27,
                 "column": 4
               },
               "end": {
-                "line": 32,
+                "line": 33,
                 "column": 5
               }
             },

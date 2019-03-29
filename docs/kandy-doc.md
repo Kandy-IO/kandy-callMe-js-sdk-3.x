@@ -2,7 +2,7 @@
 
 ## create
 
-The SDK creation factory. Create an instance of the SDK by calling this factory with the the desired configurations.
+The SDK creation factory. Create an instance of the SDK by calling this factory with the desired configurations.
 
 **Parameters**
 
@@ -104,7 +104,7 @@ Starts an outgoing call as an anonymous user.
     -   `credentials.fromToken` **[Object][5]?** The encrypted SIP address of the account/caller.
     -   `credentials.toToken` **[Object][5]?** The encrypted SIP address of the callee.
 -   `callOptions` **[Object][5]** Call options.
-    -   `callOptions.from` **[string][2]** The URI of the user making the call. (optional, default `'anonymousUser@kandy.callMe'`)
+    -   `callOptions.from` **[string][2]** The URI of the user making the call.
     -   `callOptions.contact` **[Object][5]?** Object containing firstName and lastName of caller.
     -   `callOptions.sendInitialVideo` **[boolean][6]** Whether to start the call sending the local video stream. (optional, default `false`)
     -   `callOptions.isAudioEnabled` **[boolean][6]** Whether to enable audio during the call. Setting this to false will disable audio for the call. (optional, default `true`)
