@@ -7,6 +7,10 @@ Kandy.js change log.
 
 ## 3.4.0-beta
 
+### Added
+
+- Added calls.silence() and calls.unsilence() functions `KAA-1583`
+
 ## 3.3.0 - 2018-03-29
 
 ### Fixed

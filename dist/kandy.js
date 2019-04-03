@@ -1,7 +1,7 @@
 /**
  * Kandy.js (Next)
  * kandy.callMe.js
- * Version: 3.4.0-beta.69030
+ * Version: 3.4.0-beta.69225
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -51979,7 +51979,7 @@ function anonymizeAPI({ dispatch, getState }) {
   // Devices.
   'changeInputDevices', 'changeSpeaker',
   // Call functionality.
-  'end', 'mute', 'unmute', 'startVideo', 'stopVideo', 'hold', 'unhold', 'startScreenshare', 'stopScreenshare', 'sendDTMF', 'sendCustomParameters',
+  'end', 'mute', 'unmute', 'startVideo', 'stopVideo', 'hold', 'unhold', 'silence', 'unsilence', 'startScreenshare', 'stopScreenshare', 'sendDTMF', 'sendCustomParameters',
   // Undocumented.
   'getRemoteVideoResolutions'];
 
@@ -61417,7 +61417,7 @@ const factoryDefaults = {
    */
 };function factory(plugins, options = factoryDefaults) {
   // Log the SDK's version (templated by webpack) on initialization.
-  let version = '3.4.0-beta.69030';
+  let version = '3.4.0-beta.69225';
   log.info(`CPaaS SDK version: ${version}`);
 
   var sagas = [];
