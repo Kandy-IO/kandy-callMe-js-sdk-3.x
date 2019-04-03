@@ -16,7 +16,7 @@ To install a particular build branch or beta branch with the Github URL, run:
 
 The information about tutorials and documents can be found in the links below
 
-* Documents: [docs](/docs)
+* Documents: [docs](https://kandy-io.github.io/kandy-callMe-js-sdk/docs)
 
 
 
