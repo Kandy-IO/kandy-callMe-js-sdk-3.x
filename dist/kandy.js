@@ -1,7 +1,7 @@
 /**
  * Kandy.js (Next)
  * kandy.callMe.js
- * Version: 3.4.0-KAA-1440.68949
+ * Version: 3.4.0-beta.69030
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -60485,6 +60485,14 @@ const authCodes = exports.authCodes = {
 };const clickToCallCodes = exports.clickToCallCodes = {
   MISSING_ARGS: 'clickToCall:1',
   RESPONSE_ERROR: 'clickToCall:2'
+  /**
+   * Error codes for the Groups plugin.
+   * @name groupsCodes
+   */
+};const groupsCodes = exports.groupsCodes = {
+  UNKNOWN_ERROR: 'groups:1',
+  GENERIC_ERROR: 'groups:2',
+  MISSING_PARAMETERS: 'groups:3'
 
   /**
    * Error codes for the Message plugin.
@@ -60595,6 +60603,12 @@ Object.defineProperty(exports, 'callHistoryCodes', {
   enumerable: true,
   get: function () {
     return _codes.callHistoryCodes;
+  }
+});
+Object.defineProperty(exports, 'groupsCodes', {
+  enumerable: true,
+  get: function () {
+    return _codes.groupsCodes;
   }
 });
 Object.defineProperty(exports, 'messagingCodes', {
@@ -61403,7 +61417,7 @@ const factoryDefaults = {
    */
 };function factory(plugins, options = factoryDefaults) {
   // Log the SDK's version (templated by webpack) on initialization.
-  let version = '3.4.0-KAA-1440.68949';
+  let version = '3.4.0-beta.69030';
   log.info(`CPaaS SDK version: ${version}`);
 
   var sagas = [];
@@ -63698,7 +63712,8 @@ const log = (0, _logs.getLogManager)().getLogger('REQUEST');
  */
 const responseTypes = (0, _freeze2.default)({
   json: 'json',
-  blob: 'blob'
+  blob: 'blob',
+  text: 'text'
 });
 
 /*
@@ -63796,12 +63811,24 @@ async function makeRequest(options, requestId) {
         error: 'REQUEST',
         result
       };
+    } else if (response.status === 204) {
+      /*
+       * A `204 (No Content)` response indicates a success, but with no content to return.
+       * Avoid parsing the response because there isn't one.
+       */
+      responseBody = {};
+      return {
+        body: responseBody,
+        error: false,
+        result
+      };
     } else {
       if (responseType === responseTypes.json) {
         responseBody = await response.json();
-      } else {
-        // `blob` is the only other possible value for responseType
+      } else if (responseType === responseTypes.blob) {
         responseBody = await response.blob();
+      } else if (responseType === responseTypes.text) {
+        responseBody = await response.text();
       }
       return {
         body: responseBody,
