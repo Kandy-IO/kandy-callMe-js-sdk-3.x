@@ -5,75 +5,26 @@ Kandy.js change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
-## 4.3.0-beta
+## 3.4.0-beta
 
 ### Added
-- Added the error event to the `subscription`, to prevent subscription change to emmited when there is a subscription failure. `KAA-1351`
-- [CPaaS 2.0] Added reject call functionality. `KAA-1511`
-- Added an API to retrieve basic browser information. See `getBrowserDetails`. `KAA-1470`
+
+- Added calls.silence() and calls.unsilence() functions `KAA-1583`
 
 ### Fixed
-- Fixed an issue where local call logs would not be generated after a call ended. `KAA-1535`
-- Fixed a "remove media" call issue where the error event provided an incorrect message if the track ID was invalid. `KAA-1436`
-- Fixed a call issue where, when put on hold by a Cisco Phone, the call would end after a short period. `KAA-1562`
-- Fixed reject call behaviour to make call state `Ended` on callee side instead of `Cancelled`. `KAA-1584`
-- Fixed a call issue where a media mismatch error on answer would leave the call in `Ringing` state instead of ending the call. `KAA-1432`
-- Fixed an issue where errors prevented renegotiation from completing. `KAA-1497`
-- Fixed call issue where, when on dual hold with a Cisco phone, a remote unhold operation may incorrectly show a video track being added to the call. `KAA-1593`
 
-### Changed
-- The `subscription:change` event is no longer emmitted when there is an error. User will have to subscribe to `subscription:error` as well. `KAA-1351`
+- Fixed issue where the devices:change event was not triggered after calling getDevices() `KAA-1582`
 
-## 4.2.0 - 2019-03-29
+## 3.3.0 - 2018-03-29
 
 ### Fixed
 
 - Fixed an issue where disconnecting from the network would leave isConnected in the wrong state `KAA-1547`
 
-## 4.1.0 - 2019-03-01
-
-### Added
-
-- Added new Presence event, `presence:selfChange`, to notify when self-presence information has changed. `KAA-1153`
-- Added Presence APIs for retrieving presence information. See `kandy.presence.getAll` and `kandy.presence.getSelf`. KAA-1152.
-- Added Presence constants to the API. See `kandy.presence.statuses` and `kandy.presence.activities`. `KAA-1151`
-
-### Fixed
-
-- Fixed an issue where the states property was not being defined on the call namespace (kandy.call.states). `KAA-1349`
-- Fixed a crash when using the Presence `fetch` API and receiving no data. `KAA-1169`.
-
-### Changed
-
-- Changed the default sdpSemantics to "unified-plan". `KAA-1427`
-
-## 4.0.0 - 2019-02-01
-
-### Compatibility Warning
-
-Version 4.0.0 has many breaking changes for call APIs. Please see the API reference documentation to see the new Call API.
-
-### Added
-
-- Added support to make calls on Safari 12.
-
-### Changed
-
-- Refactored all of the WebRTC-related code.
-
-## 3.4.0-beta
-
-### Added
-- Added the error event to the `subscription`, to prevent subscription change to emmited when there is a subscription failure `KAA-1351`
-
-### Changed
-- The `subscription:change` event is no longer emmitted when there is an error. User will have to subscribe to `subscription:error` as well. `KAA-1351`
-
-## 3.3.0 - 2018-03-29
-
 ### Changed
 
 - Changed the callOptions parameter for the makeAnonymous API function of the CallMe SDK. It must now include a `from` property (callOptions.from), indicating the URI of the caller, as it no longer receives a default value of `anonymousUser@kandy.callMe`. `KAA-1350`
+- Changed the callMe REST routes to use proper case letters, so that all routes (in this category) are generated consistently. `KAA-1544`
 
 ## 3.2.0 - 2019-03-01
 

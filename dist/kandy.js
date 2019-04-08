@@ -1,7 +1,7 @@
 /**
  * Kandy.js (Next)
  * kandy.callMe.js
- * Version: 3.4.0-KAA-1440.69644
+ * Version: 3.4.0-beta.69849
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -51883,6 +51883,8 @@ var _actions = __webpack_require__("./src/call/interface/actions/index.js");
 
 var _sagas = __webpack_require__("./src/call/callMe/sagas.js");
 
+var _sagas2 = __webpack_require__("./src/call/oldLink/sagas.js");
+
 var _constants = __webpack_require__("./src/call/constants.js");
 
 var _actions2 = __webpack_require__("./src/events/interface/actions.js");
@@ -51917,7 +51919,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 
 // Other plugins.
-// Call plugin.
+// TODO: Update when new Link is done.
 function anonymousCalls(options = {}) {
   const defaultOptions = {
     // Values used as defaults for making/answering a call.
@@ -51952,7 +51954,7 @@ function anonymousCalls(options = {}) {
     capabilities: ['callMe'],
     middleware,
     init,
-    sagas: [_sagas.anonymousCallFlow, _sagas.anonymousCallEnd]
+    sagas: [_sagas.anonymousCallFlow, _sagas.anonymousCallEnd, _sagas2.watchCheckMediaDevices]
   };
 }
 
@@ -51962,7 +51964,7 @@ function anonymousCalls(options = {}) {
  * @method anonymizeAPI
  * @return {Object} Anonymous Call plugin API.
  */
-// TODO: Update when new Link is done.
+// Call plugin.
 function anonymizeAPI({ dispatch, getState }) {
   // Get the call API.
   let api = _interface2.default.api({ dispatch, getState });
@@ -61417,7 +61419,7 @@ const factoryDefaults = {
    */
 };function factory(plugins, options = factoryDefaults) {
   // Log the SDK's version (templated by webpack) on initialization.
-  let version = '3.4.0-KAA-1440.69644';
+  let version = '3.4.0-beta.69849';
   log.info(`CPaaS SDK version: ${version}`);
 
   var sagas = [];
