@@ -1,7 +1,7 @@
 /**
  * Kandy.js
  * kandy.callMe.js
- * Version: 3.5.0-beta.76831
+ * Version: 3.5.0-beta.77806
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -1065,7 +1065,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 const platforms = exports.platforms = {
   LINK: 'link',
-  CPAAS: 'cpaas',
+  UC: 'uc',
   CPAAS2: 'cpaas2'
 };
 
@@ -3108,7 +3108,7 @@ function getRequestInfo(state, platform) {
         }
       }
     };
-  } else if (platform === _constants2.platforms.CPAAS) {
+  } else if (platform === _constants2.platforms.UC) {
     requestInfo = {
       baseURL: `${subscription.protocol}://${subscription.server}:${subscription.port}`,
       version: subscription.version,
@@ -3122,12 +3122,12 @@ function getRequestInfo(state, platform) {
 
       /*
        * If the requested platform was Link but the platform set in state is
-       *    CPaaS, then we're using CPaaS 1.5 but making a request for SPiDR.
+       *    UC, and so we're using UC but making a request for SPiDR.
        * Change the requestInfo provided to ensure the URL will be valid for
        *    SPiDR and authentication will be valid for CIM.
        */
     };const setPlatform = getPlatform(state);
-    if (setPlatform === _constants2.platforms.CPAAS) {
+    if (setPlatform === _constants2.platforms.UC) {
       requestInfo.version = '1';
 
       const connInfo = getConnectionInfo(state, setPlatform);
@@ -15703,8 +15703,8 @@ const factoryDefaults = {
    */
 };function factory(plugins, options = factoryDefaults) {
   // Log the SDK's version (templated by webpack) on initialization.
-  let version = '3.5.0-beta.76831';
-  log.info(`CPaaS SDK version: ${version}`);
+  let version = '3.5.0-beta.77806';
+  log.info(`UC SDK version: ${version}`);
 
   var sagas = [];
   var store;
@@ -23585,7 +23585,7 @@ var _constants = __webpack_require__(85);
  * @return {Object} Information about the SDK's subscriptions.
  */
 function parseSpidrServices(requested, received) {
-  // CPaaS platform is not case-sensitive (Link is), so filter without caring about case.
+  // UC platform is not case-sensitive (Link is), so filter without caring about case.
   let upperReceived = received.map(service => service.toUpperCase());
 
   // Find the missing services.
@@ -23645,11 +23645,11 @@ const authCodes = exports.authCodes = {
   LINK_SUBSCRIBE_FAIL: 'authentication:4',
   LINK_EXTEND_SUBSCRIPTION_FAIL: 'authentication:5',
   LINK_UPDATE_SUBSCRIPTION_FAIL: 'authentication:6',
-  CPAAS_SUBSCRIBE_FAIL: 'authentication:7',
-  CPAAS_REFRESH_TOKEN_FAIL: 'authentication:8',
-  CPAAS_CREATE_TOKEN_FAIL: 'authentication:9',
-  CPAAS_EXTEND_SUBSCRIPTION_FAIL: 'authentication:10',
-  CPAAS_DISCONNECT_FAIL: 'authentication:11',
+  UC_SUBSCRIBE_FAIL: 'authentication:7',
+  UC_REFRESH_TOKEN_FAIL: 'authentication:8',
+  UC_CREATE_TOKEN_FAIL: 'authentication:9',
+  UC_EXTEND_SUBSCRIPTION_FAIL: 'authentication:10',
+  UC_DISCONNECT_FAIL: 'authentication:11',
   MISSING_SERVICE: 'authentication:12'
 
   /**
@@ -25121,7 +25121,7 @@ function middleware({ dispatch, getState }) {
               websocketIP: authConfig.websocket.server,
               websocketPort: authConfig.websocket.port
             };
-          } else if (action.meta.platform === _constants.platforms.CPAAS) {
+          } else if (action.meta.platform === _constants.platforms.UC) {
             // If we're Link, config has the variables we need.
             const authConfig = (0, _selectors.getAuthConfig)(getState());
             log.debug(`Auth config is: ${authConfig}`);
@@ -55365,7 +55365,7 @@ function* websocketLifecycle(wsConnectAction) {
   } else {
     // If this is a Link websocket, we need to ensure the URL is using the
     //     "latest" access token from state.
-    if (wsConnectAction.meta.platform === _constants.platforms.CPAAS) {
+    if (wsConnectAction.meta.platform === _constants.platforms.UC) {
       let { notificationChannel } = yield (0, _effects.select)(_selectors2.getSubscriptionInfo);
       let { accessToken, oauthToken } = yield (0, _effects.select)(_selectors2.getConnectionInfo);
       wsInfo.url = notificationChannel;
@@ -56281,7 +56281,7 @@ function* processNotification() {
       case _constants.platforms.LINK:
         notificationId = action.payload.notificationMessage.eventId;
         break;
-      case _constants.platforms.CPAAS:
+      case _constants.platforms.UC:
         // A Link notification can be in either the Link format or the SPiDR format (for calls).
         notificationId = action.payload.notificationMessage.id || action.payload.notificationMessage.eventId;
         break;
@@ -63007,8 +63007,8 @@ var _fp = __webpack_require__(0);
  *  }]
  * @return {Function}        [description]
  *
- * INSTRUCTIONS FOR EXPOSING FUNCTION TO CPAAS VERSION OF THE SDK:
- * the following code will need to be added to the appropriate index files (ie: kandy.cpaas.js)
+ * INSTRUCTIONS FOR EXPOSING FUNCTION TO UC VERSION OF THE SDK:
+ * the following code will need to be added to the appropriate index files (ie: kandy.uc.js)
  * this will expose the createCodecRemover function in the browser
     import createCodecRemover from '../../fcs/src/js/sdp/codecRemover';
     kandy.sdpHandlers = {
