@@ -102,7 +102,7 @@
           "column": 35
         }
       },
-      "file": "/home/circleci/kandy/packages/kandy/src/index.common.js"
+      "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/index.common.js"
     },
     "augments": [],
     "examples": [
@@ -291,7 +291,7 @@
           "column": 59
         }
       },
-      "file": "/home/circleci/kandy/packages/kandy/src/events/interface/api.js"
+      "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/events/interface/api.js"
     },
     "augments": [],
     "examples": [],
@@ -437,7 +437,7 @@
                 "column": 3
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/events/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/events/interface/api.js"
           },
           "augments": [],
           "examples": [
@@ -778,7 +778,7 @@
                 "column": 3
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/events/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/events/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -1105,7 +1105,7 @@
                 "column": 3
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/events/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/events/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -1371,7 +1371,7 @@
                 "column": 3
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/events/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/events/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -1698,7 +1698,7 @@
           "column": 20
         }
       },
-      "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
+      "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
     },
     "augments": [],
     "examples": [],
@@ -1840,7 +1840,7 @@
                 "column": 40
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/eventTypes.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [],
@@ -2125,7 +2125,7 @@
                 "column": 51
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/eventTypes.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [
@@ -2676,7 +2676,7 @@
                 "column": 62
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/eventTypes.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [],
@@ -2967,7 +2967,7 @@
                 "column": 63
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/eventTypes.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [],
@@ -3207,7 +3207,7 @@
                 "column": 38
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/eventTypes.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [],
@@ -3756,7 +3756,7 @@
                 "column": 3
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/call/callMe/index.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/callMe/index.js"
           },
           "augments": [],
           "examples": [
@@ -5182,26 +5182,26 @@
           ],
           "loc": {
             "start": {
-              "line": 165,
+              "line": 166,
               "column": 4
             },
             "end": {
-              "line": 179,
+              "line": 180,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 180,
+                "line": 181,
                 "column": 4
               },
               "end": {
-                "line": 183,
+                "line": 184,
                 "column": 5
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [
@@ -5403,26 +5403,26 @@
           ],
           "loc": {
             "start": {
-              "line": 185,
+              "line": 186,
               "column": 4
             },
             "end": {
-              "line": 195,
+              "line": 196,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 196,
+                "line": 197,
                 "column": 4
               },
               "end": {
-                "line": 199,
+                "line": 200,
                 "column": 5
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -5677,26 +5677,26 @@
           ],
           "loc": {
             "start": {
-              "line": 215,
+              "line": 216,
               "column": 4
             },
             "end": {
-              "line": 225,
+              "line": 226,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 226,
+                "line": 227,
                 "column": 4
               },
               "end": {
-                "line": 229,
+                "line": 230,
                 "column": 5
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -5891,26 +5891,26 @@
           ],
           "loc": {
             "start": {
-              "line": 231,
+              "line": 232,
               "column": 4
             },
             "end": {
-              "line": 241,
+              "line": 242,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 242,
+                "line": 243,
                 "column": 4
               },
               "end": {
-                "line": 245,
+                "line": 246,
                 "column": 5
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -6140,26 +6140,26 @@
           ],
           "loc": {
             "start": {
-              "line": 247,
+              "line": 248,
               "column": 4
             },
             "end": {
-              "line": 264,
+              "line": 265,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 265,
+                "line": 266,
                 "column": 4
               },
               "end": {
-                "line": 265,
+                "line": 266,
                 "column": 27
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [
@@ -6650,26 +6650,26 @@
           ],
           "loc": {
             "start": {
-              "line": 267,
+              "line": 268,
               "column": 4
             },
             "end": {
-              "line": 281,
+              "line": 282,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 282,
+                "line": 283,
                 "column": 4
               },
               "end": {
-                "line": 282,
+                "line": 283,
                 "column": 33
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -7224,26 +7224,26 @@
           ],
           "loc": {
             "start": {
-              "line": 414,
+              "line": 416,
               "column": 4
             },
             "end": {
-              "line": 423,
+              "line": 425,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 424,
+                "line": 426,
                 "column": 4
               },
               "end": {
-                "line": 427,
+                "line": 429,
                 "column": 5
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -7434,26 +7434,26 @@
           ],
           "loc": {
             "start": {
-              "line": 433,
+              "line": 435,
               "column": 4
             },
             "end": {
-              "line": 442,
+              "line": 444,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 443,
+                "line": 445,
                 "column": 4
               },
               "end": {
-                "line": 446,
+                "line": 448,
                 "column": 5
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -7644,26 +7644,26 @@
           ],
           "loc": {
             "start": {
-              "line": 448,
+              "line": 450,
               "column": 4
             },
             "end": {
-              "line": 457,
+              "line": 459,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 458,
+                "line": 460,
                 "column": 4
               },
               "end": {
-                "line": 461,
+                "line": 463,
                 "column": 5
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -7854,26 +7854,26 @@
           ],
           "loc": {
             "start": {
-              "line": 463,
+              "line": 465,
               "column": 4
             },
             "end": {
-              "line": 472,
+              "line": 474,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 473,
+                "line": 475,
                 "column": 4
               },
               "end": {
-                "line": 476,
+                "line": 478,
                 "column": 5
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -8064,26 +8064,26 @@
           ],
           "loc": {
             "start": {
-              "line": 478,
+              "line": 480,
               "column": 4
             },
             "end": {
-              "line": 487,
+              "line": 489,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 488,
+                "line": 490,
                 "column": 4
               },
               "end": {
-                "line": 491,
+                "line": 493,
                 "column": 5
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -8309,26 +8309,26 @@
           ],
           "loc": {
             "start": {
-              "line": 493,
+              "line": 495,
               "column": 4
             },
             "end": {
-              "line": 503,
+              "line": 505,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 504,
+                "line": 506,
                 "column": 4
               },
               "end": {
-                "line": 507,
+                "line": 509,
                 "column": 5
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -8646,26 +8646,26 @@
           ],
           "loc": {
             "start": {
-              "line": 509,
+              "line": 511,
               "column": 4
             },
             "end": {
-              "line": 529,
+              "line": 531,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 530,
+                "line": 532,
                 "column": 4
               },
               "end": {
-                "line": 533,
+                "line": 535,
                 "column": 5
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [
@@ -8999,26 +8999,26 @@
           ],
           "loc": {
             "start": {
-              "line": 535,
+              "line": 537,
               "column": 4
             },
             "end": {
-              "line": 548,
+              "line": 550,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 549,
+                "line": 551,
                 "column": 4
               },
               "end": {
-                "line": 552,
+                "line": 554,
                 "column": 5
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -9469,26 +9469,26 @@
           ],
           "loc": {
             "start": {
-              "line": 554,
+              "line": 556,
               "column": 4
             },
             "end": {
-              "line": 563,
+              "line": 565,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 564,
+                "line": 566,
                 "column": 4
               },
               "end": {
-                "line": 567,
+                "line": 569,
                 "column": 5
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -9679,26 +9679,26 @@
           ],
           "loc": {
             "start": {
-              "line": 569,
+              "line": 571,
               "column": 4
             },
             "end": {
-              "line": 578,
+              "line": 580,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 579,
+                "line": 581,
                 "column": 4
               },
               "end": {
-                "line": 582,
+                "line": 584,
                 "column": 5
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -9889,26 +9889,26 @@
           ],
           "loc": {
             "start": {
-              "line": 584,
+              "line": 586,
               "column": 4
             },
             "end": {
-              "line": 593,
+              "line": 595,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 594,
+                "line": 596,
                 "column": 4
               },
               "end": {
-                "line": 597,
+                "line": 599,
                 "column": 5
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -10161,26 +10161,26 @@
           ],
           "loc": {
             "start": {
-              "line": 599,
+              "line": 601,
               "column": 4
             },
             "end": {
-              "line": 613,
+              "line": 615,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 614,
+                "line": 616,
                 "column": 4
               },
               "end": {
-                "line": 617,
+                "line": 619,
                 "column": 5
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -10629,26 +10629,26 @@
           ],
           "loc": {
             "start": {
-              "line": 619,
+              "line": 621,
               "column": 4
             },
             "end": {
-              "line": 628,
+              "line": 630,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 629,
+                "line": 631,
                 "column": 4
               },
               "end": {
-                "line": 632,
+                "line": 634,
                 "column": 5
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -10849,26 +10849,26 @@
           ],
           "loc": {
             "start": {
-              "line": 634,
+              "line": 636,
               "column": 4
             },
             "end": {
-              "line": 645,
+              "line": 647,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 646,
+                "line": 648,
                 "column": 4
               },
               "end": {
-                "line": 649,
+                "line": 651,
                 "column": 5
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -11174,26 +11174,26 @@
           ],
           "loc": {
             "start": {
-              "line": 651,
+              "line": 653,
               "column": 4
             },
             "end": {
-              "line": 660,
+              "line": 662,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 661,
+                "line": 663,
                 "column": 4
               },
               "end": {
-                "line": 664,
+                "line": 666,
                 "column": 5
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -11422,7 +11422,7 @@
           "column": 20
         }
       },
-      "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
+      "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
     },
     "augments": [],
     "examples": [],
@@ -11564,7 +11564,7 @@
                 "column": 61
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/eventTypes.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [],
@@ -11794,7 +11794,7 @@
                 "column": 45
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/eventTypes.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [],
@@ -12054,7 +12054,7 @@
                 "column": 51
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/eventTypes.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [],
@@ -12493,26 +12493,26 @@
           ],
           "loc": {
             "start": {
-              "line": 63,
+              "line": 64,
               "column": 4
             },
             "end": {
-              "line": 82,
+              "line": 83,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 83,
+                "line": 84,
                 "column": 4
               },
               "end": {
-                "line": 86,
+                "line": 87,
                 "column": 5
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [
@@ -12839,26 +12839,26 @@
           ],
           "loc": {
             "start": {
-              "line": 88,
+              "line": 89,
               "column": 4
             },
             "end": {
-              "line": 94,
+              "line": 95,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 95,
+                "line": 96,
                 "column": 4
               },
               "end": {
-                "line": 98,
+                "line": 99,
                 "column": 5
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -13010,7 +13010,7 @@
                 "column": 43
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/call/interface/eventTypes.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [],
@@ -13258,7 +13258,7 @@
           "column": 54
         }
       },
-      "file": "/home/circleci/kandy/packages/kandy/src/connectivity/interface/api.js"
+      "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/connectivity/interface/api.js"
     },
     "augments": [],
     "examples": [],
@@ -13388,7 +13388,7 @@
                 "column": 36
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/connectivity/interface/eventTypes.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/connectivity/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [],
@@ -13603,7 +13603,7 @@
                 "column": 5
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/connectivity/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/connectivity/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -13802,7 +13802,7 @@
                 "column": 5
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/connectivity/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/connectivity/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -13951,7 +13951,7 @@
           "column": 36
         }
       },
-      "file": "/home/circleci/kandy/packages/kandy/src/notifications/interface/api.js"
+      "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/notifications/interface/api.js"
     },
     "augments": [],
     "examples": [],
@@ -14087,7 +14087,7 @@
                 "column": 49
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/notifications/interface/eventTypes.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/notifications/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [],
@@ -14321,7 +14321,7 @@
                 "column": 47
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/notifications/interface/eventTypes.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/notifications/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [],
@@ -14612,7 +14612,7 @@
                 "column": 5
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/notifications/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/notifications/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -14877,7 +14877,7 @@
                 "column": 5
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/notifications/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/notifications/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -15274,7 +15274,7 @@
                 "column": 5
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/notifications/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/notifications/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -15416,7 +15416,7 @@
                 "column": 5
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/notifications/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/notifications/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -15530,337 +15530,6 @@
           "children": [
             {
               "type": "text",
-              "value": "A set of handlers for manipulating SDP information.\nThese handlers are used to customize low-level call behaviour for very specific\nenvironments and/or scenarios. They can be provided during SDK instantiation\nto be used for all calls.",
-              "position": {
-                "start": {
-                  "line": 1,
-                  "column": 1,
-                  "offset": 0
-                },
-                "end": {
-                  "line": 4,
-                  "column": 26,
-                  "offset": 234
-                },
-                "indent": [
-                  1,
-                  1,
-                  1
-                ]
-              }
-            }
-          ],
-          "position": {
-            "start": {
-              "line": 1,
-              "column": 1,
-              "offset": 0
-            },
-            "end": {
-              "line": 4,
-              "column": 26,
-              "offset": 234
-            },
-            "indent": [
-              1,
-              1,
-              1
-            ]
-          }
-        }
-      ],
-      "position": {
-        "start": {
-          "line": 1,
-          "column": 1,
-          "offset": 0
-        },
-        "end": {
-          "line": 4,
-          "column": 26,
-          "offset": 234
-        }
-      }
-    },
-    "tags": [
-      {
-        "title": "public",
-        "description": null,
-        "lineNumber": 5,
-        "type": null
-      },
-      {
-        "title": "module",
-        "description": null,
-        "lineNumber": 6,
-        "type": null,
-        "name": "sdpHandlers"
-      }
-    ],
-    "loc": {
-      "start": {
-        "line": 27,
-        "column": 0
-      },
-      "end": {
-        "line": 34,
-        "column": 3
-      }
-    },
-    "context": {
-      "loc": {
-        "start": {
-          "line": 62,
-          "column": 0
-        },
-        "end": {
-          "line": 62,
-          "column": 35
-        }
-      },
-      "file": "/home/circleci/kandy/packages/kandy/src/index.common.js"
-    },
-    "augments": [],
-    "examples": [],
-    "params": [],
-    "properties": [],
-    "returns": [],
-    "sees": [],
-    "throws": [],
-    "todos": [],
-    "access": "public",
-    "kind": "module",
-    "name": "sdpHandlers",
-    "members": {
-      "global": [],
-      "inner": [],
-      "instance": [],
-      "events": [],
-      "static": [
-        {
-          "description": {
-            "type": "root",
-            "children": [
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "In some scenarios it's necessary to remove certain codecs being offered by the SDK to the remote party. While creating an SDP handler would allow a user to perform this type of manipulation, it is a non-trivial task that requires in-depth knowledge of WebRTC SDP.",
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 1,
-                        "offset": 0
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 264,
-                        "offset": 263
-                      },
-                      "indent": []
-                    }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 1,
-                    "column": 1,
-                    "offset": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 264,
-                    "offset": 263
-                  },
-                  "indent": []
-                }
-              },
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "To facilitate this common task, the SDK provides a codec removal handler that can be used for this purpose.",
-                    "position": {
-                      "start": {
-                        "line": 3,
-                        "column": 1,
-                        "offset": 265
-                      },
-                      "end": {
-                        "line": 3,
-                        "column": 108,
-                        "offset": 372
-                      },
-                      "indent": []
-                    }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 3,
-                    "column": 1,
-                    "offset": 265
-                  },
-                  "end": {
-                    "line": 3,
-                    "column": 108,
-                    "offset": 372
-                  },
-                  "indent": []
-                }
-              },
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "The SDP handlers are exposed on the entry point of the SDK. They need to be added to the list of SDP handlers via configuration on creation of an instance of the SDK.",
-                    "position": {
-                      "start": {
-                        "line": 5,
-                        "column": 1,
-                        "offset": 374
-                      },
-                      "end": {
-                        "line": 5,
-                        "column": 167,
-                        "offset": 540
-                      },
-                      "indent": []
-                    }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 5,
-                    "column": 1,
-                    "offset": 374
-                  },
-                  "end": {
-                    "line": 5,
-                    "column": 167,
-                    "offset": 540
-                  },
-                  "indent": []
-                }
-              }
-            ],
-            "position": {
-              "start": {
-                "line": 1,
-                "column": 1,
-                "offset": 0
-              },
-              "end": {
-                "line": 5,
-                "column": 167,
-                "offset": 540
-              }
-            }
-          },
-          "tags": [
-            {
-              "title": "public",
-              "description": null,
-              "lineNumber": 7,
-              "type": null
-            },
-            {
-              "title": "memberof",
-              "description": "sdpHandlers",
-              "lineNumber": 8
-            },
-            {
-              "title": "method",
-              "description": null,
-              "lineNumber": 9,
-              "name": "createCodecRemover"
-            },
-            {
-              "title": "example",
-              "description": "import { create, sdpHandlers } from 'kandy';\nconst codecRemover = sdpHandlers.createCodecRemover(['VP8', 'VP9'])\nconst client = create({\n  call: {\n    sdpHandlers: [codecRemover]\n  }\n})",
-              "lineNumber": 10
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 38,
-              "column": 0
-            },
-            "end": {
-              "line": 57,
-              "column": 3
-            }
-          },
-          "context": {
-            "loc": {
-              "start": {
-                "line": 62,
-                "column": 0
-              },
-              "end": {
-                "line": 62,
-                "column": 35
-              }
-            },
-            "file": "/home/circleci/kandy/packages/kandy/src/index.common.js"
-          },
-          "augments": [],
-          "examples": [
-            {
-              "description": "import { create, sdpHandlers } from 'kandy';\nconst codecRemover = sdpHandlers.createCodecRemover(['VP8', 'VP9'])\nconst client = create({\n  call: {\n    sdpHandlers: [codecRemover]\n  }\n})"
-            }
-          ],
-          "params": [],
-          "properties": [],
-          "returns": [],
-          "sees": [],
-          "throws": [],
-          "todos": [],
-          "access": "public",
-          "memberof": "sdpHandlers",
-          "kind": "function",
-          "name": "createCodecRemover",
-          "members": {
-            "global": [],
-            "inner": [],
-            "instance": [],
-            "events": [],
-            "static": []
-          },
-          "path": [
-            {
-              "name": "sdpHandlers",
-              "kind": "module"
-            },
-            {
-              "name": "createCodecRemover",
-              "kind": "function"
-            }
-          ],
-          "namespace": "sdpHandlerscreateCodecRemover"
-        }
-      ]
-    },
-    "path": [
-      {
-        "name": "sdpHandlers",
-        "kind": "module"
-      }
-    ],
-    "namespace": "sdpHandlers"
-  },
-  {
-    "description": {
-      "type": "root",
-      "children": [
-        {
-          "type": "paragraph",
-          "children": [
-            {
-              "type": "text",
               "value": "The configuration object. This object defines what different configuration\nvalues you can use when instantiating the SDK.",
               "position": {
                 "start": {
@@ -15945,7 +15614,7 @@
           "column": 35
         }
       },
-      "file": "/home/circleci/kandy/packages/kandy/src/index.common.js"
+      "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/index.common.js"
     },
     "augments": [],
     "examples": [],
@@ -16182,26 +15851,26 @@
           ],
           "loc": {
             "start": {
-              "line": 49,
+              "line": 47,
               "column": 0
             },
             "end": {
-              "line": 66,
+              "line": 64,
               "column": 3
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 74,
+                "line": 72,
                 "column": 0
               },
               "end": {
-                "line": 148,
+                "line": 146,
                 "column": 1
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/logs/index.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/logs/index.js"
           },
           "augments": [],
           "examples": [],
@@ -17125,7 +16794,7 @@
                 "column": 1
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/auth/callMe/index.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/auth/callMe/index.js"
           },
           "augments": [],
           "examples": [],
@@ -17902,7 +17571,7 @@
                 "column": 1
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/call/oldLink/index.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/oldLink/index.js"
           },
           "augments": [],
           "examples": [],
@@ -18509,7 +18178,7 @@
                 "column": 1
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/connectivity/index.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/connectivity/index.js"
           },
           "augments": [],
           "examples": [],
@@ -19672,7 +19341,7 @@
                 "column": 1
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/notifications/link/index.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/notifications/link/index.js"
           },
           "augments": [],
           "examples": [],
@@ -20302,6 +19971,337 @@
           "children": [
             {
               "type": "text",
+              "value": "A set of handlers for manipulating SDP information.\nThese handlers are used to customize low-level call behaviour for very specific\nenvironments and/or scenarios. They can be provided during SDK instantiation\nto be used for all calls.",
+              "position": {
+                "start": {
+                  "line": 1,
+                  "column": 1,
+                  "offset": 0
+                },
+                "end": {
+                  "line": 4,
+                  "column": 26,
+                  "offset": 234
+                },
+                "indent": [
+                  1,
+                  1,
+                  1
+                ]
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 1,
+              "column": 1,
+              "offset": 0
+            },
+            "end": {
+              "line": 4,
+              "column": 26,
+              "offset": 234
+            },
+            "indent": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 1,
+          "column": 1,
+          "offset": 0
+        },
+        "end": {
+          "line": 4,
+          "column": 26,
+          "offset": 234
+        }
+      }
+    },
+    "tags": [
+      {
+        "title": "public",
+        "description": null,
+        "lineNumber": 5,
+        "type": null
+      },
+      {
+        "title": "module",
+        "description": null,
+        "lineNumber": 6,
+        "type": null,
+        "name": "sdpHandlers"
+      }
+    ],
+    "loc": {
+      "start": {
+        "line": 27,
+        "column": 0
+      },
+      "end": {
+        "line": 34,
+        "column": 3
+      }
+    },
+    "context": {
+      "loc": {
+        "start": {
+          "line": 62,
+          "column": 0
+        },
+        "end": {
+          "line": 62,
+          "column": 35
+        }
+      },
+      "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/index.common.js"
+    },
+    "augments": [],
+    "examples": [],
+    "params": [],
+    "properties": [],
+    "returns": [],
+    "sees": [],
+    "throws": [],
+    "todos": [],
+    "access": "public",
+    "kind": "module",
+    "name": "sdpHandlers",
+    "members": {
+      "global": [],
+      "inner": [],
+      "instance": [],
+      "events": [],
+      "static": [
+        {
+          "description": {
+            "type": "root",
+            "children": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "In some scenarios it's necessary to remove certain codecs being offered by the SDK to the remote party. While creating an SDP handler would allow a user to perform this type of manipulation, it is a non-trivial task that requires in-depth knowledge of WebRTC SDP.",
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 264,
+                        "offset": 263
+                      },
+                      "indent": []
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 264,
+                    "offset": 263
+                  },
+                  "indent": []
+                }
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "To facilitate this common task, the SDK provides a codec removal handler that can be used for this purpose.",
+                    "position": {
+                      "start": {
+                        "line": 3,
+                        "column": 1,
+                        "offset": 265
+                      },
+                      "end": {
+                        "line": 3,
+                        "column": 108,
+                        "offset": 372
+                      },
+                      "indent": []
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 3,
+                    "column": 1,
+                    "offset": 265
+                  },
+                  "end": {
+                    "line": 3,
+                    "column": 108,
+                    "offset": 372
+                  },
+                  "indent": []
+                }
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "The SDP handlers are exposed on the entry point of the SDK. They need to be added to the list of SDP handlers via configuration on creation of an instance of the SDK.",
+                    "position": {
+                      "start": {
+                        "line": 5,
+                        "column": 1,
+                        "offset": 374
+                      },
+                      "end": {
+                        "line": 5,
+                        "column": 167,
+                        "offset": 540
+                      },
+                      "indent": []
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 5,
+                    "column": 1,
+                    "offset": 374
+                  },
+                  "end": {
+                    "line": 5,
+                    "column": 167,
+                    "offset": 540
+                  },
+                  "indent": []
+                }
+              }
+            ],
+            "position": {
+              "start": {
+                "line": 1,
+                "column": 1,
+                "offset": 0
+              },
+              "end": {
+                "line": 5,
+                "column": 167,
+                "offset": 540
+              }
+            }
+          },
+          "tags": [
+            {
+              "title": "public",
+              "description": null,
+              "lineNumber": 7,
+              "type": null
+            },
+            {
+              "title": "memberof",
+              "description": "sdpHandlers",
+              "lineNumber": 8
+            },
+            {
+              "title": "method",
+              "description": null,
+              "lineNumber": 9,
+              "name": "createCodecRemover"
+            },
+            {
+              "title": "example",
+              "description": "import { create, sdpHandlers } from 'kandy';\nconst codecRemover = sdpHandlers.createCodecRemover(['VP8', 'VP9'])\nconst client = create({\n  call: {\n    sdpHandlers: [codecRemover]\n  }\n})",
+              "lineNumber": 10
+            }
+          ],
+          "loc": {
+            "start": {
+              "line": 38,
+              "column": 0
+            },
+            "end": {
+              "line": 57,
+              "column": 3
+            }
+          },
+          "context": {
+            "loc": {
+              "start": {
+                "line": 62,
+                "column": 0
+              },
+              "end": {
+                "line": 62,
+                "column": 35
+              }
+            },
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/index.common.js"
+          },
+          "augments": [],
+          "examples": [
+            {
+              "description": "import { create, sdpHandlers } from 'kandy';\nconst codecRemover = sdpHandlers.createCodecRemover(['VP8', 'VP9'])\nconst client = create({\n  call: {\n    sdpHandlers: [codecRemover]\n  }\n})"
+            }
+          ],
+          "params": [],
+          "properties": [],
+          "returns": [],
+          "sees": [],
+          "throws": [],
+          "todos": [],
+          "access": "public",
+          "memberof": "sdpHandlers",
+          "kind": "function",
+          "name": "createCodecRemover",
+          "members": {
+            "global": [],
+            "inner": [],
+            "instance": [],
+            "events": [],
+            "static": []
+          },
+          "path": [
+            {
+              "name": "sdpHandlers",
+              "kind": "module"
+            },
+            {
+              "name": "createCodecRemover",
+              "kind": "function"
+            }
+          ],
+          "namespace": "sdpHandlerscreateCodecRemover"
+        }
+      ]
+    },
+    "path": [
+      {
+        "name": "sdpHandlers",
+        "kind": "module"
+      }
+    ],
+    "namespace": "sdpHandlers"
+  },
+  {
+    "description": {
+      "type": "root",
+      "children": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
               "value": "The internal logger used to provide information about the SDK's behaviour.\nThe logger can provide two types of logs: basic logs and action logs. Basic\nlogs are simple lines of information about what the SDK is doing during operations.\nAction logs are complete information about a specific action that occurred\nwithin the SDK, prodiving debug information describing it.\nThe amount of information logged can be configured as part of the SDK\n(see ",
               "position": {
                 "start": {
@@ -20436,7 +20436,7 @@
           "column": 1
         }
       },
-      "file": "/home/circleci/kandy/packages/kandy/src/logs/interface/api.js"
+      "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/logs/interface/api.js"
     },
     "augments": [],
     "examples": [],
@@ -20592,7 +20592,7 @@
                 "column": 5
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/logs/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/logs/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -21034,7 +21034,7 @@
           "column": 36
         }
       },
-      "file": "/home/circleci/kandy/packages/kandy/src/config/interface/api.js"
+      "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/config/interface/api.js"
     },
     "augments": [],
     "examples": [],
@@ -21161,7 +21161,7 @@
                 "column": 5
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/config/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/config/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -21363,7 +21363,7 @@
                 "column": 5
               }
             },
-            "file": "/home/circleci/kandy/packages/kandy/src/config/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/config/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -21577,7 +21577,7 @@
           "column": 16
         }
       },
-      "file": "/home/circleci/kandy/packages/kandy/src/errors/index.js"
+      "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/errors/index.js"
     },
     "augments": [],
     "examples": [],
