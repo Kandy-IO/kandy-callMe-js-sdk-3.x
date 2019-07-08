@@ -5,7 +5,10 @@ Kandy.js change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
-## 3.5.0 - beta
+## 3.6.0 - beta
+
+### Fixed
+- Fixed an issue where call audio would be played out of the wrong speaker after a midcall operation that re-rendered media. `KAA-1824`
 
 ## 3.4.1 - 2019-04-26
 

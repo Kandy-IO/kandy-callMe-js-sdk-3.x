@@ -1,7 +1,7 @@
 /**
  * Kandy.js
  * kandy.callMe.js
- * Version: 3.5.0-beta.57
+ * Version: 3.6.0-beta.60
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -40947,6 +40947,33 @@ function WebRtcAdaptorImpl(_ref) {
             _ref2$muted = _ref2.muted,
             muted = _ref2$muted === undefined ? false : _ref2$muted;
 
+        /**
+         * Sets the output speaker for audio from the HTMLElement to the default
+         *    speaker.
+         * The default speaker should have been set previously using the
+         *    `setDefaultDevices` API.
+         * The element must support `.setSinkId` to be able to change speaker.
+         * @method setSelectedSpeaker
+         * @param  {HTMLElement} element
+         */
+        function setSelectedSpeaker(element) {
+            var speakerId = self.getSelectedSpeakerId();
+            if (!speakerId) {
+                logger.debug('No default speaker set. Not changing sinkId.');
+                return;
+            }
+
+            if (typeof element.setSinkId !== 'undefined') {
+                element.setSinkId(speakerId).then(function () {
+                    logger.debug('Default speaker set.', speakerId);
+                }).catch(function (error) {
+                    logger.debug('Could not set default speaker. ' + speakerId, error);
+                });
+            } else {
+                logger.debug('Renderer does not support changing speaker.');
+            }
+        }
+
         var videoRenderer, renderer, safeStreamId;
 
         if (!stream || !container) {
@@ -40981,6 +41008,12 @@ function WebRtcAdaptorImpl(_ref) {
                     logger.debug('Autoplay video was prevented.', error);
                 });
             }
+
+            // Always set the output speaker for all renderer elements. This
+            //    works-around certain scenarios where audio comes from the
+            //    wrong speaker after re-renders (eg. unhold, stop video).
+            // Reference: KAA-1824
+            setSelectedSpeaker(videoRenderer);
         }
 
         if (audio && split) {
@@ -40997,18 +41030,14 @@ function WebRtcAdaptorImpl(_ref) {
             }
             renderer.autoplay = 'true';
             renderer.srcObject = stream;
+
+            // Always set the output speaker for all renderer elements. This
+            //    works-around certain scenarios where audio comes from the
+            //    wrong speaker after re-renders (eg. unhold, stop video).
+            // Reference: KAA-1824
+            setSelectedSpeaker(renderer);
         } else {
             renderer = videoRenderer;
-        }
-
-        // Set call speaker if a default is set and it's supported.
-        var speakerId = self.getSelectedSpeakerId();
-        if (speakerId && typeof renderer.setSinkId !== 'undefined') {
-            renderer.setSinkId(speakerId).then(function () {
-                logger.debug('Default speaker set.', speakerId);
-            }).catch(function (error) {
-                logger.debug('Could not set default speaker. ' + speakerId, error);
-            });
         }
 
         return renderer;
@@ -49699,12 +49728,22 @@ Object.defineProperty(exports, "__esModule", {
 });
 /**
  * Possible subscription states.
+ * @name SUBSCRIPTION_STATE
  * @type {Object}
  */
 const SUBSCRIPTION_STATE = exports.SUBSCRIPTION_STATE = {
   FULL: 'FULL',
   PARTIAL: 'PARTIAL',
   NONE: 'NONE'
+
+  /**
+   * Possible disconnect reasons.
+   * @name DISCONNECT_REASONS
+   * @type {Object}
+   */
+};const DISCONNECT_REASONS = exports.DISCONNECT_REASONS = {
+  GONE: 'GONE',
+  LOST_CONNECTION: 'LOST_CONNECTION'
 };
 
 /***/ }),
@@ -49898,13 +49937,13 @@ function disconnect() {
  * Create a disconnectFinished action that possibly takes an error object on failure.
  *
  * @method disconnectFinished
- * @param {Object} $0
- * @param {string} [$0.error] An error message. Only present if an error occurred.
- * @param {Boolean} [$0.forced] Whether the disconnect was forcefully disconnected.
+ * @param {Object} params
+ * @param {string} [params.error] An error message. Only present if an error occurred.
+ * @param {string} [params.reason] Why the disconnectFinished action is being dispatched.
  * @return {Object} A flux standard action.
  */
-function disconnectFinished({ error, forced } = {}) {
-  var action = {
+function disconnectFinished({ error, reason } = {}) {
+  let action = {
     type: actionTypes.DISCONNECT_FINISHED,
     payload: {}
   };
@@ -49913,7 +49952,10 @@ function disconnectFinished({ error, forced } = {}) {
     action.error = true;
     action.payload = error;
   }
-  action.payload.forced = forced;
+
+  if (reason) {
+    action.payload.reason = reason;
+  }
 
   return action;
 }
@@ -50332,6 +50374,17 @@ function api({ dispatch, getState }) {
     subscriptionStates: _constants.SUBSCRIPTION_STATE,
 
     /**
+     * Possible reasons for disconnecting.
+     *
+     * @public
+     * @memberof Authentication
+     * @requires connect
+     * @property {string} GONE Connection was terminated by the server
+     * @property {string} LOST_CONNECTION Internet connection was lost
+     */
+    disconnectReasons: _constants.DISCONNECT_REASONS,
+
+    /**
      * Sets the authentication tokens necessary to make requests to the platform. The access token
      * provided establishes what can be accessed by the SDK. The identity token represents who is authenticated.
      *
@@ -50506,7 +50559,7 @@ reducers[actionTypes.DISCONNECT] = {
 };
 
 reducers[actionTypes.DISCONNECT_FINISHED] = {
-  next() {
+  next(state, action) {
     return {
       isConnected: false,
       isPending: false,
@@ -50835,6 +50888,7 @@ var _extends2 = __webpack_require__("../../node_modules/babel-runtime/helpers/ex
 var _extends3 = _interopRequireDefault(_extends2);
 
 exports.connectFlow = connectFlow;
+exports.connect = connect;
 exports.disconnect = disconnect;
 exports.extendSubscription = extendSubscription;
 exports.updateSubscription = updateSubscription;
@@ -50852,9 +50906,15 @@ var _actionTypes = __webpack_require__("../kandy/src/auth/interface/actionTypes.
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
+var _constants = __webpack_require__("../kandy/src/auth/constants.js");
+
 var _selectors = __webpack_require__("../kandy/src/auth/interface/selectors.js");
 
-var _constants = __webpack_require__("../kandy/src/constants.js");
+var _constants2 = __webpack_require__("../kandy/src/constants.js");
+
+var _errors = __webpack_require__("../kandy/src/errors/index.js");
+
+var _errors2 = _interopRequireDefault(_errors);
 
 var _requests = __webpack_require__("../kandy/src/auth/subscription/requests.js");
 
@@ -50878,10 +50938,6 @@ var _utf2 = _interopRequireDefault(_utf);
 
 var _logs = __webpack_require__("../kandy/src/logs/index.js");
 
-var _errors = __webpack_require__("../kandy/src/errors/index.js");
-
-var _errors2 = _interopRequireDefault(_errors);
-
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -50889,24 +50945,32 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // This is an Link plugin.
 
 
+// Requests
+
+
+// Constants
+
+
+// Auth
+const platform = _constants2.platforms.LINK;
+
+// Get the logger
+
+
+// Logging
+
+
 // Libraries
 
 
 // Other plugins.
 
-// Constants
-// Redux-Saga
-const platform = _constants.platforms.LINK;
 
-// Get the logger
-
-// Requests
+// Errors
 
 
 // State selectors
-
-
-// Auth
+// Redux-Saga
 const log = (0, _logs.getLogManager)().getLogger('AUTH');
 
 /**
@@ -50940,7 +51004,13 @@ function* connectFlow() {
     if (finishOrError.type === actionTypes.DISCONNECT) {
       yield (0, _effects.cancel)(task);
     } else if (finishOrError.type === actionTypes.CONNECT_FINISHED && !finishOrError.error) {
-      yield (0, _effects.take)([actionTypes.DISCONNECT]);
+      const disconnectAction = yield (0, _effects.take)([actionTypes.DISCONNECT, actionTypes.DISCONNECT_FINISHED]);
+
+      // if disconnect has finished, we dont need to do a teardown of auth state, or disconnect the websocket, so reset connectFlow
+      if (disconnectAction.type === actionTypes.DISCONNECT_FINISHED) {
+        continue;
+      }
+
       yield (0, _effects.call)(disconnect);
     }
   }
@@ -51206,7 +51276,7 @@ function* onSubscriptionGone() {
     }
 
     // Dispatch a disconnect finished action to trigger "user disconnected" logic.
-    yield (0, _effects.put)(actions.disconnectFinished({ forced: true }));
+    yield (0, _effects.put)(actions.disconnectFinished({ reason: _constants.DISCONNECT_REASONS.GONE }));
   }
 }
 
@@ -51223,7 +51293,7 @@ function* onConnectionLostEntry() {
  * @method onConnectionLost
  */
 function* onConnectionLost() {
-  yield (0, _effects.put)(actions.disconnect());
+  yield (0, _effects.put)(actions.disconnectFinished({ reason: _constants.DISCONNECT_REASONS.LOST_CONNECTION }));
 }
 
 /***/ }),
@@ -52047,7 +52117,7 @@ function* anonymousCallEnd() {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.ICE_MEDIA_STATES = exports.FCS_ICE_MEDIA_STATES = exports.WEBRTC_DEVICE_KINDS = exports.CALL_DIRECTION = exports.STATUS_CODES = exports.COMPLEX_OPERATION_MESSAGES = exports.COMPLEX_OPERATIONS = exports.OPERATIONS = exports.CALL_MEDIA_STATES = exports.CALL_STATES = exports.CALL_STATES_FCS = exports.FCS_CALL_STATES = undefined;
+exports.ICE_MEDIA_STATES = exports.FCS_ICE_MEDIA_STATES = exports.WEBRTC_DEVICE_KINDS = exports.BANDWIDTH_DEFAULTS = exports.CALL_DIRECTION = exports.STATUS_CODES = exports.COMPLEX_OPERATION_MESSAGES = exports.COMPLEX_OPERATIONS = exports.OPERATIONS = exports.CALL_MEDIA_STATES = exports.CALL_STATES = exports.CALL_STATES_FCS = exports.FCS_CALL_STATES = undefined;
 
 var _fp = __webpack_require__("../../node_modules/lodash/fp.js");
 
@@ -52199,6 +52269,14 @@ const CALL_STATES = exports.CALL_STATES = {
 };const CALL_DIRECTION = exports.CALL_DIRECTION = {
   INCOMING: 'incoming',
   OUTGOING: 'outgoing'
+
+  /**
+   * The default bandwidth limits to use for a track type.
+   * @name BANDWIDTH_DEFAULTS
+   */
+};const BANDWIDTH_DEFAULTS = exports.BANDWIDTH_DEFAULTS = {
+  AUDIO: 5000,
+  VIDEO: 5000
 
   /*
    * A conversion from MediaDeviceInfo.kind values to their more common terms.
@@ -61411,7 +61489,7 @@ const factoryDefaults = {
    */
 };function factory(plugins, options = factoryDefaults) {
   // Log the SDK's version (templated by webpack) on initialization.
-  let version = '3.5.0-beta.57';
+  let version = '3.6.0-beta.60';
   log.info(`SDK version: ${version}`);
 
   var sagas = [];
