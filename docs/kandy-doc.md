@@ -522,7 +522,7 @@ Configuration options for the Logs feature.
 **Parameters**
 
 -   `logs` **[Object][5]** Logs configs.
-    -   `logs.logLevel` **[string][2]** Log level to be set. See `logger.levels`. (optional, default `debug`)
+    -   `logs.logLevel` **[string][2]** Log level to be set. See [levels][11]. (optional, default `debug`)
     -   `logs.flatten` **[boolean][6]** Whether all logs should be output in a string-only format. (optional, default `false`)
     -   `logs.logActions` **[Object][5]?** Options specifically for action logs when logLevel is at DEBUG+ levels. Set this to false to not output action logs.
         -   `logs.logActions.actionOnly` **[boolean][6]** Only output information about the action itself. Omits the SDK context for when it occurred. (optional, default `true`)
@@ -627,13 +627,13 @@ Configuration options for the notification feature.
 
 ## Logger
 
-The internal logger used to provide information about the SDK's behaviour.
+The internal logger is used to provide information about the SDK's behaviour.
 The logger can provide two types of logs: basic logs and action logs. Basic
 logs are simple lines of information about what the SDK is doing during operations.
 Action logs are complete information about a specific action that occurred
-within the SDK, prodiving debug information describing it.
-The amount of information logged can be configured as part of the SDK
-(see `configs.logs`) configuration.
+within the SDK, providing debug information describing it.
+The amount of information logged can be configured as part of the SDK configuration.
+See [config.logs][12] .
 
 ### levels
 
@@ -641,8 +641,8 @@ Possible levels for the SDK logger.
 
 **Properties**
 
--   `SILENT` **[string][2]** Logs nothing.
--   `ERROR` **[string][2]** Only log unhandled errors.
+-   `SILENT` **[string][2]** Log nothing.
+-   `ERROR` **[string][2]** Log only unhandled errors.
 -   `WARN` **[string][2]** Log issues that may cause problems or unexpected behaviour.
 -   `INFO` **[string][2]** Log useful information and messages to indicate the SDK's internal operations.
 -   `DEBUG` **[string][2]** Log information to help diagnose problematic behaviour.
@@ -693,3 +693,7 @@ The Basic error object. Provides information about an error that occurred in the
 [9]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
 
 [10]: #basicerror
+
+[11]: #loggerlevels
+
+[12]: #configconfiglogs

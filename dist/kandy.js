@@ -1,7 +1,7 @@
 /**
  * Kandy.js
  * kandy.callMe.js
- * Version: 3.6.0-beta.60
+ * Version: 3.6.0-beta.68
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -61489,7 +61489,7 @@ const factoryDefaults = {
    */
 };function factory(plugins, options = factoryDefaults) {
   // Log the SDK's version (templated by webpack) on initialization.
-  let version = '3.6.0-beta.60';
+  let version = '3.6.0-beta.68';
   log.info(`SDK version: ${version}`);
 
   var sagas = [];
@@ -61930,12 +61930,13 @@ const logMgr = getLogManager(defaultOptions);
 /**
  * Configuration options for the Logs feature.
  * @public
+ * @static
  * @name config.logs
  * @memberof config
  * @requires logs
  * @instance
  * @param {Object} logs Logs configs.
- * @param  {string} [logs.logLevel=debug] Log level to be set. See `logger.levels`.
+ * @param  {string} [logs.logLevel=debug] Log level to be set. See {@link Logger.levels levels}.
  * @param  {boolean} [logs.flatten=false] Whether all logs should be output in a string-only format.
  * @param  {Object} [logs.logActions] Options specifically for action logs when logLevel is at DEBUG+ levels. Set this to false to not output action logs.
  * @param  {boolean} [logs.logActions.actionOnly=true] Only output information about the action itself. Omits the SDK context for when it occurred.
@@ -62058,13 +62059,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = api;
 /**
- * The internal logger used to provide information about the SDK's behaviour.
+ * The internal logger is used to provide information about the SDK's behaviour.
  * The logger can provide two types of logs: basic logs and action logs. Basic
  * logs are simple lines of information about what the SDK is doing during operations.
  * Action logs are complete information about a specific action that occurred
- * within the SDK, prodiving debug information describing it.
- * The amount of information logged can be configured as part of the SDK
- * (see `configs.logs`) configuration.
+ * within the SDK, providing debug information describing it.
+ * The amount of information logged can be configured as part of the SDK configuration.
+ * See {@link #configconfiglogs config.logs} .
  *
  * @public
  * @module Logger
@@ -62076,9 +62077,10 @@ function api() {
     /**
      * Possible levels for the SDK logger.
      * @public
+     * @static
      * @memberof Logger
-     * @property {string} SILENT Logs nothing.
-     * @property {string} ERROR Only log unhandled errors.
+     * @property {string} SILENT Log nothing.
+     * @property {string} ERROR Log only unhandled errors.
      * @property {string} WARN Log issues that may cause problems or unexpected behaviour.
      * @property {string} INFO Log useful information and messages to indicate the SDK's internal operations.
      * @property {string} DEBUG Log information to help diagnose problematic behaviour.
