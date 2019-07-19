@@ -1,7 +1,7 @@
 /**
  * Kandy.js
  * kandy.callMe.js
- * Version: 3.6.0-beta.69
+ * Version: 3.6.0-beta.91
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -42164,24 +42164,24 @@ function WebRtcAdaptorImpl(_ref) {
         }
     };
 
-    var updateVideoConstraints = function updateVideoConstraints(videoConstraints, videoResolutionArray, deviceId) {
+    var updateVideoConstraints = function updateVideoConstraints(videoConstraints, videoResolution, deviceId) {
         // If the constraint is a boolean, leave it as such if no resolution or deviceId was specified
         if (typeof videoConstraints === 'boolean') {
-            if (!videoResolutionArray && !deviceId) {
+            if (!videoResolution && !deviceId) {
                 return videoConstraints;
             }
 
             videoConstraints = {};
         }
 
-        if (videoResolutionArray && videoResolutionArray.length) {
+        if (videoResolution) {
             videoConstraints.height = {
-                max: videoResolutionArray[1],
-                min: videoResolutionArray[3]
+                max: videoResolution.maxHeight ? videoResolution.maxHeight : videoResolution.height,
+                min: videoResolution.minHeight ? videoResolution.minHeight : videoResolution.height
             };
             videoConstraints.width = {
-                max: videoResolutionArray[0],
-                min: videoResolutionArray[2]
+                max: videoResolution.maxWidth ? videoResolution.maxWidth : videoResolution.width,
+                min: videoResolution.minWidth ? videoResolution.minWidth : videoResolution.width
             };
         }
 
@@ -42191,7 +42191,6 @@ function WebRtcAdaptorImpl(_ref) {
 
     self.prepareVideoConstraints = function (data) {
         var mediaConstraints,
-            videoResolutionArray,
             selectedCameraId = self.getSelectedCameraId(),
             isVideoEnabled,
             videoResolution,
@@ -42211,23 +42210,9 @@ function WebRtcAdaptorImpl(_ref) {
             return false;
         }
 
-        if (videoResolution) {
-            if (typeof videoResolution === 'string') {
-                // First and third elements of array will be Width and second and fourth elements will be Height
-                videoResolutionArray = videoResolution.split('x');
-                // we need an array with 4 elements
-                videoResolutionArray = videoResolutionArray.concat(videoResolutionArray);
-                logger.warn('Deprecated usage of video resolution!!');
-                logger.warn('Pass video resolution as an object. Please see documentation for more information.');
-            } else {
-                // videoResolution is an object in this case
-                videoResolutionArray = [videoResolution.minWidth ? videoResolution.minWidth : videoResolution.width, videoResolution.minHeight ? videoResolution.minHeight : videoResolution.height, videoResolution.maxWidth ? videoResolution.maxWidth : videoResolution.width, videoResolution.maxHeight ? videoResolution.maxHeight : videoResolution.height];
-            }
-        }
-
         if (isVideoEnabled) {
             mediaConstraints = self.getUserMediaContraints();
-            mediaConstraints.video = updateVideoConstraints(mediaConstraints.video, videoResolutionArray, selectedCameraId);
+            mediaConstraints.video = updateVideoConstraints(mediaConstraints.video, videoResolution, selectedCameraId);
         }
 
         //We need to handle specific resolution constraints for screen sharing.
@@ -53779,7 +53764,7 @@ const log = (0, _logs.getLogManager)().getLogger('CALL');
 
 // Libraries.
 /**
- * The call feature is used to make audio and video calls to and from
+ * The Calls feature is used to make audio and video calls to and from
  * SIP users and PSTN phones.
  *
  * Call functions are all part of the 'call' namespace.
@@ -53888,7 +53873,7 @@ function api({ dispatch, getState }) {
      * @requires callMe
      * @method init
      * @param {Object} [options]
-     * @param {string} [options.chromeExtensionId] The ID of the Chrome Screenshare extension, if your application will be using screenshare on Chrome.
+     * @param {string} [options.chromeExtensionId] The ID of the Chrome Screenshare extension if your application will be using screenshare on Chrome.
      */
     init(options) {
       log.debug(_logs.API_LOG_TAG + 'media.init: ', options);
@@ -59086,6 +59071,8 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 const log = (0, _logs.getLogManager)().getLogger('CONFIG'); /**
                                                              * An interface for getting and updating the configuration Object.
                                                              *
+                                                             * Config functions are available directly on the SDK Object
+                                                             *
                                                              * @public
                                                              * @module Config
                                                              * @requires config
@@ -59099,7 +59086,7 @@ function api(context) {
      * @memberof Config
      * @requires config
      * @method getConfig
-     * @returns {Object} A configuration Object
+     * @returns {Object} A configuration Object.
      */
     getConfig: function () {
       log.debug(_logs.API_LOG_TAG + 'getConfig');
@@ -59110,10 +59097,11 @@ function api(context) {
      * Update values in the global Config section of the store.
      *
      * @public
+     * @static
      * @memberof Config
      * @requires config
      * @method updateConfig
-     * @param {Object} newConfigValues Key Value pairs that will be placed into the store.
+     * @param {Object} newConfigValues Key-value pairs that will be placed into the store. See {@link config} for details on what key-value pairs are available for use.
      */
     updateConfig: function (newConfigValues) {
       log.debug(_logs.API_LOG_TAG + 'updateConfig: ', newConfigValues);
@@ -59485,7 +59473,7 @@ function api({ dispatch, getState }) {
      * @public
      * @memberof Connectivity
      * @method getSocketState
-     * @param  {string} [platform='link'] Backend platform for which websocket's state to request.
+     * @param {string} [platform='link'] Backend platform for which to request the websocket's state.
      */
     getSocketState(platform = _constants.platforms.LINK) {
       log.debug(_logs.API_LOG_TAG + 'connection.getSocketState: ', platform);
@@ -59497,14 +59485,13 @@ function api({ dispatch, getState }) {
      * @public
      * @memberof Connectivity
      * @method enableConnectivityChecking
-     * @param {boolean} enable Whether to enable or disable connectivity checking.
+     * @param {boolean} enable Enable connectivity checking.
      */
     enableConnectivityChecking(enable) {
       log.debug(_logs.API_LOG_TAG + 'connection.enableConnectivityChecking: ', enable);
       dispatch((0, _actions.changeConnectivityChecking)(enable));
     }
   };
-
   return { connection: connectivityApi };
 }
 
@@ -61489,7 +61476,7 @@ const factoryDefaults = {
    */
 };function factory(plugins, options = factoryDefaults) {
   // Log the SDK's version (templated by webpack) on initialization.
-  let version = '3.6.0-beta.69';
+  let version = '3.6.0-beta.91';
   log.info(`SDK version: ${version}`);
 
   var sagas = [];
@@ -61798,27 +61785,41 @@ var _fp = __webpack_require__("../../node_modules/lodash/fp.js");
  * @module config
  */
 
+// Disabling eslint for the next comment as we want to be able to use a disallowed word
+// eslint-disable-next-line no-warning-comments
 /**
- * A set of handlers for manipulating SDP information.
+ * A set of {@link #sdphandlerfunction SdpHandlerFunction}s for manipulating SDP information.
  * These handlers are used to customize low-level call behaviour for very specific
  * environments and/or scenarios. They can be provided during SDK instantiation
  * to be used for all calls.
+ *
  * @public
  * @module sdpHandlers
+ * @example
+ * import { create, sdpHandlers } from 'kandy';
+ * const codecRemover = sdpHandlers.createCodecRemover(['VP8', 'VP9'])
+ * const client = create({
+ *   call: {
+ *     sdpHandlers: [ <Your-SDP-Handler-Function>, ...]
+ *   }
+ * })
  */
 
 // Disabling eslint for the next comment as we want to be able to use a disallowed word
 // eslint-disable-next-line no-warning-comments
 /**
- * In some scenarios it's necessary to remove certain codecs being offered by the SDK to the remote party. While creating an SDP handler would allow a user to perform this type of manipulation, it is a non-trivial task that requires in-depth knowledge of WebRTC SDP.
+ * In some scenarios it's necessary to remove certain codecs being offered by the SDK to the remote party.
+ * While creating an SDP handler would allow a user to perform this type of manipulation, it is a non-trivial task that requires in-depth knowledge of WebRTC SDP.
  *
- * To facilitate this common task, the SDK provides a codec removal handler that can be used for this purpose.
+ * To facilitate this common task, the SDK provides a codec removal handler creator that can be used for this purpose.
  *
  * The SDP handlers are exposed on the entry point of the SDK. They need to be added to the list of SDP handlers via configuration on creation of an instance of the SDK.
  *
  * @public
  * @memberof sdpHandlers
  * @method createCodecRemover
+ * @param {Array<string>} codecs A list of codec names to remove from the SDP.
+ * @returns {SdpHandlerFunction} The resulting SDP handler that will remove the codec.
  * @example
  * import { create, sdpHandlers } from 'kandy';
  * const codecRemover = sdpHandlers.createCodecRemover(['VP8', 'VP9'])
@@ -61936,7 +61937,7 @@ const logMgr = getLogManager(defaultOptions);
  * @requires logs
  * @instance
  * @param {Object} logs Logs configs.
- * @param  {string} [logs.logLevel=debug] Log level to be set. See {@link Logger.levels levels}.
+ * @param  {string} [logs.logLevel='debug'] Log level to be set. See {@link Logger.levels levels}.
  * @param  {boolean} [logs.flatten=false] Whether all logs should be output in a string-only format.
  * @param  {Object} [logs.logActions] Options specifically for action logs when logLevel is at DEBUG+ levels. Set this to false to not output action logs.
  * @param  {boolean} [logs.logActions.actionOnly=true] Only output information about the action itself. Omits the SDK context for when it occurred.

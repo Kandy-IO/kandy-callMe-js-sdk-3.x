@@ -8,11 +8,14 @@ Kandy.js change log.
 ## 3.6.0 - beta
 
 ### Fixed
+
 - Fixed an issue where call audio would be played out of the wrong speaker after a midcall operation that re-rendered media. `KAA-1824`
+- Fixed an issue where specifying min and max resolutions when making or answering a call got mixed up. `KAA-1886`
 
 ## 3.4.1 - 2019-04-26
 
 ### Fixed
+
 - Made a hotfix release just to update the version because something went wrong with NPM and it requires a new version.
 
 ## 3.4.0 - 2019-04-26

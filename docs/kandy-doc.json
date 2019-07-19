@@ -94,11 +94,11 @@
     "context": {
       "loc": {
         "start": {
-          "line": 62,
+          "line": 76,
           "column": 0
         },
         "end": {
-          "line": 62,
+          "line": 76,
           "column": 35
         }
       },
@@ -1544,7 +1544,7 @@
           "children": [
             {
               "type": "text",
-              "value": "The call feature is used to make audio and video calls to and from\nSIP users and PSTN phones.",
+              "value": "The Calls feature is used to make audio and video calls to and from\nSIP users and PSTN phones.",
               "position": {
                 "start": {
                   "line": 1,
@@ -1554,7 +1554,7 @@
                 "end": {
                   "line": 2,
                   "column": 27,
-                  "offset": 93
+                  "offset": 94
                 },
                 "indent": [
                   1
@@ -1571,7 +1571,7 @@
             "end": {
               "line": 2,
               "column": 27,
-              "offset": 93
+              "offset": 94
             },
             "indent": [
               1
@@ -1588,12 +1588,12 @@
                 "start": {
                   "line": 4,
                   "column": 1,
-                  "offset": 95
+                  "offset": 96
                 },
                 "end": {
                   "line": 4,
                   "column": 53,
-                  "offset": 147
+                  "offset": 148
                 },
                 "indent": []
               }
@@ -1603,12 +1603,12 @@
             "start": {
               "line": 4,
               "column": 1,
-              "offset": 95
+              "offset": 96
             },
             "end": {
               "line": 4,
               "column": 53,
-              "offset": 147
+              "offset": 148
             },
             "indent": []
           }
@@ -1623,12 +1623,12 @@
                 "start": {
                   "line": 6,
                   "column": 1,
-                  "offset": 149
+                  "offset": 150
                 },
                 "end": {
                   "line": 6,
                   "column": 116,
-                  "offset": 264
+                  "offset": 265
                 },
                 "indent": []
               }
@@ -1638,12 +1638,12 @@
             "start": {
               "line": 6,
               "column": 1,
-              "offset": 149
+              "offset": 150
             },
             "end": {
               "line": 6,
               "column": 116,
-              "offset": 264
+              "offset": 265
             },
             "indent": []
           }
@@ -1658,7 +1658,7 @@
         "end": {
           "line": 6,
           "column": 116,
-          "offset": 264
+          "offset": 265
         }
       }
     },
@@ -13569,7 +13569,7 @@
             },
             {
               "title": "param",
-              "description": "Backend platform for which websocket's state to request.",
+              "description": "Backend platform for which to request the websocket's state.",
               "lineNumber": 5,
               "type": {
                 "type": "OptionalType",
@@ -13620,7 +13620,7 @@
                     "children": [
                       {
                         "type": "text",
-                        "value": "Backend platform for which websocket's state to request.",
+                        "value": "Backend platform for which to request the websocket's state.",
                         "position": {
                           "start": {
                             "line": 1,
@@ -13629,8 +13629,8 @@
                           },
                           "end": {
                             "line": 1,
-                            "column": 57,
-                            "offset": 56
+                            "column": 61,
+                            "offset": 60
                           },
                           "indent": []
                         }
@@ -13644,8 +13644,8 @@
                       },
                       "end": {
                         "line": 1,
-                        "column": 57,
-                        "offset": 56
+                        "column": 61,
+                        "offset": 60
                       },
                       "indent": []
                     }
@@ -13659,8 +13659,8 @@
                   },
                   "end": {
                     "line": 1,
-                    "column": 57,
-                    "offset": 56
+                    "column": 61,
+                    "offset": 60
                   }
                 }
               },
@@ -13772,7 +13772,7 @@
             },
             {
               "title": "param",
-              "description": "Whether to enable or disable connectivity checking.",
+              "description": "Enable connectivity checking.",
               "lineNumber": 5,
               "type": {
                 "type": "NameExpression",
@@ -13819,7 +13819,7 @@
                     "children": [
                       {
                         "type": "text",
-                        "value": "Whether to enable or disable connectivity checking.",
+                        "value": "Enable connectivity checking.",
                         "position": {
                           "start": {
                             "line": 1,
@@ -13828,8 +13828,8 @@
                           },
                           "end": {
                             "line": 1,
-                            "column": 52,
-                            "offset": 51
+                            "column": 30,
+                            "offset": 29
                           },
                           "indent": []
                         }
@@ -13843,8 +13843,8 @@
                       },
                       "end": {
                         "line": 1,
-                        "column": 52,
-                        "offset": 51
+                        "column": 30,
+                        "offset": 29
                       },
                       "indent": []
                     }
@@ -13858,8 +13858,8 @@
                   },
                   "end": {
                     "line": 1,
-                    "column": 52,
-                    "offset": 51
+                    "column": 30,
+                    "offset": 29
                   }
                 }
               },
@@ -15530,7 +15530,7 @@
           "children": [
             {
               "type": "text",
-              "value": "A set of handlers for manipulating SDP information.\nThese handlers are used to customize low-level call behaviour for very specific\nenvironments and/or scenarios. They can be provided during SDK instantiation\nto be used for all calls.",
+              "value": "A set of ",
               "position": {
                 "start": {
                   "line": 1,
@@ -15538,9 +15538,51 @@
                   "offset": 0
                 },
                 "end": {
+                  "line": 1,
+                  "column": 10,
+                  "offset": 9
+                },
+                "indent": []
+              }
+            },
+            {
+              "type": "link",
+              "url": "#sdphandlerfunction",
+              "title": null,
+              "jsdoc": true,
+              "children": [
+                {
+                  "type": "text",
+                  "value": "SdpHandlerFunction"
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 1,
+                  "column": 10,
+                  "offset": 9
+                },
+                "end": {
+                  "line": 1,
+                  "column": 56,
+                  "offset": 55
+                },
+                "indent": []
+              }
+            },
+            {
+              "type": "text",
+              "value": "s for manipulating SDP information.\nThese handlers are used to customize low-level call behaviour for very specific\nenvironments and/or scenarios. They can be provided during SDK instantiation\nto be used for all calls.",
+              "position": {
+                "start": {
+                  "line": 1,
+                  "column": 56,
+                  "offset": 55
+                },
+                "end": {
                   "line": 4,
                   "column": 26,
-                  "offset": 234
+                  "offset": 273
                 },
                 "indent": [
                   1,
@@ -15559,7 +15601,7 @@
             "end": {
               "line": 4,
               "column": 26,
-              "offset": 234
+              "offset": 273
             },
             "indent": [
               1,
@@ -15578,7 +15620,7 @@
         "end": {
           "line": 4,
           "column": 26,
-          "offset": 234
+          "offset": 273
         }
       }
     },
@@ -15586,42 +15628,51 @@
       {
         "title": "public",
         "description": null,
-        "lineNumber": 5,
+        "lineNumber": 6,
         "type": null
       },
       {
         "title": "module",
         "description": null,
-        "lineNumber": 6,
+        "lineNumber": 7,
         "type": null,
         "name": "sdpHandlers"
+      },
+      {
+        "title": "example",
+        "description": "import { create, sdpHandlers } from 'kandy';\nconst codecRemover = sdpHandlers.createCodecRemover(['VP8', 'VP9'])\nconst client = create({\n  call: {\n    sdpHandlers: [ <Your-SDP-Handler-Function>, ...]\n  }\n})",
+        "lineNumber": 8
       }
     ],
     "loc": {
       "start": {
-        "line": 27,
+        "line": 29,
         "column": 0
       },
       "end": {
-        "line": 34,
+        "line": 45,
         "column": 3
       }
     },
     "context": {
       "loc": {
         "start": {
-          "line": 62,
+          "line": 76,
           "column": 0
         },
         "end": {
-          "line": 62,
+          "line": 76,
           "column": 35
         }
       },
       "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/index.common.js"
     },
     "augments": [],
-    "examples": [],
+    "examples": [
+      {
+        "description": "import { create, sdpHandlers } from 'kandy';\nconst codecRemover = sdpHandlers.createCodecRemover(['VP8', 'VP9'])\nconst client = create({\n  call: {\n    sdpHandlers: [ <Your-SDP-Handler-Function>, ...]\n  }\n})"
+      }
+    ],
     "params": [],
     "properties": [],
     "returns": [],
@@ -15646,7 +15697,234 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "In some scenarios it's necessary to remove certain codecs being offered by the SDK to the remote party. While creating an SDP handler would allow a user to perform this type of manipulation, it is a non-trivial task that requires in-depth knowledge of WebRTC SDP.",
+                    "value": "In some scenarios it's necessary to remove certain codecs being offered by the SDK to the remote party.\nWhile creating an SDP handler would allow a user to perform this type of manipulation, it is a non-trivial task that requires in-depth knowledge of WebRTC SDP.",
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 2,
+                        "column": 160,
+                        "offset": 263
+                      },
+                      "indent": [
+                        1
+                      ]
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                  },
+                  "end": {
+                    "line": 2,
+                    "column": 160,
+                    "offset": 263
+                  },
+                  "indent": [
+                    1
+                  ]
+                }
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "To facilitate this common task, the SDK provides a codec removal handler creator that can be used for this purpose.",
+                    "position": {
+                      "start": {
+                        "line": 4,
+                        "column": 1,
+                        "offset": 265
+                      },
+                      "end": {
+                        "line": 4,
+                        "column": 116,
+                        "offset": 380
+                      },
+                      "indent": []
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 4,
+                    "column": 1,
+                    "offset": 265
+                  },
+                  "end": {
+                    "line": 4,
+                    "column": 116,
+                    "offset": 380
+                  },
+                  "indent": []
+                }
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "The SDP handlers are exposed on the entry point of the SDK. They need to be added to the list of SDP handlers via configuration on creation of an instance of the SDK.",
+                    "position": {
+                      "start": {
+                        "line": 6,
+                        "column": 1,
+                        "offset": 382
+                      },
+                      "end": {
+                        "line": 6,
+                        "column": 167,
+                        "offset": 548
+                      },
+                      "indent": []
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 6,
+                    "column": 1,
+                    "offset": 382
+                  },
+                  "end": {
+                    "line": 6,
+                    "column": 167,
+                    "offset": 548
+                  },
+                  "indent": []
+                }
+              }
+            ],
+            "position": {
+              "start": {
+                "line": 1,
+                "column": 1,
+                "offset": 0
+              },
+              "end": {
+                "line": 6,
+                "column": 167,
+                "offset": 548
+              }
+            }
+          },
+          "tags": [
+            {
+              "title": "public",
+              "description": null,
+              "lineNumber": 8,
+              "type": null
+            },
+            {
+              "title": "memberof",
+              "description": "sdpHandlers",
+              "lineNumber": 9
+            },
+            {
+              "title": "method",
+              "description": null,
+              "lineNumber": 10,
+              "name": "createCodecRemover"
+            },
+            {
+              "title": "param",
+              "description": "A list of codec names to remove from the SDP.",
+              "lineNumber": 11,
+              "type": {
+                "type": "TypeApplication",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "Array"
+                },
+                "applications": [
+                  {
+                    "type": "NameExpression",
+                    "name": "string"
+                  }
+                ]
+              },
+              "name": "codecs"
+            },
+            {
+              "title": "returns",
+              "description": "The resulting SDP handler that will remove the codec.",
+              "lineNumber": 12,
+              "type": {
+                "type": "NameExpression",
+                "name": "SdpHandlerFunction"
+              }
+            },
+            {
+              "title": "example",
+              "description": "import { create, sdpHandlers } from 'kandy';\nconst codecRemover = sdpHandlers.createCodecRemover(['VP8', 'VP9'])\nconst client = create({\n  call: {\n    sdpHandlers: [codecRemover]\n  }\n})",
+              "lineNumber": 13
+            }
+          ],
+          "loc": {
+            "start": {
+              "line": 49,
+              "column": 0
+            },
+            "end": {
+              "line": 71,
+              "column": 3
+            }
+          },
+          "context": {
+            "loc": {
+              "start": {
+                "line": 76,
+                "column": 0
+              },
+              "end": {
+                "line": 76,
+                "column": 35
+              }
+            },
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/index.common.js"
+          },
+          "augments": [],
+          "examples": [
+            {
+              "description": "import { create, sdpHandlers } from 'kandy';\nconst codecRemover = sdpHandlers.createCodecRemover(['VP8', 'VP9'])\nconst client = create({\n  call: {\n    sdpHandlers: [codecRemover]\n  }\n})"
+            }
+          ],
+          "params": [
+            {
+              "title": "param",
+              "name": "codecs",
+              "lineNumber": 11,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "A list of codec names to remove from the SDP.",
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 46,
+                            "offset": 45
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
                     "position": {
                       "start": {
                         "line": 1,
@@ -15655,8 +15933,8 @@
                       },
                       "end": {
                         "line": 1,
-                        "column": 264,
-                        "offset": 263
+                        "column": 46,
+                        "offset": 45
                       },
                       "indent": []
                     }
@@ -15670,152 +15948,88 @@
                   },
                   "end": {
                     "line": 1,
-                    "column": 264,
-                    "offset": 263
-                  },
-                  "indent": []
-                }
-              },
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "To facilitate this common task, the SDK provides a codec removal handler that can be used for this purpose.",
-                    "position": {
-                      "start": {
-                        "line": 3,
-                        "column": 1,
-                        "offset": 265
-                      },
-                      "end": {
-                        "line": 3,
-                        "column": 108,
-                        "offset": 372
-                      },
-                      "indent": []
-                    }
+                    "column": 46,
+                    "offset": 45
                   }
-                ],
-                "position": {
-                  "start": {
-                    "line": 3,
-                    "column": 1,
-                    "offset": 265
-                  },
-                  "end": {
-                    "line": 3,
-                    "column": 108,
-                    "offset": 372
-                  },
-                  "indent": []
                 }
               },
-              {
-                "type": "paragraph",
-                "children": [
+              "type": {
+                "type": "TypeApplication",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "Array"
+                },
+                "applications": [
                   {
-                    "type": "text",
-                    "value": "The SDP handlers are exposed on the entry point of the SDK. They need to be added to the list of SDP handlers via configuration on creation of an instance of the SDK.",
-                    "position": {
-                      "start": {
-                        "line": 5,
-                        "column": 1,
-                        "offset": 374
-                      },
-                      "end": {
-                        "line": 5,
-                        "column": 167,
-                        "offset": 540
-                      },
-                      "indent": []
-                    }
+                    "type": "NameExpression",
+                    "name": "string"
                   }
-                ],
-                "position": {
-                  "start": {
-                    "line": 5,
-                    "column": 1,
-                    "offset": 374
-                  },
-                  "end": {
-                    "line": 5,
-                    "column": 167,
-                    "offset": 540
-                  },
-                  "indent": []
-                }
+                ]
               }
-            ],
-            "position": {
-              "start": {
-                "line": 1,
-                "column": 1,
-                "offset": 0
-              },
-              "end": {
-                "line": 5,
-                "column": 167,
-                "offset": 540
-              }
-            }
-          },
-          "tags": [
-            {
-              "title": "public",
-              "description": null,
-              "lineNumber": 7,
-              "type": null
-            },
-            {
-              "title": "memberof",
-              "description": "sdpHandlers",
-              "lineNumber": 8
-            },
-            {
-              "title": "method",
-              "description": null,
-              "lineNumber": 9,
-              "name": "createCodecRemover"
-            },
-            {
-              "title": "example",
-              "description": "import { create, sdpHandlers } from 'kandy';\nconst codecRemover = sdpHandlers.createCodecRemover(['VP8', 'VP9'])\nconst client = create({\n  call: {\n    sdpHandlers: [codecRemover]\n  }\n})",
-              "lineNumber": 10
             }
           ],
-          "loc": {
-            "start": {
-              "line": 38,
-              "column": 0
-            },
-            "end": {
-              "line": 57,
-              "column": 3
-            }
-          },
-          "context": {
-            "loc": {
-              "start": {
-                "line": 62,
-                "column": 0
-              },
-              "end": {
-                "line": 62,
-                "column": 35
-              }
-            },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/index.common.js"
-          },
-          "augments": [],
-          "examples": [
-            {
-              "description": "import { create, sdpHandlers } from 'kandy';\nconst codecRemover = sdpHandlers.createCodecRemover(['VP8', 'VP9'])\nconst client = create({\n  call: {\n    sdpHandlers: [codecRemover]\n  }\n})"
-            }
-          ],
-          "params": [],
           "properties": [],
-          "returns": [],
+          "returns": [
+            {
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "The resulting SDP handler that will remove the codec.",
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 54,
+                            "offset": 53
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 54,
+                        "offset": 53
+                      },
+                      "indent": []
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 54,
+                    "offset": 53
+                  }
+                }
+              },
+              "title": "returns",
+              "type": {
+                "type": "NameExpression",
+                "name": "SdpHandlerFunction"
+              }
+            }
+          ],
           "sees": [],
           "throws": [],
           "todos": [],
@@ -15937,11 +16151,11 @@
     "context": {
       "loc": {
         "start": {
-          "line": 62,
+          "line": 76,
           "column": 0
         },
         "end": {
-          "line": 62,
+          "line": 76,
           "column": 35
         }
       },
@@ -16071,7 +16285,7 @@
                 }
               },
               "name": "logs.logLevel",
-              "default": "debug"
+              "default": "'debug'"
             },
             {
               "title": "param",
@@ -16374,7 +16588,7 @@
                     "type": "NameExpression",
                     "name": "string"
                   },
-                  "default": "debug"
+                  "default": "'debug'"
                 },
                 {
                   "title": "param",
@@ -23152,6 +23366,41 @@
             },
             "indent": []
           }
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "Config functions are available directly on the SDK Object",
+              "position": {
+                "start": {
+                  "line": 3,
+                  "column": 1,
+                  "offset": 65
+                },
+                "end": {
+                  "line": 3,
+                  "column": 58,
+                  "offset": 122
+                },
+                "indent": []
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 3,
+              "column": 1,
+              "offset": 65
+            },
+            "end": {
+              "line": 3,
+              "column": 58,
+              "offset": 122
+            },
+            "indent": []
+          }
         }
       ],
       "position": {
@@ -23161,9 +23410,9 @@
           "offset": 0
         },
         "end": {
-          "line": 1,
-          "column": 64,
-          "offset": 63
+          "line": 3,
+          "column": 58,
+          "offset": 122
         }
       }
     },
@@ -23171,20 +23420,20 @@
       {
         "title": "public",
         "description": null,
-        "lineNumber": 3,
+        "lineNumber": 5,
         "type": null
       },
       {
         "title": "module",
         "description": null,
-        "lineNumber": 4,
+        "lineNumber": 6,
         "type": null,
         "name": "Config"
       },
       {
         "title": "requires",
         "description": null,
-        "lineNumber": 5,
+        "lineNumber": 7,
         "name": "config"
       }
     ],
@@ -23194,18 +23443,18 @@
         "column": 0
       },
       "end": {
-        "line": 7,
+        "line": 9,
         "column": 3
       }
     },
     "context": {
       "loc": {
         "start": {
-          "line": 8,
+          "line": 10,
           "column": 0
         },
         "end": {
-          "line": 8,
+          "line": 10,
           "column": 36
         }
       },
@@ -23307,7 +23556,7 @@
             },
             {
               "title": "returns",
-              "description": "A configuration Object",
+              "description": "A configuration Object.",
               "lineNumber": 7,
               "type": {
                 "type": "NameExpression",
@@ -23317,22 +23566,22 @@
           ],
           "loc": {
             "start": {
-              "line": 17,
+              "line": 19,
               "column": 4
             },
             "end": {
-              "line": 25,
+              "line": 27,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 26,
+                "line": 28,
                 "column": 4
               },
               "end": {
-                "line": 29,
+                "line": 31,
                 "column": 5
               }
             },
@@ -23352,7 +23601,7 @@
                     "children": [
                       {
                         "type": "text",
-                        "value": "A configuration Object",
+                        "value": "A configuration Object.",
                         "position": {
                           "start": {
                             "line": 1,
@@ -23361,8 +23610,8 @@
                           },
                           "end": {
                             "line": 1,
-                            "column": 23,
-                            "offset": 22
+                            "column": 24,
+                            "offset": 23
                           },
                           "indent": []
                         }
@@ -23376,8 +23625,8 @@
                       },
                       "end": {
                         "line": 1,
-                        "column": 23,
-                        "offset": 22
+                        "column": 24,
+                        "offset": 23
                       },
                       "indent": []
                     }
@@ -23391,8 +23640,8 @@
                   },
                   "end": {
                     "line": 1,
-                    "column": 23,
-                    "offset": 22
+                    "column": 24,
+                    "offset": 23
                   }
                 }
               },
@@ -23490,26 +23739,31 @@
               "type": null
             },
             {
+              "title": "static",
+              "description": null,
+              "lineNumber": 4
+            },
+            {
               "title": "memberof",
               "description": "Config",
-              "lineNumber": 4
+              "lineNumber": 5
             },
             {
               "title": "requires",
               "description": null,
-              "lineNumber": 5,
+              "lineNumber": 6,
               "name": "config"
             },
             {
               "title": "method",
               "description": null,
-              "lineNumber": 6,
+              "lineNumber": 7,
               "name": "updateConfig"
             },
             {
               "title": "param",
-              "description": "Key Value pairs that will be placed into the store.",
-              "lineNumber": 7,
+              "description": "Key-value pairs that will be placed into the store. See {@link config} for details on what key-value pairs are available for use.",
+              "lineNumber": 8,
               "type": {
                 "type": "NameExpression",
                 "name": "Object"
@@ -23519,22 +23773,22 @@
           ],
           "loc": {
             "start": {
-              "line": 31,
+              "line": 33,
               "column": 4
             },
             "end": {
-              "line": 39,
+              "line": 42,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 40,
+                "line": 43,
                 "column": 4
               },
               "end": {
-                "line": 43,
+                "line": 46,
                 "column": 5
               }
             },
@@ -23546,7 +23800,7 @@
             {
               "title": "param",
               "name": "newConfigValues",
-              "lineNumber": 7,
+              "lineNumber": 8,
               "description": {
                 "type": "root",
                 "children": [
@@ -23555,7 +23809,7 @@
                     "children": [
                       {
                         "type": "text",
-                        "value": "Key Value pairs that will be placed into the store.",
+                        "value": "Key-value pairs that will be placed into the store. See ",
                         "position": {
                           "start": {
                             "line": 1,
@@ -23564,8 +23818,50 @@
                           },
                           "end": {
                             "line": 1,
-                            "column": 52,
-                            "offset": 51
+                            "column": 57,
+                            "offset": 56
+                          },
+                          "indent": []
+                        }
+                      },
+                      {
+                        "type": "link",
+                        "url": "#config",
+                        "title": null,
+                        "jsdoc": true,
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "config"
+                          }
+                        ],
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 57,
+                            "offset": 56
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 71,
+                            "offset": 70
+                          },
+                          "indent": []
+                        }
+                      },
+                      {
+                        "type": "text",
+                        "value": " for details on what key-value pairs are available for use.",
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 71,
+                            "offset": 70
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 130,
+                            "offset": 129
                           },
                           "indent": []
                         }
@@ -23579,8 +23875,8 @@
                       },
                       "end": {
                         "line": 1,
-                        "column": 52,
-                        "offset": 51
+                        "column": 130,
+                        "offset": 129
                       },
                       "indent": []
                     }
@@ -23594,8 +23890,8 @@
                   },
                   "end": {
                     "line": 1,
-                    "column": 52,
-                    "offset": 51
+                    "column": 130,
+                    "offset": 129
                   }
                 }
               },
@@ -23611,6 +23907,7 @@
           "throws": [],
           "todos": [],
           "access": "public",
+          "scope": "static",
           "memberof": "Config",
           "kind": "function",
           "name": "updateConfig",
@@ -23628,10 +23925,11 @@
             },
             {
               "name": "updateConfig",
-              "kind": "function"
+              "kind": "function",
+              "scope": "static"
             }
           ],
-          "namespace": "ConfigupdateConfig"
+          "namespace": "Config.updateConfig"
         }
       ]
     },
@@ -23652,7 +23950,7 @@
           "children": [
             {
               "type": "text",
-              "value": "The Basic error object. Provides information about an error that occurred in the SDK.",
+              "value": "The Basic Error object. Provides information about an error that occurred in the SDK.",
               "position": {
                 "start": {
                   "line": 1,
@@ -23712,7 +24010,7 @@
       },
       {
         "title": "property",
-        "description": "The code of the error. If no code is known, this will be a string 'NO_CODE'.",
+        "description": "The code of the error. If no code is known, this will be 'NO_CODE'.",
         "lineNumber": 4,
         "type": {
           "type": "NameExpression",
@@ -23722,7 +24020,7 @@
       },
       {
         "title": "property",
-        "description": "A human-readable message to describe the error. If no message is known, this will be a string 'An error occured'.",
+        "description": "A human-readable message to describe the error. If no message is known, this will be 'An error occured'.",
         "lineNumber": 5,
         "type": {
           "type": "NameExpression",
@@ -23770,7 +24068,7 @@
               "children": [
                 {
                   "type": "text",
-                  "value": "The code of the error. If no code is known, this will be a string 'NO_CODE'.",
+                  "value": "The code of the error. If no code is known, this will be 'NO_CODE'.",
                   "position": {
                     "start": {
                       "line": 1,
@@ -23779,8 +24077,8 @@
                     },
                     "end": {
                       "line": 1,
-                      "column": 77,
-                      "offset": 76
+                      "column": 68,
+                      "offset": 67
                     },
                     "indent": []
                   }
@@ -23794,8 +24092,8 @@
                 },
                 "end": {
                   "line": 1,
-                  "column": 77,
-                  "offset": 76
+                  "column": 68,
+                  "offset": 67
                 },
                 "indent": []
               }
@@ -23809,8 +24107,8 @@
             },
             "end": {
               "line": 1,
-              "column": 77,
-              "offset": 76
+              "column": 68,
+              "offset": 67
             }
           }
         },
@@ -23831,7 +24129,7 @@
               "children": [
                 {
                   "type": "text",
-                  "value": "A human-readable message to describe the error. If no message is known, this will be a string 'An error occured'.",
+                  "value": "A human-readable message to describe the error. If no message is known, this will be 'An error occured'.",
                   "position": {
                     "start": {
                       "line": 1,
@@ -23840,8 +24138,8 @@
                     },
                     "end": {
                       "line": 1,
-                      "column": 114,
-                      "offset": 113
+                      "column": 105,
+                      "offset": 104
                     },
                     "indent": []
                   }
@@ -23855,8 +24153,8 @@
                 },
                 "end": {
                   "line": 1,
-                  "column": 114,
-                  "offset": 113
+                  "column": 105,
+                  "offset": 104
                 },
                 "indent": []
               }
@@ -23870,8 +24168,8 @@
             },
             "end": {
               "line": 1,
-              "column": 114,
-              "offset": 113
+              "column": 105,
+              "offset": 104
             }
           }
         },

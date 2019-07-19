@@ -84,7 +84,7 @@ Removes a global event listener
 
 ## Calls
 
-The call feature is used to make audio and video calls to and from
+The Calls feature is used to make audio and video calls to and from
 SIP users and PSTN phones.
 
 Call functions are all part of the 'call' namespace.
@@ -438,7 +438,7 @@ Get the state of the websocket.
 
 **Parameters**
 
--   `platform` **[string][2]** Backend platform for which websocket's state to request. (optional, default `'link'`)
+-   `platform` **[string][2]** Backend platform for which to request the websocket's state. (optional, default `'link'`)
 
 ### enableConnectivityChecking
 
@@ -446,7 +446,7 @@ Enables or disables connectivity checking.
 
 **Parameters**
 
--   `enable` **[boolean][6]** Whether to enable or disable connectivity checking.
+-   `enable` **[boolean][6]** Enable connectivity checking.
 
 ## Notification
 
@@ -485,18 +485,35 @@ Enables, or disables, the processing of websocket notifications.
 
 ## sdpHandlers
 
-A set of handlers for manipulating SDP information.
+A set of [SdpHandlerFunction][11]s for manipulating SDP information.
 These handlers are used to customize low-level call behaviour for very specific
 environments and/or scenarios. They can be provided during SDK instantiation
 to be used for all calls.
 
+**Examples**
+
+```javascript
+import { create, sdpHandlers } from 'kandy';
+const codecRemover = sdpHandlers.createCodecRemover(['VP8', 'VP9'])
+const client = create({
+  call: {
+    sdpHandlers: [ <Your-SDP-Handler-Function>, ...]
+  }
+})
+```
+
 ### createCodecRemover
 
-In some scenarios it's necessary to remove certain codecs being offered by the SDK to the remote party. While creating an SDP handler would allow a user to perform this type of manipulation, it is a non-trivial task that requires in-depth knowledge of WebRTC SDP.
+In some scenarios it's necessary to remove certain codecs being offered by the SDK to the remote party.
+While creating an SDP handler would allow a user to perform this type of manipulation, it is a non-trivial task that requires in-depth knowledge of WebRTC SDP.
 
-To facilitate this common task, the SDK provides a codec removal handler that can be used for this purpose.
+To facilitate this common task, the SDK provides a codec removal handler creator that can be used for this purpose.
 
 The SDP handlers are exposed on the entry point of the SDK. They need to be added to the list of SDP handlers via configuration on creation of an instance of the SDK.
+
+**Parameters**
+
+-   `codecs` **[Array][9]&lt;[string][2]>** A list of codec names to remove from the SDP.
 
 **Examples**
 
@@ -510,6 +527,8 @@ const client = create({
 })
 ```
 
+Returns **SdpHandlerFunction** The resulting SDP handler that will remove the codec.
+
 ## config
 
 The configuration object. This object defines what different configuration
@@ -522,7 +541,7 @@ Configuration options for the Logs feature.
 **Parameters**
 
 -   `logs` **[Object][5]** Logs configs.
-    -   `logs.logLevel` **[string][2]** Log level to be set. See [levels][11]. (optional, default `debug`)
+    -   `logs.logLevel` **[string][2]** Log level to be set. See [levels][12]. (optional, default `'debug'`)
     -   `logs.flatten` **[boolean][6]** Whether all logs should be output in a string-only format. (optional, default `false`)
     -   `logs.logActions` **[Object][5]?** Options specifically for action logs when logLevel is at DEBUG+ levels. Set this to false to not output action logs.
         -   `logs.logActions.actionOnly` **[boolean][6]** Only output information about the action itself. Omits the SDK context for when it occurred. (optional, default `true`)
@@ -633,7 +652,7 @@ logs are simple lines of information about what the SDK is doing during operatio
 Action logs are complete information about a specific action that occurred
 within the SDK, providing debug information describing it.
 The amount of information logged can be configured as part of the SDK configuration.
-See [config.logs][12] .
+See [config.logs][13] .
 
 ### levels
 
@@ -651,11 +670,13 @@ Possible levels for the SDK logger.
 
 An interface for getting and updating the configuration Object.
 
+Config functions are available directly on the SDK Object
+
 ### getConfig
 
 Gets the current configuration Object
 
-Returns **[Object][5]** A configuration Object
+Returns **[Object][5]** A configuration Object.
 
 ### updateConfig
 
@@ -663,16 +684,16 @@ Update values in the global Config section of the store.
 
 **Parameters**
 
--   `newConfigValues` **[Object][5]** Key Value pairs that will be placed into the store.
+-   `newConfigValues` **[Object][5]** Key-value pairs that will be placed into the store. See [config][14] for details on what key-value pairs are available for use.
 
 ## BasicError
 
-The Basic error object. Provides information about an error that occurred in the SDK.
+The Basic Error object. Provides information about an error that occurred in the SDK.
 
 **Properties**
 
--   `code` **[string][2]** The code of the error. If no code is known, this will be a string 'NO_CODE'.
--   `message` **[string][2]** A human-readable message to describe the error. If no message is known, this will be a string 'An error occured'.
+-   `code` **[string][2]** The code of the error. If no code is known, this will be 'NO_CODE'.
+-   `message` **[string][2]** A human-readable message to describe the error. If no message is known, this will be 'An error occured'.
 
 [1]: #config
 
@@ -694,6 +715,10 @@ The Basic error object. Provides information about an error that occurred in the
 
 [10]: #basicerror
 
-[11]: #loggerlevels
+[11]: #sdphandlerfunction
 
-[12]: #configconfiglogs
+[12]: #loggerlevels
+
+[13]: #configconfiglogs
+
+[14]: #config
