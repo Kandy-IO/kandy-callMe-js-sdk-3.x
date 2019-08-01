@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset='utf-8' />
-  <title>kandy 3.4.1 | Documentation</title>
+  <title>kandy 3.6.0 | Documentation</title>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' type='text/css' rel='stylesheet' />
   <link href='assets/style.css' type='text/css' rel='stylesheet' />
@@ -14,7 +14,7 @@
       <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
         <div class='py1 px2'>
           <h3 class='mb0 no-anchor'>kandy</h3>
-          <div class='mb1'><code>3.4.1</code></div>
+          <div class='mb1'><code>3.6.0</code></div>
           <input
             placeholder='Filter'
             id='filter-input'
@@ -1043,7 +1043,7 @@ client.on(<span class="hljs-string">'dummy:event'</span>, <span class="hljs-func
   </div>
   
 
-  <p>The call feature is used to make audio and video calls to and from
+  <p>The Calls feature is used to make audio and video calls to and from
 SIP users and PSTN phones.</p>
 <p>Call functions are all part of the 'call' namespace.</p>
 <p>Whenever 'user' is mentioned as input parameter within this API, it needs to be provided in the user@domain format.</p>
@@ -4081,7 +4081,7 @@ the SDK and one or more backend servers.</p>
           <div>
             <span class='code bold'>platform</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>
             = <code>&#39;link&#39;</code>)</code>
-	    Backend platform for which websocket's state to request.
+	    Backend platform for which to request the websocket's state.
 
           </div>
           
@@ -4141,7 +4141,7 @@ the SDK and one or more backend servers.</p>
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>enable</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>)</code>
-	    Whether to enable or disable connectivity checking.
+	    Enable connectivity checking.
 
           </div>
           
@@ -4803,7 +4803,7 @@ the SDK and one or more backend servers.</p>
   </div>
   
 
-  <p>A set of handlers for manipulating SDP information.
+  <p>A set of <a href="#sdphandlerfunction">SdpHandlerFunction</a>s for manipulating SDP information.
 These handlers are used to customize low-level call behaviour for very specific
 environments and/or scenarios. They can be provided during SDK instantiation
 to be used for all calls.</p>
@@ -4829,6 +4829,18 @@ to be used for all calls.</p>
   
 
   
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">import</span> { create, sdpHandlers } <span class="hljs-keyword">from</span> <span class="hljs-string">'kandy'</span>;
+<span class="hljs-keyword">const</span> codecRemover = sdpHandlers.createCodecRemover([<span class="hljs-string">'VP8'</span>, <span class="hljs-string">'VP9'</span>])
+<span class="hljs-keyword">const</span> client = create({
+  <span class="hljs-attr">call</span>: {
+    <span class="hljs-attr">sdpHandlers</span>: [ <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Your-SDP-Handler-Function</span>&gt;</span>, ...]
+  }
+})</span></pre>
+    
+  
 
   
     <div class='py1 quiet mt1 prose-big'>API Functions</div>
@@ -4838,7 +4850,7 @@ to be used for all calls.</p>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>createCodecRemover()</span>
+            <span class='code strong strong truncate'>createCodecRemover(codecs)</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -4846,12 +4858,13 @@ to be used for all calls.</p>
 
   
 
-  <p>In some scenarios it's necessary to remove certain codecs being offered by the SDK to the remote party. While creating an SDP handler would allow a user to perform this type of manipulation, it is a non-trivial task that requires in-depth knowledge of WebRTC SDP.</p>
-<p>To facilitate this common task, the SDK provides a codec removal handler that can be used for this purpose.</p>
+  <p>In some scenarios it's necessary to remove certain codecs being offered by the SDK to the remote party.
+While creating an SDP handler would allow a user to perform this type of manipulation, it is a non-trivial task that requires in-depth knowledge of WebRTC SDP.</p>
+<p>To facilitate this common task, the SDK provides a codec removal handler creator that can be used for this purpose.</p>
 <p>The SDP handlers are exposed on the entry point of the SDK. They need to be added to the list of SDP handlers via configuration on creation of an instance of the SDK.</p>
 
 
-  <div class='pre p1 fill-light mt0'>createCodecRemover()</div>
+  <div class='pre p1 fill-light mt0'>createCodecRemover(codecs: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>>): SdpHandlerFunction</div>
   
   
 
@@ -4863,9 +4876,33 @@ to be used for all calls.</p>
   
 
   
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>codecs</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>>)</code>
+	    A list of codec names to remove from the SDP.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
 
   
 
+  
+    <div class='py1 quiet mt1 prose-big'>Returns</div>
+    
+      <div>
+        <code>SdpHandlerFunction</code>:
+          The resulting SDP handler that will remove the codec.
+
+        
+      </div>
+    
   
 
   
@@ -5003,10 +5040,10 @@ values you can use when instantiating the SDK.</p>
                 <tr>
   <td class='break-word'><span class='code bold'>logs.logLevel</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
   
-    (default <code>debug</code>)
+    (default <code>&#39;debug&#39;</code>)
   </td>
   <td class='break-word'><span>Log level to be set. See 
-<code>logger.levels</code>
+<a href="#loggerlevels">levels</a>
 .
 </span></td>
 </tr>
@@ -5362,6 +5399,59 @@ values you can use when instantiating the SDK.</p>
 </span></td>
 </tr>
 
+  
+    <tr>
+  <td class='break-word'><span class='code bold'>call.callDefaults.isAudioEnabled</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>
+  
+    (default <code>true</code>)
+  </td>
+  <td class='break-word'><span>Specifies whether audio is enabled or not.
+</span></td>
+</tr>
+
+
+  
+    <tr>
+  <td class='break-word'><span class='code bold'>call.callDefaults.isVideoEnabled</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>
+  
+    (default <code>true</code>)
+  </td>
+  <td class='break-word'><span>Specifies whether video is enabled or not.
+</span></td>
+</tr>
+
+
+  
+    <tr>
+  <td class='break-word'><span class='code bold'>call.callDefaults.sendInitialVideo</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>
+  
+    (default <code>false</code>)
+  </td>
+  <td class='break-word'><span>Specifies whether to send an inital video stream or not.
+</span></td>
+</tr>
+
+
+  
+    <tr>
+  <td class='break-word'><span class='code bold'>call.callDefaults.remoteVideoContainer</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?</code>
+  </td>
+  <td class='break-word'><span>Specifies the container where video (coming from remote party) is rendered.
+</span></td>
+</tr>
+
+
+  
+    <tr>
+  <td class='break-word'><span class='code bold'>call.callDefaults.localVideoContainer</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?</code>
+  </td>
+  <td class='break-word'><span>Specifies the container where video (coming from local party) is rendered.
+</span></td>
+</tr>
+
+
+  
+
 
               
                 <tr>
@@ -5374,11 +5464,106 @@ values you can use when instantiating the SDK.</p>
 
               
                 <tr>
-  <td class='break-word'><span class='code bold'>call.webrtcdtls</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>
+  <td class='break-word'><span class='code bold'>call.recordCallStats</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>
   
-    (default <code>true</code>)
+    (default <code>false</code>)
   </td>
-  <td class='break-word'><span>Whether to enable the webRTC DTLS setting for calls.
+  <td class='break-word'><span>Whether to enable the recording of call statistics as part of app's local storage.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>call.earlyMedia</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>
+  
+    (default <code>false</code>)
+  </td>
+  <td class='break-word'><span>Whether to use early media (e.g. for playing incoming tones) as part of an outgoing call.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>call.callAuditTimer</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
+  
+    (default <code>30000</code>)
+  </td>
+  <td class='break-word'><span>Audit time value for calls, as a positive number in milliseconds.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>call.activeCallTimeoutMS</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
+  
+    (default <code>120000</code>)
+  </td>
+  <td class='break-word'><span>Timeout for an existing ringing call before it gets terminated, as a positive number in milliseconds.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>call.ringingFeedback</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>?</code>
+  </td>
+  <td class='break-word'><span>When enabled, inform Spidr that RingingFeedback is supported.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>call.codecsToReplace</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?</code>
+  </td>
+  <td class='break-word'><span>Specifies alternative audio/video codecs to use for a given call. It has been deprecated so pipeline parameter should be used instead.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>call.videoInactiveOnHold</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>
+  
+    (default <code>false</code>)
+  </td>
+  <td class='break-word'><span>Sets the video as "inactive" instead of "sendonly" when holding a call.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>call.forceDisableMediaOnHold</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>
+  
+    (default <code>false</code>)
+  </td>
+  <td class='break-word'><span>Disables any type of media (e.g. Comfort Noise) from transmitting when call is held locally.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>call.iceCandidateCollectionTimeoutInterval</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
+  
+    (default <code>3000</code>)
+  </td>
+  <td class='break-word'><span>When provided (in milliseconds), ice candidate collection is assumed to be completed if at least one candidate is received within the interval.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>call.relayCandidateCollectionTimeoutCycle</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>
+  
+    (default <code>false</code>)
+  </td>
+  <td class='break-word'><span>When enabled, iceCandidateCollectionTimeoutInterval is restarted until receiving first relay candidate. If the provided cycle limit is reached, ice candidate collection assumed to be completed.
 </span></td>
 </tr>
 
@@ -5389,7 +5574,147 @@ values you can use when instantiating the SDK.</p>
   
     (default <code>false</code>)
   </td>
-  <td class='break-word'><span>Whether to enable the recording of call statistics as part of app's local storage.
+  <td class='break-word'><span>When enabled, call statistics are recorded in app's localstorage after the call is terminated.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>call.callConstraints</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?</code>
+  </td>
+  <td class='break-word'><span>Custom RTCPeerConnection constraints to use for calls. Will cause errors if malformed.
+</span></td>
+</tr>
+
+  
+    <tr>
+  <td class='break-word'><span class='code bold'>call.callConstraints.chrome</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?</code>
+  </td>
+  <td class='break-word'><span>Custom constraints to be used on Google Chrome.
+</span></td>
+</tr>
+
+
+  
+    <tr>
+  <td class='break-word'><span class='code bold'>call.callConstraints.firefox</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?</code>
+  </td>
+  <td class='break-word'><span>Custom constraints to be used on Mozilla Firefox.
+</span></td>
+</tr>
+
+
+  
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>call.bundlePolicy</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+  
+    (default <code>&#39;DISABLED&#39;</code>)
+  </td>
+  <td class='break-word'><span>The bundle policy to use for peer connections. Value can be fcs.SDP_CONSTANTS.BUNDLE_POLICY.MAX_COMPAT, fcs.SDP_CONSTANTS.BUNDLE_POLICY.MAX_BUNDLE, fcs.SDP_CONSTANTS.BUNDLE_POLICY.BALANCED or fcs.SDP_CONSTANTS.BUNDLE_POLICY.DISABLED. The DISABLED option means that bundle group lines will be removed from every SDP.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>call.opusConfig</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?</code>
+  </td>
+  <td class='break-word'><span>Bandwidth controls to add for Opus audio codec.
+</span></td>
+</tr>
+
+  
+    <tr>
+  <td class='break-word'><span class='code bold'>call.opusConfig.maxPlaybackRate</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>?</code>
+  </td>
+  <td class='break-word'><span>Maximum playback rate, in bits per second. Must be a positive value between 8000 and 48000.
+</span></td>
+</tr>
+
+
+  
+    <tr>
+  <td class='break-word'><span class='code bold'>call.opusConfig.maxAverageBitrate</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>?</code>
+  </td>
+  <td class='break-word'><span>A bitrate encoding value between 6000 and 510000 bits per second.
+</span></td>
+</tr>
+
+
+  
+    <tr>
+  <td class='break-word'><span class='code bold'>call.opusConfig.fec</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>?</code>
+  </td>
+  <td class='break-word'><span>Specifies whether Forward Error Correction is enabled or not. When enabled, FEC provides robustness against packet loss. Acceptable values can only be 0 or 1.
+</span></td>
+</tr>
+
+
+  
+    <tr>
+  <td class='break-word'><span class='code bold'>call.opusConfig.dtx</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>?</code>
+  </td>
+  <td class='break-word'><span>Specifies whether Discontinuous Transmission mode is enabled or not. When enabled, DTX reduces the bitrate during silence or background noise. Acceptable values can only be 0 or 1.
+</span></td>
+</tr>
+
+
+  
+    <tr>
+  <td class='break-word'><span class='code bold'>call.opusConfig.ptime</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>?</code>
+  </td>
+  <td class='break-word'><span>Packet (i.e. frame) duration in milliseconds. Frames will be combined into packets to achieve the maximum of 120 ms duration. A positive value between 2.5 and 120.
+</span></td>
+</tr>
+
+
+  
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>call.webrtcLogCollectionInterval</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
+  
+    (default <code>3000</code>)
+  </td>
+  <td class='break-word'><span>Interval at which to collect WebRTC logs for calls, in milliseconds.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>call.useRelay</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>
+  
+    (default <code>false</code>)
+  </td>
+  <td class='break-word'><span>Whether we should force connection through the relay candidates (i.e. TURN server). Mostly used for testing.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>call.trickleIceSupport</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+  
+    (default <code>&#39;none&#39;</code>)
+  </td>
+  <td class='break-word'><span>Whether we should advertise and use Trickle ICE. Accepted value is one of: 'none', 'half' or 'full'.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>call.continuity</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>
+  
+    (default <code>false</code>)
+  </td>
+  <td class='break-word'><span>Whether an existing voice call can be persisted, as a mobile phone moves between circuit switched and packet switched domains (e.g. GSM to WiFi).
 </span></td>
 </tr>
 
@@ -5803,13 +6128,13 @@ values you can use when instantiating the SDK.</p>
   </div>
   
 
-  <p>The internal logger used to provide information about the SDK's behaviour.
+  <p>The internal logger is used to provide information about the SDK's behaviour.
 The logger can provide two types of logs: basic logs and action logs. Basic
 logs are simple lines of information about what the SDK is doing during operations.
 Action logs are complete information about a specific action that occurred
-within the SDK, prodiving debug information describing it.
-The amount of information logged can be configured as part of the SDK
-(see <code>configs.logs</code>) configuration.</p>
+within the SDK, providing debug information describing it.
+The amount of information logged can be configured as part of the SDK configuration.
+See <a href="#configconfiglogs">config.logs</a> .</p>
 
 
   <div class='pre p1 fill-light mt0'>Logger</div>
@@ -5871,14 +6196,14 @@ The amount of information logged can be configured as part of the SDK
       
         <div class='space-bottom0'>
           <span class='code bold'>SILENT</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-          : Logs nothing.
+          : Log nothing.
 
           
         </div>
       
         <div class='space-bottom0'>
           <span class='code bold'>ERROR</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-          : Only log unhandled errors.
+          : Log only unhandled errors.
 
           
         </div>
@@ -5949,6 +6274,7 @@ The amount of information logged can be configured as part of the SDK
   
 
   <p>An interface for getting and updating the configuration Object.</p>
+<p>Config functions are available directly on the SDK Object</p>
 
 
   <div class='pre p1 fill-light mt0'>Config</div>
@@ -6011,7 +6337,7 @@ The amount of information logged can be configured as part of the SDK
     
       <div>
         <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
-          A configuration Object
+          A configuration Object.
 
         
       </div>
@@ -6065,7 +6391,9 @@ The amount of information logged can be configured as part of the SDK
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>newConfigValues</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    Key Value pairs that will be placed into the store.
+	    Key-value pairs that will be placed into the store. See 
+<a href="#config">config</a>
+ for details on what key-value pairs are available for use.
 
           </div>
           
@@ -6117,7 +6445,7 @@ The amount of information logged can be configured as part of the SDK
   </div>
   
 
-  <p>The Basic error object. Provides information about an error that occurred in the SDK.</p>
+  <p>The Basic Error object. Provides information about an error that occurred in the SDK.</p>
 
 
   <div class='pre p1 fill-light mt0'>BasicError</div>
@@ -6139,14 +6467,14 @@ The amount of information logged can be configured as part of the SDK
       
         <div class='space-bottom0'>
           <span class='code bold'>code</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-          : The code of the error. If no code is known, this will be a string 'NO_CODE'.
+          : The code of the error. If no code is known, this will be 'NO_CODE'.
 
           
         </div>
       
         <div class='space-bottom0'>
           <span class='code bold'>message</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-          : A human-readable message to describe the error. If no message is known, this will be a string 'An error occured'.
+          : A human-readable message to describe the error. If no message is known, this will be 'An error occured'.
 
           
         </div>

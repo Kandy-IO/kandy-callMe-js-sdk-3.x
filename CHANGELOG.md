@@ -5,9 +5,19 @@ Kandy.js change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 3.6.0 - 2019-08-01
+
+### Fixed
+
+- Fixed an issue where call audio would be played out of the wrong speaker after a midcall operation that re-rendered media. `KAA-1824`
+- Fixed an issue where specifying min and max resolutions when making or answering a call got mixed up. `KAA-1886`
+- Fixed many API documentation issues across all SDK's plugins.
+- Fixed version numbering associated with public documentation. `KAA-1823`
+
 ## 3.4.1 - 2019-04-26
 
 ### Fixed
+
 - Made a hotfix release just to update the version because something went wrong with NPM and it requires a new version.
 
 ## 3.4.0 - 2019-04-26
@@ -83,7 +93,7 @@ The function to instantiate the SDK has been renamed from `createKandy()` to `Ka
 
 ### Added
 
-- [CPaaS 2.0] Added chat functionality with support for sending and receiving messages `KAA-617`
+- [CPaaS] Added chat functionality with support for sending and receiving messages `KAA-617`
 - Added user's locale to data returned in fetchSelfInfo(). `KAA-787`
 - Added new Authorization name (authname) to the Kandy connect method. `KAA-606`
 - Implemented originalRemoteParticipant field to call and callHistory for keeping track of the initial call "to" `feat/KAA-959`
