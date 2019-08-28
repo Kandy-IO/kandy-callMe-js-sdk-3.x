@@ -7,6 +7,10 @@ Kandy.js change log.
 
 ## 3.7.0 - beta
 
+### Fixed
+
+- Fixed an issue causing some BasicError objects to have a misleading message rather than a message about the operation that failed. `KAA-1947`
+
 ## 3.6.0 - 2018-08-01
 
 ### Fixed
