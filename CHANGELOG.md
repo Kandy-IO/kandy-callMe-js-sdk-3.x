@@ -11,12 +11,14 @@ Kandy.js change log.
 
 - Fixed an issue causing some BasicError objects to have a misleading message rather than a message about the operation that failed. `KAA-1947`
 
-## 3.6.0 - 2018-08-01
+## 3.6.0 - 2019-08-01
 
 ### Fixed
 
 - Fixed an issue where call audio would be played out of the wrong speaker after a midcall operation that re-rendered media. `KAA-1824`
 - Fixed an issue where specifying min and max resolutions when making or answering a call got mixed up. `KAA-1886`
+- Fixed many API documentation issues across all SDK's plugins.
+- Fixed version numbering associated with public documentation. `KAA-1823`
 
 ## 3.4.1 - 2019-04-26
 
@@ -33,6 +35,7 @@ Kandy.js change log.
 - Added a DEBUG log at the start of every public API invocation, which will better help with future investigations `KAA-1353`
 
 ### Changed
+
 - The `subscription:change` event is no longer emmitted when there is an error. User will have to subscribe to `subscription:error` as well. `KAA-1351`
 - No longer stores call stats in localstorage by default. Use the `recordCallStats` configuration to turn this back on. `KAA-1552`
 
