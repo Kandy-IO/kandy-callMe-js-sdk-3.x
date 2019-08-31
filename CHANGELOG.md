@@ -5,11 +5,13 @@ Kandy.js change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
-## 3.7.0 - beta
+## 3.7.0 - 2019-08-30
 
 ### Fixed
 
 - Fixed an issue causing some BasicError objects to have a misleading message rather than a message about the operation that failed. `KAA-1947`
+- Fixed an issue where the screensharing for the callee would fail to stop from the Chrome notification. `KAA-601`
+- Fixed an issue where the transfered call status was not being passed to the application properly. `KAA-1926`
 
 ## 3.6.0 - 2019-08-01
 

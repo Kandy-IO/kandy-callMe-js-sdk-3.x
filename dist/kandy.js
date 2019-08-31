@@ -1,7 +1,7 @@
 /**
  * Kandy.js
  * kandy.callMe.js
- * Version: 3.7.0-beta.125
+ * Version: 3.7.0-beta.130
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -28798,6 +28798,10 @@ var _keys = __webpack_require__("../../node_modules/babel-runtime/core-js/object
 
 var _keys2 = _interopRequireDefault(_keys);
 
+var _extends2 = __webpack_require__("../../node_modules/babel-runtime/helpers/extends.js");
+
+var _extends3 = _interopRequireDefault(_extends2);
+
 var _stringify = __webpack_require__("../../node_modules/babel-runtime/core-js/json/stringify.js");
 
 var _stringify2 = _interopRequireDefault(_stringify);
@@ -30771,7 +30775,7 @@ function CallManagerImpl(_ref) {
                 if (_callFSM.getCurrentState(internalCall) === fsmState.COMPLETED) {
                     //Screen sharing video stream has been stopped, act as if someone called screenStopStart
                     //but pass the result to onScreenStop instead.
-                    self.screenStopStart(data.callid, onScreenStop, function () {
+                    self.screenStopStart((0, _extends3.default)({}, data, { isScreenStart: false }), onScreenStop, function () {
                         logger.error('Failed to stop screen properly after user stopped the stream via' + ' the browser controls');
                     }, false);
                 } else if (internalCall.isScreenShared) {
@@ -31576,9 +31580,9 @@ function CallManagerImpl(_ref) {
                 }, function () {
                     logger.error('callControlService.endCall FAILED!! callId: ' + call.id);
                 });
-                clearResources(call);
                 triggerCallState(callStates.TRANSFERRED);
                 triggerCallState(callStates.ENDED);
+                clearResources(call);
                 logger.info('endCall successful. callId: ' + call.id);
                 break;
             case transferEvent.stateReverted_fsm:
@@ -50650,6 +50654,7 @@ exports.getAuthConfig = getAuthConfig;
 exports.getSubscriptionInfo = getSubscriptionInfo;
 exports.getConnectionInfo = getConnectionInfo;
 exports.getDomain = getDomain;
+exports.getIdentity = getIdentity;
 exports.getUserInfo = getUserInfo;
 exports.getAuthScenario = getAuthScenario;
 exports.getServices = getServices;
@@ -50736,9 +50741,20 @@ function getDomain(state) {
 }
 
 /**
+ * Retrieves the identity of the currently logged-in user.
+ * The identity is of the form: <userName>@<domain>
+ * @method getIdentity
+ * @return {string}
+ */
+function getIdentity(state) {
+  const userInfo = getUserInfo(state);
+  return userInfo.identity || userInfo.username || '';
+}
+
+/**
  * Retrieves the user information.
  * @method getUserInfo
- * @return {Object}
+ * @return {Object} An object whose properties are: accessToken, identity & username. Identity is user's primary contact address.
  */
 function getUserInfo(state) {
   return (0, _fp.cloneDeep)(state.authentication.userInfo) || {};
@@ -61490,7 +61506,7 @@ const factoryDefaults = {
    */
 };function factory(plugins, options = factoryDefaults) {
   // Log the SDK's version (templated by webpack) on initialization.
-  let version = '3.7.0-beta.125';
+  let version = '3.7.0-beta.130';
   log.info(`SDK version: ${version}`);
 
   var sagas = [];
