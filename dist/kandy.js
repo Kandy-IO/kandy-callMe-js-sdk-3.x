@@ -1,7 +1,7 @@
 /**
  * Kandy.js
  * kandy.callMe.js
- * Version: 3.6.0
+ * Version: 3.7.0
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -28798,6 +28798,10 @@ var _keys = __webpack_require__("../../node_modules/babel-runtime/core-js/object
 
 var _keys2 = _interopRequireDefault(_keys);
 
+var _extends2 = __webpack_require__("../../node_modules/babel-runtime/helpers/extends.js");
+
+var _extends3 = _interopRequireDefault(_extends2);
+
 var _stringify = __webpack_require__("../../node_modules/babel-runtime/core-js/json/stringify.js");
 
 var _stringify2 = _interopRequireDefault(_stringify);
@@ -30771,7 +30775,7 @@ function CallManagerImpl(_ref) {
                 if (_callFSM.getCurrentState(internalCall) === fsmState.COMPLETED) {
                     //Screen sharing video stream has been stopped, act as if someone called screenStopStart
                     //but pass the result to onScreenStop instead.
-                    self.screenStopStart(data.callid, onScreenStop, function () {
+                    self.screenStopStart((0, _extends3.default)({}, data, { isScreenStart: false }), onScreenStop, function () {
                         logger.error('Failed to stop screen properly after user stopped the stream via' + ' the browser controls');
                     }, false);
                 } else if (internalCall.isScreenShared) {
@@ -31576,9 +31580,9 @@ function CallManagerImpl(_ref) {
                 }, function () {
                     logger.error('callControlService.endCall FAILED!! callId: ' + call.id);
                 });
-                clearResources(call);
                 triggerCallState(callStates.TRANSFERRED);
                 triggerCallState(callStates.ENDED);
+                clearResources(call);
                 logger.info('endCall successful. callId: ' + call.id);
                 break;
             case transferEvent.stateReverted_fsm:
@@ -50650,6 +50654,7 @@ exports.getAuthConfig = getAuthConfig;
 exports.getSubscriptionInfo = getSubscriptionInfo;
 exports.getConnectionInfo = getConnectionInfo;
 exports.getDomain = getDomain;
+exports.getIdentity = getIdentity;
 exports.getUserInfo = getUserInfo;
 exports.getAuthScenario = getAuthScenario;
 exports.getServices = getServices;
@@ -50736,9 +50741,20 @@ function getDomain(state) {
 }
 
 /**
+ * Retrieves the identity of the currently logged-in user.
+ * The identity is of the form: <userName>@<domain>
+ * @method getIdentity
+ * @return {string}
+ */
+function getIdentity(state) {
+  const userInfo = getUserInfo(state);
+  return userInfo.identity || userInfo.username || '';
+}
+
+/**
  * Retrieves the user information.
  * @method getUserInfo
- * @return {Object}
+ * @return {Object} An object whose properties are: accessToken, identity & username. Identity is user's primary contact address.
  */
 function getUserInfo(state) {
   return (0, _fp.cloneDeep)(state.authentication.userInfo) || {};
@@ -51444,7 +51460,21 @@ function* subscribe(connection, credentials, extras = {}) {
 
   if (response.error) {
     if (response.payload.body) {
-      let { statusCode } = response.payload.body.subscribeResponse;
+      const body = response.payload.body;
+
+      let statusCode;
+      /*
+       * In some cases, the response is not wrapped in a `subscribeResponse`
+       *    property. This seems to be when using a pre-provisioned user (stored
+       *    as part of KL?) rather than a dynamically created user (retrieved
+       *    from AS?).
+       * Reference: ABE-23981 (and KAA-1937)
+       */
+      if (body.statusCode && body.reason) {
+        statusCode = body.statusCode;
+      } else {
+        statusCode = body.subscribeResponse.statusCode;
+      }
       log.debug(`Failed user subscription with status code ${statusCode}.`);
 
       // Handle errors from the server.
@@ -61476,7 +61506,7 @@ const factoryDefaults = {
    */
 };function factory(plugins, options = factoryDefaults) {
   // Log the SDK's version (templated by webpack) on initialization.
-  let version = '3.6.0';
+  let version = '3.7.0';
   log.info(`SDK version: ${version}`);
 
   var sagas = [];
@@ -63781,6 +63811,10 @@ const responseTypes = (0, _freeze2.default)({
   text: 'text'
 });
 
+const contentTypes = (0, _freeze2.default)({
+  jsonType: 'application/json'
+});
+
 /*
  * HTTP request plugin.
  */
@@ -63844,6 +63878,7 @@ async function makeRequest(options, requestId) {
     };
   }
   let response;
+  let contentType;
   try {
     response = await fetch(url + (0, _utils.toQueryString)(queryParams), fetchOptions);
   } catch (err) {
@@ -63859,6 +63894,12 @@ async function makeRequest(options, requestId) {
     };
   }
   try {
+    contentType = response.headers.get('content-type');
+  } catch (err) {
+    log.debug(`Failed to get content-type:${err.message}.`);
+  }
+
+  try {
     let result = {
       ok: response.ok,
       code: response.status,
@@ -63868,9 +63909,26 @@ async function makeRequest(options, requestId) {
     let error = !response.ok;
 
     if (error) {
-      // If the response indicates an error, resolve the body as JSON and return a `REQUEST` error
       log.debug(`Response indicates that request ${requestId} failed`);
-      responseBody = await response.json();
+      /*
+       * Handle a special-case error where the response body is a HTML page...
+       * Throw away the body and so it is simply reported as 'Forbidden'.
+       * TODO: Handle responses based on their type rather than checking for
+       *    individual special cases...
+       */
+      if (response.status === 403 && contentType.includes('html')) {
+        return {
+          body: false,
+          error: 'REQUEST',
+          result
+        };
+      }
+
+      /*
+       * If the response indicates an error and has a body, resolve the body as JSON
+       * but no body return an empty object then return a `REQUEST` error
+       */
+      responseBody = contentTypes.jsonType === contentType ? await response.json() : {};
       return {
         body: responseBody,
         error: 'REQUEST',
@@ -63888,13 +63946,15 @@ async function makeRequest(options, requestId) {
         result
       };
     } else {
-      if (responseType === responseTypes.json) {
+      responseBody = {};
+      if (contentTypes.jsonType === contentType && responseType === responseTypes.json) {
         responseBody = await response.json();
       } else if (responseType === responseTypes.blob) {
         responseBody = await response.blob();
       } else if (responseType === responseTypes.text) {
         responseBody = await response.text();
       }
+
       return {
         body: responseBody,
         error: false,

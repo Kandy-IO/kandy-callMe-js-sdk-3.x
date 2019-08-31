@@ -5,6 +5,14 @@ Kandy.js change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 3.7.0 - 2019-08-30
+
+### Fixed
+
+- Fixed an issue causing some BasicError objects to have a misleading message rather than a message about the operation that failed. `KAA-1947`
+- Fixed an issue where the screensharing for the callee would fail to stop from the Chrome notification. `KAA-601`
+- Fixed an issue where the transfered call status was not being passed to the application properly. `KAA-1926`
+
 ## 3.6.0 - 2019-08-01
 
 ### Fixed
@@ -29,6 +37,7 @@ Kandy.js change log.
 - Added a DEBUG log at the start of every public API invocation, which will better help with future investigations `KAA-1353`
 
 ### Changed
+
 - The `subscription:change` event is no longer emmitted when there is an error. User will have to subscribe to `subscription:error` as well. `KAA-1351`
 - No longer stores call stats in localstorage by default. Use the `recordCallStats` configuration to turn this back on. `KAA-1552`
 
