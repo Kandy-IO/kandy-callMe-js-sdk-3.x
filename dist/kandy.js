@@ -1,7 +1,7 @@
 /**
  * Kandy.js
  * kandy.callMe.js
- * Version: 3.8.0-beta.140
+ * Version: 3.8.0-beta.141
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -53840,7 +53840,7 @@ const log = (0, _logs.getLogManager)().getLogger('CALL');
  * Whenever 'user' is mentioned as input parameter within this API, it needs to be provided in the user@domain format.
  *
  * @public
- * @module Calls
+ * @namespace Calls
  */
 
 /**
@@ -59152,10 +59152,10 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 const log = (0, _logs.getLogManager)().getLogger('CONFIG'); /**
                                                              * An interface for getting and updating the configuration Object.
                                                              *
-                                                             * Config functions are available directly on the SDK Object
+                                                             * Configuration functions are available directly on the SDK Object
                                                              *
                                                              * @public
-                                                             * @module Config
+                                                             * @module Configuration
                                                              * @requires config
                                                              */
 function api(context) {
@@ -59164,7 +59164,7 @@ function api(context) {
      * Gets the current configuration Object
      *
      * @public
-     * @memberof Config
+     * @memberof Configuration
      * @requires config
      * @method getConfig
      * @returns {Object} A configuration Object.
@@ -59179,7 +59179,7 @@ function api(context) {
      *
      * @public
      * @static
-     * @memberof Config
+     * @memberof Configuration
      * @requires config
      * @method updateConfig
      * @param {Object} newConfigValues Key-value pairs that will be placed into the store. See {@link config} for details on what key-value pairs are available for use.
@@ -59544,7 +59544,7 @@ const log = (0, _logs.getLogManager)().getLogger('CONNECTIVITY');
  * Connectivity functions are all part of the 'connection' namespace.
  *
  * @public
- * @module Connectivity
+ * @namespace Connectivity
  */
 
 function api({ dispatch, getState }) {
@@ -61557,7 +61557,7 @@ const factoryDefaults = {
    */
 };function factory(plugins, options = factoryDefaults) {
   // Log the SDK's version (templated by webpack) on initialization.
-  let version = '3.8.0-beta.140';
+  let version = '3.8.0-beta.141';
   log.info(`SDK version: ${version}`);
 
   var sagas = [];
@@ -61861,7 +61861,7 @@ var _fp = __webpack_require__("../../node_modules/lodash/fp.js");
 
 /**
  * The configuration object. This object defines what different configuration
- * values you can use when instantiating the SDK.
+ * values you can use when instantiating the SDK using the {@link #create create} function.
  * @public
  * @module config
  */
@@ -61875,7 +61875,7 @@ var _fp = __webpack_require__("../../node_modules/lodash/fp.js");
  * to be used for all calls.
  *
  * @public
- * @module sdpHandlers
+ * @namespace sdpHandlers
  * @example
  * import { create, sdpHandlers } from 'kandy';
  * const codecRemover = sdpHandlers.createCodecRemover(['VP8', 'VP9'])
