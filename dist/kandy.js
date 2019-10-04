@@ -1,7 +1,7 @@
 /**
  * Kandy.js
  * kandy.callMe.js
- * Version: 3.8.0-beta.150
+ * Version: 3.9.0-beta.151
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -52207,6 +52207,7 @@ const FCS_CALL_STATES = exports.FCS_CALL_STATES = {
 const CALL_STATES = exports.CALL_STATES = {
   INITIATING: 'Initiating',
   INITIATED: 'Initiated',
+  EARLY_MEDIA: 'Early Media',
   RINGING: 'Ringing',
   CANCELLED: 'Cancelled',
   CONNECTED: 'Connected',
@@ -61522,7 +61523,7 @@ const factoryDefaults = {
    */
 };function factory(plugins, options = factoryDefaults) {
   // Log the SDK's version (templated by webpack) on initialization.
-  let version = '3.8.0-beta.150';
+  let version = '3.9.0-beta.151';
   log.info(`SDK version: ${version}`);
 
   var sagas = [];
