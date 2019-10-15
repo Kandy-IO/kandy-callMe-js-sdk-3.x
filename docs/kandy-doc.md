@@ -111,18 +111,14 @@ Configuration options for the Connectivity feature.
 
 **Parameters**
 
--   `connectivity` **[Object][4]** Connectivity configs.
-    -   `connectivity.method` **[Object][4]** Configuration for how connectivity checks should be made.
-        -   `connectivity.method.type` **[String][5]** The method of connectivity checking to use: `keepAlive` or `pingPong`. (optional, default `'keepAlive'`)
-        -   `connectivity.method.responsibleParty` **[String][5]** Configures who is responsible for initiating the connectivity check: `client` or `server`. (optional, default `'client'`)
-    -   `connectivity.pingInterval` **[Number][8]** Time in between websocket ping attempts (milliseconds). Only used for when the client is responsible for ping/connCheck. (optional, default `30000`)
-    -   `connectivity.reconnectLimit` **[Number][8]** Number of failed reconnect attempts before reporting an error. Can be set to 0 to not limit reconnection attempts. (optional, default `5`)
-    -   `connectivity.reconnectDelay` **[Number][8]** Base time between websocket reconnect attempts (milliseconds). (optional, default `5000`)
-    -   `connectivity.reconnectTimeMultiplier` **[Number][8]** Reconnect delay multiplier for subsequent attempts. The reconnect delay time will be multiplied by this factor after each failed reconnect attempt to increase the delay between attempts. (optional, default `1`)
-    -   `connectivity.reconnectTimeLimit` **[Number][8]** Maximum time delay between reconnect attempts (milliseconds). Used in conjunction with `reconnectTimeMultiplier` to prevent overly long delays between reconnection attempts. (optional, default `640000`)
-    -   `connectivity.autoReconnect` **[Boolean][7]** Flag to determine whether reconnection will be attempted automatically after connectivity disruptions. (optional, default `true`)
-    -   `connectivity.maxMissedPings` **[Number][8]** Maximum pings sent (without receiving a response) before reporting an error. (optional, default `3`)
-    -   `connectivity.checkConnectivity` **[Boolean][7]** Flag to determine whether to enable connectivity checking or not. (optional, default `true`)
+-   `pingInterval` **[Number][8]** Time in between websocket ping attempts (milliseconds). (optional, default `30000`)
+-   `reconnectLimit` **[Number][8]** Number of failed reconnect attempts before reporting an error. Can be set to 0 to not limit reconnection attempts. (optional, default `5`)
+-   `reconnectDelay` **[Number][8]** Base time between websocket reconnect attempts (milliseconds). (optional, default `5000`)
+-   `reconnectTimeMultiplier` **[Number][8]** Reconnect delay multiplier for subsequent attempts. The reconnect delay time will be multiplied by this factor after each failed reconnect attempt to increase the delay between attempts. (optional, default `1`)
+-   `reconnectTimeLimit` **[Number][8]** Maximum time delay between reconnect attempts (milliseconds). Used in conjunction with the reconnect time multiplier to prevent overly long delays between reconnection attempts. (optional, default `640000`)
+-   `autoReconnect` **[Boolean][7]** Flag to determine whether the SDK will attempt to automatically reconnect after connectivity disruptions. (optional, default `true`)
+-   `maxMissedPings` **[Number][8]** Maximum pings sent (without receiving a response) before reporting an error. (optional, default `3`)
+-   `checkConnectivity` **[Boolean][7]** Flag to determine whether the SDK should check connectivity. (optional, default `true`)
 
 ### config.notifications
 
