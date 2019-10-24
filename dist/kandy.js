@@ -1,7 +1,7 @@
 /**
  * Kandy.js
  * kandy.callMe.js
- * Version: 3.9.0-beta.171
+ * Version: 3.9.0-beta.172
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -60516,6 +60516,68 @@ const connCheckMethods = exports.connCheckMethods = {
 
 /***/ }),
 
+/***/ "../kandy/src/docs/docs.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * The User ID ie: joe@test.3s5j.att.com
+ *
+ * @public
+ * @static
+ * @module UserID
+ * @typedef {string} UserID
+ * @memberof user
+ * @requires cpaas_user_id
+ */
+
+/**
+ * The User ID ie: joe@test.3s5j.att.com
+ *
+ * @public
+ * @static
+ * @module UserID
+ * @typedef {string} UserID
+ * @memberof call
+ * @requires cpaas_user_id
+ */
+
+/**
+ * The SIP URI ie: sip:joe@domain.com
+ *
+ * @public
+ * @static
+ * @module SIP_URI
+ * @typedef {string} SIP_URI
+ * @memberof call
+ * @requires link_user_id
+ */
+
+/**
+ * The Phone Numer ie: +18885559876
+ *
+ * @public
+ * @static
+ * @module PhoneNumber
+ * @typedef {string} PhoneNumber
+ * @memberof call
+ * @requires cpaas_pstn
+ */
+
+/**
+ * The TEL URI ie: tel:+18885559876
+ *
+ * @public
+ * @static
+ * @module TEL_URI
+ * @typedef {string} TEL_URI
+ * @memberof call
+ * @requires link_pstn
+ */
+
+
+/***/ }),
+
 /***/ "../kandy/src/errors/codes.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -61511,7 +61573,7 @@ const factoryDefaults = {
    */
 };function factory(plugins, options = factoryDefaults) {
   // Log the SDK's version (templated by webpack) on initialization.
-  let version = '3.9.0-beta.171';
+  let version = '3.9.0-beta.172';
   log.info(`SDK version: ${version}`);
 
   var sagas = [];
@@ -61751,6 +61813,8 @@ var _link2 = _interopRequireDefault(_link);
 var _link3 = __webpack_require__("../kandy/src/notifications/link/index.js");
 
 var _link4 = _interopRequireDefault(_link3);
+
+__webpack_require__("../kandy/src/docs/docs.js");
 
 var _codecRemover = __webpack_require__("../fcs/src/js/sdp/codecRemover.js");
 
