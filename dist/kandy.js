@@ -1,7 +1,7 @@
 /**
  * Kandy.js
  * kandy.callMe.js
- * Version: 3.9.0-beta.183
+ * Version: 3.9.0-beta.184
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -55438,7 +55438,7 @@ const callReducers = {};
  */
 
 /*
- * Reducer to handle MAKE_CAL action.
+ * Reducer to handle MAKE_CALL action.
  * Create a new call object and add it to state.
  */
 reducers[actionTypes.MAKE_CALL] = {
@@ -61569,7 +61569,7 @@ const factoryDefaults = {
    */
 };function factory(plugins, options = factoryDefaults) {
   // Log the SDK's version (templated by webpack) on initialization.
-  let version = '3.9.0-beta.183';
+  let version = '3.9.0-beta.184';
   log.info(`SDK version: ${version}`);
 
   var sagas = [];
