@@ -527,7 +527,7 @@ Type: [string][5]
 **Parameters**
 
 -   `params` **[Object][4]** 
-    -   `params.error` **BasicError** The Basic error object.
+    -   `params.error` **[api.BasicError][13]** The Basic error object.
 
 ## getDevices
 
@@ -541,7 +541,7 @@ logs are simple lines of information about what the SDK is doing during operatio
 Action logs are complete information about a specific action that occurred
 within the SDK, providing debug information describing it.
 The amount of information logged can be configured as part of the SDK configuration.
-See [config.logs][13] .
+See [config.logs][14] .
 
 ### levels
 
@@ -601,7 +601,7 @@ Enables, or disables, the processing of websocket notifications.
 
 ## sdpHandlers
 
-A set of [SdpHandlerFunction][14]s for manipulating SDP information.
+A set of [SdpHandlerFunction][15]s for manipulating SDP information.
 These handlers are used to customize low-level call behaviour for very specific
 environments and/or scenarios. They can be provided during SDK instantiation
 to be used for all calls.
@@ -643,7 +643,7 @@ const client = create({
 })
 ```
 
-Returns **SdpHandlerFunction** The resulting SDP handler that will remove the codec.
+Returns **call.SdpHandlerFunction** The resulting SDP handler that will remove the codec.
 
 ## setDefaultDevices
 
@@ -692,6 +692,8 @@ client.media.setDefaultDevices({
 
 [12]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error
 
-[13]: #configconfiglogs
+[13]: #apibasicerror
 
-[14]: call.SdpHandlerFunction
+[14]: #configconfiglogs
+
+[15]: call.SdpHandlerFunction

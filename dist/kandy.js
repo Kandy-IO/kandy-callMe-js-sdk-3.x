@@ -1,7 +1,7 @@
 /**
  * Kandy.js
  * kandy.callMe.js
- * Version: 3.9.0-beta.188
+ * Version: 3.9.0-beta.189
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -54795,7 +54795,7 @@ const CALL_SCREENSHARE_CHANGE = exports.CALL_SCREENSHARE_CHANGE = 'call:screensh
  * @event call:error
  * @param {Object} params
  * @param {string} params.callId The id of the call.
- * @param {BasicError} params.error The Basic error object.
+ * @param {api.BasicError} params.error The Basic error object.
  */
 const CALL_ERROR = exports.CALL_ERROR = 'call:error';
 
@@ -54817,7 +54817,7 @@ const LOCAL_VIDEO_CHANGE = exports.LOCAL_VIDEO_CHANGE = 'videoPreview:change';
  * @requires call
  * @event videoPreview:error
  * @param {Object} params
- * @param {BasicError} params.error Information about the error.
+ * @param {api.BasicError} params.error Information about the error.
  */
 const LOCAL_VIDEO_ERROR = exports.LOCAL_VIDEO_ERROR = 'videoPreview:error';
 
@@ -54854,7 +54854,7 @@ const DEVICE_CHANGE = exports.DEVICE_CHANGE = 'devices:change';
  * @event media:permissions
  * @param {Object} params
  * @param {Object} params.devices The devices to request permission for.
- * @param {BasicError} params.error The Basic error object.
+ * @param {api.BasicError} params.error The Basic error object.
  * @param {boolean} params.granted Whether premission was granted?
  */
 const MEDIA_PERMISSIONS = exports.MEDIA_PERMISSIONS = 'media:permissions';
@@ -54866,7 +54866,7 @@ const MEDIA_PERMISSIONS = exports.MEDIA_PERMISSIONS = 'media:permissions';
  * @requires call
  * @requires callMe
  * @param {Object} params
- * @param {BasicError} params.error The Basic error object.
+ * @param {api.BasicError} params.error The Basic error object.
  */
 const DEVICE_ERROR = exports.DEVICE_ERROR = 'devices:error';
 
@@ -54901,7 +54901,7 @@ const BRIDGE_CHANGE = exports.BRIDGE_CHANGE = 'audioBridge:change';
  * @memberof AudioBridge
  * @event audioBridge:error
  * @param {Object} params
- * @param {BasicError} params.error The Basic error object.
+ * @param {api.BasicError} params.error The Basic error object.
  */
 const BRIDGE_ERROR = exports.BRIDGE_ERROR = 'audioBridge:error';
 
@@ -60525,7 +60525,6 @@ const connCheckMethods = exports.connCheckMethods = {
  *
  * @public
  * @static
- * @module UserID
  * @typedef {string} UserID
  * @memberof user
  * @requires cpaas_user_id
@@ -61569,7 +61568,7 @@ const factoryDefaults = {
    */
 };function factory(plugins, options = factoryDefaults) {
   // Log the SDK's version (templated by webpack) on initialization.
-  let version = '3.9.0-beta.188';
+  let version = '3.9.0-beta.189';
   log.info(`SDK version: ${version}`);
 
   var sagas = [];
@@ -61925,7 +61924,7 @@ var _fp = __webpack_require__("../../node_modules/lodash/fp.js");
  * @memberof sdpHandlers
  * @method createCodecRemover
  * @param {Array<string>} codecs A list of codec names to remove from the SDP.
- * @returns {SdpHandlerFunction} The resulting SDP handler that will remove the codec.
+ * @returns {call.SdpHandlerFunction} The resulting SDP handler that will remove the codec.
  * @example
  * import { create, sdpHandlers } from 'kandy';
  * const codecRemover = sdpHandlers.createCodecRemover(['VP8', 'VP9'])
@@ -62971,7 +62970,7 @@ const NOTI_CHANGE = exports.NOTI_CHANGE = 'notifications:change';
  * @memberof notification
  * @event notifications:error
  * @param {Object} params
- * @param {BasicError} params.error The Basic error object.
+ * @param {api.BasicError} params.error The Basic error object.
  * @param {string} params.channel The channel for the notification.
  */
 const NOTI_ERROR = exports.NOTI_ERROR = 'notifications:error';

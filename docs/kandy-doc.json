@@ -16982,7 +16982,7 @@
         "lineNumber": 7,
         "type": {
           "type": "NameExpression",
-          "name": "BasicError"
+          "name": "api.BasicError"
         },
         "name": "params.error"
       }
@@ -17080,7 +17080,7 @@
             },
             "type": {
               "type": "NameExpression",
-              "name": "BasicError"
+              "name": "api.BasicError"
             }
           }
         ]
@@ -18494,7 +18494,7 @@
               "lineNumber": 8,
               "type": {
                 "type": "NameExpression",
-                "name": "BasicError"
+                "name": "api.BasicError"
               },
               "name": "params.error"
             },
@@ -18602,7 +18602,7 @@
                   },
                   "type": {
                     "type": "NameExpression",
-                    "name": "BasicError"
+                    "name": "api.BasicError"
                   }
                 },
                 {
@@ -20067,7 +20067,7 @@
               "lineNumber": 12,
               "type": {
                 "type": "NameExpression",
-                "name": "SdpHandlerFunction"
+                "name": "call.SdpHandlerFunction"
               }
             },
             {
@@ -20235,7 +20235,7 @@
               "title": "returns",
               "type": {
                 "type": "NameExpression",
-                "name": "SdpHandlerFunction"
+                "name": "call.SdpHandlerFunction"
               }
             }
           ],

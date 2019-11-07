@@ -4818,7 +4818,7 @@ the SDK and one or more backend servers.</p>
             <tbody class='mt1'>
               
                 <tr>
-  <td class='break-word'><span class='code bold'>params.error</span> <code class='quiet'>BasicError</code>
+  <td class='break-word'><span class='code bold'>params.error</span> <code class='quiet'><a href="#apibasicerror">api.BasicError</a></code>
   </td>
   <td class='break-word'><span>The Basic error object.
 </span></td>
@@ -5609,7 +5609,7 @@ enabling/disabling the processing of websocket notifications.</p>
             <tbody class='mt1'>
               
                 <tr>
-  <td class='break-word'><span class='code bold'>params.error</span> <code class='quiet'>BasicError</code>
+  <td class='break-word'><span class='code bold'>params.error</span> <code class='quiet'><a href="#apibasicerror">api.BasicError</a></code>
   </td>
   <td class='break-word'><span>The Basic error object.
 </span></td>
@@ -5736,7 +5736,7 @@ While creating an SDP handler would allow a user to perform this type of manipul
 <p>The SDP handlers are exposed on the entry point of the SDK. They need to be added to the list of SDP handlers via configuration on creation of an instance of the SDK.</p>
 
 
-  <div class='pre p1 fill-light mt0'>createCodecRemover(codecs: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>>): SdpHandlerFunction</div>
+  <div class='pre p1 fill-light mt0'>createCodecRemover(codecs: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>>): call.SdpHandlerFunction</div>
   
   
 
@@ -5769,7 +5769,7 @@ While creating an SDP handler would allow a user to perform this type of manipul
     <div class='py1 quiet mt1 prose-big'>Returns</div>
     
       <div>
-        <code>SdpHandlerFunction</code>:
+        <code>call.SdpHandlerFunction</code>:
           The resulting SDP handler that will remove the codec.
 
         
