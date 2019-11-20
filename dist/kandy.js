@@ -1,7 +1,7 @@
 /**
  * Kandy.js
  * kandy.callMe.js
- * Version: 3.9.0-beta.200
+ * Version: 3.9.0-beta.201
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -60522,8 +60522,7 @@ const connCheckMethods = exports.connCheckMethods = {
 
 "use strict";
 /**
- * The User ID ie: joe@test.3s5j.att.com
- *
+ * The ID of a User (e.g. joe@test.3s5j.att.com)
  * @public
  * @static
  * @typedef {string} UserID
@@ -61542,7 +61541,7 @@ const factoryDefaults = {
    */
 };function factory(plugins, options = factoryDefaults) {
   // Log the SDK's version (templated by webpack) on initialization.
-  let version = '3.9.0-beta.200';
+  let version = '3.9.0-beta.201';
   log.info(`SDK version: ${version}`);
 
   var sagas = [];
