@@ -15,7 +15,7 @@ To install a particular build branch or beta branch with the Github URL, run:
 ### In the browser :
 ```html
 <script src="https://unpkg.com/@kandy-io/@kandy-io/callme-sdk@3.11.0/dist/kandy.js"
-  integrity="sha384-opR0OezjmBVH+sTvVr4GL3zN3Axr3XJ3jrt7m0Ci2W7TNuXYxKDGldYhJ+cbKaT0"
+  integrity="sha384-7AN8Cbomfuf1d4Erjn/B6qB9DJUUCYF8Lol7hWnZBgYcbuwuH2PCfGfGQHvRo8X7"
   crossorigin="anonymous">
 </script>
 ```
