@@ -1,7 +1,7 @@
 /**
  * Kandy.js
  * kandy.callMe.js
- * Version: 3.11.1-beta.243
+ * Version: 3.12.0-beta.244
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -60985,7 +60985,7 @@ function unsubscribe(listener) {
 
 /* Internal actions */
 
-/*
+/**
  * Emits an event of the specified type.
  *
  * @method emitEvent
@@ -61004,12 +61004,12 @@ function emitEvent(type, ...args) {
   };
 }
 
-/*
+/**
  * Define an alias for an event type.
  *
  * @method alias
- * @param {String} type The event type for which to add an alias.
- * @param {String} alias The alias name for the event type.
+ * @param {string} type The event type for which to add an alias.
+ * @param {string} alias The alias name for the event type.
  */
 function aliasEvent(type, alias) {
   if (type === undefined || alias === undefined) {
@@ -61276,7 +61276,7 @@ const factoryDefaults = {
    */
 };function factory(plugins, options = factoryDefaults) {
   // Log the SDK's version (templated by webpack) on initialization.
-  let version = '3.11.1-beta.243';
+  let version = '3.12.0-beta.244';
   log.info(`SDK version: ${version}`);
 
   var sagas = [];
