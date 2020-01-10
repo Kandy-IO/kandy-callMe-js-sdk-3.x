@@ -1,7 +1,7 @@
 /**
  * Kandy.js
  * kandy.callMe.js
- * Version: 3.12.0-beta.260
+ * Version: 3.12.0-beta.266
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -61276,7 +61276,7 @@ const factoryDefaults = {
    */
 };function factory(plugins, options = factoryDefaults) {
   // Log the SDK's version (templated by webpack) on initialization.
-  let version = '3.12.0-beta.260';
+  let version = '3.12.0-beta.266';
   log.info(`SDK version: ${version}`);
 
   var sagas = [];
@@ -62765,7 +62765,7 @@ const defaultState = {
     channelEnabled: false
   },
   PUSH: {
-    channelEnabled: false
+    channelEnabled: true
   },
   EXTERNAL: {
     channelEnabled: true
