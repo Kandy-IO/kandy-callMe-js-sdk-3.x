@@ -10,6 +10,7 @@ Kandy.js change log.
 ### Fixed
 
 - Fixed an issue where PUSH notification channel was closed by default. `KAA-719`
+- Fixed the issue where there was no refresh subscription and the Call will be torn down when the subscription expires. `KAA-2145`
 
 ## 3.11.1 - 2020-01-02
 
