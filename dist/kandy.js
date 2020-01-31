@@ -1,7 +1,7 @@
 /**
  * Kandy.js
  * kandy.callMe.js
- * Version: 3.11.1
+ * Version: 3.12.0
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -49226,6 +49226,8 @@ var _noop2 = _interopRequireDefault(_noop);
 
 var _sagas = __webpack_require__("../../packages/kandy/src/auth/callMe/sagas.js");
 
+var _sagas2 = __webpack_require__("../../packages/kandy/src/auth/link/sagas.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
@@ -49253,16 +49255,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @param  {Object} options Configuration options for authentication. See above.
  * @return {Object} A callMe authentication plugin.
  */
-// Re-use the no-op auth plugin.
 function callMeAuth(options = {}) {
   // Use the no-op auth plugin as a basis.
   let authComponents = (0, _noop2.default)(options);
 
   // Add in the sagas.
-  authComponents.sagas = [_sagas.anonymousConnect, _sagas.anonymousDisconnect];
+  authComponents.sagas = [_sagas.anonymousConnect, _sagas.anonymousDisconnect, _sagas2.extendSubscription];
 
   return authComponents;
-}
+} // Re-use the no-op auth plugin.
 
 /***/ }),
 
@@ -60361,7 +60362,9 @@ const authCodes = exports.authCodes = {
 };const callHistoryCodes = exports.callHistoryCodes = {
   UNKNOWN_ERROR: 'callHistory:1',
   BAD_REQUEST: 'callHistory:2',
-  NOT_FOUND: 'callHistory:3'
+  NOT_FOUND: 'callHistory:3',
+  NOT_AUTHENTICATED: 'callHistory:4',
+  FORBIDDEN: 'callHistory:5'
   /**
    * @name clickToCallCodes
    */
@@ -60985,7 +60988,7 @@ function unsubscribe(listener) {
 
 /* Internal actions */
 
-/*
+/**
  * Emits an event of the specified type.
  *
  * @method emitEvent
@@ -61004,12 +61007,12 @@ function emitEvent(type, ...args) {
   };
 }
 
-/*
+/**
  * Define an alias for an event type.
  *
  * @method alias
- * @param {String} type The event type for which to add an alias.
- * @param {String} alias The alias name for the event type.
+ * @param {string} type The event type for which to add an alias.
+ * @param {string} alias The alias name for the event type.
  */
 function aliasEvent(type, alias) {
   if (type === undefined || alias === undefined) {
@@ -61276,7 +61279,7 @@ const factoryDefaults = {
    */
 };function factory(plugins, options = factoryDefaults) {
   // Log the SDK's version (templated by webpack) on initialization.
-  let version = '3.11.1';
+  let version = '3.12.0';
   log.info(`SDK version: ${version}`);
 
   var sagas = [];
@@ -62765,7 +62768,7 @@ const defaultState = {
     channelEnabled: false
   },
   PUSH: {
-    channelEnabled: false
+    channelEnabled: true
   },
   EXTERNAL: {
     channelEnabled: true
