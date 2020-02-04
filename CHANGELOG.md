@@ -5,6 +5,16 @@ Kandy.js change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 3.13.0 - beta
+
+### Added
+
+- Added a destroy function to allow users to wipe the SDK state and render the SDK unusuable. `KAA-2181`
+  - This is useful when a user is finished with the SDK and wants their data to not be available to the next SDK consumer. After destroy is called, the SDK must be recreated for an application to continue working.
+- Added a new call configuration to trigger a resync of all active calls upon connecting to the websocket. `KAA-2154`
+  - The new call configuration `resyncOnConnect` is disabled by default.
+  - The resync feature requires Kandy Link 4.7.1+.
+
 ## 3.12.0 - 2020-01-31
 
 ### Fixed

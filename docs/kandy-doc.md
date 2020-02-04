@@ -123,6 +123,7 @@ Configuration options for the call feature.
     -   `call.useRelay` **[boolean][10]** Whether we should force connection through the relay candidates (i.e. TURN server). Mostly used for testing. (optional, default `false`)
     -   `call.trickleIceSupport` **[string][7]** Whether we should advertise and use Trickle ICE. Accepted value is one of: 'none', 'half' or 'full'. (optional, default `'none'`)
     -   `call.continuity` **[boolean][10]** Whether an existing voice call can be persisted, as a mobile phone moves between circuit switched and packet switched domains (e.g. GSM to WiFi). (optional, default `false`)
+    -   `call.resyncOnConnect` **[boolean][10]** Whether all active calls should be resynched upon connecting or reconnecting to the websocket (requires Kandy Link 4.7.1+). (optional, default `false`)
 
 ### config.connectivity
 
@@ -147,13 +148,12 @@ Configuration options for the notification feature.
 
 -   `notifications` **[Object][6]** The notifications configuration object.
     -   `notifications.idCacheLength` **[number][11]** Default amount of event ids to remember for de-duplication purposes. (optional, default `100`)
+    -   `notifications.incomingCallNotificationMode` **[string][7]** Communication channel mode used for incoming call notifications. Supported values are 'any-channel' or 'push-channel-only'. (optional, default `'any-channel'`)
     -   `notifications.pushRegistration` **[Object][6]?** Object describing the server to use for push services.
         -   `notifications.pushRegistration.server` **[string][7]?** Hostname for the push registration server.
         -   `notifications.pushRegistration.port` **[string][7]?** Port for the push registration server.
         -   `notifications.pushRegistration.protocol` **[string][7]?** Protocol for the push registration server.
         -   `notifications.pushRegistration.version` **[string][7]?** Version for the push registration server.
-    -   `notifications.realm` **[string][7]?** The realm used for push notifications
-    -   `notifications.bundleId` **[string][7]?** The bundle id used for push notifications
 
 ## devices:change
 
@@ -190,6 +190,36 @@ Media support has been checked.
 The 'api' is the type returned by the create function.
 It contains various top-level functions that pertain to SDK global instance
 as well as several nested namespaces that pertain to various features (e.g. call, contacts, presence, etc).
+
+### getVersion
+
+Returns the current version of the API.
+
+### destroy
+
+Destroys the SDK, and removes its state, rendering the SDK unusable.
+Useful when a user logs out and their call data needs to be destroyed.
+The SDK must be recreated to be usable again.
+
+**Examples**
+
+```javascript
+// Instantiate the SDK.
+import { create } from 'kandy'
+const config = {
+    authentication: { ... },
+    logs: { ... },
+    ...
+}
+let client = create(config);
+client.on( ... )
+// Use the SDK
+...
+// Destroy the SDK, then recreate on the next step
+client.destroy()
+client = create(config)
+client.on( ... )
+```
 
 ### getConfig
 
@@ -574,6 +604,47 @@ Possible levels for the SDK logger.
 -   `INFO` **[string][7]** Log useful information and messages to indicate the SDK's internal operations.
 -   `DEBUG` **[string][7]** Log information to help diagnose problematic behaviour.
 
+### LogEntry
+
+A LogEntry object is the data that the SDK compiles when information is
+   logged. It contains both the logged information and meta-info about when
+   and who logged it.
+
+A [LogHandler][4] provided to the SDK (see
+   [config.logs][17]) will need to handle LogEntry
+   objects.
+
+Type: [Object][6]
+
+**Properties**
+
+-   `timestamp` **[number][11]** When the log was created, based on UNIX epoch.
+-   `method` **[string][7]** The log function that was used to create the log.
+-   `level` **[string][7]** The level of severity the log.
+-   `target` **[Object][6]** The subject that the log is about.
+    -   `target.type` **[string][7]** The type of the target. This is also
+           used as part of the name of the Logger.
+    -   `target.id` **[string][7]?** A unique identifer for the target.
+    -   `target.name` **[string][7]** A combination of the target type and ID. If no
+           id was provided, this will be the same as the type.
+-   `messages` **[Array][12]** The logged information, given to the Logger
+       method as parameters.
+
+**Examples**
+
+```javascript
+function defaultLogHandler (logEntry) {
+  // Compile the meta info of the log for a prefix.
+  const { timestamp, level, method, target } = logEntry
+  const logInfo = `${timestamp} - ${target.type} - ${level}`
+
+  // Assume that the first message parameter is a string.
+  const [log, ...extra] = logEntry.messages
+
+  console[method](`${logInfo} - ${log}`, ...extra)
+}
+```
+
 ### LogHandler
 
 A LogHandler can be used to customize how the SDK should log information. By
@@ -597,7 +668,7 @@ Type: [Function][14]
 function logHandler (logEntry) {
   // Compile the meta info of the log for a prefix.
   const { timestamp, level, method, target } = logEntry
-  const logInfo = `${timestamp} - ${target.name} - ${level}`
+  const logInfo = `${timestamp} - ${target.type} - ${level}`
 
   // Assume that the first message parameter is a string.
   const [log, ...extra] = logEntry.messages
@@ -609,45 +680,6 @@ function logHandler (logEntry) {
 const configs = { ... }
 configs.logs.handler = logHandler
 const client = create(configs)
-```
-
-### LogEntry
-
-A LogEntry object is the data that the SDK compiles when information is
-   logged. It contains both the logged information and meta-info about when
-   and who logged it.
-
-A [LogHandler][4] provided to the SDK (see
-   [config.logs][17]) will need to handle LogEntry
-   objects.
-
-Type: [Object][6]
-
-**Properties**
-
--   `timestamp` **[number][11]** When the log was created, based on UNIX epoch.
--   `method` **[string][7]** The log function that was used to create the log.
--   `level` **[string][7]** The level of severity the log.
--   `target` **[Object][6]** The subject that the log is about.
-    -   `target.name` **[string][7]** The name of the target. This is also
-           used as the name of the Logger.
-    -   `target.id` **[string][7]?** A unique identifer for the target.
--   `messages` **[Array][12]** The logged information, given to the Logger
-       method as parameters.
-
-**Examples**
-
-```javascript
-function defaultLogHandler (logEntry) {
-  // Compile the meta info of the log for a prefix.
-  const { timestamp, level, method, target } = logEntry
-  const logInfo = `${timestamp} - ${target.name} - ${level}`
-
-  // Assume that the first message parameter is a string.
-  const [log, ...extra] = logEntry.messages
-
-  console[method](`${logInfo} - ${log}`, ...extra)
-}
 ```
 
 ## Media
@@ -670,21 +702,71 @@ Provides an external notification to the system for processing.
 -   `notification` **[Object][6]** 
 -   `channel` **[string][7]?** The channel that the notification came from.
 
-### registerPush
+### registerApplePush
 
-Registers a device token for push notifications.
+Registers with Apple push notification service. Once registration is successful, the application will be able to receive
+standard and/or voip push notifications. It can then send these notifications to the SDK with [api.notifications.process][18]
+in order for the SDK to process them.
 
 **Parameters**
 
 -   `params` **[Object][6]** 
-    -   `params.deviceToken` **[string][7]** The device token to be registered.
-    -   `params.services` **[Array][12]&lt;[string][7]>** Array of services to register for.
-    -   `params.pushProvider` **[string][7]** The push provider, can be either 'apple' or 'google'.
+    -   `params.services` **[Array][12]&lt;[string][7]>** Array of services for which we wish to receive notifications.
+    -   `params.voipDeviceToken` **[string][7]** The voip device token used for voip push on iOS.
+                                                 This token is required if registering for call service notifications on iOS.
+    -   `params.standardDeviceToken` **[string][7]** The standardDevice token used for standard push on iOS .
+                                                     This token is required when registering for non-call service notifications.
+    -   `params.bundleId` **[string][7]** The bundleId to identify the application receiving the push notification.
     -   `params.clientCorrelator` **[string][7]** Unique identifier for a client device.
+    -   `params.realm` **[string][7]** The realm used by the push registration service to identify and
+                                       establish a connection with the service gateway.
+    -   `params.isProduction` **[boolean][10]** If true, push notification will be sent to production.
+                                               If false, push notification will be sent to sandbox.
 
-### deregisterPush
+Returns **[Promise][19]** When successful,  the information of the registration.
+                  Promise will reject with error object otherwise.
 
-Deregisters for push notifications.
+### registerAndroidPush
+
+Registers with Google push notification service. Once registration is successful, the application will be able to receive
+standard and/or voip push notifications. It can then send these notifications to the SDK with [api.notifications.process][18]
+in order for the SDK to process them.
+
+**Parameters**
+
+-   `params` **[Object][6]** 
+    -   `params.services` **[Array][12]&lt;[string][7]>** Array of services to register for.
+    -   `params.deviceToken` **[string][7]** The device token used for standard push on Android. This token is required
+                                             when registering for all related services notifications.
+    -   `params.bundleId` **[string][7]** The bundleId to identify the application receiving the push notification.
+    -   `params.clientCorrelator` **[string][7]** Unique identifier for a client device.
+    -   `params.realm` **[string][7]** The realm used by the push registration service to identify
+                                       and establish a connection with the service gateway.
+
+Returns **[Promise][19]** When successful,  the information of the registration.
+                  Promise will reject with error object otherwise.
+
+### unregisterApplePush
+
+Unregister Apple push notifications.
+
+**Parameters**
+
+-   `registrationInfo` **[string][7]** The data returned from the push registration
+
+Returns **[Promise][19]** When successful, the promise will resolve with undefined.
+                  Promise will reject with error object otherwise.
+
+### unregisterAndroidPush
+
+Unregister Android push notifications.
+
+**Parameters**
+
+-   `registrationInfo` **[string][7]** The data returned from the push registration
+
+Returns **[Promise][19]** When successful, the promise will resolve with undefined.
+                  Promise will reject with error object otherwise.
 
 ### enableWebsocket
 
@@ -696,7 +778,7 @@ Enables, or disables, the processing of websocket notifications.
 
 ## sdpHandlers
 
-A set of [SdpHandlerFunction][18]s for manipulating SDP information.
+A set of [SdpHandlerFunction][20]s for manipulating SDP information.
 These handlers are used to customize low-level call behaviour for very specific
 environments and/or scenarios. They can be provided during SDK instantiation
 to be used for all calls.
@@ -797,4 +879,8 @@ client.media.setDefaultDevices({
 
 [17]: #configconfiglogs
 
-[18]: call.SdpHandlerFunction
+[18]: api.notifications.process
+
+[19]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
+
+[20]: call.SdpHandlerFunction
