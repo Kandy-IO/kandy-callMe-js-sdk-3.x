@@ -5,7 +5,7 @@ Kandy.js change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
-## 3.13.0 - beta
+## 3.13.0 - 2020-02-28
 
 ### Added
 
@@ -14,6 +14,7 @@ Kandy.js change log.
 - Added a new call configuration to trigger a resync of all active calls upon connecting to the websocket. `KAA-2154`
   - The new call configuration `resyncOnConnect` is disabled by default.
   - The resync feature requires Kandy Link 4.7.1+.
+- Added the wrtcsSessionId to the call state. `KAA-2172`
 
 ## 3.12.0 - 2020-01-31
 
