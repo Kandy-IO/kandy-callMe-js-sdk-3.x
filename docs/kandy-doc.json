@@ -5163,7 +5163,7 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "Configuration options for the Connectivity feature.",
+                    "value": "Configuration options for the Connectivity feature.\nThe SDK can only use keepalive as the connectivity check.",
                     "position": {
                       "start": {
                         "line": 1,
@@ -5171,11 +5171,13 @@
                         "offset": 0
                       },
                       "end": {
-                        "line": 1,
-                        "column": 52,
-                        "offset": 51
+                        "line": 2,
+                        "column": 58,
+                        "offset": 109
                       },
-                      "indent": []
+                      "indent": [
+                        1
+                      ]
                     }
                   }
                 ],
@@ -5186,9 +5188,118 @@
                     "offset": 0
                   },
                   "end": {
-                    "line": 1,
-                    "column": 52,
-                    "offset": 51
+                    "line": 2,
+                    "column": 58,
+                    "offset": 109
+                  },
+                  "indent": [
+                    1
+                  ]
+                }
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "Keep Alive: The client sends \"keepalive\" messages (to the server) on the websocket at regular intervals. This lets the server know that the client is still connected, and that it should \"keep the connection alive\".",
+                    "position": {
+                      "start": {
+                        "line": 4,
+                        "column": 1,
+                        "offset": 111
+                      },
+                      "end": {
+                        "line": 4,
+                        "column": 215,
+                        "offset": 325
+                      },
+                      "indent": []
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 4,
+                    "column": 1,
+                    "offset": 111
+                  },
+                  "end": {
+                    "line": 4,
+                    "column": 215,
+                    "offset": 325
+                  },
+                  "indent": []
+                }
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "For more information on keepalive see here: ",
+                    "position": {
+                      "start": {
+                        "line": 6,
+                        "column": 1,
+                        "offset": 327
+                      },
+                      "end": {
+                        "line": 6,
+                        "column": 45,
+                        "offset": 371
+                      },
+                      "indent": []
+                    }
+                  },
+                  {
+                    "type": "link",
+                    "title": null,
+                    "url": "https://en.wikipedia.org/wiki/Keepalive",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "https://en.wikipedia.org/wiki/Keepalive",
+                        "position": {
+                          "start": {
+                            "line": 6,
+                            "column": 45,
+                            "offset": 371
+                          },
+                          "end": {
+                            "line": 6,
+                            "column": 84,
+                            "offset": 410
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 6,
+                        "column": 45,
+                        "offset": 371
+                      },
+                      "end": {
+                        "line": 6,
+                        "column": 84,
+                        "offset": 410
+                      },
+                      "indent": []
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 6,
+                    "column": 1,
+                    "offset": 327
+                  },
+                  "end": {
+                    "line": 6,
+                    "column": 84,
+                    "offset": 410
                   },
                   "indent": []
                 }
@@ -5201,9 +5312,9 @@
                 "offset": 0
               },
               "end": {
-                "line": 1,
-                "column": 52,
-                "offset": 51
+                "line": 6,
+                "column": 84,
+                "offset": 410
               }
             }
           },
@@ -5211,112 +5322,38 @@
             {
               "title": "public",
               "description": null,
-              "lineNumber": 2,
+              "lineNumber": 7,
               "type": null
             },
             {
               "title": "name",
               "description": null,
-              "lineNumber": 3,
+              "lineNumber": 8,
               "name": "config.connectivity"
             },
             {
               "title": "memberof",
               "description": "config",
-              "lineNumber": 4
+              "lineNumber": 9
             },
             {
               "title": "instance",
               "description": null,
-              "lineNumber": 5
+              "lineNumber": 10
+            },
+            {
+              "title": "param",
+              "description": "Connectivity configs.",
+              "lineNumber": 11,
+              "type": {
+                "type": "NameExpression",
+                "name": "Object"
+              },
+              "name": "connectivity"
             },
             {
               "title": "param",
               "description": "Time in between websocket ping attempts (milliseconds).",
-              "lineNumber": 6,
-              "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "Number"
-                }
-              },
-              "name": "pingInterval",
-              "default": "30000"
-            },
-            {
-              "title": "param",
-              "description": "Number of failed reconnect attempts before reporting an error. Can be set to 0 to not limit reconnection attempts.",
-              "lineNumber": 7,
-              "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "Number"
-                }
-              },
-              "name": "reconnectLimit",
-              "default": "5"
-            },
-            {
-              "title": "param",
-              "description": "Base time between websocket reconnect attempts (milliseconds).",
-              "lineNumber": 8,
-              "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "Number"
-                }
-              },
-              "name": "reconnectDelay",
-              "default": "5000"
-            },
-            {
-              "title": "param",
-              "description": "Reconnect delay multiplier for subsequent attempts. The reconnect delay time will be multiplied by this factor after each failed reconnect attempt to increase the delay between attempts.",
-              "lineNumber": 9,
-              "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "Number"
-                }
-              },
-              "name": "reconnectTimeMultiplier",
-              "default": "1"
-            },
-            {
-              "title": "param",
-              "description": "Maximum time delay between reconnect attempts (milliseconds). Used in conjunction with the reconnect time multiplier to prevent overly long delays between reconnection attempts.",
-              "lineNumber": 10,
-              "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "Number"
-                }
-              },
-              "name": "reconnectTimeLimit",
-              "default": "640000"
-            },
-            {
-              "title": "param",
-              "description": "Flag to determine whether the SDK will attempt to automatically reconnect after connectivity disruptions.",
-              "lineNumber": 11,
-              "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "Boolean"
-                }
-              },
-              "name": "autoReconnect",
-              "default": "true"
-            },
-            {
-              "title": "param",
-              "description": "Maximum pings sent (without receiving a response) before reporting an error.",
               "lineNumber": 12,
               "type": {
                 "type": "OptionalType",
@@ -5325,13 +5362,69 @@
                   "name": "Number"
                 }
               },
-              "name": "maxMissedPings",
-              "default": "3"
+              "name": "connectivity.pingInterval",
+              "default": "30000"
             },
             {
               "title": "param",
-              "description": "Flag to determine whether the SDK should check connectivity.",
+              "description": "Number of failed reconnect attempts before reporting an error. Can be set to 0 to not limit reconnection attempts.",
               "lineNumber": 13,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "Number"
+                }
+              },
+              "name": "connectivity.reconnectLimit",
+              "default": "5"
+            },
+            {
+              "title": "param",
+              "description": "Base time between websocket reconnect attempts (milliseconds).",
+              "lineNumber": 14,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "Number"
+                }
+              },
+              "name": "connectivity.reconnectDelay",
+              "default": "5000"
+            },
+            {
+              "title": "param",
+              "description": "Reconnect delay multiplier for subsequent attempts. The reconnect delay time will be multiplied by this after each failed reconnect attempt to increase the delay between attempts. eg. 5000ms then 10000ms then 20000ms delay if value is 2.",
+              "lineNumber": 15,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "Number"
+                }
+              },
+              "name": "connectivity.reconnectTimeMultiplier",
+              "default": "1"
+            },
+            {
+              "title": "param",
+              "description": "Maximum time delay between reconnect attempts (milliseconds). Used in conjunction with the reconnect time multiplier to prevent overly long delays between reconnection attempts.",
+              "lineNumber": 16,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "Number"
+                }
+              },
+              "name": "connectivity.reconnectTimeLimit",
+              "default": "640000"
+            },
+            {
+              "title": "param",
+              "description": "Flag to determine whether the SDK will attempt to automatically reconnect after connectivity disruptions.",
+              "lineNumber": 17,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -5339,7 +5432,35 @@
                   "name": "Boolean"
                 }
               },
-              "name": "checkConnectivity",
+              "name": "connectivity.autoReconnect",
+              "default": "true"
+            },
+            {
+              "title": "param",
+              "description": "Maximum pings sent (without receiving a response) before reporting an error.",
+              "lineNumber": 18,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "Number"
+                }
+              },
+              "name": "connectivity.maxMissedPings",
+              "default": "3"
+            },
+            {
+              "title": "param",
+              "description": "Flag to determine whether the SDK should check connectivity.",
+              "lineNumber": 19,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "Boolean"
+                }
+              },
+              "name": "connectivity.checkConnectivity",
               "default": "true"
             }
           ],
@@ -5349,7 +5470,7 @@
               "column": 0
             },
             "end": {
-              "line": 31,
+              "line": 37,
               "column": 3
             }
           },
@@ -5371,8 +5492,8 @@
           "params": [
             {
               "title": "param",
-              "name": "pingInterval",
-              "lineNumber": 6,
+              "name": "connectivity",
+              "lineNumber": 11,
               "description": {
                 "type": "root",
                 "children": [
@@ -5381,7 +5502,83 @@
                     "children": [
                       {
                         "type": "text",
-                        "value": "Time in between websocket ping attempts (milliseconds).",
+                        "value": "Connectivity configs.",
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 22,
+                            "offset": 21
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 22,
+                        "offset": 21
+                      },
+                      "indent": []
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 22,
+                    "offset": 21
+                  }
+                }
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "Object"
+              },
+              "properties": [
+                {
+                  "title": "param",
+                  "name": "connectivity.pingInterval",
+                  "lineNumber": 12,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "Time in between websocket ping attempts (milliseconds).",
+                            "position": {
+                              "start": {
+                                "line": 1,
+                                "column": 1,
+                                "offset": 0
+                              },
+                              "end": {
+                                "line": 1,
+                                "column": 56,
+                                "offset": 55
+                              },
+                              "indent": []
+                            }
+                          }
+                        ],
                         "position": {
                           "start": {
                             "line": 1,
@@ -5407,43 +5604,43 @@
                         "line": 1,
                         "column": 56,
                         "offset": 55
-                      },
-                      "indent": []
+                      }
                     }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 1,
-                    "column": 1,
-                    "offset": 0
                   },
-                  "end": {
-                    "line": 1,
-                    "column": 56,
-                    "offset": 55
-                  }
-                }
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "Number"
-              },
-              "default": "30000"
-            },
-            {
-              "title": "param",
-              "name": "reconnectLimit",
-              "lineNumber": 7,
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "Number"
+                  },
+                  "default": "30000"
+                },
+                {
+                  "title": "param",
+                  "name": "connectivity.reconnectLimit",
+                  "lineNumber": 13,
+                  "description": {
+                    "type": "root",
                     "children": [
                       {
-                        "type": "text",
-                        "value": "Number of failed reconnect attempts before reporting an error. Can be set to 0 to not limit reconnection attempts.",
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "Number of failed reconnect attempts before reporting an error. Can be set to 0 to not limit reconnection attempts.",
+                            "position": {
+                              "start": {
+                                "line": 1,
+                                "column": 1,
+                                "offset": 0
+                              },
+                              "end": {
+                                "line": 1,
+                                "column": 115,
+                                "offset": 114
+                              },
+                              "indent": []
+                            }
+                          }
+                        ],
                         "position": {
                           "start": {
                             "line": 1,
@@ -5469,43 +5666,43 @@
                         "line": 1,
                         "column": 115,
                         "offset": 114
-                      },
-                      "indent": []
+                      }
                     }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 1,
-                    "column": 1,
-                    "offset": 0
                   },
-                  "end": {
-                    "line": 1,
-                    "column": 115,
-                    "offset": 114
-                  }
-                }
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "Number"
-              },
-              "default": "5"
-            },
-            {
-              "title": "param",
-              "name": "reconnectDelay",
-              "lineNumber": 8,
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "Number"
+                  },
+                  "default": "5"
+                },
+                {
+                  "title": "param",
+                  "name": "connectivity.reconnectDelay",
+                  "lineNumber": 14,
+                  "description": {
+                    "type": "root",
                     "children": [
                       {
-                        "type": "text",
-                        "value": "Base time between websocket reconnect attempts (milliseconds).",
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "Base time between websocket reconnect attempts (milliseconds).",
+                            "position": {
+                              "start": {
+                                "line": 1,
+                                "column": 1,
+                                "offset": 0
+                              },
+                              "end": {
+                                "line": 1,
+                                "column": 63,
+                                "offset": 62
+                              },
+                              "indent": []
+                            }
+                          }
+                        ],
                         "position": {
                           "start": {
                             "line": 1,
@@ -5531,43 +5728,43 @@
                         "line": 1,
                         "column": 63,
                         "offset": 62
-                      },
-                      "indent": []
+                      }
                     }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 1,
-                    "column": 1,
-                    "offset": 0
                   },
-                  "end": {
-                    "line": 1,
-                    "column": 63,
-                    "offset": 62
-                  }
-                }
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "Number"
-              },
-              "default": "5000"
-            },
-            {
-              "title": "param",
-              "name": "reconnectTimeMultiplier",
-              "lineNumber": 9,
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "Number"
+                  },
+                  "default": "5000"
+                },
+                {
+                  "title": "param",
+                  "name": "connectivity.reconnectTimeMultiplier",
+                  "lineNumber": 15,
+                  "description": {
+                    "type": "root",
                     "children": [
                       {
-                        "type": "text",
-                        "value": "Reconnect delay multiplier for subsequent attempts. The reconnect delay time will be multiplied by this factor after each failed reconnect attempt to increase the delay between attempts.",
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "Reconnect delay multiplier for subsequent attempts. The reconnect delay time will be multiplied by this after each failed reconnect attempt to increase the delay between attempts. eg. 5000ms then 10000ms then 20000ms delay if value is 2.",
+                            "position": {
+                              "start": {
+                                "line": 1,
+                                "column": 1,
+                                "offset": 0
+                              },
+                              "end": {
+                                "line": 1,
+                                "column": 238,
+                                "offset": 237
+                              },
+                              "indent": []
+                            }
+                          }
+                        ],
                         "position": {
                           "start": {
                             "line": 1,
@@ -5576,8 +5773,8 @@
                           },
                           "end": {
                             "line": 1,
-                            "column": 187,
-                            "offset": 186
+                            "column": 238,
+                            "offset": 237
                           },
                           "indent": []
                         }
@@ -5591,45 +5788,45 @@
                       },
                       "end": {
                         "line": 1,
-                        "column": 187,
-                        "offset": 186
-                      },
-                      "indent": []
+                        "column": 238,
+                        "offset": 237
+                      }
                     }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 1,
-                    "column": 1,
-                    "offset": 0
                   },
-                  "end": {
-                    "line": 1,
-                    "column": 187,
-                    "offset": 186
-                  }
-                }
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "Number"
-              },
-              "default": "1"
-            },
-            {
-              "title": "param",
-              "name": "reconnectTimeLimit",
-              "lineNumber": 10,
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "Number"
+                  },
+                  "default": "1"
+                },
+                {
+                  "title": "param",
+                  "name": "connectivity.reconnectTimeLimit",
+                  "lineNumber": 16,
+                  "description": {
+                    "type": "root",
                     "children": [
                       {
-                        "type": "text",
-                        "value": "Maximum time delay between reconnect attempts (milliseconds). Used in conjunction with the reconnect time multiplier to prevent overly long delays between reconnection attempts.",
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "Maximum time delay between reconnect attempts (milliseconds). Used in conjunction with the reconnect time multiplier to prevent overly long delays between reconnection attempts.",
+                            "position": {
+                              "start": {
+                                "line": 1,
+                                "column": 1,
+                                "offset": 0
+                              },
+                              "end": {
+                                "line": 1,
+                                "column": 178,
+                                "offset": 177
+                              },
+                              "indent": []
+                            }
+                          }
+                        ],
                         "position": {
                           "start": {
                             "line": 1,
@@ -5655,43 +5852,43 @@
                         "line": 1,
                         "column": 178,
                         "offset": 177
-                      },
-                      "indent": []
+                      }
                     }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 1,
-                    "column": 1,
-                    "offset": 0
                   },
-                  "end": {
-                    "line": 1,
-                    "column": 178,
-                    "offset": 177
-                  }
-                }
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "Number"
-              },
-              "default": "640000"
-            },
-            {
-              "title": "param",
-              "name": "autoReconnect",
-              "lineNumber": 11,
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "Number"
+                  },
+                  "default": "640000"
+                },
+                {
+                  "title": "param",
+                  "name": "connectivity.autoReconnect",
+                  "lineNumber": 17,
+                  "description": {
+                    "type": "root",
                     "children": [
                       {
-                        "type": "text",
-                        "value": "Flag to determine whether the SDK will attempt to automatically reconnect after connectivity disruptions.",
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "Flag to determine whether the SDK will attempt to automatically reconnect after connectivity disruptions.",
+                            "position": {
+                              "start": {
+                                "line": 1,
+                                "column": 1,
+                                "offset": 0
+                              },
+                              "end": {
+                                "line": 1,
+                                "column": 106,
+                                "offset": 105
+                              },
+                              "indent": []
+                            }
+                          }
+                        ],
                         "position": {
                           "start": {
                             "line": 1,
@@ -5717,43 +5914,43 @@
                         "line": 1,
                         "column": 106,
                         "offset": 105
-                      },
-                      "indent": []
+                      }
                     }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 1,
-                    "column": 1,
-                    "offset": 0
                   },
-                  "end": {
-                    "line": 1,
-                    "column": 106,
-                    "offset": 105
-                  }
-                }
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "Boolean"
-              },
-              "default": "true"
-            },
-            {
-              "title": "param",
-              "name": "maxMissedPings",
-              "lineNumber": 12,
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "Boolean"
+                  },
+                  "default": "true"
+                },
+                {
+                  "title": "param",
+                  "name": "connectivity.maxMissedPings",
+                  "lineNumber": 18,
+                  "description": {
+                    "type": "root",
                     "children": [
                       {
-                        "type": "text",
-                        "value": "Maximum pings sent (without receiving a response) before reporting an error.",
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "Maximum pings sent (without receiving a response) before reporting an error.",
+                            "position": {
+                              "start": {
+                                "line": 1,
+                                "column": 1,
+                                "offset": 0
+                              },
+                              "end": {
+                                "line": 1,
+                                "column": 77,
+                                "offset": 76
+                              },
+                              "indent": []
+                            }
+                          }
+                        ],
                         "position": {
                           "start": {
                             "line": 1,
@@ -5779,43 +5976,43 @@
                         "line": 1,
                         "column": 77,
                         "offset": 76
-                      },
-                      "indent": []
+                      }
                     }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 1,
-                    "column": 1,
-                    "offset": 0
                   },
-                  "end": {
-                    "line": 1,
-                    "column": 77,
-                    "offset": 76
-                  }
-                }
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "Number"
-              },
-              "default": "3"
-            },
-            {
-              "title": "param",
-              "name": "checkConnectivity",
-              "lineNumber": 13,
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "Number"
+                  },
+                  "default": "3"
+                },
+                {
+                  "title": "param",
+                  "name": "connectivity.checkConnectivity",
+                  "lineNumber": 19,
+                  "description": {
+                    "type": "root",
                     "children": [
                       {
-                        "type": "text",
-                        "value": "Flag to determine whether the SDK should check connectivity.",
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "Flag to determine whether the SDK should check connectivity.",
+                            "position": {
+                              "start": {
+                                "line": 1,
+                                "column": 1,
+                                "offset": 0
+                              },
+                              "end": {
+                                "line": 1,
+                                "column": 61,
+                                "offset": 60
+                              },
+                              "indent": []
+                            }
+                          }
+                        ],
                         "position": {
                           "start": {
                             "line": 1,
@@ -5841,29 +6038,16 @@
                         "line": 1,
                         "column": 61,
                         "offset": 60
-                      },
-                      "indent": []
+                      }
                     }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 1,
-                    "column": 1,
-                    "offset": 0
                   },
-                  "end": {
-                    "line": 1,
-                    "column": 61,
-                    "offset": 60
-                  }
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "Boolean"
+                  },
+                  "default": "true"
                 }
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "Boolean"
-              },
-              "default": "true"
+              ]
             }
           ],
           "properties": [],

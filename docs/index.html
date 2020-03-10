@@ -1684,7 +1684,10 @@ to be exposed in the logs, potentially displaying sensitive information.
 
   
 
-  <p>Configuration options for the Connectivity feature.</p>
+  <p>Configuration options for the Connectivity feature.
+The SDK can only use keepalive as the connectivity check.</p>
+<p>Keep Alive: The client sends "keepalive" messages (to the server) on the websocket at regular intervals. This lets the server know that the client is still connected, and that it should "keep the connection alive".</p>
+<p>For more information on keepalive see here: <a href="https://en.wikipedia.org/wiki/Keepalive">https://en.wikipedia.org/wiki/Keepalive</a></p>
 
 
   <div class='pre p1 fill-light mt0'>config.connectivity</div>
@@ -1704,81 +1707,114 @@ to be exposed in the logs, potentially displaying sensitive information.
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>pingInterval</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>
-            = <code>30000</code>)</code>
-	    Time in between websocket ping attempts (milliseconds).
+            <span class='code bold'>connectivity</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    Connectivity configs.
 
           </div>
           
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>reconnectLimit</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>
-            = <code>5</code>)</code>
-	    Number of failed reconnect attempts before reporting an error. Can be set to 0 to not limit reconnection attempts.
+          <table class='mt1 mb2 fixed-table h5 col-12'>
+            <colgroup>
+              <col width='30%' />
+              <col width='70%' />
+            </colgroup>
+            <thead>
+              <tr class='bold fill-light'>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody class='mt1'>
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>connectivity.pingInterval</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code>
+  
+    (default <code>30000</code>)
+  </td>
+  <td class='break-word'><span>Time in between websocket ping attempts (milliseconds).
+</span></td>
+</tr>
 
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>reconnectDelay</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>
-            = <code>5000</code>)</code>
-	    Base time between websocket reconnect attempts (milliseconds).
 
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>reconnectTimeMultiplier</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>
-            = <code>1</code>)</code>
-	    Reconnect delay multiplier for subsequent attempts. The reconnect delay time will be multiplied by this factor after each failed reconnect attempt to increase the delay between attempts.
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>connectivity.reconnectLimit</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code>
+  
+    (default <code>5</code>)
+  </td>
+  <td class='break-word'><span>Number of failed reconnect attempts before reporting an error. Can be set to 0 to not limit reconnection attempts.
+</span></td>
+</tr>
 
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>reconnectTimeLimit</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>
-            = <code>640000</code>)</code>
-	    Maximum time delay between reconnect attempts (milliseconds). Used in conjunction with the reconnect time multiplier to prevent overly long delays between reconnection attempts.
 
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>autoReconnect</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a>
-            = <code>true</code>)</code>
-	    Flag to determine whether the SDK will attempt to automatically reconnect after connectivity disruptions.
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>connectivity.reconnectDelay</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code>
+  
+    (default <code>5000</code>)
+  </td>
+  <td class='break-word'><span>Base time between websocket reconnect attempts (milliseconds).
+</span></td>
+</tr>
 
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>maxMissedPings</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>
-            = <code>3</code>)</code>
-	    Maximum pings sent (without receiving a response) before reporting an error.
 
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>checkConnectivity</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a>
-            = <code>true</code>)</code>
-	    Flag to determine whether the SDK should check connectivity.
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>connectivity.reconnectTimeMultiplier</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code>
+  
+    (default <code>1</code>)
+  </td>
+  <td class='break-word'><span>Reconnect delay multiplier for subsequent attempts. The reconnect delay time will be multiplied by this after each failed reconnect attempt to increase the delay between attempts. eg. 5000ms then 10000ms then 20000ms delay if value is 2.
+</span></td>
+</tr>
 
-          </div>
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>connectivity.reconnectTimeLimit</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code>
+  
+    (default <code>640000</code>)
+  </td>
+  <td class='break-word'><span>Maximum time delay between reconnect attempts (milliseconds). Used in conjunction with the reconnect time multiplier to prevent overly long delays between reconnection attempts.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>connectivity.autoReconnect</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code>
+  
+    (default <code>true</code>)
+  </td>
+  <td class='break-word'><span>Flag to determine whether the SDK will attempt to automatically reconnect after connectivity disruptions.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>connectivity.maxMissedPings</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code>
+  
+    (default <code>3</code>)
+  </td>
+  <td class='break-word'><span>Maximum pings sent (without receiving a response) before reporting an error.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>connectivity.checkConnectivity</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code>
+  
+    (default <code>true</code>)
+  </td>
+  <td class='break-word'><span>Flag to determine whether the SDK should check connectivity.
+</span></td>
+</tr>
+
+
+              
+            </tbody>
+          </table>
           
         </div>
       
