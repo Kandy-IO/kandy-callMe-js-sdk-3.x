@@ -128,17 +128,23 @@ Configuration options for the call feature.
 ### config.connectivity
 
 Configuration options for the Connectivity feature.
+The SDK can only use keepalive as the connectivity check.
+
+Keep Alive: The client sends "keepalive" messages (to the server) on the websocket at regular intervals. This lets the server know that the client is still connected, and that it should "keep the connection alive".
+
+For more information on keepalive see here: [https://en.wikipedia.org/wiki/Keepalive][13]
 
 **Parameters**
 
--   `pingInterval` **[Number][11]** Time in between websocket ping attempts (milliseconds). (optional, default `30000`)
--   `reconnectLimit` **[Number][11]** Number of failed reconnect attempts before reporting an error. Can be set to 0 to not limit reconnection attempts. (optional, default `5`)
--   `reconnectDelay` **[Number][11]** Base time between websocket reconnect attempts (milliseconds). (optional, default `5000`)
--   `reconnectTimeMultiplier` **[Number][11]** Reconnect delay multiplier for subsequent attempts. The reconnect delay time will be multiplied by this factor after each failed reconnect attempt to increase the delay between attempts. (optional, default `1`)
--   `reconnectTimeLimit` **[Number][11]** Maximum time delay between reconnect attempts (milliseconds). Used in conjunction with the reconnect time multiplier to prevent overly long delays between reconnection attempts. (optional, default `640000`)
--   `autoReconnect` **[Boolean][10]** Flag to determine whether the SDK will attempt to automatically reconnect after connectivity disruptions. (optional, default `true`)
--   `maxMissedPings` **[Number][11]** Maximum pings sent (without receiving a response) before reporting an error. (optional, default `3`)
--   `checkConnectivity` **[Boolean][10]** Flag to determine whether the SDK should check connectivity. (optional, default `true`)
+-   `connectivity` **[Object][6]** Connectivity configs.
+    -   `connectivity.pingInterval` **[Number][11]** Time in between websocket ping attempts (milliseconds). (optional, default `30000`)
+    -   `connectivity.reconnectLimit` **[Number][11]** Number of failed reconnect attempts before reporting an error. Can be set to 0 to not limit reconnection attempts. (optional, default `5`)
+    -   `connectivity.reconnectDelay` **[Number][11]** Base time between websocket reconnect attempts (milliseconds). (optional, default `5000`)
+    -   `connectivity.reconnectTimeMultiplier` **[Number][11]** Reconnect delay multiplier for subsequent attempts. The reconnect delay time will be multiplied by this after each failed reconnect attempt to increase the delay between attempts. eg. 5000ms then 10000ms then 20000ms delay if value is 2. (optional, default `1`)
+    -   `connectivity.reconnectTimeLimit` **[Number][11]** Maximum time delay between reconnect attempts (milliseconds). Used in conjunction with the reconnect time multiplier to prevent overly long delays between reconnection attempts. (optional, default `640000`)
+    -   `connectivity.autoReconnect` **[Boolean][10]** Flag to determine whether the SDK will attempt to automatically reconnect after connectivity disruptions. (optional, default `true`)
+    -   `connectivity.maxMissedPings` **[Number][11]** Maximum pings sent (without receiving a response) before reporting an error. (optional, default `3`)
+    -   `connectivity.checkConnectivity` **[Boolean][10]** Flag to determine whether the SDK should check connectivity. (optional, default `true`)
 
 ### config.notifications
 
@@ -233,7 +239,7 @@ Update values in the global Config section of the store. The values pertain to t
 
 **Parameters**
 
--   `newConfigValues` **[Object][6]** Key-value pairs that will be placed into the store. See [config][13] for details on what key-value pairs are available for use.
+-   `newConfigValues` **[Object][6]** Key-value pairs that will be placed into the store. See [config][14] for details on what key-value pairs are available for use.
 
 ### on
 
@@ -242,7 +248,7 @@ Add an event listener for the specified event type. The event is emmited by the 
 **Parameters**
 
 -   `type` **[string][7]** The event type for which to add the listener.
--   `listener` **[Function][14]** The listener for the event type. The parameters of the listener depend on the event type.
+-   `listener` **[Function][15]** The listener for the event type. The parameters of the listener depend on the event type.
 
 **Examples**
 
@@ -253,7 +259,7 @@ client.on('dummy:event', function (params) {
 })
 ```
 
--   Throws **[Error][15]** Invalid event type
+-   Throws **[Error][16]** Invalid event type
 
 ### off
 
@@ -262,10 +268,10 @@ Removes an event listener for the specified event type. The event is emmited by 
 **Parameters**
 
 -   `type` **[string][7]** The event type for which to remote the listener.
--   `listener` **[Function][14]** The listener to remove.
+-   `listener` **[Function][15]** The listener to remove.
 
 
--   Throws **[Error][15]** Invalid event type
+-   Throws **[Error][16]** Invalid event type
 
 ### subscribe
 
@@ -273,10 +279,10 @@ Adds a global event listener to SDK instance.
 
 **Parameters**
 
--   `listener` **[Function][14]** The event listener to add. The parameters are (type, ...args), where args depend on the event type.
+-   `listener` **[Function][15]** The event listener to add. The parameters are (type, ...args), where args depend on the event type.
 
 
--   Throws **[Error][15]** Listener not a function
+-   Throws **[Error][16]** Listener not a function
 
 ### unsubscribe
 
@@ -284,10 +290,10 @@ Removes a global event listener from SDK instance.
 
 **Parameters**
 
--   `listener` **[Function][14]** The event listener to remove.
+-   `listener` **[Function][15]** The event listener to remove.
 
 
--   Throws **[Error][15]** Listener not a function
+-   Throws **[Error][16]** Listener not a function
 
 ### getUserInfo
 
@@ -576,7 +582,7 @@ Type: [string][7]
 **Parameters**
 
 -   `params` **[Object][6]** 
-    -   `params.error` **[api.BasicError][16]** The Basic error object.
+    -   `params.error` **[api.BasicError][17]** The Basic error object.
 
 ## getDevices
 
@@ -590,7 +596,7 @@ logs are simple lines of information about what the SDK is doing during operatio
 Action logs are complete information about a specific action that occurred
 within the SDK, providing debug information describing it.
 The amount of information logged can be configured as part of the SDK configuration.
-See [config.logs][17] .
+See [config.logs][18] .
 
 ### levels
 
@@ -604,6 +610,50 @@ Possible levels for the SDK logger.
 -   `INFO` **[string][7]** Log useful information and messages to indicate the SDK's internal operations.
 -   `DEBUG` **[string][7]** Log information to help diagnose problematic behaviour.
 
+### LogHandler
+
+A LogHandler can be used to customize how the SDK should log information. By
+   default, the SDK will log information to the console, but a LogHandler can
+   be configured to change this behaviour.
+
+A LogHandler can be provided to the SDK as part of its configuration (see
+   [config.logs][18]). The SDK will then provide this
+   function with the logged information.
+
+Type: [Function][15]
+
+**Parameters**
+
+-   `LogEntry` **[Object][6]** The LogEntry to be logged.
+
+**Examples**
+
+```javascript
+// Define a custom function to handle logs.
+function logHandler (logEntry) {
+  // Compile the meta info of the log for a prefix.
+  const { timestamp, level, target } = logEntry
+  let { method } = logEntry
+  const logInfo = `${timestamp} - ${target.type} - ${level}`
+
+  // Assume that the first message parameter is a string.
+  const [log, ...extra] = logEntry.messages
+
+  // For the timer methods, don't actually use the console methods.
+  //    The Logger already did the timing, so simply log out the info.
+  if (['time', 'timeLog', 'timeEnd'].includes(method)) {
+    method = 'debug'
+  }
+
+  console[method](`${logInfo} - ${log}`, ...extra)
+}
+
+// Provide the LogHandler as part of the SDK configurations.
+const configs = { ... }
+configs.logs.handler = logHandler
+const client = create(configs)
+```
+
 ### LogEntry
 
 A LogEntry object is the data that the SDK compiles when information is
@@ -611,7 +661,7 @@ A LogEntry object is the data that the SDK compiles when information is
    and who logged it.
 
 A [LogHandler][4] provided to the SDK (see
-   [config.logs][17]) will need to handle LogEntry
+   [config.logs][18]) will need to handle LogEntry
    objects.
 
 Type: [Object][6]
@@ -629,57 +679,28 @@ Type: [Object][6]
            id was provided, this will be the same as the type.
 -   `messages` **[Array][12]** The logged information, given to the Logger
        method as parameters.
+-   `timer` **[Object][6]?** Timing data, if the log method was a timer method.
 
 **Examples**
 
 ```javascript
 function defaultLogHandler (logEntry) {
   // Compile the meta info of the log for a prefix.
-  const { timestamp, level, method, target } = logEntry
+  const { timestamp, level, target } = logEntry
+  let { method } = logEntry
   const logInfo = `${timestamp} - ${target.type} - ${level}`
 
   // Assume that the first message parameter is a string.
   const [log, ...extra] = logEntry.messages
 
-  console[method](`${logInfo} - ${log}`, ...extra)
-}
-```
-
-### LogHandler
-
-A LogHandler can be used to customize how the SDK should log information. By
-   default, the SDK will log information to the console, but a LogHandler can
-   be configured to change this behaviour.
-
-A LogHandler can be provided to the SDK as part of its configuration (see
-   [config.logs][17]). The SDK will then provide this
-   function with the logged information.
-
-Type: [Function][14]
-
-**Parameters**
-
--   `LogEntry` **[Object][6]** The LogEntry to be logged.
-
-**Examples**
-
-```javascript
-// Define a custom function to handle logs.
-function logHandler (logEntry) {
-  // Compile the meta info of the log for a prefix.
-  const { timestamp, level, method, target } = logEntry
-  const logInfo = `${timestamp} - ${target.type} - ${level}`
-
-  // Assume that the first message parameter is a string.
-  const [log, ...extra] = logEntry.messages
+  // For the timer methods, don't actually use the console methods.
+  //    The Logger already did the timing, so simply log out the info.
+  if (['time', 'timeLog', 'timeEnd'].includes(method)) {
+    method = 'debug'
+  }
 
   console[method](`${logInfo} - ${log}`, ...extra)
 }
-
-// Provide the LogHandler as part of the SDK configurations.
-const configs = { ... }
-configs.logs.handler = logHandler
-const client = create(configs)
 ```
 
 ## Media
@@ -705,7 +726,7 @@ Provides an external notification to the system for processing.
 ### registerApplePush
 
 Registers with Apple push notification service. Once registration is successful, the application will be able to receive
-standard and/or voip push notifications. It can then send these notifications to the SDK with [api.notifications.process][18]
+standard and/or voip push notifications. It can then send these notifications to the SDK with [api.notifications.process][19]
 in order for the SDK to process them.
 
 **Parameters**
@@ -723,13 +744,13 @@ in order for the SDK to process them.
     -   `params.isProduction` **[boolean][10]** If true, push notification will be sent to production.
                                                If false, push notification will be sent to sandbox.
 
-Returns **[Promise][19]** When successful,  the information of the registration.
+Returns **[Promise][20]** When successful,  the information of the registration.
                   Promise will reject with error object otherwise.
 
 ### registerAndroidPush
 
 Registers with Google push notification service. Once registration is successful, the application will be able to receive
-standard and/or voip push notifications. It can then send these notifications to the SDK with [api.notifications.process][18]
+standard and/or voip push notifications. It can then send these notifications to the SDK with [api.notifications.process][19]
 in order for the SDK to process them.
 
 **Parameters**
@@ -743,7 +764,7 @@ in order for the SDK to process them.
     -   `params.realm` **[string][7]** The realm used by the push registration service to identify
                                        and establish a connection with the service gateway.
 
-Returns **[Promise][19]** When successful,  the information of the registration.
+Returns **[Promise][20]** When successful,  the information of the registration.
                   Promise will reject with error object otherwise.
 
 ### unregisterApplePush
@@ -754,7 +775,7 @@ Unregister Apple push notifications.
 
 -   `registrationInfo` **[string][7]** The data returned from the push registration
 
-Returns **[Promise][19]** When successful, the promise will resolve with undefined.
+Returns **[Promise][20]** When successful, the promise will resolve with undefined.
                   Promise will reject with error object otherwise.
 
 ### unregisterAndroidPush
@@ -765,7 +786,7 @@ Unregister Android push notifications.
 
 -   `registrationInfo` **[string][7]** The data returned from the push registration
 
-Returns **[Promise][19]** When successful, the promise will resolve with undefined.
+Returns **[Promise][20]** When successful, the promise will resolve with undefined.
                   Promise will reject with error object otherwise.
 
 ### enableWebsocket
@@ -778,7 +799,7 @@ Enables, or disables, the processing of websocket notifications.
 
 ## sdpHandlers
 
-A set of [SdpHandlerFunction][20]s for manipulating SDP information.
+A set of [SdpHandlerFunction][21]s for manipulating SDP information.
 These handlers are used to customize low-level call behaviour for very specific
 environments and/or scenarios. They can be provided during SDK instantiation
 to be used for all calls.
@@ -869,18 +890,20 @@ client.media.setDefaultDevices({
 
 [12]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
 
-[13]: #config
+[13]: https://en.wikipedia.org/wiki/Keepalive
 
-[14]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+[14]: #config
 
-[15]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error
+[15]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
 
-[16]: #apibasicerror
+[16]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error
 
-[17]: #configconfiglogs
+[17]: #apibasicerror
 
-[18]: api.notifications.process
+[18]: #configconfiglogs
 
-[19]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
+[19]: api.notifications.process
 
-[20]: call.SdpHandlerFunction
+[20]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
+
+[21]: call.SdpHandlerFunction
