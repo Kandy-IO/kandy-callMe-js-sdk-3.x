@@ -5462,26 +5462,40 @@
               },
               "name": "connectivity.checkConnectivity",
               "default": "true"
+            },
+            {
+              "title": "param",
+              "description": "query will send the bearer access token to authenticate the websocket and none will not send it.",
+              "lineNumber": 20,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "string"
+                }
+              },
+              "name": "connectivity.webSocketOAuthMode",
+              "default": "query"
             }
           ],
           "loc": {
             "start": {
-              "line": 17,
+              "line": 36,
               "column": 0
             },
             "end": {
-              "line": 37,
+              "line": 57,
               "column": 3
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 5,
+                "line": 58,
                 "column": 0
               },
               "end": {
-                "line": 15,
+                "line": 62,
                 "column": 1
               }
             },
@@ -6046,6 +6060,68 @@
                     "name": "Boolean"
                   },
                   "default": "true"
+                },
+                {
+                  "title": "param",
+                  "name": "connectivity.webSocketOAuthMode",
+                  "lineNumber": 20,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "query will send the bearer access token to authenticate the websocket and none will not send it.",
+                            "position": {
+                              "start": {
+                                "line": 1,
+                                "column": 1,
+                                "offset": 0
+                              },
+                              "end": {
+                                "line": 1,
+                                "column": 97,
+                                "offset": 96
+                              },
+                              "indent": []
+                            }
+                          }
+                        ],
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 97,
+                            "offset": 96
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 97,
+                        "offset": 96
+                      }
+                    }
+                  },
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "string"
+                  },
+                  "default": "query"
                 }
               ]
             }
@@ -6260,23 +6336,23 @@
           ],
           "loc": {
             "start": {
-              "line": 15,
+              "line": 18,
               "column": 0
             },
             "end": {
-              "line": 29,
+              "line": 32,
               "column": 3
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 37,
+                "line": 35,
                 "column": 0
               },
               "end": {
-                "line": 59,
-                "column": 1
+                "line": 35,
+                "column": 102
               }
             },
             "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/notifications/link/index.js"
@@ -7915,22 +7991,22 @@
           ],
           "loc": {
             "start": {
-              "line": 250,
+              "line": 262,
               "column": 4
             },
             "end": {
-              "line": 256,
+              "line": 268,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 257,
+                "line": 269,
                 "column": 4
               },
               "end": {
-                "line": 259,
+                "line": 271,
                 "column": 5
               }
             },
@@ -8052,22 +8128,22 @@
           ],
           "loc": {
             "start": {
-              "line": 262,
+              "line": 274,
               "column": 4
             },
             "end": {
-              "line": 286,
+              "line": 298,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 287,
+                "line": 299,
                 "column": 4
               },
               "end": {
-                "line": 305,
+                "line": 317,
                 "column": 5
               }
             },
