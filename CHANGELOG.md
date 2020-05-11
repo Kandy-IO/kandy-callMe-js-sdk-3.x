@@ -5,7 +5,15 @@ Kandy.js change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 3.15.1 - 2020-05-11
+
+### Fixed
+
+- Fixed an irregular one-way audio issue when ICE timeout is low and call updates happen in quick succession. `KAA-2345`
+
 ## 3.15.0 - 2020-04-30
+
+No change.
 
 ## 3.14.0 - 2020-03-27
 
