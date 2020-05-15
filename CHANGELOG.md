@@ -11,7 +11,15 @@ Kandy.js change log.
 
 - Removed the need for remote party properties (callNotificationParams) to be present in notifications. `KAA-2271`
 
+## 3.15.1 - 2020-05-11
+
+### Fixed
+
+- Fixed an irregular one-way audio issue when ICE timeout is low and call updates happen in quick succession. `KAA-2345`
+
 ## 3.15.0 - 2020-04-30
+
+No change.
 
 ## 3.14.0 - 2020-03-27
 
