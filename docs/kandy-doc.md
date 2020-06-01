@@ -51,7 +51,7 @@ The format of logs can also be customized by providing a
            to the console.
     -   `logs.enableFcsLogs` **[boolean][10]** Enable the detailed call logger
            for v3.X. Requires log level debug. (optional, default `true`)
-    -   `logs.logActions` **[Object][6]?** Options specifically for action logs when
+    -   `logs.logActions` **([Object][6] \| [boolean][10])?** Options specifically for action logs when
            logLevel is at DEBUG+ levels. Set this to false to not output action logs.
         -   `logs.logActions.handler` **[logger.LogHandler][9]?** The function to receive action
                log entries from the SDK. If not provided, a default handler will be used
@@ -63,6 +63,8 @@ The format of logs can also be customized by providing a
                inspected on the console. (optional, default `false`)
         -   `logs.logActions.diff` **[boolean][10]** Include a diff of what SDK
                context was changed by the action. (optional, default `false`)
+        -   `logs.logActions.level` **[string][7]** Log level to be set
+               on the action logs (optional, default `'debug'`)
         -   `logs.logActions.exposePayloads` **[boolean][10]** Allow action payloads
                to be exposed in the logs, potentially displaying sensitive information. (optional, default `false`)
 
@@ -74,13 +76,12 @@ Configuration options for the CallMe Authentication feature.
 
 -   `authentication` **[Object][6]** Authentication configs.
     -   `authentication.subscription` **[Object][6]** 
-        -   `authentication.subscription.protocol` **[string][7]** Protocol to be used for subscription requests. (optional, default `https`)
+        -   `authentication.subscription.protocol` **[string][7]** Protocol to be used for subscription requests. (optional, default `'https'`)
         -   `authentication.subscription.server` **[string][7]** Server to be used for subscription requests.
         -   `authentication.subscription.port` **[Number][11]** Port to be used for subscription requests. (optional, default `443`)
-        -   `authentication.subscription.version` **[string][7]** Version of the REST API to be used. (optional, default `1`)
         -   `authentication.subscription.service` **[Array][12]?** Services to subscribe to for notifications.
     -   `authentication.websocket` **[Object][6]** 
-        -   `authentication.websocket.protocol` **[string][7]** Protocol to be used for websocket notifications. (optional, default `wss`)
+        -   `authentication.websocket.protocol` **[string][7]** Protocol to be used for websocket notifications. (optional, default `'wss'`)
         -   `authentication.websocket.server` **[string][7]** Server to be used for websocket notifications.
         -   `authentication.websocket.port` **[Number][11]** Port to be used for websocket notifications. (optional, default `443`)
 
@@ -803,7 +804,7 @@ Enables, or disables, the processing of websocket notifications.
 A set of [SdpHandlerFunction][21]s for manipulating SDP information.
 These handlers are used to customize low-level call behaviour for very specific
 environments and/or scenarios. They can be provided during SDK instantiation
-to be used for all calls.
+to be used for all calls, or with the [call.setSdpHandlers][22] Call API post-instantiation.
 
 **Examples**
 
@@ -812,9 +813,14 @@ import { create, sdpHandlers } from 'kandy';
 const codecRemover = sdpHandlers.createCodecRemover(['VP8', 'VP9'])
 const client = create({
   call: {
-    sdpHandlers: [ <Your-SDP-Handler-Function>, ...]
+    sdpHandlers: [ codecRemover, <Your-SDP-Handler-Function>, ...]
   }
 })
+```
+
+```javascript
+// Through the Call API post-instantiation
+client.call.setSdpHandlers([ codecRemover, <Your-SDP-Handler-Function>, ...])
 ```
 
 ### createCodecRemover
@@ -908,3 +914,5 @@ client.media.setDefaultDevices({
 [20]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
 
 [21]: call.SdpHandlerFunction
+
+[22]: call.setSdpHandlers

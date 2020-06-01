@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset='utf-8' />
-  <title>kandy-callMe-js-sdk-3.x 3.16.0 | Documentation</title>
+  <title>kandy-callMe-js-sdk-3.x 3.17.0 | Documentation</title>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' type='text/css' rel='stylesheet' />
   <link href='assets/style.css' type='text/css' rel='stylesheet' />
@@ -14,7 +14,7 @@
       <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
         <div class='py1 px2'>
           <h3 class='mb0 no-anchor'>kandy-callMe-js-sdk-3.x</h3>
-          <div class='mb1'><code>3.16.0</code></div>
+          <div class='mb1'><code>3.17.0</code></div>
           <input
             placeholder='Filter'
             id='filter-input'
@@ -982,7 +982,7 @@ for v3.X. Requires log level debug.
 
               
                 <tr>
-  <td class='break-word'><span class='code bold'>logs.logActions</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?</code>
+  <td class='break-word'><span class='code bold'>logs.logActions</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>)?</code>
   </td>
   <td class='break-word'><span>Options specifically for action logs when
 logLevel is at DEBUG+ levels. Set this to false to not output action logs.
@@ -1033,6 +1033,18 @@ inspected on the console.
   </td>
   <td class='break-word'><span>Include a diff of what SDK
 context was changed by the action.
+</span></td>
+</tr>
+
+
+  
+    <tr>
+  <td class='break-word'><span class='code bold'>logs.logActions.level</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+  
+    (default <code>&#39;debug&#39;</code>)
+  </td>
+  <td class='break-word'><span>Log level to be set
+on the action logs
 </span></td>
 </tr>
 
@@ -1139,7 +1151,7 @@ to be exposed in the logs, potentially displaying sensitive information.
     <tr>
   <td class='break-word'><span class='code bold'>authentication.subscription.protocol</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
   
-    (default <code>https</code>)
+    (default <code>&#39;https&#39;</code>)
   </td>
   <td class='break-word'><span>Protocol to be used for subscription requests.
 </span></td>
@@ -1168,17 +1180,6 @@ to be exposed in the logs, potentially displaying sensitive information.
 
   
     <tr>
-  <td class='break-word'><span class='code bold'>authentication.subscription.version</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
-  
-    (default <code>1</code>)
-  </td>
-  <td class='break-word'><span>Version of the REST API to be used.
-</span></td>
-</tr>
-
-
-  
-    <tr>
   <td class='break-word'><span class='code bold'>authentication.subscription.service</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>?</code>
   </td>
   <td class='break-word'><span>Services to subscribe to for notifications.
@@ -1200,7 +1201,7 @@ to be exposed in the logs, potentially displaying sensitive information.
     <tr>
   <td class='break-word'><span class='code bold'>authentication.websocket.protocol</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
   
-    (default <code>wss</code>)
+    (default <code>&#39;wss&#39;</code>)
   </td>
   <td class='break-word'><span>Protocol to be used for websocket notifications.
 </span></td>
@@ -6469,7 +6470,7 @@ Promise will reject with error object otherwise.
   <p>A set of <a href="call.SdpHandlerFunction">SdpHandlerFunction</a>s for manipulating SDP information.
 These handlers are used to customize low-level call behaviour for very specific
 environments and/or scenarios. They can be provided during SDK instantiation
-to be used for all calls.</p>
+to be used for all calls, or with the <a href="call.setSdpHandlers">call.setSdpHandlers</a> Call API post-instantiation.</p>
 
 
   <div class='pre p1 fill-light mt0'>sdpHandlers</div>
@@ -6499,9 +6500,13 @@ to be used for all calls.</p>
 <span class="hljs-keyword">const</span> codecRemover = sdpHandlers.createCodecRemover([<span class="hljs-string">'VP8'</span>, <span class="hljs-string">'VP9'</span>])
 <span class="hljs-keyword">const</span> client = create({
   <span class="hljs-attr">call</span>: {
-    <span class="hljs-attr">sdpHandlers</span>: [ <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Your-SDP-Handler-Function</span>&gt;</span>, ...]
+    <span class="hljs-attr">sdpHandlers</span>: [ codecRemover, &lt;Your-SDP-Handler-<span class="hljs-built_in">Function</span>&gt;, ...]
   }
-})</span></pre>
+})</pre>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// Through the Call API post-instantiation</span>
+client.call.setSdpHandlers([ codecRemover, &lt;Your-SDP-Handler-<span class="hljs-built_in">Function</span>&gt;, ...])</pre>
     
   
 

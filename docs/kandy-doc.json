@@ -107,11 +107,11 @@
     "context": {
       "loc": {
         "start": {
-          "line": 87,
+          "line": 90,
           "column": 0
         },
         "end": {
-          "line": 87,
+          "line": 90,
           "column": 58
         }
       },
@@ -396,11 +396,11 @@
     "context": {
       "loc": {
         "start": {
-          "line": 87,
+          "line": 90,
           "column": 0
         },
         "end": {
-          "line": 87,
+          "line": 90,
           "column": 58
         }
       },
@@ -734,8 +734,17 @@
               "type": {
                 "type": "OptionalType",
                 "expression": {
-                  "type": "NameExpression",
-                  "name": "Object"
+                  "type": "UnionType",
+                  "elements": [
+                    {
+                      "type": "NameExpression",
+                      "name": "Object"
+                    },
+                    {
+                      "type": "NameExpression",
+                      "name": "boolean"
+                    }
+                  ]
                 }
               },
               "name": "logs.logActions"
@@ -797,8 +806,22 @@
             },
             {
               "title": "param",
-              "description": "Allow action payloads\n   to be exposed in the logs, potentially displaying sensitive information.",
+              "description": "Log level to be set\n   on the action logs",
               "lineNumber": 36,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "string"
+                }
+              },
+              "name": "logs.logActions.level",
+              "default": "'debug'"
+            },
+            {
+              "title": "param",
+              "description": "Allow action payloads\n   to be exposed in the logs, potentially displaying sensitive information.",
+              "lineNumber": 38,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -816,18 +839,18 @@
               "column": 0
             },
             "end": {
-              "line": 41,
+              "line": 43,
               "column": 3
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 42,
+                "line": 44,
                 "column": 0
               },
               "end": {
-                "line": 56,
+                "line": 58,
                 "column": 1
               }
             },
@@ -1200,8 +1223,17 @@
                   "type": {
                     "type": "OptionalType",
                     "expression": {
-                      "type": "NameExpression",
-                      "name": "Object"
+                      "type": "UnionType",
+                      "elements": [
+                        {
+                          "type": "NameExpression",
+                          "name": "Object"
+                        },
+                        {
+                          "type": "NameExpression",
+                          "name": "boolean"
+                        }
+                      ]
                     }
                   },
                   "properties": [
@@ -1477,8 +1509,74 @@
                     },
                     {
                       "title": "param",
-                      "name": "logs.logActions.exposePayloads",
+                      "name": "logs.logActions.level",
                       "lineNumber": 36,
+                      "description": {
+                        "type": "root",
+                        "children": [
+                          {
+                            "type": "paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "Log level to be set\n   on the action logs",
+                                "position": {
+                                  "start": {
+                                    "line": 1,
+                                    "column": 1,
+                                    "offset": 0
+                                  },
+                                  "end": {
+                                    "line": 2,
+                                    "column": 22,
+                                    "offset": 41
+                                  },
+                                  "indent": [
+                                    1
+                                  ]
+                                }
+                              }
+                            ],
+                            "position": {
+                              "start": {
+                                "line": 1,
+                                "column": 1,
+                                "offset": 0
+                              },
+                              "end": {
+                                "line": 2,
+                                "column": 22,
+                                "offset": 41
+                              },
+                              "indent": [
+                                1
+                              ]
+                            }
+                          }
+                        ],
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 2,
+                            "column": 22,
+                            "offset": 41
+                          }
+                        }
+                      },
+                      "type": {
+                        "type": "NameExpression",
+                        "name": "string"
+                      },
+                      "default": "'debug'"
+                    },
+                    {
+                      "title": "param",
+                      "name": "logs.logActions.exposePayloads",
+                      "lineNumber": 38,
                       "description": {
                         "type": "root",
                         "children": [
@@ -1682,7 +1780,7 @@
                 }
               },
               "name": "authentication.subscription.protocol",
-              "default": "https"
+              "default": "'https'"
             },
             {
               "title": "param",
@@ -1710,22 +1808,8 @@
             },
             {
               "title": "param",
-              "description": "Version of the REST API to be used.",
-              "lineNumber": 11,
-              "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "string"
-                }
-              },
-              "name": "authentication.subscription.version",
-              "default": "1"
-            },
-            {
-              "title": "param",
               "description": "Services to subscribe to for notifications.",
-              "lineNumber": 12,
+              "lineNumber": 11,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -1738,7 +1822,7 @@
             {
               "title": "param",
               "description": null,
-              "lineNumber": 13,
+              "lineNumber": 12,
               "type": {
                 "type": "NameExpression",
                 "name": "Object"
@@ -1748,7 +1832,7 @@
             {
               "title": "param",
               "description": "Protocol to be used for websocket notifications.",
-              "lineNumber": 14,
+              "lineNumber": 13,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -1757,12 +1841,12 @@
                 }
               },
               "name": "authentication.websocket.protocol",
-              "default": "wss"
+              "default": "'wss'"
             },
             {
               "title": "param",
               "description": "Server to be used for websocket notifications.",
-              "lineNumber": 15,
+              "lineNumber": 14,
               "type": {
                 "type": "NameExpression",
                 "name": "string"
@@ -1772,7 +1856,7 @@
             {
               "title": "param",
               "description": "Port to be used for websocket notifications.",
-              "lineNumber": 16,
+              "lineNumber": 15,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -1786,22 +1870,22 @@
           ],
           "loc": {
             "start": {
-              "line": 7,
+              "line": 10,
               "column": 0
             },
             "end": {
-              "line": 24,
+              "line": 26,
               "column": 3
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 32,
+                "line": 28,
                 "column": 0
               },
               "end": {
-                "line": 40,
+                "line": 41,
                 "column": 1
               }
             },
@@ -1940,7 +2024,7 @@
                         "type": "NameExpression",
                         "name": "string"
                       },
-                      "default": "https"
+                      "default": "'https'"
                     },
                     {
                       "title": "param",
@@ -2067,70 +2151,8 @@
                     },
                     {
                       "title": "param",
-                      "name": "authentication.subscription.version",
-                      "lineNumber": 11,
-                      "description": {
-                        "type": "root",
-                        "children": [
-                          {
-                            "type": "paragraph",
-                            "children": [
-                              {
-                                "type": "text",
-                                "value": "Version of the REST API to be used.",
-                                "position": {
-                                  "start": {
-                                    "line": 1,
-                                    "column": 1,
-                                    "offset": 0
-                                  },
-                                  "end": {
-                                    "line": 1,
-                                    "column": 36,
-                                    "offset": 35
-                                  },
-                                  "indent": []
-                                }
-                              }
-                            ],
-                            "position": {
-                              "start": {
-                                "line": 1,
-                                "column": 1,
-                                "offset": 0
-                              },
-                              "end": {
-                                "line": 1,
-                                "column": 36,
-                                "offset": 35
-                              },
-                              "indent": []
-                            }
-                          }
-                        ],
-                        "position": {
-                          "start": {
-                            "line": 1,
-                            "column": 1,
-                            "offset": 0
-                          },
-                          "end": {
-                            "line": 1,
-                            "column": 36,
-                            "offset": 35
-                          }
-                        }
-                      },
-                      "type": {
-                        "type": "NameExpression",
-                        "name": "string"
-                      },
-                      "default": "1"
-                    },
-                    {
-                      "title": "param",
                       "name": "authentication.subscription.service",
-                      "lineNumber": 12,
+                      "lineNumber": 11,
                       "description": {
                         "type": "root",
                         "children": [
@@ -2196,7 +2218,7 @@
                 {
                   "title": "param",
                   "name": "authentication.websocket",
-                  "lineNumber": 13,
+                  "lineNumber": 12,
                   "type": {
                     "type": "NameExpression",
                     "name": "Object"
@@ -2205,7 +2227,7 @@
                     {
                       "title": "param",
                       "name": "authentication.websocket.protocol",
-                      "lineNumber": 14,
+                      "lineNumber": 13,
                       "description": {
                         "type": "root",
                         "children": [
@@ -2262,12 +2284,12 @@
                         "type": "NameExpression",
                         "name": "string"
                       },
-                      "default": "wss"
+                      "default": "'wss'"
                     },
                     {
                       "title": "param",
                       "name": "authentication.websocket.server",
-                      "lineNumber": 15,
+                      "lineNumber": 14,
                       "description": {
                         "type": "root",
                         "children": [
@@ -2328,7 +2350,7 @@
                     {
                       "title": "param",
                       "name": "authentication.websocket.port",
-                      "lineNumber": 16,
+                      "lineNumber": 15,
                       "description": {
                         "type": "root",
                         "children": [
@@ -6347,12 +6369,12 @@
           "context": {
             "loc": {
               "start": {
-                "line": 35,
+                "line": 34,
                 "column": 0
               },
               "end": {
-                "line": 35,
-                "column": 102
+                "line": 37,
+                "column": 1
               }
             },
             "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/notifications/link/index.js"
@@ -7890,11 +7912,11 @@
     "context": {
       "loc": {
         "start": {
-          "line": 87,
+          "line": 90,
           "column": 0
         },
         "end": {
-          "line": 87,
+          "line": 90,
           "column": 58
         }
       },
@@ -23224,7 +23246,7 @@
             },
             {
               "type": "text",
-              "value": "s for manipulating SDP information.\nThese handlers are used to customize low-level call behaviour for very specific\nenvironments and/or scenarios. They can be provided during SDK instantiation\nto be used for all calls.",
+              "value": "s for manipulating SDP information.\nThese handlers are used to customize low-level call behaviour for very specific\nenvironments and/or scenarios. They can be provided during SDK instantiation\nto be used for all calls, or with the ",
               "position": {
                 "start": {
                   "line": 1,
@@ -23233,14 +23255,56 @@
                 },
                 "end": {
                   "line": 4,
-                  "column": 26,
-                  "offset": 277
+                  "column": 39,
+                  "offset": 290
                 },
                 "indent": [
                   1,
                   1,
                   1
                 ]
+              }
+            },
+            {
+              "type": "link",
+              "url": "call.setSdpHandlers",
+              "title": null,
+              "jsdoc": true,
+              "children": [
+                {
+                  "type": "text",
+                  "value": "call.setSdpHandlers"
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 4,
+                  "column": 39,
+                  "offset": 290
+                },
+                "end": {
+                  "line": 4,
+                  "column": 66,
+                  "offset": 317
+                },
+                "indent": []
+              }
+            },
+            {
+              "type": "text",
+              "value": " Call API post-instantiation.",
+              "position": {
+                "start": {
+                  "line": 4,
+                  "column": 66,
+                  "offset": 317
+                },
+                "end": {
+                  "line": 4,
+                  "column": 95,
+                  "offset": 346
+                },
+                "indent": []
               }
             }
           ],
@@ -23252,8 +23316,8 @@
             },
             "end": {
               "line": 4,
-              "column": 26,
-              "offset": 277
+              "column": 95,
+              "offset": 346
             },
             "indent": [
               1,
@@ -23271,8 +23335,8 @@
         },
         "end": {
           "line": 4,
-          "column": 26,
-          "offset": 277
+          "column": 95,
+          "offset": 346
         }
       }
     },
@@ -23292,8 +23356,13 @@
       },
       {
         "title": "example",
-        "description": "import { create, sdpHandlers } from 'kandy';\nconst codecRemover = sdpHandlers.createCodecRemover(['VP8', 'VP9'])\nconst client = create({\n  call: {\n    sdpHandlers: [ <Your-SDP-Handler-Function>, ...]\n  }\n})",
+        "description": "import { create, sdpHandlers } from 'kandy';\nconst codecRemover = sdpHandlers.createCodecRemover(['VP8', 'VP9'])\nconst client = create({\n  call: {\n    sdpHandlers: [ codecRemover, <Your-SDP-Handler-Function>, ...]\n  }\n})",
         "lineNumber": 8
+      },
+      {
+        "title": "example",
+        "description": "// Through the Call API post-instantiation\nclient.call.setSdpHandlers([ codecRemover, <Your-SDP-Handler-Function>, ...])",
+        "lineNumber": 16
       }
     ],
     "loc": {
@@ -23302,18 +23371,18 @@
         "column": 0
       },
       "end": {
-        "line": 56,
+        "line": 59,
         "column": 3
       }
     },
     "context": {
       "loc": {
         "start": {
-          "line": 87,
+          "line": 90,
           "column": 0
         },
         "end": {
-          "line": 87,
+          "line": 90,
           "column": 58
         }
       },
@@ -23322,7 +23391,10 @@
     "augments": [],
     "examples": [
       {
-        "description": "import { create, sdpHandlers } from 'kandy';\nconst codecRemover = sdpHandlers.createCodecRemover(['VP8', 'VP9'])\nconst client = create({\n  call: {\n    sdpHandlers: [ <Your-SDP-Handler-Function>, ...]\n  }\n})"
+        "description": "import { create, sdpHandlers } from 'kandy';\nconst codecRemover = sdpHandlers.createCodecRemover(['VP8', 'VP9'])\nconst client = create({\n  call: {\n    sdpHandlers: [ codecRemover, <Your-SDP-Handler-Function>, ...]\n  }\n})"
+      },
+      {
+        "description": "// Through the Call API post-instantiation\nclient.call.setSdpHandlers([ codecRemover, <Your-SDP-Handler-Function>, ...])"
       }
     ],
     "params": [],
@@ -23521,22 +23593,22 @@
           ],
           "loc": {
             "start": {
-              "line": 60,
+              "line": 63,
               "column": 0
             },
             "end": {
-              "line": 82,
+              "line": 85,
               "column": 3
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 87,
+                "line": 90,
                 "column": 0
               },
               "end": {
-                "line": 87,
+                "line": 90,
                 "column": 58
               }
             },
