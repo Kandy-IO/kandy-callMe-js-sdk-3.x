@@ -1,7 +1,7 @@
 /**
  * Kandy.js
  * kandy.callMe.js
- * Version: 3.17.0-beta.444
+ * Version: 3.17.0-beta.445
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -51590,6 +51590,11 @@ const log = _logs.logManager.getLogger('AUTH');
 
 // Libraries.
 function* subscribe(connection, credentials, extras = {}) {
+  /*
+   * TODO: Clean-up / fix the function signature. The requestOptions (eg. headers)
+   *    are mixed with the API options (eg. client correlator) when they're used
+   *    for unrelated purposes.
+   */
   let subscribeType = connection.isAnonymous ? 'anonymous' : 'user';
   let requestOptions = {};
   requestOptions.method = 'POST';
@@ -59483,7 +59488,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '3.17.0-beta.444';
+  return '3.17.0-beta.445';
 }
 
 /***/ }),
