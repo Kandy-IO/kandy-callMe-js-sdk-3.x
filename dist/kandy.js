@@ -1,7 +1,7 @@
 /**
  * Kandy.js
  * kandy.callMe.js
- * Version: 3.17.0-beta.443
+ * Version: 3.17.0-beta.444
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -59105,8 +59105,9 @@ const log = _logs.logManager.getLogger('SDPHANDLER');
  *
  * @method sanitizeSdesFromSdp
  * @param {Object} newSdp The SDP so far (could have been modified by previous handlers).
- * @param {RTCSdpType} info Information about the session description.
+ * @param {Object} info Information about the session description.
  * @param {RTCSdpType} info.type The session description's type.
+ * @param {string} info.step The step that will occur after the Pipeline is run.
  * @param {string} info.endpoint Which end of the connection created the SDP.
  * @param {Object} originalSdp The SDP in its initial state.
  * @return {Object} The sanitized SDP with crypto removed (if fingerprint exists)
@@ -59482,7 +59483,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '3.17.0-beta.443';
+  return '3.17.0-beta.444';
 }
 
 /***/ }),
