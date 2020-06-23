@@ -107,15 +107,15 @@
     "context": {
       "loc": {
         "start": {
-          "line": 109,
+          "line": 121,
           "column": 0
         },
         "end": {
-          "line": 109,
+          "line": 121,
           "column": 58
         }
       },
-      "file": "/var/jenkins_home/workspace/Kandy.js_beta/builds/core/index.js"
+      "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/builds/core/index.js"
     },
     "augments": [],
     "examples": [
@@ -396,15 +396,15 @@
     "context": {
       "loc": {
         "start": {
-          "line": 109,
+          "line": 121,
           "column": 0
         },
         "end": {
-          "line": 109,
+          "line": 121,
           "column": 58
         }
       },
-      "file": "/var/jenkins_home/workspace/Kandy.js_beta/builds/core/index.js"
+      "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/builds/core/index.js"
     },
     "augments": [],
     "examples": [],
@@ -854,7 +854,7 @@
                 "column": 1
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/logs/config.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/logs/config.js"
           },
           "augments": [],
           "examples": [],
@@ -1889,7 +1889,7 @@
                 "column": 1
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/auth/callMe/index.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/auth/callMe/index.js"
           },
           "augments": [],
           "examples": [],
@@ -2997,7 +2997,7 @@
                 "column": 1
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/oldLink/index.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/call/oldLink/index.js"
           },
           "augments": [],
           "examples": [],
@@ -5521,7 +5521,7 @@
                 "column": 1
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/connectivity/link/index.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/connectivity/link/index.js"
           },
           "augments": [],
           "examples": [],
@@ -6377,7 +6377,7 @@
                 "column": 1
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/notifications/link/index.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/notifications/link/index.js"
           },
           "augments": [],
           "examples": [],
@@ -7056,7 +7056,7 @@
           "column": 45
         }
       },
-      "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/eventTypes.js"
+      "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/call/interface/eventTypes.js"
     },
     "augments": [],
     "examples": [],
@@ -7282,7 +7282,7 @@
           "column": 61
         }
       },
-      "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/eventTypes.js"
+      "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/call/interface/eventTypes.js"
     },
     "augments": [],
     "examples": [],
@@ -7538,7 +7538,7 @@
           "column": 51
         }
       },
-      "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/eventTypes.js"
+      "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/call/interface/eventTypes.js"
     },
     "augments": [],
     "examples": [],
@@ -7912,15 +7912,15 @@
     "context": {
       "loc": {
         "start": {
-          "line": 109,
+          "line": 121,
           "column": 0
         },
         "end": {
-          "line": 109,
+          "line": 121,
           "column": 58
         }
       },
-      "file": "/var/jenkins_home/workspace/Kandy.js_beta/builds/core/index.js"
+      "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/builds/core/index.js"
     },
     "augments": [],
     "examples": [],
@@ -8032,7 +8032,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/factory.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/factory.js"
           },
           "augments": [],
           "examples": [],
@@ -8169,7 +8169,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/factory.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/factory.js"
           },
           "augments": [],
           "examples": [
@@ -8314,7 +8314,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/config/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/config/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -8521,7 +8521,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/config/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/config/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -8787,7 +8787,7 @@
                 "column": 3
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/events/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/events/interface/api.js"
           },
           "augments": [],
           "examples": [
@@ -9128,7 +9128,7 @@
                 "column": 3
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/events/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/events/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -9455,7 +9455,7 @@
                 "column": 3
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/events/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/events/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -9721,7 +9721,7 @@
                 "column": 3
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/events/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/events/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -9995,7 +9995,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/auth/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/auth/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -10332,7 +10332,7 @@
                 "column": 16
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/errors/index.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/errors/index.js"
           },
           "augments": [],
           "examples": [],
@@ -10667,7 +10667,7 @@
           "column": 20
         }
       },
-      "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
+      "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/call/interface/api.js"
     },
     "augments": [],
     "examples": [],
@@ -10805,7 +10805,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [
@@ -11026,7 +11026,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -11300,7 +11300,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -11514,7 +11514,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -11763,7 +11763,7 @@
                 "column": 27
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [
@@ -12273,7 +12273,7 @@
                 "column": 33
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -12847,7 +12847,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -13057,7 +13057,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -13267,7 +13267,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -13477,7 +13477,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -13687,7 +13687,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -13932,7 +13932,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -14269,7 +14269,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [
@@ -14622,7 +14622,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -15092,7 +15092,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -15302,7 +15302,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -15512,7 +15512,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -15784,7 +15784,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -16252,7 +16252,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -16472,7 +16472,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -16797,7 +16797,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/call/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -16995,7 +16995,7 @@
           "column": 54
         }
       },
-      "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/connectivity/interface/api.js"
+      "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/connectivity/interface/api.js"
     },
     "augments": [],
     "examples": [],
@@ -17125,7 +17125,7 @@
                 "column": 36
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/connectivity/interface/eventTypes.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/connectivity/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [],
@@ -17340,7 +17340,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/connectivity/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/connectivity/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -17539,7 +17539,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/connectivity/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/connectivity/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -17763,7 +17763,7 @@
           "column": 43
         }
       },
-      "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/eventTypes.js"
+      "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/call/interface/eventTypes.js"
     },
     "augments": [],
     "examples": [],
@@ -17974,7 +17974,7 @@
           "column": 5
         }
       },
-      "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
+      "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/call/interface/api.js"
     },
     "augments": [],
     "examples": [],
@@ -18154,7 +18154,7 @@
           "column": 1
         }
       },
-      "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/logs/interface/api.js"
+      "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/logs/interface/api.js"
     },
     "augments": [],
     "examples": [],
@@ -18321,7 +18321,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/logs/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/logs/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -18671,6 +18671,324 @@
                 "children": [
                   {
                     "type": "text",
+                    "value": "A LogHandler can be used to customize how the SDK should log information. By\n   default, the SDK will log information to the console, but a LogHandler can\n   be configured to change this behaviour.",
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 3,
+                        "column": 43,
+                        "offset": 197
+                      },
+                      "indent": [
+                        1,
+                        1
+                      ]
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                  },
+                  "end": {
+                    "line": 3,
+                    "column": 43,
+                    "offset": 197
+                  },
+                  "indent": [
+                    1,
+                    1
+                  ]
+                }
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "A LogHandler can be provided to the SDK as part of its configuration (see\n   ",
+                    "position": {
+                      "start": {
+                        "line": 5,
+                        "column": 1,
+                        "offset": 199
+                      },
+                      "end": {
+                        "line": 6,
+                        "column": 4,
+                        "offset": 276
+                      },
+                      "indent": [
+                        1
+                      ]
+                    }
+                  },
+                  {
+                    "type": "link",
+                    "url": "#configconfiglogs",
+                    "title": null,
+                    "jsdoc": true,
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "config.logs"
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 6,
+                        "column": 4,
+                        "offset": 276
+                      },
+                      "end": {
+                        "line": 6,
+                        "column": 41,
+                        "offset": 313
+                      },
+                      "indent": []
+                    }
+                  },
+                  {
+                    "type": "text",
+                    "value": "). The SDK will then provide this\n   function with the logged information.",
+                    "position": {
+                      "start": {
+                        "line": 6,
+                        "column": 41,
+                        "offset": 313
+                      },
+                      "end": {
+                        "line": 7,
+                        "column": 41,
+                        "offset": 387
+                      },
+                      "indent": [
+                        1
+                      ]
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 5,
+                    "column": 1,
+                    "offset": 199
+                  },
+                  "end": {
+                    "line": 7,
+                    "column": 41,
+                    "offset": 387
+                  },
+                  "indent": [
+                    1,
+                    1
+                  ]
+                }
+              }
+            ],
+            "position": {
+              "start": {
+                "line": 1,
+                "column": 1,
+                "offset": 0
+              },
+              "end": {
+                "line": 7,
+                "column": 41,
+                "offset": 387
+              }
+            }
+          },
+          "tags": [
+            {
+              "title": "public",
+              "description": null,
+              "lineNumber": 9,
+              "type": null
+            },
+            {
+              "title": "static",
+              "description": null,
+              "lineNumber": 10
+            },
+            {
+              "title": "typedef",
+              "description": null,
+              "lineNumber": 11,
+              "type": {
+                "type": "NameExpression",
+                "name": "Function"
+              },
+              "name": "LogHandler"
+            },
+            {
+              "title": "memberof",
+              "description": "logger",
+              "lineNumber": 12
+            },
+            {
+              "title": "requires",
+              "description": null,
+              "lineNumber": 13,
+              "name": "logs"
+            },
+            {
+              "title": "param",
+              "description": "The LogEntry to be logged.",
+              "lineNumber": 14,
+              "type": {
+                "type": "NameExpression",
+                "name": "Object"
+              },
+              "name": "LogEntry"
+            },
+            {
+              "title": "example",
+              "description": "// Define a custom function to handle logs.\nfunction logHandler (logEntry) {\n  // Compile the meta info of the log for a prefix.\n  const { timestamp, level, target } = logEntry\n  let { method } = logEntry\n  const logInfo = `${timestamp} - ${target.type} - ${level}`\n\n  // Assume that the first message parameter is a string.\n  const [log, ...extra] = logEntry.messages\n\n  // For the timer methods, don't actually use the console methods.\n  //    The Logger already did the timing, so simply log out the info.\n  if (['time', 'timeLog', 'timeEnd'].includes(method)) {\n    method = 'debug'\n  }\n\n  console[method](`${logInfo} - ${log}`, ...extra)\n}\n\n// Provide the LogHandler as part of the SDK configurations.\nconst configs = { ... }\nconfigs.logs.handler = logHandler\nconst client = create(configs)",
+              "lineNumber": 15
+            }
+          ],
+          "loc": {
+            "start": {
+              "line": 54,
+              "column": 0
+            },
+            "end": {
+              "line": 93,
+              "column": 3
+            }
+          },
+          "context": {
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 94,
+                "column": 0
+              }
+            },
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/logs/docs.js"
+          },
+          "augments": [],
+          "examples": [
+            {
+              "description": "// Define a custom function to handle logs.\nfunction logHandler (logEntry) {\n  // Compile the meta info of the log for a prefix.\n  const { timestamp, level, target } = logEntry\n  let { method } = logEntry\n  const logInfo = `${timestamp} - ${target.type} - ${level}`\n\n  // Assume that the first message parameter is a string.\n  const [log, ...extra] = logEntry.messages\n\n  // For the timer methods, don't actually use the console methods.\n  //    The Logger already did the timing, so simply log out the info.\n  if (['time', 'timeLog', 'timeEnd'].includes(method)) {\n    method = 'debug'\n  }\n\n  console[method](`${logInfo} - ${log}`, ...extra)\n}\n\n// Provide the LogHandler as part of the SDK configurations.\nconst configs = { ... }\nconfigs.logs.handler = logHandler\nconst client = create(configs)"
+            }
+          ],
+          "params": [
+            {
+              "title": "param",
+              "name": "LogEntry",
+              "lineNumber": 14,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "The LogEntry to be logged.",
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 27,
+                            "offset": 26
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 27,
+                        "offset": 26
+                      },
+                      "indent": []
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 27,
+                    "offset": 26
+                  }
+                }
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "Object"
+              }
+            }
+          ],
+          "properties": [],
+          "returns": [],
+          "sees": [],
+          "throws": [],
+          "todos": [],
+          "access": "public",
+          "scope": "static",
+          "kind": "typedef",
+          "name": "LogHandler",
+          "type": {
+            "type": "NameExpression",
+            "name": "Function"
+          },
+          "memberof": "logger",
+          "members": {
+            "global": [],
+            "inner": [],
+            "instance": [],
+            "events": [],
+            "static": []
+          },
+          "path": [
+            {
+              "name": "logger",
+              "kind": "namespace"
+            },
+            {
+              "name": "LogHandler",
+              "kind": "typedef",
+              "scope": "static"
+            }
+          ],
+          "namespace": "logger.LogHandler"
+        },
+        {
+          "description": {
+            "type": "root",
+            "children": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
                     "value": "A LogEntry object is the data that the SDK compiles when information is\n   logged. It contains both the logged information and meta-info about when\n   and who logged it.",
                     "position": {
                       "start": {
@@ -19003,7 +19321,7 @@
                 "column": 0
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/logs/docs.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/logs/docs.js"
           },
           "augments": [],
           "examples": [
@@ -19615,324 +19933,6 @@
             }
           ],
           "namespace": "logger.LogEntry"
-        },
-        {
-          "description": {
-            "type": "root",
-            "children": [
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "A LogHandler can be used to customize how the SDK should log information. By\n   default, the SDK will log information to the console, but a LogHandler can\n   be configured to change this behaviour.",
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 1,
-                        "offset": 0
-                      },
-                      "end": {
-                        "line": 3,
-                        "column": 43,
-                        "offset": 197
-                      },
-                      "indent": [
-                        1,
-                        1
-                      ]
-                    }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 1,
-                    "column": 1,
-                    "offset": 0
-                  },
-                  "end": {
-                    "line": 3,
-                    "column": 43,
-                    "offset": 197
-                  },
-                  "indent": [
-                    1,
-                    1
-                  ]
-                }
-              },
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "A LogHandler can be provided to the SDK as part of its configuration (see\n   ",
-                    "position": {
-                      "start": {
-                        "line": 5,
-                        "column": 1,
-                        "offset": 199
-                      },
-                      "end": {
-                        "line": 6,
-                        "column": 4,
-                        "offset": 276
-                      },
-                      "indent": [
-                        1
-                      ]
-                    }
-                  },
-                  {
-                    "type": "link",
-                    "url": "#configconfiglogs",
-                    "title": null,
-                    "jsdoc": true,
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "config.logs"
-                      }
-                    ],
-                    "position": {
-                      "start": {
-                        "line": 6,
-                        "column": 4,
-                        "offset": 276
-                      },
-                      "end": {
-                        "line": 6,
-                        "column": 41,
-                        "offset": 313
-                      },
-                      "indent": []
-                    }
-                  },
-                  {
-                    "type": "text",
-                    "value": "). The SDK will then provide this\n   function with the logged information.",
-                    "position": {
-                      "start": {
-                        "line": 6,
-                        "column": 41,
-                        "offset": 313
-                      },
-                      "end": {
-                        "line": 7,
-                        "column": 41,
-                        "offset": 387
-                      },
-                      "indent": [
-                        1
-                      ]
-                    }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 5,
-                    "column": 1,
-                    "offset": 199
-                  },
-                  "end": {
-                    "line": 7,
-                    "column": 41,
-                    "offset": 387
-                  },
-                  "indent": [
-                    1,
-                    1
-                  ]
-                }
-              }
-            ],
-            "position": {
-              "start": {
-                "line": 1,
-                "column": 1,
-                "offset": 0
-              },
-              "end": {
-                "line": 7,
-                "column": 41,
-                "offset": 387
-              }
-            }
-          },
-          "tags": [
-            {
-              "title": "public",
-              "description": null,
-              "lineNumber": 9,
-              "type": null
-            },
-            {
-              "title": "static",
-              "description": null,
-              "lineNumber": 10
-            },
-            {
-              "title": "typedef",
-              "description": null,
-              "lineNumber": 11,
-              "type": {
-                "type": "NameExpression",
-                "name": "Function"
-              },
-              "name": "LogHandler"
-            },
-            {
-              "title": "memberof",
-              "description": "logger",
-              "lineNumber": 12
-            },
-            {
-              "title": "requires",
-              "description": null,
-              "lineNumber": 13,
-              "name": "logs"
-            },
-            {
-              "title": "param",
-              "description": "The LogEntry to be logged.",
-              "lineNumber": 14,
-              "type": {
-                "type": "NameExpression",
-                "name": "Object"
-              },
-              "name": "LogEntry"
-            },
-            {
-              "title": "example",
-              "description": "// Define a custom function to handle logs.\nfunction logHandler (logEntry) {\n  // Compile the meta info of the log for a prefix.\n  const { timestamp, level, target } = logEntry\n  let { method } = logEntry\n  const logInfo = `${timestamp} - ${target.type} - ${level}`\n\n  // Assume that the first message parameter is a string.\n  const [log, ...extra] = logEntry.messages\n\n  // For the timer methods, don't actually use the console methods.\n  //    The Logger already did the timing, so simply log out the info.\n  if (['time', 'timeLog', 'timeEnd'].includes(method)) {\n    method = 'debug'\n  }\n\n  console[method](`${logInfo} - ${log}`, ...extra)\n}\n\n// Provide the LogHandler as part of the SDK configurations.\nconst configs = { ... }\nconfigs.logs.handler = logHandler\nconst client = create(configs)",
-              "lineNumber": 15
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 54,
-              "column": 0
-            },
-            "end": {
-              "line": 93,
-              "column": 3
-            }
-          },
-          "context": {
-            "loc": {
-              "start": {
-                "line": 1,
-                "column": 0
-              },
-              "end": {
-                "line": 94,
-                "column": 0
-              }
-            },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/logs/docs.js"
-          },
-          "augments": [],
-          "examples": [
-            {
-              "description": "// Define a custom function to handle logs.\nfunction logHandler (logEntry) {\n  // Compile the meta info of the log for a prefix.\n  const { timestamp, level, target } = logEntry\n  let { method } = logEntry\n  const logInfo = `${timestamp} - ${target.type} - ${level}`\n\n  // Assume that the first message parameter is a string.\n  const [log, ...extra] = logEntry.messages\n\n  // For the timer methods, don't actually use the console methods.\n  //    The Logger already did the timing, so simply log out the info.\n  if (['time', 'timeLog', 'timeEnd'].includes(method)) {\n    method = 'debug'\n  }\n\n  console[method](`${logInfo} - ${log}`, ...extra)\n}\n\n// Provide the LogHandler as part of the SDK configurations.\nconst configs = { ... }\nconfigs.logs.handler = logHandler\nconst client = create(configs)"
-            }
-          ],
-          "params": [
-            {
-              "title": "param",
-              "name": "LogEntry",
-              "lineNumber": 14,
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "The LogEntry to be logged.",
-                        "position": {
-                          "start": {
-                            "line": 1,
-                            "column": 1,
-                            "offset": 0
-                          },
-                          "end": {
-                            "line": 1,
-                            "column": 27,
-                            "offset": 26
-                          },
-                          "indent": []
-                        }
-                      }
-                    ],
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 1,
-                        "offset": 0
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 27,
-                        "offset": 26
-                      },
-                      "indent": []
-                    }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 1,
-                    "column": 1,
-                    "offset": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 27,
-                    "offset": 26
-                  }
-                }
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "Object"
-              }
-            }
-          ],
-          "properties": [],
-          "returns": [],
-          "sees": [],
-          "throws": [],
-          "todos": [],
-          "access": "public",
-          "scope": "static",
-          "kind": "typedef",
-          "name": "LogHandler",
-          "type": {
-            "type": "NameExpression",
-            "name": "Function"
-          },
-          "memberof": "logger",
-          "members": {
-            "global": [],
-            "inner": [],
-            "instance": [],
-            "events": [],
-            "static": []
-          },
-          "path": [
-            {
-              "name": "logger",
-              "kind": "namespace"
-            },
-            {
-              "name": "LogHandler",
-              "kind": "typedef",
-              "scope": "static"
-            }
-          ],
-          "namespace": "logger.LogHandler"
         }
       ]
     },
@@ -20068,7 +20068,7 @@
           "column": 20
         }
       },
-      "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
+      "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/call/interface/api.js"
     },
     "augments": [],
     "examples": [],
@@ -20195,7 +20195,7 @@
           "column": 36
         }
       },
-      "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/notifications/interface/api.js"
+      "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/notifications/interface/api.js"
     },
     "augments": [],
     "examples": [],
@@ -20331,7 +20331,7 @@
                 "column": 49
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/notifications/interface/eventTypes.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/notifications/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [],
@@ -20565,7 +20565,7 @@
                 "column": 47
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/notifications/interface/eventTypes.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/notifications/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [],
@@ -20856,7 +20856,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/notifications/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/notifications/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -21209,7 +21209,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/notifications/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/notifications/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -21996,7 +21996,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/notifications/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/notifications/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -22545,7 +22545,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/notifications/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/notifications/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -22822,7 +22822,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/notifications/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/notifications/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -23090,7 +23090,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/notifications/interface/api.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/notifications/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -23246,7 +23246,7 @@
             },
             {
               "type": "text",
-              "value": "s for manipulating SDP information.\nThese handlers are used to customize low-level call behaviour for very specific\nenvironments and/or scenarios. They can be provided during SDK instantiation\nto be used for all calls, or with the ",
+              "value": "s for manipulating SDP information.\nThese handlers are used to customize low-level call behaviour for very specific\nenvironments and/or scenarios.",
               "position": {
                 "start": {
                   "line": 1,
@@ -23254,12 +23254,96 @@
                   "offset": 59
                 },
                 "end": {
-                  "line": 4,
-                  "column": 39,
-                  "offset": 290
+                  "line": 3,
+                  "column": 31,
+                  "offset": 205
                 },
                 "indent": [
                   1,
+                  1
+                ]
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 1,
+              "column": 1,
+              "offset": 0
+            },
+            "end": {
+              "line": 3,
+              "column": 31,
+              "offset": 205
+            },
+            "indent": [
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "Note that SDP handlers are exposed on the entry point of the SDK. They can be added during\ninitialization of the SDK using the ",
+              "position": {
+                "start": {
+                  "line": 5,
+                  "column": 1,
+                  "offset": 207
+                },
+                "end": {
+                  "line": 6,
+                  "column": 37,
+                  "offset": 334
+                },
+                "indent": [
+                  1
+                ]
+              }
+            },
+            {
+              "type": "link",
+              "url": "#configconfigcall",
+              "title": null,
+              "jsdoc": true,
+              "children": [
+                {
+                  "type": "text",
+                  "value": "config.call.sdpHandlers"
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 6,
+                  "column": 37,
+                  "offset": 334
+                },
+                "end": {
+                  "line": 6,
+                  "column": 86,
+                  "offset": 383
+                },
+                "indent": []
+              }
+            },
+            {
+              "type": "text",
+              "value": " configuration\nparameter. They can also be set after the SDK's creation by using the\n",
+              "position": {
+                "start": {
+                  "line": 6,
+                  "column": 86,
+                  "offset": 383
+                },
+                "end": {
+                  "line": 8,
+                  "column": 1,
+                  "offset": 468
+                },
+                "indent": [
                   1,
                   1
                 ]
@@ -23278,31 +23362,31 @@
               ],
               "position": {
                 "start": {
-                  "line": 4,
-                  "column": 39,
-                  "offset": 290
+                  "line": 8,
+                  "column": 1,
+                  "offset": 468
                 },
                 "end": {
-                  "line": 4,
-                  "column": 66,
-                  "offset": 317
+                  "line": 8,
+                  "column": 28,
+                  "offset": 495
                 },
                 "indent": []
               }
             },
             {
               "type": "text",
-              "value": " Call API post-instantiation.",
+              "value": " function.",
               "position": {
                 "start": {
-                  "line": 4,
-                  "column": 66,
-                  "offset": 317
+                  "line": 8,
+                  "column": 28,
+                  "offset": 495
                 },
                 "end": {
-                  "line": 4,
-                  "column": 95,
-                  "offset": 346
+                  "line": 8,
+                  "column": 38,
+                  "offset": 505
                 },
                 "indent": []
               }
@@ -23310,14 +23394,14 @@
           ],
           "position": {
             "start": {
-              "line": 1,
+              "line": 5,
               "column": 1,
-              "offset": 0
+              "offset": 207
             },
             "end": {
-              "line": 4,
-              "column": 95,
-              "offset": 346
+              "line": 8,
+              "column": 38,
+              "offset": 505
             },
             "indent": [
               1,
@@ -23334,9 +23418,9 @@
           "offset": 0
         },
         "end": {
-          "line": 4,
-          "column": 95,
-          "offset": 346
+          "line": 8,
+          "column": 38,
+          "offset": 505
         }
       }
     },
@@ -23344,25 +23428,25 @@
       {
         "title": "public",
         "description": null,
-        "lineNumber": 6,
+        "lineNumber": 10,
         "type": null
       },
       {
         "title": "namespace",
         "description": null,
-        "lineNumber": 7,
+        "lineNumber": 11,
         "type": null,
         "name": "sdpHandlers"
       },
       {
         "title": "example",
         "description": "import { create, sdpHandlers } from 'kandy';\nconst codecRemover = sdpHandlers.createCodecRemover(['VP8', 'VP9'])\nconst client = create({\n  call: {\n    sdpHandlers: [ codecRemover, <Your-SDP-Handler-Function>, ...]\n  }\n})",
-        "lineNumber": 8
+        "lineNumber": 12
       },
       {
         "title": "example",
         "description": "// Through the Call API post-instantiation\nclient.call.setSdpHandlers([ codecRemover, <Your-SDP-Handler-Function>, ...])",
-        "lineNumber": 16
+        "lineNumber": 20
       }
     ],
     "loc": {
@@ -23371,22 +23455,22 @@
         "column": 0
       },
       "end": {
-        "line": 59,
+        "line": 63,
         "column": 3
       }
     },
     "context": {
       "loc": {
         "start": {
-          "line": 109,
+          "line": 121,
           "column": 0
         },
         "end": {
-          "line": 109,
+          "line": 121,
           "column": 58
         }
       },
-      "file": "/var/jenkins_home/workspace/Kandy.js_beta/builds/core/index.js"
+      "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/builds/core/index.js"
     },
     "augments": [],
     "examples": [
@@ -23421,7 +23505,7 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "In some scenarios it's necessary to remove certain codecs being offered by the SDK to remote parties.\nWhile creating an SDP handler would allow a user to perform this type of manipulation, it is a non-trivial task that requires in-depth knowledge of WebRTC SDP.",
+                    "value": "This function creates an SDP handler that will remove codecs matching the selectors specified for SDP offers and answers.",
                     "position": {
                       "start": {
                         "line": 1,
@@ -23429,13 +23513,11 @@
                         "offset": 0
                       },
                       "end": {
-                        "line": 2,
-                        "column": 160,
-                        "offset": 261
+                        "line": 1,
+                        "column": 122,
+                        "offset": 121
                       },
-                      "indent": [
-                        1
-                      ]
+                      "indent": []
                     }
                   }
                 ],
@@ -23446,9 +23528,46 @@
                     "offset": 0
                   },
                   "end": {
-                    "line": 2,
-                    "column": 160,
-                    "offset": 261
+                    "line": 1,
+                    "column": 122,
+                    "offset": 121
+                  },
+                  "indent": []
+                }
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "In some scenarios it's necessary to remove certain codecs being offered by the SDK to remote parties. For example, some legacy call services limit the SDP\nlength (usually to 4KB) and will reject calls that have SDP size above this amount.",
+                    "position": {
+                      "start": {
+                        "line": 3,
+                        "column": 1,
+                        "offset": 123
+                      },
+                      "end": {
+                        "line": 4,
+                        "column": 84,
+                        "offset": 361
+                      },
+                      "indent": [
+                        1
+                      ]
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 3,
+                    "column": 1,
+                    "offset": 123
+                  },
+                  "end": {
+                    "line": 4,
+                    "column": 84,
+                    "offset": 361
                   },
                   "indent": [
                     1
@@ -23460,17 +23579,17 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "To facilitate this common task, the createCodecRemover function creates a codec removal handler that can be used for this purpose.",
+                    "value": "While creating an SDP handler would allow a user to perform this type of manipulation, it is a non-trivial task that requires in-depth knowledge of WebRTC SDP.",
                     "position": {
                       "start": {
-                        "line": 4,
+                        "line": 6,
                         "column": 1,
-                        "offset": 263
+                        "offset": 363
                       },
                       "end": {
-                        "line": 4,
-                        "column": 131,
-                        "offset": 393
+                        "line": 6,
+                        "column": 160,
+                        "offset": 522
                       },
                       "indent": []
                     }
@@ -23478,14 +23597,14 @@
                 ],
                 "position": {
                   "start": {
-                    "line": 4,
+                    "line": 6,
                     "column": 1,
-                    "offset": 263
+                    "offset": 363
                   },
                   "end": {
-                    "line": 4,
-                    "column": 131,
-                    "offset": 393
+                    "line": 6,
+                    "column": 160,
+                    "offset": 522
                   },
                   "indent": []
                 }
@@ -23495,34 +23614,83 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "Note that SDP handlers are exposed on the entry point of the SDK. They need to be added to the list of SDP handlers via configuration on creation of an instance of the SDK.",
+                    "value": "To facilitate this common task, the createCodecRemover function creates a codec removal handler that can be used for this purpose. Applications can use this codec\nremoval handler in combination with the ",
                     "position": {
                       "start": {
-                        "line": 6,
+                        "line": 8,
                         "column": 1,
-                        "offset": 395
+                        "offset": 524
                       },
                       "end": {
-                        "line": 6,
-                        "column": 173,
-                        "offset": 567
+                        "line": 9,
+                        "column": 41,
+                        "offset": 727
+                      },
+                      "indent": [
+                        1
+                      ]
+                    }
+                  },
+                  {
+                    "type": "link",
+                    "url": "call.getAvailableCodecs",
+                    "title": null,
+                    "jsdoc": true,
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "call.getAvailableCodecs"
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 9,
+                        "column": 41,
+                        "offset": 727
+                      },
+                      "end": {
+                        "line": 9,
+                        "column": 96,
+                        "offset": 782
                       },
                       "indent": []
+                    }
+                  },
+                  {
+                    "type": "text",
+                    "value": " function in order to build logic to determine the best codecs to use\nfor their application.",
+                    "position": {
+                      "start": {
+                        "line": 9,
+                        "column": 96,
+                        "offset": 782
+                      },
+                      "end": {
+                        "line": 10,
+                        "column": 23,
+                        "offset": 874
+                      },
+                      "indent": [
+                        1
+                      ]
                     }
                   }
                 ],
                 "position": {
                   "start": {
-                    "line": 6,
+                    "line": 8,
                     "column": 1,
-                    "offset": 395
+                    "offset": 524
                   },
                   "end": {
-                    "line": 6,
-                    "column": 173,
-                    "offset": 567
+                    "line": 10,
+                    "column": 23,
+                    "offset": 874
                   },
-                  "indent": []
+                  "indent": [
+                    1,
+                    1
+                  ]
                 }
               }
             ],
@@ -23533,9 +23701,9 @@
                 "offset": 0
               },
               "end": {
-                "line": 6,
-                "column": 173,
-                "offset": 567
+                "line": 10,
+                "column": 23,
+                "offset": 874
               }
             }
           },
@@ -23543,24 +23711,24 @@
             {
               "title": "public",
               "description": null,
-              "lineNumber": 8,
+              "lineNumber": 12,
               "type": null
             },
             {
               "title": "memberof",
               "description": "sdpHandlers",
-              "lineNumber": 9
+              "lineNumber": 13
             },
             {
               "title": "method",
               "description": null,
-              "lineNumber": 10,
+              "lineNumber": 14,
               "name": "createCodecRemover"
             },
             {
               "title": "param",
               "description": "A list of codec selectors to remove from the SDP. If passing a list of strings, they will be converted into\n                                                     codec selectors that correspond to those names without any extra FMTP parameters.",
-              "lineNumber": 11,
+              "lineNumber": 15,
               "type": {
                 "type": "UnionType",
                 "elements": [
@@ -23597,7 +23765,7 @@
             {
               "title": "returns",
               "description": "The resulting SDP handler that will remove the codec.",
-              "lineNumber": 13,
+              "lineNumber": 17,
               "type": {
                 "type": "NameExpression",
                 "name": "call.SdpHandlerFunction"
@@ -23605,44 +23773,44 @@
             },
             {
               "title": "example",
-              "description": "import { create, sdpHandlers } from 'kandy';\nconst codecRemover = sdpHandlers.createCodecRemover([\n  'VP8',\n  'VP9',\n  {\n    name: 'H264',\n    fmtpParams: ['profile-level-id=4d0032', 'packetization-mode=1']\n  }\n])\n\nconst client = create({\n  call: {\n    sdpHandlers: [codecRemover]\n  }\n})",
-              "lineNumber": 14
+              "description": "import { create, sdpHandlers } from 'kandy';\n\nconst codecRemover = sdpHandlers.createCodecRemover([\n  // Remove all VP8 and VP9 codecs.\n  'VP8',\n  'VP9',\n\n  // Remove all H264 codecs with the specified FMTP parameters.\n  {\n    name: 'H264',\n    fmtpParams: ['profile-level-id=4d0032', 'packetization-mode=1']\n  }\n])\n\nconst client = create({\n  call: {\n    sdpHandlers: [codecRemover]\n  }\n})",
+              "lineNumber": 18
             }
           ],
           "loc": {
             "start": {
-              "line": 73,
+              "line": 77,
               "column": 0
             },
             "end": {
-              "line": 104,
+              "line": 116,
               "column": 3
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 109,
+                "line": 121,
                 "column": 0
               },
               "end": {
-                "line": 109,
+                "line": 121,
                 "column": 58
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/builds/core/index.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/builds/core/index.js"
           },
           "augments": [],
           "examples": [
             {
-              "description": "import { create, sdpHandlers } from 'kandy';\nconst codecRemover = sdpHandlers.createCodecRemover([\n  'VP8',\n  'VP9',\n  {\n    name: 'H264',\n    fmtpParams: ['profile-level-id=4d0032', 'packetization-mode=1']\n  }\n])\n\nconst client = create({\n  call: {\n    sdpHandlers: [codecRemover]\n  }\n})"
+              "description": "import { create, sdpHandlers } from 'kandy';\n\nconst codecRemover = sdpHandlers.createCodecRemover([\n  // Remove all VP8 and VP9 codecs.\n  'VP8',\n  'VP9',\n\n  // Remove all H264 codecs with the specified FMTP parameters.\n  {\n    name: 'H264',\n    fmtpParams: ['profile-level-id=4d0032', 'packetization-mode=1']\n  }\n])\n\nconst client = create({\n  call: {\n    sdpHandlers: [codecRemover]\n  }\n})"
             }
           ],
           "params": [
             {
               "title": "param",
               "name": "codecs",
-              "lineNumber": 11,
+              "lineNumber": 15,
               "description": {
                 "type": "root",
                 "children": [
@@ -23932,26 +24100,26 @@
           ],
           "loc": {
             "start": {
-              "line": 61,
+              "line": 65,
               "column": 0
             },
             "end": {
-              "line": 71,
+              "line": 75,
               "column": 3
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 109,
+                "line": 121,
                 "column": 0
               },
               "end": {
-                "line": 109,
+                "line": 121,
                 "column": 58
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/builds/core/index.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/builds/core/index.js"
           },
           "augments": [],
           "examples": [],
@@ -24301,7 +24469,7 @@
           "column": 5
         }
       },
-      "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/call/interface/api.js"
+      "file": "/var/jenkins_home/workspace/Kandy.js_beta@2/packages/kandy/src/call/interface/api.js"
     },
     "augments": [],
     "examples": [

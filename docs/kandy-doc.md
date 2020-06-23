@@ -612,6 +612,50 @@ Possible levels for the SDK logger.
 -   `INFO` **[string][7]** Log useful information and messages to indicate the SDK's internal operations.
 -   `DEBUG` **[string][7]** Log information to help diagnose problematic behaviour.
 
+### LogHandler
+
+A LogHandler can be used to customize how the SDK should log information. By
+   default, the SDK will log information to the console, but a LogHandler can
+   be configured to change this behaviour.
+
+A LogHandler can be provided to the SDK as part of its configuration (see
+   [config.logs][18]). The SDK will then provide this
+   function with the logged information.
+
+Type: [Function][15]
+
+**Parameters**
+
+-   `LogEntry` **[Object][6]** The LogEntry to be logged.
+
+**Examples**
+
+```javascript
+// Define a custom function to handle logs.
+function logHandler (logEntry) {
+  // Compile the meta info of the log for a prefix.
+  const { timestamp, level, target } = logEntry
+  let { method } = logEntry
+  const logInfo = `${timestamp} - ${target.type} - ${level}`
+
+  // Assume that the first message parameter is a string.
+  const [log, ...extra] = logEntry.messages
+
+  // For the timer methods, don't actually use the console methods.
+  //    The Logger already did the timing, so simply log out the info.
+  if (['time', 'timeLog', 'timeEnd'].includes(method)) {
+    method = 'debug'
+  }
+
+  console[method](`${logInfo} - ${log}`, ...extra)
+}
+
+// Provide the LogHandler as part of the SDK configurations.
+const configs = { ... }
+configs.logs.handler = logHandler
+const client = create(configs)
+```
+
 ### LogEntry
 
 A LogEntry object is the data that the SDK compiles when information is
@@ -659,50 +703,6 @@ function defaultLogHandler (logEntry) {
 
   console[method](`${logInfo} - ${log}`, ...extra)
 }
-```
-
-### LogHandler
-
-A LogHandler can be used to customize how the SDK should log information. By
-   default, the SDK will log information to the console, but a LogHandler can
-   be configured to change this behaviour.
-
-A LogHandler can be provided to the SDK as part of its configuration (see
-   [config.logs][18]). The SDK will then provide this
-   function with the logged information.
-
-Type: [Function][15]
-
-**Parameters**
-
--   `LogEntry` **[Object][6]** The LogEntry to be logged.
-
-**Examples**
-
-```javascript
-// Define a custom function to handle logs.
-function logHandler (logEntry) {
-  // Compile the meta info of the log for a prefix.
-  const { timestamp, level, target } = logEntry
-  let { method } = logEntry
-  const logInfo = `${timestamp} - ${target.type} - ${level}`
-
-  // Assume that the first message parameter is a string.
-  const [log, ...extra] = logEntry.messages
-
-  // For the timer methods, don't actually use the console methods.
-  //    The Logger already did the timing, so simply log out the info.
-  if (['time', 'timeLog', 'timeEnd'].includes(method)) {
-    method = 'debug'
-  }
-
-  console[method](`${logInfo} - ${log}`, ...extra)
-}
-
-// Provide the LogHandler as part of the SDK configurations.
-const configs = { ... }
-configs.logs.handler = logHandler
-const client = create(configs)
 ```
 
 ## Media
@@ -803,8 +803,12 @@ Enables, or disables, the processing of websocket notifications.
 
 A set of [SdpHandlerFunction][21]s for manipulating SDP information.
 These handlers are used to customize low-level call behaviour for very specific
-environments and/or scenarios. They can be provided during SDK instantiation
-to be used for all calls, or with the [call.setSdpHandlers][22] Call API post-instantiation.
+environments and/or scenarios.
+
+Note that SDP handlers are exposed on the entry point of the SDK. They can be added during
+initialization of the SDK using the [config.call.sdpHandlers][22] configuration
+parameter. They can also be set after the SDK's creation by using the
+[call.setSdpHandlers][23] function.
 
 **Examples**
 
@@ -825,12 +829,16 @@ client.call.setSdpHandlers([ codecRemover, <Your-SDP-Handler-Function>, ...])
 
 ### createCodecRemover
 
-In some scenarios it's necessary to remove certain codecs being offered by the SDK to remote parties.
+This function creates an SDP handler that will remove codecs matching the selectors specified for SDP offers and answers.
+
+In some scenarios it's necessary to remove certain codecs being offered by the SDK to remote parties. For example, some legacy call services limit the SDP
+length (usually to 4KB) and will reject calls that have SDP size above this amount.
+
 While creating an SDP handler would allow a user to perform this type of manipulation, it is a non-trivial task that requires in-depth knowledge of WebRTC SDP.
 
-To facilitate this common task, the createCodecRemover function creates a codec removal handler that can be used for this purpose.
-
-Note that SDP handlers are exposed on the entry point of the SDK. They need to be added to the list of SDP handlers via configuration on creation of an instance of the SDK.
+To facilitate this common task, the createCodecRemover function creates a codec removal handler that can be used for this purpose. Applications can use this codec
+removal handler in combination with the [call.getAvailableCodecs][24] function in order to build logic to determine the best codecs to use
+for their application.
 
 **Parameters**
 
@@ -841,9 +849,13 @@ Note that SDP handlers are exposed on the entry point of the SDK. They need to b
 
 ```javascript
 import { create, sdpHandlers } from 'kandy';
+
 const codecRemover = sdpHandlers.createCodecRemover([
+  // Remove all VP8 and VP9 codecs.
   'VP8',
   'VP9',
+
+  // Remove all H264 codecs with the specified FMTP parameters.
   {
     name: 'H264',
     fmtpParams: ['profile-level-id=4d0032', 'packetization-mode=1']
@@ -936,4 +948,8 @@ client.media.setDefaultDevices({
 
 [21]: call.SdpHandlerFunction
 
-[22]: call.setSdpHandlers
+[22]: #configconfigcall
+
+[23]: call.setSdpHandlers
+
+[24]: call.getAvailableCodecs
