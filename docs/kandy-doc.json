@@ -107,11 +107,11 @@
     "context": {
       "loc": {
         "start": {
-          "line": 87,
+          "line": 121,
           "column": 0
         },
         "end": {
-          "line": 87,
+          "line": 121,
           "column": 58
         }
       },
@@ -396,11 +396,11 @@
     "context": {
       "loc": {
         "start": {
-          "line": 87,
+          "line": 121,
           "column": 0
         },
         "end": {
-          "line": 87,
+          "line": 121,
           "column": 58
         }
       },
@@ -734,8 +734,17 @@
               "type": {
                 "type": "OptionalType",
                 "expression": {
-                  "type": "NameExpression",
-                  "name": "Object"
+                  "type": "UnionType",
+                  "elements": [
+                    {
+                      "type": "NameExpression",
+                      "name": "Object"
+                    },
+                    {
+                      "type": "NameExpression",
+                      "name": "boolean"
+                    }
+                  ]
                 }
               },
               "name": "logs.logActions"
@@ -797,8 +806,22 @@
             },
             {
               "title": "param",
-              "description": "Allow action payloads\n   to be exposed in the logs, potentially displaying sensitive information.",
+              "description": "Log level to be set\n   on the action logs",
               "lineNumber": 36,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "string"
+                }
+              },
+              "name": "logs.logActions.level",
+              "default": "'debug'"
+            },
+            {
+              "title": "param",
+              "description": "Allow action payloads\n   to be exposed in the logs, potentially displaying sensitive information.",
+              "lineNumber": 38,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -816,18 +839,18 @@
               "column": 0
             },
             "end": {
-              "line": 41,
+              "line": 43,
               "column": 3
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 42,
+                "line": 44,
                 "column": 0
               },
               "end": {
-                "line": 56,
+                "line": 58,
                 "column": 1
               }
             },
@@ -1200,8 +1223,17 @@
                   "type": {
                     "type": "OptionalType",
                     "expression": {
-                      "type": "NameExpression",
-                      "name": "Object"
+                      "type": "UnionType",
+                      "elements": [
+                        {
+                          "type": "NameExpression",
+                          "name": "Object"
+                        },
+                        {
+                          "type": "NameExpression",
+                          "name": "boolean"
+                        }
+                      ]
                     }
                   },
                   "properties": [
@@ -1477,8 +1509,74 @@
                     },
                     {
                       "title": "param",
-                      "name": "logs.logActions.exposePayloads",
+                      "name": "logs.logActions.level",
                       "lineNumber": 36,
+                      "description": {
+                        "type": "root",
+                        "children": [
+                          {
+                            "type": "paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "Log level to be set\n   on the action logs",
+                                "position": {
+                                  "start": {
+                                    "line": 1,
+                                    "column": 1,
+                                    "offset": 0
+                                  },
+                                  "end": {
+                                    "line": 2,
+                                    "column": 22,
+                                    "offset": 41
+                                  },
+                                  "indent": [
+                                    1
+                                  ]
+                                }
+                              }
+                            ],
+                            "position": {
+                              "start": {
+                                "line": 1,
+                                "column": 1,
+                                "offset": 0
+                              },
+                              "end": {
+                                "line": 2,
+                                "column": 22,
+                                "offset": 41
+                              },
+                              "indent": [
+                                1
+                              ]
+                            }
+                          }
+                        ],
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 2,
+                            "column": 22,
+                            "offset": 41
+                          }
+                        }
+                      },
+                      "type": {
+                        "type": "NameExpression",
+                        "name": "string"
+                      },
+                      "default": "'debug'"
+                    },
+                    {
+                      "title": "param",
+                      "name": "logs.logActions.exposePayloads",
+                      "lineNumber": 38,
                       "description": {
                         "type": "root",
                         "children": [
@@ -1682,7 +1780,7 @@
                 }
               },
               "name": "authentication.subscription.protocol",
-              "default": "https"
+              "default": "'https'"
             },
             {
               "title": "param",
@@ -1710,22 +1808,8 @@
             },
             {
               "title": "param",
-              "description": "Version of the REST API to be used.",
-              "lineNumber": 11,
-              "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "string"
-                }
-              },
-              "name": "authentication.subscription.version",
-              "default": "1"
-            },
-            {
-              "title": "param",
               "description": "Services to subscribe to for notifications.",
-              "lineNumber": 12,
+              "lineNumber": 11,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -1738,7 +1822,7 @@
             {
               "title": "param",
               "description": null,
-              "lineNumber": 13,
+              "lineNumber": 12,
               "type": {
                 "type": "NameExpression",
                 "name": "Object"
@@ -1748,7 +1832,7 @@
             {
               "title": "param",
               "description": "Protocol to be used for websocket notifications.",
-              "lineNumber": 14,
+              "lineNumber": 13,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -1757,12 +1841,12 @@
                 }
               },
               "name": "authentication.websocket.protocol",
-              "default": "wss"
+              "default": "'wss'"
             },
             {
               "title": "param",
               "description": "Server to be used for websocket notifications.",
-              "lineNumber": 15,
+              "lineNumber": 14,
               "type": {
                 "type": "NameExpression",
                 "name": "string"
@@ -1772,7 +1856,7 @@
             {
               "title": "param",
               "description": "Port to be used for websocket notifications.",
-              "lineNumber": 16,
+              "lineNumber": 15,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -1786,22 +1870,22 @@
           ],
           "loc": {
             "start": {
-              "line": 7,
+              "line": 10,
               "column": 0
             },
             "end": {
-              "line": 24,
+              "line": 26,
               "column": 3
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 32,
+                "line": 28,
                 "column": 0
               },
               "end": {
-                "line": 40,
+                "line": 41,
                 "column": 1
               }
             },
@@ -1940,7 +2024,7 @@
                         "type": "NameExpression",
                         "name": "string"
                       },
-                      "default": "https"
+                      "default": "'https'"
                     },
                     {
                       "title": "param",
@@ -2067,70 +2151,8 @@
                     },
                     {
                       "title": "param",
-                      "name": "authentication.subscription.version",
-                      "lineNumber": 11,
-                      "description": {
-                        "type": "root",
-                        "children": [
-                          {
-                            "type": "paragraph",
-                            "children": [
-                              {
-                                "type": "text",
-                                "value": "Version of the REST API to be used.",
-                                "position": {
-                                  "start": {
-                                    "line": 1,
-                                    "column": 1,
-                                    "offset": 0
-                                  },
-                                  "end": {
-                                    "line": 1,
-                                    "column": 36,
-                                    "offset": 35
-                                  },
-                                  "indent": []
-                                }
-                              }
-                            ],
-                            "position": {
-                              "start": {
-                                "line": 1,
-                                "column": 1,
-                                "offset": 0
-                              },
-                              "end": {
-                                "line": 1,
-                                "column": 36,
-                                "offset": 35
-                              },
-                              "indent": []
-                            }
-                          }
-                        ],
-                        "position": {
-                          "start": {
-                            "line": 1,
-                            "column": 1,
-                            "offset": 0
-                          },
-                          "end": {
-                            "line": 1,
-                            "column": 36,
-                            "offset": 35
-                          }
-                        }
-                      },
-                      "type": {
-                        "type": "NameExpression",
-                        "name": "string"
-                      },
-                      "default": "1"
-                    },
-                    {
-                      "title": "param",
                       "name": "authentication.subscription.service",
-                      "lineNumber": 12,
+                      "lineNumber": 11,
                       "description": {
                         "type": "root",
                         "children": [
@@ -2196,7 +2218,7 @@
                 {
                   "title": "param",
                   "name": "authentication.websocket",
-                  "lineNumber": 13,
+                  "lineNumber": 12,
                   "type": {
                     "type": "NameExpression",
                     "name": "Object"
@@ -2205,7 +2227,7 @@
                     {
                       "title": "param",
                       "name": "authentication.websocket.protocol",
-                      "lineNumber": 14,
+                      "lineNumber": 13,
                       "description": {
                         "type": "root",
                         "children": [
@@ -2262,12 +2284,12 @@
                         "type": "NameExpression",
                         "name": "string"
                       },
-                      "default": "wss"
+                      "default": "'wss'"
                     },
                     {
                       "title": "param",
                       "name": "authentication.websocket.server",
-                      "lineNumber": 15,
+                      "lineNumber": 14,
                       "description": {
                         "type": "root",
                         "children": [
@@ -2328,7 +2350,7 @@
                     {
                       "title": "param",
                       "name": "authentication.websocket.port",
-                      "lineNumber": 16,
+                      "lineNumber": 15,
                       "description": {
                         "type": "root",
                         "children": [
@@ -6347,12 +6369,12 @@
           "context": {
             "loc": {
               "start": {
-                "line": 35,
+                "line": 34,
                 "column": 0
               },
               "end": {
-                "line": 35,
-                "column": 102
+                "line": 37,
+                "column": 1
               }
             },
             "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/notifications/link/index.js"
@@ -7890,11 +7912,11 @@
     "context": {
       "loc": {
         "start": {
-          "line": 87,
+          "line": 121,
           "column": 0
         },
         "end": {
-          "line": 87,
+          "line": 121,
           "column": 58
         }
       },
@@ -8647,7 +8669,7 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "Add an event listener for the specified event type. The event is emmited by the SDK instance.",
+                    "value": "Add an event listener for the specified event type. The event is emitted by the SDK instance.",
                     "position": {
                       "start": {
                         "line": 1,
@@ -8993,7 +9015,7 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "Removes an event listener for the specified event type. The event is emmited by the SDK instance.",
+                    "value": "Removes an event listener for the specified event type. The event is emitted by the SDK instance.",
                     "position": {
                       "start": {
                         "line": 1,
@@ -10280,7 +10302,7 @@
             },
             {
               "title": "property",
-              "description": "A human-readable message to describe the error. If no message is known, this will be 'An error occured'.",
+              "description": "A human-readable message to describe the error. If no message is known, this will be 'An error occurred'.",
               "lineNumber": 7,
               "type": {
                 "type": "NameExpression",
@@ -10389,7 +10411,7 @@
                     "children": [
                       {
                         "type": "text",
-                        "value": "A human-readable message to describe the error. If no message is known, this will be 'An error occured'.",
+                        "value": "A human-readable message to describe the error. If no message is known, this will be 'An error occurred'.",
                         "position": {
                           "start": {
                             "line": 1,
@@ -10398,8 +10420,8 @@
                           },
                           "end": {
                             "line": 1,
-                            "column": 105,
-                            "offset": 104
+                            "column": 106,
+                            "offset": 105
                           },
                           "indent": []
                         }
@@ -10413,8 +10435,8 @@
                       },
                       "end": {
                         "line": 1,
-                        "column": 105,
-                        "offset": 104
+                        "column": 106,
+                        "offset": 105
                       },
                       "indent": []
                     }
@@ -10428,8 +10450,8 @@
                   },
                   "end": {
                     "line": 1,
-                    "column": 105,
-                    "offset": 104
+                    "column": 106,
+                    "offset": 105
                   }
                 }
               },
@@ -20424,7 +20446,7 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "An error occured with push notifications.",
+                    "value": "An error occurred with push notifications.",
                     "position": {
                       "start": {
                         "line": 1,
@@ -20433,8 +20455,8 @@
                       },
                       "end": {
                         "line": 1,
-                        "column": 42,
-                        "offset": 41
+                        "column": 43,
+                        "offset": 42
                       },
                       "indent": []
                     }
@@ -20448,8 +20470,8 @@
                   },
                   "end": {
                     "line": 1,
-                    "column": 42,
-                    "offset": 41
+                    "column": 43,
+                    "offset": 42
                   },
                   "indent": []
                 }
@@ -20463,8 +20485,8 @@
               },
               "end": {
                 "line": 1,
-                "column": 42,
-                "offset": 41
+                "column": 43,
+                "offset": 42
               }
             }
           },
@@ -23224,7 +23246,7 @@
             },
             {
               "type": "text",
-              "value": "s for manipulating SDP information.\nThese handlers are used to customize low-level call behaviour for very specific\nenvironments and/or scenarios. They can be provided during SDK instantiation\nto be used for all calls.",
+              "value": "s for manipulating SDP information.\nThese handlers are used to customize low-level call behaviour for very specific\nenvironments and/or scenarios.",
               "position": {
                 "start": {
                   "line": 1,
@@ -23232,12 +23254,11 @@
                   "offset": 59
                 },
                 "end": {
-                  "line": 4,
-                  "column": 26,
-                  "offset": 277
+                  "line": 3,
+                  "column": 31,
+                  "offset": 205
                 },
                 "indent": [
-                  1,
                   1,
                   1
                 ]
@@ -23251,9 +23272,136 @@
               "offset": 0
             },
             "end": {
-              "line": 4,
-              "column": 26,
-              "offset": 277
+              "line": 3,
+              "column": 31,
+              "offset": 205
+            },
+            "indent": [
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "Note that SDP handlers are exposed on the entry point of the SDK. They can be added during\ninitialization of the SDK using the ",
+              "position": {
+                "start": {
+                  "line": 5,
+                  "column": 1,
+                  "offset": 207
+                },
+                "end": {
+                  "line": 6,
+                  "column": 37,
+                  "offset": 334
+                },
+                "indent": [
+                  1
+                ]
+              }
+            },
+            {
+              "type": "link",
+              "url": "#configconfigcall",
+              "title": null,
+              "jsdoc": true,
+              "children": [
+                {
+                  "type": "text",
+                  "value": "config.call.sdpHandlers"
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 6,
+                  "column": 37,
+                  "offset": 334
+                },
+                "end": {
+                  "line": 6,
+                  "column": 86,
+                  "offset": 383
+                },
+                "indent": []
+              }
+            },
+            {
+              "type": "text",
+              "value": " configuration\nparameter. They can also be set after the SDK's creation by using the\n",
+              "position": {
+                "start": {
+                  "line": 6,
+                  "column": 86,
+                  "offset": 383
+                },
+                "end": {
+                  "line": 8,
+                  "column": 1,
+                  "offset": 468
+                },
+                "indent": [
+                  1,
+                  1
+                ]
+              }
+            },
+            {
+              "type": "link",
+              "url": "call.setSdpHandlers",
+              "title": null,
+              "jsdoc": true,
+              "children": [
+                {
+                  "type": "text",
+                  "value": "call.setSdpHandlers"
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 8,
+                  "column": 1,
+                  "offset": 468
+                },
+                "end": {
+                  "line": 8,
+                  "column": 28,
+                  "offset": 495
+                },
+                "indent": []
+              }
+            },
+            {
+              "type": "text",
+              "value": " function.",
+              "position": {
+                "start": {
+                  "line": 8,
+                  "column": 28,
+                  "offset": 495
+                },
+                "end": {
+                  "line": 8,
+                  "column": 38,
+                  "offset": 505
+                },
+                "indent": []
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 5,
+              "column": 1,
+              "offset": 207
+            },
+            "end": {
+              "line": 8,
+              "column": 38,
+              "offset": 505
             },
             "indent": [
               1,
@@ -23270,9 +23418,9 @@
           "offset": 0
         },
         "end": {
-          "line": 4,
-          "column": 26,
-          "offset": 277
+          "line": 8,
+          "column": 38,
+          "offset": 505
         }
       }
     },
@@ -23280,20 +23428,25 @@
       {
         "title": "public",
         "description": null,
-        "lineNumber": 6,
+        "lineNumber": 10,
         "type": null
       },
       {
         "title": "namespace",
         "description": null,
-        "lineNumber": 7,
+        "lineNumber": 11,
         "type": null,
         "name": "sdpHandlers"
       },
       {
         "title": "example",
-        "description": "import { create, sdpHandlers } from 'kandy';\nconst codecRemover = sdpHandlers.createCodecRemover(['VP8', 'VP9'])\nconst client = create({\n  call: {\n    sdpHandlers: [ <Your-SDP-Handler-Function>, ...]\n  }\n})",
-        "lineNumber": 8
+        "description": "import { create, sdpHandlers } from 'kandy';\nconst codecRemover = sdpHandlers.createCodecRemover(['VP8', 'VP9'])\nconst client = create({\n  call: {\n    sdpHandlers: [ codecRemover, <Your-SDP-Handler-Function>, ...]\n  }\n})",
+        "lineNumber": 12
+      },
+      {
+        "title": "example",
+        "description": "// Through the Call API post-instantiation\nclient.call.setSdpHandlers([ codecRemover, <Your-SDP-Handler-Function>, ...])",
+        "lineNumber": 20
       }
     ],
     "loc": {
@@ -23302,18 +23455,18 @@
         "column": 0
       },
       "end": {
-        "line": 56,
+        "line": 63,
         "column": 3
       }
     },
     "context": {
       "loc": {
         "start": {
-          "line": 87,
+          "line": 121,
           "column": 0
         },
         "end": {
-          "line": 87,
+          "line": 121,
           "column": 58
         }
       },
@@ -23322,7 +23475,10 @@
     "augments": [],
     "examples": [
       {
-        "description": "import { create, sdpHandlers } from 'kandy';\nconst codecRemover = sdpHandlers.createCodecRemover(['VP8', 'VP9'])\nconst client = create({\n  call: {\n    sdpHandlers: [ <Your-SDP-Handler-Function>, ...]\n  }\n})"
+        "description": "import { create, sdpHandlers } from 'kandy';\nconst codecRemover = sdpHandlers.createCodecRemover(['VP8', 'VP9'])\nconst client = create({\n  call: {\n    sdpHandlers: [ codecRemover, <Your-SDP-Handler-Function>, ...]\n  }\n})"
+      },
+      {
+        "description": "// Through the Call API post-instantiation\nclient.call.setSdpHandlers([ codecRemover, <Your-SDP-Handler-Function>, ...])"
       }
     ],
     "params": [],
@@ -23349,7 +23505,338 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "In some scenarios it's necessary to remove certain codecs being offered by the SDK to the remote party.\nWhile creating an SDP handler would allow a user to perform this type of manipulation, it is a non-trivial task that requires in-depth knowledge of WebRTC SDP.",
+                    "value": "This function creates an SDP handler that will remove codecs matching the selectors specified for SDP offers and answers.",
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 122,
+                        "offset": 121
+                      },
+                      "indent": []
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 122,
+                    "offset": 121
+                  },
+                  "indent": []
+                }
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "In some scenarios it's necessary to remove certain codecs being offered by the SDK to remote parties. For example, some legacy call services limit the SDP\nlength (usually to 4KB) and will reject calls that have SDP size above this amount.",
+                    "position": {
+                      "start": {
+                        "line": 3,
+                        "column": 1,
+                        "offset": 123
+                      },
+                      "end": {
+                        "line": 4,
+                        "column": 84,
+                        "offset": 361
+                      },
+                      "indent": [
+                        1
+                      ]
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 3,
+                    "column": 1,
+                    "offset": 123
+                  },
+                  "end": {
+                    "line": 4,
+                    "column": 84,
+                    "offset": 361
+                  },
+                  "indent": [
+                    1
+                  ]
+                }
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "While creating an SDP handler would allow a user to perform this type of manipulation, it is a non-trivial task that requires in-depth knowledge of WebRTC SDP.",
+                    "position": {
+                      "start": {
+                        "line": 6,
+                        "column": 1,
+                        "offset": 363
+                      },
+                      "end": {
+                        "line": 6,
+                        "column": 160,
+                        "offset": 522
+                      },
+                      "indent": []
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 6,
+                    "column": 1,
+                    "offset": 363
+                  },
+                  "end": {
+                    "line": 6,
+                    "column": 160,
+                    "offset": 522
+                  },
+                  "indent": []
+                }
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "To facilitate this common task, the createCodecRemover function creates a codec removal handler that can be used for this purpose. Applications can use this codec\nremoval handler in combination with the ",
+                    "position": {
+                      "start": {
+                        "line": 8,
+                        "column": 1,
+                        "offset": 524
+                      },
+                      "end": {
+                        "line": 9,
+                        "column": 41,
+                        "offset": 727
+                      },
+                      "indent": [
+                        1
+                      ]
+                    }
+                  },
+                  {
+                    "type": "link",
+                    "url": "call.getAvailableCodecs",
+                    "title": null,
+                    "jsdoc": true,
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "call.getAvailableCodecs"
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 9,
+                        "column": 41,
+                        "offset": 727
+                      },
+                      "end": {
+                        "line": 9,
+                        "column": 96,
+                        "offset": 782
+                      },
+                      "indent": []
+                    }
+                  },
+                  {
+                    "type": "text",
+                    "value": " function in order to build logic to determine the best codecs to use\nfor their application.",
+                    "position": {
+                      "start": {
+                        "line": 9,
+                        "column": 96,
+                        "offset": 782
+                      },
+                      "end": {
+                        "line": 10,
+                        "column": 23,
+                        "offset": 874
+                      },
+                      "indent": [
+                        1
+                      ]
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 8,
+                    "column": 1,
+                    "offset": 524
+                  },
+                  "end": {
+                    "line": 10,
+                    "column": 23,
+                    "offset": 874
+                  },
+                  "indent": [
+                    1,
+                    1
+                  ]
+                }
+              }
+            ],
+            "position": {
+              "start": {
+                "line": 1,
+                "column": 1,
+                "offset": 0
+              },
+              "end": {
+                "line": 10,
+                "column": 23,
+                "offset": 874
+              }
+            }
+          },
+          "tags": [
+            {
+              "title": "public",
+              "description": null,
+              "lineNumber": 12,
+              "type": null
+            },
+            {
+              "title": "memberof",
+              "description": "sdpHandlers",
+              "lineNumber": 13
+            },
+            {
+              "title": "method",
+              "description": null,
+              "lineNumber": 14,
+              "name": "createCodecRemover"
+            },
+            {
+              "title": "param",
+              "description": "A list of codec selectors to remove from the SDP. If passing a list of strings, they will be converted into\n                                                     codec selectors that correspond to those names without any extra FMTP parameters.",
+              "lineNumber": 15,
+              "type": {
+                "type": "UnionType",
+                "elements": [
+                  {
+                    "type": "TypeApplication",
+                    "expression": {
+                      "type": "NameExpression",
+                      "name": "Array"
+                    },
+                    "applications": [
+                      {
+                        "type": "NameExpression",
+                        "name": "CodecSelector"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "TypeApplication",
+                    "expression": {
+                      "type": "NameExpression",
+                      "name": "Array"
+                    },
+                    "applications": [
+                      {
+                        "type": "NameExpression",
+                        "name": "string"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "name": "codecs"
+            },
+            {
+              "title": "returns",
+              "description": "The resulting SDP handler that will remove the codec.",
+              "lineNumber": 17,
+              "type": {
+                "type": "NameExpression",
+                "name": "call.SdpHandlerFunction"
+              }
+            },
+            {
+              "title": "example",
+              "description": "import { create, sdpHandlers } from 'kandy';\n\nconst codecRemover = sdpHandlers.createCodecRemover([\n  // Remove all VP8 and VP9 codecs.\n  'VP8',\n  'VP9',\n\n  // Remove all H264 codecs with the specified FMTP parameters.\n  {\n    name: 'H264',\n    fmtpParams: ['profile-level-id=4d0032', 'packetization-mode=1']\n  }\n])\n\nconst client = create({\n  call: {\n    sdpHandlers: [codecRemover]\n  }\n})",
+              "lineNumber": 18
+            }
+          ],
+          "loc": {
+            "start": {
+              "line": 77,
+              "column": 0
+            },
+            "end": {
+              "line": 116,
+              "column": 3
+            }
+          },
+          "context": {
+            "loc": {
+              "start": {
+                "line": 121,
+                "column": 0
+              },
+              "end": {
+                "line": 121,
+                "column": 58
+              }
+            },
+            "file": "/var/jenkins_home/workspace/Kandy.js_master/builds/core/index.js"
+          },
+          "augments": [],
+          "examples": [
+            {
+              "description": "import { create, sdpHandlers } from 'kandy';\n\nconst codecRemover = sdpHandlers.createCodecRemover([\n  // Remove all VP8 and VP9 codecs.\n  'VP8',\n  'VP9',\n\n  // Remove all H264 codecs with the specified FMTP parameters.\n  {\n    name: 'H264',\n    fmtpParams: ['profile-level-id=4d0032', 'packetization-mode=1']\n  }\n])\n\nconst client = create({\n  call: {\n    sdpHandlers: [codecRemover]\n  }\n})"
+            }
+          ],
+          "params": [
+            {
+              "title": "param",
+              "name": "codecs",
+              "lineNumber": 15,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "A list of codec selectors to remove from the SDP. If passing a list of strings, they will be converted into\n                                                     codec selectors that correspond to those names without any extra FMTP parameters.",
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 2,
+                            "column": 135,
+                            "offset": 242
+                          },
+                          "indent": [
+                            1
+                          ]
+                        }
+                      }
+                    ],
                     "position": {
                       "start": {
                         "line": 1,
@@ -23358,8 +23845,8 @@
                       },
                       "end": {
                         "line": 2,
-                        "column": 160,
-                        "offset": 263
+                        "column": 135,
+                        "offset": 242
                       },
                       "indent": [
                         1
@@ -23375,246 +23862,39 @@
                   },
                   "end": {
                     "line": 2,
-                    "column": 160,
-                    "offset": 263
-                  },
-                  "indent": [
-                    1
-                  ]
-                }
-              },
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "To facilitate this common task, the SDK provides a codec removal handler creator that can be used for this purpose.",
-                    "position": {
-                      "start": {
-                        "line": 4,
-                        "column": 1,
-                        "offset": 265
-                      },
-                      "end": {
-                        "line": 4,
-                        "column": 116,
-                        "offset": 380
-                      },
-                      "indent": []
-                    }
+                    "column": 135,
+                    "offset": 242
                   }
-                ],
-                "position": {
-                  "start": {
-                    "line": 4,
-                    "column": 1,
-                    "offset": 265
-                  },
-                  "end": {
-                    "line": 4,
-                    "column": 116,
-                    "offset": 380
-                  },
-                  "indent": []
                 }
               },
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "The SDP handlers are exposed on the entry point of the SDK. They need to be added to the list of SDP handlers via configuration on creation of an instance of the SDK.",
-                    "position": {
-                      "start": {
-                        "line": 6,
-                        "column": 1,
-                        "offset": 382
-                      },
-                      "end": {
-                        "line": 6,
-                        "column": 167,
-                        "offset": 548
-                      },
-                      "indent": []
-                    }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 6,
-                    "column": 1,
-                    "offset": 382
-                  },
-                  "end": {
-                    "line": 6,
-                    "column": 167,
-                    "offset": 548
-                  },
-                  "indent": []
-                }
-              }
-            ],
-            "position": {
-              "start": {
-                "line": 1,
-                "column": 1,
-                "offset": 0
-              },
-              "end": {
-                "line": 6,
-                "column": 167,
-                "offset": 548
-              }
-            }
-          },
-          "tags": [
-            {
-              "title": "public",
-              "description": null,
-              "lineNumber": 8,
-              "type": null
-            },
-            {
-              "title": "memberof",
-              "description": "sdpHandlers",
-              "lineNumber": 9
-            },
-            {
-              "title": "method",
-              "description": null,
-              "lineNumber": 10,
-              "name": "createCodecRemover"
-            },
-            {
-              "title": "param",
-              "description": "A list of codec names to remove from the SDP.",
-              "lineNumber": 11,
               "type": {
-                "type": "TypeApplication",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "Array"
-                },
-                "applications": [
+                "type": "UnionType",
+                "elements": [
                   {
-                    "type": "NameExpression",
-                    "name": "string"
-                  }
-                ]
-              },
-              "name": "codecs"
-            },
-            {
-              "title": "returns",
-              "description": "The resulting SDP handler that will remove the codec.",
-              "lineNumber": 12,
-              "type": {
-                "type": "NameExpression",
-                "name": "call.SdpHandlerFunction"
-              }
-            },
-            {
-              "title": "example",
-              "description": "import { create, sdpHandlers } from 'kandy';\nconst codecRemover = sdpHandlers.createCodecRemover(['VP8', 'VP9'])\nconst client = create({\n  call: {\n    sdpHandlers: [codecRemover]\n  }\n})",
-              "lineNumber": 13
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 60,
-              "column": 0
-            },
-            "end": {
-              "line": 82,
-              "column": 3
-            }
-          },
-          "context": {
-            "loc": {
-              "start": {
-                "line": 87,
-                "column": 0
-              },
-              "end": {
-                "line": 87,
-                "column": 58
-              }
-            },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/builds/core/index.js"
-          },
-          "augments": [],
-          "examples": [
-            {
-              "description": "import { create, sdpHandlers } from 'kandy';\nconst codecRemover = sdpHandlers.createCodecRemover(['VP8', 'VP9'])\nconst client = create({\n  call: {\n    sdpHandlers: [codecRemover]\n  }\n})"
-            }
-          ],
-          "params": [
-            {
-              "title": "param",
-              "name": "codecs",
-              "lineNumber": 11,
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
+                    "type": "TypeApplication",
+                    "expression": {
+                      "type": "NameExpression",
+                      "name": "Array"
+                    },
+                    "applications": [
                       {
-                        "type": "text",
-                        "value": "A list of codec names to remove from the SDP.",
-                        "position": {
-                          "start": {
-                            "line": 1,
-                            "column": 1,
-                            "offset": 0
-                          },
-                          "end": {
-                            "line": 1,
-                            "column": 46,
-                            "offset": 45
-                          },
-                          "indent": []
-                        }
+                        "type": "NameExpression",
+                        "name": "CodecSelector"
                       }
-                    ],
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 1,
-                        "offset": 0
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 46,
-                        "offset": 45
-                      },
-                      "indent": []
-                    }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 1,
-                    "column": 1,
-                    "offset": 0
+                    ]
                   },
-                  "end": {
-                    "line": 1,
-                    "column": 46,
-                    "offset": 45
-                  }
-                }
-              },
-              "type": {
-                "type": "TypeApplication",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "Array"
-                },
-                "applications": [
                   {
-                    "type": "NameExpression",
-                    "name": "string"
+                    "type": "TypeApplication",
+                    "expression": {
+                      "type": "NameExpression",
+                      "name": "Array"
+                    },
+                    "applications": [
+                      {
+                        "type": "NameExpression",
+                        "name": "string"
+                      }
+                    ]
                   }
                 ]
               }
@@ -23707,6 +23987,312 @@
             }
           ],
           "namespace": "sdpHandlerscreateCodecRemover"
+        },
+        {
+          "description": {
+            "type": "root",
+            "children": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "An object that represents a selector to match codecs of an RTP map in SDP.",
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 75,
+                        "offset": 74
+                      },
+                      "indent": []
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 75,
+                    "offset": 74
+                  },
+                  "indent": []
+                }
+              }
+            ],
+            "position": {
+              "start": {
+                "line": 1,
+                "column": 1,
+                "offset": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 75,
+                "offset": 74
+              }
+            }
+          },
+          "tags": [
+            {
+              "title": "public",
+              "description": null,
+              "lineNumber": 3,
+              "type": null
+            },
+            {
+              "title": "static",
+              "description": null,
+              "lineNumber": 4
+            },
+            {
+              "title": "typedef",
+              "description": null,
+              "lineNumber": 5,
+              "type": {
+                "type": "NameExpression",
+                "name": "Object"
+              },
+              "name": "CodecSelector"
+            },
+            {
+              "title": "memberof",
+              "description": "sdpHandlers",
+              "lineNumber": 6
+            },
+            {
+              "title": "property",
+              "description": "The name of the codec.",
+              "lineNumber": 7,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "name"
+            },
+            {
+              "title": "property",
+              "description": "An array of strings to match against the \"a=fmtp\" format parameters for the corresponding codec.\n                                     All of the elements in the array must be contained in the \"a=fmtp\" attribute in order to be a match.",
+              "lineNumber": 8,
+              "type": {
+                "type": "TypeApplication",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "Array"
+                },
+                "applications": [
+                  {
+                    "type": "NameExpression",
+                    "name": "string"
+                  }
+                ]
+              },
+              "name": "fmtpParams"
+            }
+          ],
+          "loc": {
+            "start": {
+              "line": 65,
+              "column": 0
+            },
+            "end": {
+              "line": 75,
+              "column": 3
+            }
+          },
+          "context": {
+            "loc": {
+              "start": {
+                "line": 121,
+                "column": 0
+              },
+              "end": {
+                "line": 121,
+                "column": 58
+              }
+            },
+            "file": "/var/jenkins_home/workspace/Kandy.js_master/builds/core/index.js"
+          },
+          "augments": [],
+          "examples": [],
+          "params": [],
+          "properties": [
+            {
+              "title": "property",
+              "name": "name",
+              "lineNumber": 7,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "The name of the codec.",
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 23,
+                            "offset": 22
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 23,
+                        "offset": 22
+                      },
+                      "indent": []
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 23,
+                    "offset": 22
+                  }
+                }
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "fmtpParams",
+              "lineNumber": 8,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "An array of strings to match against the \"a=fmtp\" format parameters for the corresponding codec.\n                                     All of the elements in the array must be contained in the \"a=fmtp\" attribute in order to be a match.",
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 2,
+                            "column": 138,
+                            "offset": 234
+                          },
+                          "indent": [
+                            1
+                          ]
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 2,
+                        "column": 138,
+                        "offset": 234
+                      },
+                      "indent": [
+                        1
+                      ]
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                  },
+                  "end": {
+                    "line": 2,
+                    "column": 138,
+                    "offset": 234
+                  }
+                }
+              },
+              "type": {
+                "type": "TypeApplication",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "Array"
+                },
+                "applications": [
+                  {
+                    "type": "NameExpression",
+                    "name": "string"
+                  }
+                ]
+              }
+            }
+          ],
+          "returns": [],
+          "sees": [],
+          "throws": [],
+          "todos": [],
+          "access": "public",
+          "scope": "static",
+          "kind": "typedef",
+          "name": "CodecSelector",
+          "type": {
+            "type": "NameExpression",
+            "name": "Object"
+          },
+          "memberof": "sdpHandlers",
+          "members": {
+            "global": [],
+            "inner": [],
+            "instance": [],
+            "events": [],
+            "static": []
+          },
+          "path": [
+            {
+              "name": "sdpHandlers",
+              "kind": "namespace"
+            },
+            {
+              "name": "CodecSelector",
+              "kind": "typedef",
+              "scope": "static"
+            }
+          ],
+          "namespace": "sdpHandlers.CodecSelector"
         }
       ]
     },

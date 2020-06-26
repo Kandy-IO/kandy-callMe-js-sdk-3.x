@@ -51,7 +51,7 @@ The format of logs can also be customized by providing a
            to the console.
     -   `logs.enableFcsLogs` **[boolean][10]** Enable the detailed call logger
            for v3.X. Requires log level debug. (optional, default `true`)
-    -   `logs.logActions` **[Object][6]?** Options specifically for action logs when
+    -   `logs.logActions` **([Object][6] \| [boolean][10])?** Options specifically for action logs when
            logLevel is at DEBUG+ levels. Set this to false to not output action logs.
         -   `logs.logActions.handler` **[logger.LogHandler][9]?** The function to receive action
                log entries from the SDK. If not provided, a default handler will be used
@@ -63,6 +63,8 @@ The format of logs can also be customized by providing a
                inspected on the console. (optional, default `false`)
         -   `logs.logActions.diff` **[boolean][10]** Include a diff of what SDK
                context was changed by the action. (optional, default `false`)
+        -   `logs.logActions.level` **[string][7]** Log level to be set
+               on the action logs (optional, default `'debug'`)
         -   `logs.logActions.exposePayloads` **[boolean][10]** Allow action payloads
                to be exposed in the logs, potentially displaying sensitive information. (optional, default `false`)
 
@@ -74,13 +76,12 @@ Configuration options for the CallMe Authentication feature.
 
 -   `authentication` **[Object][6]** Authentication configs.
     -   `authentication.subscription` **[Object][6]** 
-        -   `authentication.subscription.protocol` **[string][7]** Protocol to be used for subscription requests. (optional, default `https`)
+        -   `authentication.subscription.protocol` **[string][7]** Protocol to be used for subscription requests. (optional, default `'https'`)
         -   `authentication.subscription.server` **[string][7]** Server to be used for subscription requests.
         -   `authentication.subscription.port` **[Number][11]** Port to be used for subscription requests. (optional, default `443`)
-        -   `authentication.subscription.version` **[string][7]** Version of the REST API to be used. (optional, default `1`)
         -   `authentication.subscription.service` **[Array][12]?** Services to subscribe to for notifications.
     -   `authentication.websocket` **[Object][6]** 
-        -   `authentication.websocket.protocol` **[string][7]** Protocol to be used for websocket notifications. (optional, default `wss`)
+        -   `authentication.websocket.protocol` **[string][7]** Protocol to be used for websocket notifications. (optional, default `'wss'`)
         -   `authentication.websocket.server` **[string][7]** Server to be used for websocket notifications.
         -   `authentication.websocket.port` **[Number][11]** Port to be used for websocket notifications. (optional, default `443`)
 
@@ -244,7 +245,7 @@ Update values in the global Config section of the store. The values pertain to t
 
 ### on
 
-Add an event listener for the specified event type. The event is emmited by the SDK instance.
+Add an event listener for the specified event type. The event is emitted by the SDK instance.
 
 **Parameters**
 
@@ -264,7 +265,7 @@ client.on('dummy:event', function (params) {
 
 ### off
 
-Removes an event listener for the specified event type. The event is emmited by the SDK instance.
+Removes an event listener for the specified event type. The event is emitted by the SDK instance.
 
 **Parameters**
 
@@ -316,7 +317,7 @@ Type: [Object][6]
 **Properties**
 
 -   `code` **[string][7]** The code of the error. If no code is known, this will be 'NO_CODE'.
--   `message` **[string][7]** A human-readable message to describe the error. If no message is known, this will be 'An error occured'.
+-   `message` **[string][7]** A human-readable message to describe the error. If no message is known, this will be 'An error occurred'.
 
 ## Calls
 
@@ -802,8 +803,12 @@ Enables, or disables, the processing of websocket notifications.
 
 A set of [SdpHandlerFunction][21]s for manipulating SDP information.
 These handlers are used to customize low-level call behaviour for very specific
-environments and/or scenarios. They can be provided during SDK instantiation
-to be used for all calls.
+environments and/or scenarios.
+
+Note that SDP handlers are exposed on the entry point of the SDK. They can be added during
+initialization of the SDK using the [config.call.sdpHandlers][22] configuration
+parameter. They can also be set after the SDK's creation by using the
+[call.setSdpHandlers][23] function.
 
 **Examples**
 
@@ -812,29 +817,51 @@ import { create, sdpHandlers } from 'kandy';
 const codecRemover = sdpHandlers.createCodecRemover(['VP8', 'VP9'])
 const client = create({
   call: {
-    sdpHandlers: [ <Your-SDP-Handler-Function>, ...]
+    sdpHandlers: [ codecRemover, <Your-SDP-Handler-Function>, ...]
   }
 })
 ```
 
+```javascript
+// Through the Call API post-instantiation
+client.call.setSdpHandlers([ codecRemover, <Your-SDP-Handler-Function>, ...])
+```
+
 ### createCodecRemover
 
-In some scenarios it's necessary to remove certain codecs being offered by the SDK to the remote party.
+This function creates an SDP handler that will remove codecs matching the selectors specified for SDP offers and answers.
+
+In some scenarios it's necessary to remove certain codecs being offered by the SDK to remote parties. For example, some legacy call services limit the SDP
+length (usually to 4KB) and will reject calls that have SDP size above this amount.
+
 While creating an SDP handler would allow a user to perform this type of manipulation, it is a non-trivial task that requires in-depth knowledge of WebRTC SDP.
 
-To facilitate this common task, the SDK provides a codec removal handler creator that can be used for this purpose.
-
-The SDP handlers are exposed on the entry point of the SDK. They need to be added to the list of SDP handlers via configuration on creation of an instance of the SDK.
+To facilitate this common task, the createCodecRemover function creates a codec removal handler that can be used for this purpose. Applications can use this codec
+removal handler in combination with the [call.getAvailableCodecs][24] function in order to build logic to determine the best codecs to use
+for their application.
 
 **Parameters**
 
--   `codecs` **[Array][12]&lt;[string][7]>** A list of codec names to remove from the SDP.
+-   `codecs` **([Array][12]&lt;CodecSelector> | [Array][12]&lt;[string][7]>)** A list of codec selectors to remove from the SDP. If passing a list of strings, they will be converted into
+                                                         codec selectors that correspond to those names without any extra FMTP parameters.
 
 **Examples**
 
 ```javascript
 import { create, sdpHandlers } from 'kandy';
-const codecRemover = sdpHandlers.createCodecRemover(['VP8', 'VP9'])
+
+const codecRemover = sdpHandlers.createCodecRemover([
+  // Remove all VP8 and VP9 codecs.
+  'VP8',
+  'VP9',
+
+  // Remove all H264 codecs with the specified FMTP parameters.
+  {
+    name: 'H264',
+    fmtpParams: ['profile-level-id=4d0032', 'packetization-mode=1']
+  }
+])
+
 const client = create({
   call: {
     sdpHandlers: [codecRemover]
@@ -843,6 +870,18 @@ const client = create({
 ```
 
 Returns **call.SdpHandlerFunction** The resulting SDP handler that will remove the codec.
+
+### CodecSelector
+
+An object that represents a selector to match codecs of an RTP map in SDP.
+
+Type: [Object][6]
+
+**Properties**
+
+-   `name` **[string][7]** The name of the codec.
+-   `fmtpParams` **[Array][12]&lt;[string][7]>** An array of strings to match against the "a=fmtp" format parameters for the corresponding codec.
+                                         All of the elements in the array must be contained in the "a=fmtp" attribute in order to be a match.
 
 ## setDefaultDevices
 
@@ -908,3 +947,9 @@ client.media.setDefaultDevices({
 [20]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
 
 [21]: call.SdpHandlerFunction
+
+[22]: #configconfigcall
+
+[23]: call.setSdpHandlers
+
+[24]: call.getAvailableCodecs
