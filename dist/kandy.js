@@ -1,7 +1,7 @@
 /**
  * Kandy.js
  * kandy.callMe.js
- * Version: 3.18.0-beta.468
+ * Version: 3.18.0-beta.469
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -3554,54 +3554,6 @@ exports.default = function (obj, keys) {
   }
 
   return target;
-};
-
-/***/ }),
-
-/***/ "../../node_modules/babel-runtime/helpers/toArray.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _from = __webpack_require__("../../node_modules/babel-runtime/core-js/array/from.js");
-
-var _from2 = _interopRequireDefault(_from);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = function (arr) {
-  return Array.isArray(arr) ? arr : (0, _from2.default)(arr);
-};
-
-/***/ }),
-
-/***/ "../../node_modules/babel-runtime/helpers/toConsumableArray.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _from = __webpack_require__("../../node_modules/babel-runtime/core-js/array/from.js");
-
-var _from2 = _interopRequireDefault(_from);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = function (arr) {
-  if (Array.isArray(arr)) {
-    for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
-      arr2[i] = arr[i];
-    }
-
-    return arr2;
-  } else {
-    return (0, _from2.default)(arr);
-  }
 };
 
 /***/ }),
@@ -20870,7 +20822,7 @@ var _module10 = _interopRequireDefault(_module9);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var modules = [
+const modules = [
 // Common modules, needed in all scenarios
 _module2.default,
 
@@ -20885,12 +20837,12 @@ _module10.default];
 
 // Modules
 function createFcs() {
-    var bottle = new _bottlejs2.default();
+    const bottle = new _bottlejs2.default();
 
     // Load all modules into bottle.
     modules.forEach(_loadModule2.default.bind(bottle));
 
-    var container = bottle.container;
+    const container = bottle.container;
     var fcs = bottle.container.Core;
 
     // Build the namespaces.
@@ -20928,31 +20880,34 @@ exports.Cache = Cache;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function Cache(_ref) {
-    var _fcs = _ref.Core,
-        _config = _ref.Config,
-        _global = _ref.Global;
-
+function Cache({
+    Core: _fcs,
+    Config: _config,
+    Global: _global
+}) {
 
     function getPrefix() {
-        var username = _fcs.getUser() || '';
-        var cachePrefix = _config.cachePrefix || 'FCS';
-        return cachePrefix + '_' + username + '_';
+        const username = _fcs.getUser() || '';
+        const cachePrefix = _config.cachePrefix || 'FCS';
+        return `${cachePrefix}_${username}_`;
     }
 
     (0, _assign2.default)(this, {
-        setItem: function setItem(keyName, keyValue) {
+        setItem(keyName, keyValue) {
             return _global.localStorage.setItem(getPrefix() + keyName, keyValue);
         },
-        getItem: function getItem(keyName) {
+
+        getItem(keyName) {
             return _global.localStorage.getItem(getPrefix() + keyName);
         },
-        removeItem: function removeItem(keyName) {
+
+        removeItem(keyName) {
             return _global.localStorage.removeItem(getPrefix() + keyName);
         },
-        clear: function clear() {
-            for (var i = 0; i < _global.localStorage.length; ++i) {
-                var fullKeyName = localStorage.key(i);
+
+        clear() {
+            for (let i = 0; i < _global.localStorage.length; ++i) {
+                const fullKeyName = localStorage.key(i);
 
                 // If the key name starts with the prefix, remove it.
                 if (fullKeyName.indexOf(getPrefix()) === 0) {
@@ -20979,7 +20934,7 @@ exports.CallImpl = CallImpl;
 
 var _utils = __webpack_require__("../../packages/fcs/src/js/utils/index.js");
 
-var mediaErrors = exports.mediaErrors = {
+const mediaErrors = exports.mediaErrors = {
   NOT_FOUND: 1,
   NOT_ALLOWED: 2,
   OPTIONS: 3,
@@ -21002,10 +20957,7 @@ var mediaErrors = exports.mediaErrors = {
  *
  * @version @{spidr.jsl.version}
  */
-function CallImpl(_ref) {
-  var _callManager = _ref.CallManager,
-      _rccManager = _ref.RccManager;
-
+function CallImpl({ CallManager: _callManager, RccManager: _rccManager }) {
 
   /**
    * This field provides the state of local video status like "recvonly", "sendrecv", "sendrecv" etc.
@@ -21169,7 +21121,7 @@ function CallImpl(_ref) {
    *
    */
   this.setOnMonitorSessionLost = function (callback) {
-    return _rccManager.setOnMonitorSessionLost({ callback: callback });
+    return _rccManager.setOnMonitorSessionLost({ callback });
   };
 
   /**
@@ -21179,7 +21131,7 @@ function CallImpl(_ref) {
    */
 
   this.initMedia = function (onSuccess, onFailure, options) {
-    return _callManager.initMedia({ options: options }, onSuccess, onFailure);
+    return _callManager.initMedia({ options }, onSuccess, onFailure);
   };
 
   /**
@@ -21354,7 +21306,7 @@ function CallImpl(_ref) {
    */
 
   this.startMonitorDevice = function (deviceID, onSuccess, onFailure) {
-    return _rccManager.startMonitorDevice({ deviceID: deviceID }, onSuccess, onFailure);
+    return _rccManager.startMonitorDevice({ deviceID }, onSuccess, onFailure);
   };
 
   /**
@@ -21431,7 +21383,7 @@ function CallImpl(_ref) {
    */
 
   this.set_logSeverityLevel = function (level) {
-    return _callManager.set_logSeverityLevel({ level: level });
+    return _callManager.set_logSeverityLevel({ level });
   };
 
   /**
@@ -21568,7 +21520,7 @@ function CallImpl(_ref) {
    */
 
   this.getUserMedia = function (onSuccess, onFailure, options) {
-    return _callManager.getUserMedia({ options: options, privateStream: true }, onSuccess, onFailure);
+    return _callManager.getUserMedia({ options, privateStream: true }, onSuccess, onFailure);
   };
 
   /**
@@ -21588,7 +21540,7 @@ function CallImpl(_ref) {
    */
 
   this.showSettingsWindow = function (onSuccess, onFailure, options) {
-    return _callManager.showSettingsWindow({ options: options }, onSuccess, onFailure);
+    return _callManager.showSettingsWindow({ options }, onSuccess, onFailure);
   };
 
   /**
@@ -21714,7 +21666,7 @@ function CallImpl(_ref) {
    *
    */
   this.createStreamRenderer = function (stream, container, options) {
-    return _callManager.createStreamRenderer({ stream: stream, container: container, options: options });
+    return _callManager.createStreamRenderer({ stream, container, options });
   };
 
   /**
@@ -21727,7 +21679,7 @@ function CallImpl(_ref) {
    * @param {object} container The DOM node into which the renderer was previously created
    */
   this.disposeStreamRenderer = function (container) {
-    return _callManager.disposeStreamRenderer({ container: container });
+    return _callManager.disposeStreamRenderer({ container });
   };
 
   /**
@@ -21935,7 +21887,7 @@ function CallImpl(_ref) {
    */
 
   this.clickToCall = function (callingParty, calledParty, onSuccess, onFailure) {
-    return _callManager.clickToCall({ callingParty: callingParty, calledParty: calledParty }, onSuccess, onFailure);
+    return _callManager.clickToCall({ callingParty, calledParty }, onSuccess, onFailure);
   };
 
   /**
@@ -21952,7 +21904,7 @@ function CallImpl(_ref) {
    */
 
   this.getIMRN = function (realm, source, destination, onSuccess, onFailure) {
-    return _callManager.getIMRN({ realm: realm, source: source, destination: destination }, onSuccess, onFailure);
+    return _callManager.getIMRN({ realm, source, destination }, onSuccess, onFailure);
   };
 
   /**
@@ -21965,7 +21917,7 @@ function CallImpl(_ref) {
    * @param id of the stream
    */
   this.getStreamById = function (streamId) {
-    return _callManager.getStreamById({ streamId: streamId });
+    return _callManager.getStreamById({ streamId });
   };
 
   /**
@@ -21978,7 +21930,7 @@ function CallImpl(_ref) {
    * @param id of the stream
    */
   this.removeStreamById = function (streamId) {
-    _callManager.removeStreamById({ streamId: streamId });
+    _callManager.removeStreamById({ streamId });
   };
 
   /**
@@ -21991,7 +21943,7 @@ function CallImpl(_ref) {
    * @param id of the audio input device
    */
   this.setSelectedMicrophoneId = function (microphoneId) {
-    _callManager.setSelectedMicrophoneId({ microphoneId: microphoneId });
+    _callManager.setSelectedMicrophoneId({ microphoneId });
   };
 
   /**
@@ -22004,7 +21956,7 @@ function CallImpl(_ref) {
    * @param id of the video input device
    */
   this.setSelectedCameraId = function (cameraId) {
-    _callManager.setSelectedCameraId({ cameraId: cameraId });
+    _callManager.setSelectedCameraId({ cameraId });
   };
 
   /**
@@ -22020,7 +21972,7 @@ function CallImpl(_ref) {
    * @param {function} onFailure Function called if the operation fails to complete.
    */
   this.setSelectedSpeakerId = function (speakerId, onSuccess, onFailure) {
-    _callManager.setSelectedSpeakerId({ speakerId: speakerId }, onSuccess, onFailure);
+    _callManager.setSelectedSpeakerId({ speakerId }, onSuccess, onFailure);
   };
 
   /**
@@ -22045,7 +21997,7 @@ function CallImpl(_ref) {
    * });
    */
   this.getCameraList = function (onSuccess) {
-    return _callManager.getCameraList({ onSuccess: onSuccess });
+    return _callManager.getCameraList({ onSuccess });
   };
 
   /**
@@ -22070,7 +22022,7 @@ function CallImpl(_ref) {
    * });
    */
   this.getMicrophoneList = function (onSuccess) {
-    return _callManager.getMicrophoneList({ onSuccess: onSuccess });
+    return _callManager.getMicrophoneList({ onSuccess });
   };
 
   /**
@@ -22095,7 +22047,7 @@ function CallImpl(_ref) {
    * });
    */
   this.getSpeakerList = function (onSuccess) {
-    return _callManager.getSpeakerList({ onSuccess: onSuccess });
+    return _callManager.getSpeakerList({ onSuccess });
   };
 
   /**
@@ -22147,7 +22099,7 @@ function CallImpl(_ref) {
    * call.changeSpeaker(speakerId, onSuccess, onFailure);
    */
   this.changeSpeaker = function (speakerId, onSuccess, onFailure) {
-    return _callManager.changeSpeaker({ speakerId: speakerId }, onSuccess, onFailure);
+    return _callManager.changeSpeaker({ speakerId }, onSuccess, onFailure);
   };
 
   /**
@@ -22178,7 +22130,7 @@ function CallImpl(_ref) {
    *
    */
   this.setOnMonitorSessionRefreshed = function (callback) {
-    return _rccManager.setOnMonitorSessionRefreshed({ callback: callback });
+    return _rccManager.setOnMonitorSessionRefreshed({ callback });
   };
 
   /**
@@ -22209,7 +22161,7 @@ function CallImpl(_ref) {
    *
    */
   this.setOnMonitorSessionTerminated = function (callback) {
-    return _rccManager.setOnMonitorSessionTerminated({ callback: callback });
+    return _rccManager.setOnMonitorSessionTerminated({ callback });
   };
 
   /**
@@ -24543,9 +24495,7 @@ Object.defineProperty(exports, "__esModule", {
 var _call = __webpack_require__("../../packages/fcs/src/js/call/call.js");
 
 exports.default = {
-    Call: function Call(container) {
-        return new _call.CallImpl(container);
-    }
+    Call: container => new _call.CallImpl(container)
 };
 
 /***/ }),
@@ -24567,15 +24517,9 @@ var _rccManager = __webpack_require__("../../packages/fcs/src/js/call/rcc/rccMan
 var _wamrcc = __webpack_require__("../../packages/fcs/src/js/call/rcc/wamrcc.js");
 
 exports.default = {
-    RccFSM: function RccFSM(container) {
-        return new _rccFsm.RccFSMImpl(container);
-    },
-    RccManager: function RccManager(container) {
-        return new _rccManager.RccManagerImpl(container);
-    },
-    RccControlService: function RccControlService(container) {
-        return new _wamrcc.RccControlServiceImpl(container);
-    }
+    RccFSM: container => new _rccFsm.RccFSMImpl(container),
+    RccManager: container => new _rccManager.RccManagerImpl(container),
+    RccControlService: container => new _wamrcc.RccControlServiceImpl(container)
 };
 
 /***/ }),
@@ -24597,9 +24541,9 @@ exports.RccFSMImpl = RccFSMImpl;
  *
  */
 
-function RccFSMImpl(_ref) {
-    var _logManager = _ref.LogManager;
-
+function RccFSMImpl({
+    LogManager: _logManager
+}) {
 
     this.CallFSMState = {
         INIT: 'INIT',
@@ -25288,16 +25232,16 @@ var _utils2 = __webpack_require__("../../packages/fcs/src/js/utils/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function RccManagerImpl(_ref) {
-    var _rccFSM = _ref.RccFSM,
-        _rccControlService = _ref.RccControlService,
-        _logManager = _ref.LogManager,
-        _globalBroadcaster = _ref.GlobalBroadcaster,
-        _utils = _ref.Utils,
-        _core = _ref.Core,
-        _config = _ref.Config,
-        _notificationCallbacks = _ref.NotificationCallbacks;
-
+function RccManagerImpl({
+    RccFSM: _rccFSM,
+    RccControlService: _rccControlService,
+    LogManager: _logManager,
+    GlobalBroadcaster: _globalBroadcaster,
+    Utils: _utils,
+    Core: _core,
+    Config: _config,
+    NotificationCallbacks: _notificationCallbacks
+}) {
 
     /* AUDIT_KICKOFF_TIMEOUT is the interval we use to kickoff call audit after the call is setup.
      * The timeout is there to ensure we do not hit call setup race conditions when we try to kickoff the call audit */
@@ -26728,9 +26672,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.RccControlServiceImpl = RccControlServiceImpl;
-function RccControlServiceImpl(_ref) {
-    var _server = _ref.Http;
-
+function RccControlServiceImpl({ Http: _server }) {
 
     function genericErrorParser(jqXHR, property) {
         try {
@@ -27031,9 +26973,7 @@ exports.CallFSMImpl = CallFSMImpl;
  *
  */
 
-function CallFSMImpl(_ref) {
-    var _logManager = _ref.LogManager;
-
+function CallFSMImpl({ LogManager: _logManager }) {
 
     this.CallFSMState = {
         INIT: 'INIT',
@@ -27958,19 +27898,19 @@ var _fp = __webpack_require__("../../node_modules/lodash/fp.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function CallManagerImpl(_ref) {
-    var _webRtcManager = _ref.WebRtcManager,
-        _callFSM = _ref.CallFSM,
-        _callControlService = _ref.CallControlService,
-        _sdpParser = _ref.SdpParser,
-        _logManager = _ref.LogManager,
-        _globalBroadcaster = _ref.GlobalBroadcaster,
-        _utils = _ref.Utils,
-        _core = _ref.Core,
-        _config = _ref.Config,
-        _cache = _ref.Cache,
-        _notificationCallBacks = _ref.NotificationCallbacks;
-
+function CallManagerImpl({
+    WebRtcManager: _webRtcManager,
+    CallFSM: _callFSM,
+    CallControlService: _callControlService,
+    SdpParser: _sdpParser,
+    LogManager: _logManager,
+    GlobalBroadcaster: _globalBroadcaster,
+    Utils: _utils,
+    Core: _core,
+    Config: _config,
+    Cache: _cache,
+    NotificationCallbacks: _notificationCallBacks
+}) {
 
     /* AUDIT_KICKOFF_TIMEOUT is the interval we use to kickoff call audit after the call is setup.
      * The timeout is there to ensure we do not hit call setup race conditions when we try to kickoff the call audit */
@@ -29135,7 +29075,7 @@ function CallManagerImpl(_ref) {
                     internalCall = calls[id];
 
                     if (internalCall) {
-                        var defaultActiveCallTimeoutMS = 120000; // 2 minutes
+                        const defaultActiveCallTimeoutMS = 120000; // 2 minutes
                         var activeCallTimeout = typeof _config.activeCallTimeoutMS !== 'undefined' ? _config.activeCallTimeoutMS : defaultActiveCallTimeoutMS;
                         var callAge = Date.now() - internalCall.call.timestamp;
 
@@ -29196,7 +29136,7 @@ function CallManagerImpl(_ref) {
                             internalCall.call.onStateChange(CALL_STATES.ENDED, 0);
                             clearResources(internalCall);
                         } else {
-                            logger.info('Unable to sync call ' + internalCall);
+                            logger.info(`Unable to sync call ${internalCall}`);
                         }
                     });
                 }
@@ -30236,9 +30176,7 @@ function CallManagerImpl(_ref) {
         calls[call.id] = call;
 
         function triggerCallState(state, doNotTriggerQueue) {
-            var stateText = (0, _fp.find)(function (stateName) {
-                return CALL_STATES[stateName] === state;
-            }, (0, _keys2.default)(CALL_STATES));
+            const stateText = (0, _fp.find)(stateName => CALL_STATES[stateName] === state, (0, _keys2.default)(CALL_STATES));
             logger.debug('triggerCallState:  stateCode =   ' + state + '   state =   ' + stateText + '    call.statusCode =  ' + call.statusCode + '   call.reasonText =  ' + call.reasonText);
             call.call.callState = state;
             _utils.callFunctionIfExist(call.call.onStateChange, state, call.statusCode, call.reasonText, {
@@ -30254,7 +30192,7 @@ function CallManagerImpl(_ref) {
             triggerCallState(state, true);
         }
 
-        auditTimerDelay = function auditTimerDelay() {
+        auditTimerDelay = function () {
             setTimeout(function () {
                 if (_core.isConnected()) {
                     _callControlService.audit(call.id, function () {
@@ -30267,7 +30205,7 @@ function CallManagerImpl(_ref) {
             }, AUDIT_KICKOFF_TIMEOUT);
         };
 
-        startAuditTimer = function startAuditTimer() {
+        startAuditTimer = function () {
             if (!call.isAuditing) {
                 call.call.setAuditTimer(function () {
                     if (_core.isConnected()) {
@@ -31216,7 +31154,7 @@ function CallManagerImpl(_ref) {
                     var opts = {
                         isVideoEnabled: isSendInitialVideo
                     },
-                        successCallback = function successCallback() {
+                        successCallback = function () {
                         // if previous call is an active call, mute it
                         if (transferredCallState === fsmState.COMPLETED) {
                             transferredCall.call.mute();
@@ -31238,7 +31176,7 @@ function CallManagerImpl(_ref) {
                             self.handleReplacesFailure(newlyCreatedCall);
                         }, data.customParameters);
                     },
-                        failureCallback = function failureCallback() {
+                        failureCallback = function () {
                         logger.error('[NotificationCallBacks.handleStartCallReplaceNotification] webrtc error');
                         self.handleReplacesWebrtcFailure(newlyCreatedCall);
                     };
@@ -31481,15 +31419,9 @@ var _callManager = __webpack_require__("../../packages/fcs/src/js/call/wam/callM
 var _wamcall = __webpack_require__("../../packages/fcs/src/js/call/wam/wamcall.js");
 
 exports.default = {
-    CallFSM: function CallFSM(container) {
-        return new _callFsm.CallFSMImpl(container);
-    },
-    CallManager: function CallManager(container) {
-        return new _callManager.CallManagerImpl(container);
-    },
-    CallControlService: function CallControlService(container) {
-        return new _wamcall.CallControlServiceImpl(container);
-    }
+    CallFSM: container => new _callFsm.CallFSMImpl(container),
+    CallManager: container => new _callManager.CallManagerImpl(container),
+    CallControlService: container => new _wamcall.CallControlServiceImpl(container)
 };
 
 /***/ }),
@@ -31513,13 +31445,13 @@ var _constants2 = _interopRequireDefault(_constants);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function CallControlServiceImpl(_ref) {
-    var _server = _ref.Http,
-        _logManager = _ref.LogManager,
-        _cache = _ref.Cache,
-        _config = _ref.Config,
-        _sdpPipeline = _ref.SdpPipeline;
-
+function CallControlServiceImpl({
+    Http: _server,
+    LogManager: _logManager,
+    Cache: _cache,
+    Config: _config,
+    SdpPipeline: _sdpPipeline
+}) {
 
     var logger = _logManager.getLogger('callControlService');
 
@@ -31540,7 +31472,7 @@ function CallControlServiceImpl(_ref) {
     }
 
     this.startCall = function (from, to, sdp, onSuccess, onFailure, customParameters) {
-        var modifiedSdp = runSdpPipeline(undefined, sdp, _constants2.default.WEBRTC.SDP.OPERATION.START_CALL, _constants2.default.WEBRTC.SDP.TYPE.OFFER);
+        const modifiedSdp = runSdpPipeline(undefined, sdp, _constants2.default.WEBRTC.SDP.OPERATION.START_CALL, _constants2.default.WEBRTC.SDP.TYPE.OFFER);
 
         logger.info('Call Start Function: ' + from + ' --> ' + to);
 
@@ -31634,7 +31566,7 @@ function CallControlServiceImpl(_ref) {
     };
 
     this.hold = function (callid, sdp, onSuccess, onFailure, customParameters) {
-        var modifiedSdp = runSdpPipeline(callid, sdp, _constants2.default.WEBRTC.SDP.OPERATION.HOLD, _constants2.default.WEBRTC.SDP.TYPE.OFFER);
+        const modifiedSdp = runSdpPipeline(callid, sdp, _constants2.default.WEBRTC.SDP.OPERATION.HOLD, _constants2.default.WEBRTC.SDP.TYPE.OFFER);
 
         logger.info('Hold Function : sdp : ' + modifiedSdp);
         var data,
@@ -31668,7 +31600,7 @@ function CallControlServiceImpl(_ref) {
     };
 
     this.unhold = function (callid, sdp, onSuccess, onFailure, customParameters) {
-        var modifiedSdp = runSdpPipeline(callid, sdp, _constants2.default.WEBRTC.SDP.OPERATION.UNHOLD, _constants2.default.WEBRTC.SDP.TYPE.OFFER);
+        const modifiedSdp = runSdpPipeline(callid, sdp, _constants2.default.WEBRTC.SDP.OPERATION.UNHOLD, _constants2.default.WEBRTC.SDP.TYPE.OFFER);
 
         logger.info('UnHold Function : sdp : ' + modifiedSdp);
         var data,
@@ -31703,7 +31635,7 @@ function CallControlServiceImpl(_ref) {
     };
 
     this.reinvite = function (callid, sdp, onSuccess, onFailure, customParameters) {
-        var modifiedSdp = runSdpPipeline(callid, sdp, _constants2.default.WEBRTC.SDP.OPERATION.UPDATE, _constants2.default.WEBRTC.SDP.TYPE.OFFER);
+        const modifiedSdp = runSdpPipeline(callid, sdp, _constants2.default.WEBRTC.SDP.OPERATION.UPDATE, _constants2.default.WEBRTC.SDP.TYPE.OFFER);
 
         logger.info('reinvite Function : sdp : ' + modifiedSdp);
 
@@ -31738,10 +31670,8 @@ function CallControlServiceImpl(_ref) {
         }, onSuccess, onFailure, null, errorParser);
     };
 
-    this.respondCallUpdate = function (callid, sdp, onSuccess, onFailure, customParameters) {
-        var operation = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : _constants2.default.WEBRTC.SDP.OPERATION.UPDATE;
-
-        var modifiedSdp = runSdpPipeline(callid, sdp, operation, _constants2.default.WEBRTC.SDP.TYPE.ANSWER);
+    this.respondCallUpdate = function (callid, sdp, onSuccess, onFailure, customParameters, operation = _constants2.default.WEBRTC.SDP.OPERATION.UPDATE) {
+        const modifiedSdp = runSdpPipeline(callid, sdp, operation, _constants2.default.WEBRTC.SDP.TYPE.ANSWER);
 
         logger.info('Respond Call Update Function : sdp : ' + modifiedSdp);
         var data,
@@ -31784,7 +31714,7 @@ function CallControlServiceImpl(_ref) {
     };
 
     this.join = function (firstSessionData, secondSessionData, sdp, onSuccess, onFailure, customParameters) {
-        var modifiedSdp = runSdpPipeline(undefined, sdp, _constants2.default.WEBRTC.SDP.OPERATION.UPDATE, _constants2.default.WEBRTC.SDP.TYPE.OFFER);
+        const modifiedSdp = runSdpPipeline(undefined, sdp, _constants2.default.WEBRTC.SDP.OPERATION.UPDATE, _constants2.default.WEBRTC.SDP.TYPE.OFFER);
 
         logger.info('Join Function : sdp : ' + modifiedSdp);
 
@@ -31844,7 +31774,7 @@ function CallControlServiceImpl(_ref) {
         var endUrl = (_config.anonymous ? '/callMe/callSessions/' : '/callControl/callSessions/') + callid;
         var queryString = localReasonText ? '?reasonText=' + localReasonText : '';
         if (realm) {
-            var delimiter = queryString ? '&' : '?';
+            let delimiter = queryString ? '&' : '?';
             queryString += realm ? delimiter + 'tokenrealm=' + realm : '';
         }
 
@@ -31855,7 +31785,7 @@ function CallControlServiceImpl(_ref) {
     };
 
     this.answerCall = function (callid, sdp, onSuccess, onFailure, customParameters) {
-        var modifiedSdp = runSdpPipeline(callid, sdp, _constants2.default.WEBRTC.SDP.OPERATION.ANSWER_CALL, _constants2.default.WEBRTC.SDP.TYPE.ANSWER);
+        const modifiedSdp = runSdpPipeline(callid, sdp, _constants2.default.WEBRTC.SDP.OPERATION.ANSWER_CALL, _constants2.default.WEBRTC.SDP.TYPE.ANSWER);
 
         logger.info('Answer Call Function : sdp : ' + modifiedSdp);
 
@@ -32098,7 +32028,7 @@ var _utils = __webpack_require__("../../packages/fcs/src/js/utils/index.js");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function ChallengeManagerFactory() {
-    var challengeManager = {};
+    const challengeManager = {};
 
     /*
      * Set the challenge handler which is a function that will receive challenges.
@@ -32145,7 +32075,7 @@ function ChallengeManagerFactory() {
 
         // If we don't already have a challenge to the application in progress, create one.
         if (!challengeManager.currentChallenge) {
-            challengeManager.currentChallenge = (0, _utils.always)(new _promiscuous2.default(function (resolve, reject) {
+            challengeManager.currentChallenge = (0, _utils.always)(new _promiscuous2.default((resolve, reject) => {
                 if (challengeManager.challengeHandler) {
                     var retry = (0, _once2.default)(function (params) {
 
@@ -32166,9 +32096,7 @@ function ChallengeManagerFactory() {
                 } else {
                     reject();
                 }
-            }), function () {
-                return challengeManager.currentChallenge = undefined;
-            });
+            }), () => challengeManager.currentChallenge = undefined);
         }
 
         return challengeManager.currentChallenge;
@@ -32182,9 +32110,7 @@ function ChallengeManagerFactory() {
      */
     challengeManager.suspendChallenges = function (waitOn) {
         challengeManager.challengeSuspensions++;
-        return (0, _utils.always)(waitOn, function () {
-            return challengeManager.challengeSuspensions -= 1;
-        });
+        return (0, _utils.always)(waitOn, () => challengeManager.challengeSuspensions -= 1);
     };
 
     challengeManager.challengeSuspensions = 0;
@@ -32451,10 +32377,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @param _server
  * @param _globalBroadcaster
  */
-function CoreImpl(_ref) {
-    var _globalBroadcaster = _ref.GlobalBroadcaster,
-        _config = _ref.Config;
-
+function CoreImpl({
+    GlobalBroadcaster: _globalBroadcaster,
+    Config: _config
+}) {
 
     var dev = null,
         pluginVer = null,
@@ -33103,7 +33029,7 @@ function CoreImpl(_ref) {
         // This function checks the expiration date.
         // It should not be a very small value.
         // Otherwise, the api enters the loop.There is no upper limit.
-        var handleValidSubscriptionExpiryTimerValue = function handleValidSubscriptionExpiryTimerValue(time) {
+        var handleValidSubscriptionExpiryTimerValue = function (time) {
             if (time && parseInt(time) >= MIN_SUBSCRIPTION_EXPIRY_VALUE) {
                 return time;
             } else {
@@ -33531,9 +33457,7 @@ Object.defineProperty(exports, "__esModule", {
 var _globalBroadcaster = __webpack_require__("../../packages/fcs/src/js/globalbroadcaster/globalBroadcaster.js");
 
 exports.default = {
-    GlobalBroadcaster: function GlobalBroadcaster() {
-        return new _globalBroadcaster.GlobalBroadcaster();
-    }
+    GlobalBroadcaster: () => new _globalBroadcaster.GlobalBroadcaster()
 };
 
 /***/ }),
@@ -33561,12 +33485,12 @@ var _errors2 = _interopRequireDefault(_errors);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function HttpImpl(_ref) {
-    var _xhr = _ref.XHR,
-        _globalBroadcaster = _ref.GlobalBroadcaster,
-        _core = _ref.Core,
-        _config = _ref.Config;
-
+function HttpImpl({
+    XHR: _xhr,
+    GlobalBroadcaster: _globalBroadcaster,
+    Core: _core,
+    Config: _config
+}) {
 
     var REQUEST_TYPE_PUT = 'PUT',
         REQUEST_TYPE_POST = 'POST',
@@ -33627,7 +33551,7 @@ function HttpImpl(_ref) {
     function sendRequest(method, callParams, successHandler, errorHandler, successParser, errorParser, responseType, header) {
         var kandyUAT = _core.getKandyUAT();
 
-        var failureHandler = function failureHandler(statusCode) {
+        var failureHandler = function (statusCode) {
             if (statusCode === _errors2.default.TOKEN_NOT_FOUND) {
                 _globalBroadcaster.publish(_constants2.default.EVENT.TOKEN_NOT_FOUND);
                 session = null;
@@ -33762,12 +33686,8 @@ var _http = __webpack_require__("../../packages/fcs/src/js/http/http.js");
 var _xhr = __webpack_require__("../../packages/fcs/src/js/http/xhr.js");
 
 exports.default = {
-    XHR: function XHR(container) {
-        return new _xhr.XHRImpl(container);
-    },
-    Http: function Http(container) {
-        return new _http.HttpImpl(container);
-    }
+    XHR: container => new _xhr.XHRImpl(container),
+    Http: container => new _http.HttpImpl(container)
 };
 
 /***/ }),
@@ -33800,15 +33720,15 @@ var _constants2 = _interopRequireDefault(_constants);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function XHRImpl(_ref) {
-    var _core = _ref.Core,
-        _globalBroadcaster = _ref.GlobalBroadcaster,
-        _logManager = _ref.LogManager,
-        _config = _ref.Config,
-        _utils = _ref.Utils,
-        _challenger = _ref.ChallengeManager,
-        _goneNotifier = _ref.GoneNotifier;
-
+function XHRImpl({
+    Core: _core,
+    GlobalBroadcaster: _globalBroadcaster,
+    LogManager: _logManager,
+    Config: _config,
+    Utils: _utils,
+    ChallengeManager: _challenger,
+    GoneNotifier: _goneNotifier
+}) {
 
     var DEFAULT_LONGPOLLING_TOLERANCE = 30000,
         DEFAULT_AJAX_TIMEOUT = 40000,
@@ -34055,7 +33975,7 @@ function XHRImpl(_ref) {
             return isSuccess;
         }
 
-        handleSuccess = function handleSuccess(xhr) {
+        handleSuccess = function (xhr) {
 
             if (xhr.readyState === XHR_READY_STATE.REQUEST_DONE) {
 
@@ -34102,11 +34022,11 @@ function XHRImpl(_ref) {
             }
         };
 
-        handleError = function handleError(xhr) {
+        handleError = function (xhr) {
             // TODO: Error Thrown
             logger.error('ajax error: ' + xhr.status + ' ' + xhr.statusText, composeAjaxRequestResponseLog(responseLogContext, xhr, xhr.statusText));
 
-            var reportError = function reportError() {
+            var reportError = function () {
                 if (xhr.status === 410) {
                     logger.error('410 Gone received');
                     _utils.callFunctionIfExist(_goneNotifier.onGoneReceived);
@@ -34137,7 +34057,7 @@ function XHRImpl(_ref) {
             if (xhr.status === 403 && _core.getKandyUAT() && _config.enableAuthChallenge) {
                 _challenger.challenge().then(function (newUAT) {
                     // Replace the key parameter with the new user access token.
-                    callParams.url = callParams.url.replace(/([\?\&]key=)uat[0-9a-f]{32}/gi, '$1' + newUAT);
+                    callParams.url = callParams.url.replace(/([\?\&]key=)uat[0-9a-f]{32}/gi, `$1${newUAT}`);
                     self.call(method, callParams, successHandler, errorHandler, successParser, errorParser, responseType, origHeaders);
                 }).catch(reportError);
             } else {
@@ -34176,10 +34096,10 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.LocaleService = LocaleService;
-function LocaleService(_ref) {
-    var _server = _ref.Http,
-        _utils = _ref.Utils;
-
+function LocaleService({
+    Http: _server,
+    Utils: _utils
+}) {
     this.getUserLocale = function (onSuccess, onFailure) {
         _server.sendGetRequest({
             'url': _server.getWAMUrl(1, '/localization', false)
@@ -34224,9 +34144,7 @@ exports.LogManagerImpl = LogManagerImpl;
  * @since 3.0.0
  *
  */
-function LogManagerImpl(_ref) {
-    var _core = _ref.Core;
-
+function LogManagerImpl({ Core: _core }) {
     var loggers = {},
         enabled = false,
         Level = {
@@ -34468,39 +34386,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = (0, _extends3.default)({}, _module2.default, _module4.default, _module6.default, _module8.default, {
 
-    Config: function Config() {
-        return (0, _config.Config)();
-    },
-    LogManager: function LogManager(container) {
-        return new _logManager.LogManagerImpl(container);
-    },
-    Utils: function Utils(container) {
-        return new _utils.Utils(container);
-    },
-    Cache: function Cache(container) {
-        return new _cache.Cache(container);
-    },
-    SdpParser: function SdpParser(container) {
-        return new _sdpparser.SdpParserImpl(container);
-    },
-    LocaleService: function LocaleService(container) {
-        return new _locale.LocaleService(container);
-    },
+    Config: () => (0, _config.Config)(),
+    LogManager: container => new _logManager.LogManagerImpl(container),
+    Utils: container => new _utils.Utils(container),
+    Cache: container => new _cache.Cache(container),
+    SdpParser: container => new _sdpparser.SdpParserImpl(container),
+    LocaleService: container => new _locale.LocaleService(container),
     ChallengeManager: _challenge.ChallengeManagerFactory,
-    Core: function Core(container) {
-        return new _core.CoreImpl(container);
-    },
-    NotificationCallbacks: function NotificationCallbacks() {
+    Core: container => new _core.CoreImpl(container),
+    NotificationCallbacks: () => {
         return {};
     },
 
     // Some globals
-    Navigator: function Navigator() {
-        return navigator;
-    },
-    Global: function Global() {
-        return window;
-    }
+    Navigator: () => navigator,
+    Global: () => window
 });
 
 /***/ }),
@@ -34533,15 +34433,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // support trickle ICE since you wouldn't expect the SDP to have all of its
 // candidates up front anyways.
 function createBundleHandler(getConfig) {
-    return function bundleHandler(_ref) {
-        var next = _ref.next,
-            currentSdp = _ref.currentSdp;
-
+    return function bundleHandler({ next, currentSdp }) {
         if (getConfig().bundlePolicy !== _constants2.default.WEBRTC.SDP.BUNDLE_POLICY.DISABLED || currentSdp.groups === undefined) {
             return next(currentSdp);
         }
 
-        var newSdp = (0, _fp.cloneDeep)(currentSdp);
+        const newSdp = (0, _fp.cloneDeep)(currentSdp);
 
         delete newSdp.groups;
         return next(newSdp);
@@ -34593,23 +34490,16 @@ function createCodecRemover(codecs) {
         codecs = [];
     }
     // We allow the user to pass in a codecs of objects or strings, so here we format the strings into objects for uniformity.
-    codecs = codecs.map(function (item) {
-        return typeof item === 'string' ? { name: item } : item;
-    });
+    codecs = codecs.map(item => typeof item === 'string' ? { name: item } : item);
 
-    return function () {
+    return function (...params) {
         // Adding support for new callstack sdp handlers
         // Old callstack sdp pipeline passes an object to each sdp
         // handler that contains the currentSdp
         // New callstack passes 3 arguments to each sdp handler
         // newSdp, info, originalSdp
-        var oldCallstack = true;
-        var currentSdp = void 0;
-
-        for (var _len = arguments.length, params = Array(_len), _key = 0; _key < _len; _key++) {
-            params[_key] = arguments[_key];
-        }
-
+        let oldCallstack = true;
+        let currentSdp;
         if (params[0].currentSdp) {
             currentSdp = params[0].currentSdp;
         } else if (params.length === 3) {
@@ -34617,32 +34507,26 @@ function createCodecRemover(codecs) {
             currentSdp = params[0];
         }
 
-        var newSdp = (0, _fp.cloneDeep)(currentSdp);
+        let newSdp = (0, _fp.cloneDeep)(currentSdp);
 
         // This is an array of strings representing codec names we want to remove.
-        var codecStringsToRemove = codecs.map(function (codec) {
-            return codec.name;
-        });
+        let codecStringsToRemove = codecs.map(codec => codec.name);
 
-        newSdp.media.forEach(function (media) {
+        newSdp.media.forEach(media => {
             // This is an array of just the codes (codec payloads) that we FOR SURE want to remove.
-            var finalRemoveList = [];
+            let finalRemoveList = [];
             // This is an array of RTP objects who have codecs that are the same as strings passed in via codecs.
-            var filteredRtp = [];
+            let filteredRtp = [];
 
             // If the current rtp.codec is in the codecStringsToRemove list, add the rtp to filteredRtp
-            filteredRtp = media.rtp.filter(function (rtp) {
-                return codecStringsToRemove.includes(rtp.codec);
-            });
+            filteredRtp = media.rtp.filter(rtp => codecStringsToRemove.includes(rtp.codec));
 
-            filteredRtp.forEach(function (rtp) {
+            filteredRtp.forEach(rtp => {
                 // We grab the relevantCodec codecs object from the passed in codecs, based on the name string.
-                var relevantCodecs = codecs.filter(function (codec) {
-                    return codec.name === rtp.codec;
-                });
+                const relevantCodecs = codecs.filter(codec => codec.name === rtp.codec);
 
                 // We check the relevantCodec. If it is not present, then we have no codecs info for this specific rtp.
-                relevantCodecs.forEach(function (relevantCodec) {
+                relevantCodecs.forEach(relevantCodec => {
                     // If fmtpParams doesnt exist or is of length 0 then we assume we can remove all instances of this codec
                     if (!relevantCodec.fmtpParams || relevantCodec.fmtpParams && relevantCodec.fmtpParams.length === 0) {
                         // We want to delete this codec no matter what, since no fmtp params were included.
@@ -34650,13 +34534,11 @@ function createCodecRemover(codecs) {
                     } else {
                         // There are fmtp values for this codec. Therefore we have to check each media.fmtp object to see if it is the right one.
                         // Then when we find the right fmtp object, we check its config to see if it has the parameters specified in the input.
-                        media.fmtp.forEach(function (fmtp) {
+                        media.fmtp.forEach(fmtp => {
                             // We check each iteration to see if we found the right fmtp object.
                             if (fmtp.payload === rtp.payload) {
                                 // If we found the right fmtp object, we have to make sure each config param is in the fmtp.config.
-                                if (relevantCodec.fmtpParams.every(function (c) {
-                                    return fmtp.config.includes(c);
-                                })) {
+                                if (relevantCodec.fmtpParams.every(c => fmtp.config.includes(c))) {
                                     finalRemoveList.push(rtp.payload);
                                 }
                             }
@@ -34667,7 +34549,7 @@ function createCodecRemover(codecs) {
 
             // At this point we should have an array (finalRemoveList) that contains all ORIGINAL codec payloads that we need to remove.
             // We now need to check fmtp for all rtx payloads ASSOCIATED with the original codec payload.
-            media.fmtp.forEach(function (fmtp) {
+            media.fmtp.forEach(fmtp => {
                 // Check if the config contains apt=, which indicates this fmtp is associated with another.
                 if (fmtp.config.includes('apt=')) {
                     // If so, lets grab the whole string WITHOUT the apt= part, and convet it into an integer. This should be a payload number.
@@ -34683,15 +34565,13 @@ function createCodecRemover(codecs) {
 
             // We assume past this point that the finalRemoveList is all powerful.
             // For each codec in the media.payloads string, if it is in our finalRemoveList list, we remove it.
-            var isNumber = false;
+            let isNumber = false;
             if (typeof media.payloads === 'number') {
                 media.payloads = media.payloads.toString();
                 isNumber = true;
             }
             if (media.payloads) {
-                media.payloads = media.payloads.split(' ').filter(function (payload) {
-                    return !finalRemoveList.includes(parseInt(payload));
-                }).join(' ');
+                media.payloads = media.payloads.split(' ').filter(payload => !finalRemoveList.includes(parseInt(payload))).join(' ');
             }
             if (media.payloads && isNumber) {
                 media.payloads = parseInt(media.payloads);
@@ -34699,20 +34579,14 @@ function createCodecRemover(codecs) {
 
             // For each codec object, if the payload is in our filteredCodes list, we remove the object.
             if (media.rtp) {
-                media.rtp = media.rtp.filter(function (rtp) {
-                    return !finalRemoveList.includes(rtp.payload);
-                });
+                media.rtp = media.rtp.filter(rtp => !finalRemoveList.includes(rtp.payload));
             }
 
             if (media.fmtp) {
-                media.fmtp = media.fmtp.filter(function (fmtp) {
-                    return !finalRemoveList.includes(fmtp.payload);
-                });
+                media.fmtp = media.fmtp.filter(fmtp => !finalRemoveList.includes(fmtp.payload));
             }
             if (media.rtcpFb) {
-                media.rtcpFb = media.rtcpFb.filter(function (rtcpFb) {
-                    return !finalRemoveList.includes(rtcpFb.payload);
-                });
+                media.rtcpFb = media.rtcpFb.filter(rtcpFb => !finalRemoveList.includes(rtcpFb.payload));
             }
         });
 
@@ -34735,15 +34609,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = createSdpLogger;
 function createSdpLogger(logger) {
-    return function sdpLogger(_ref) {
-        var next = _ref.next,
-            currentSdp = _ref.currentSdp,
-            originalSdp = _ref.originalSdp,
-            operation = _ref.operation,
-            step = _ref.step,
-            type = _ref.type,
-            callId = _ref.callId;
-
+    return function sdpLogger({ next, currentSdp, originalSdp, operation, step, type, callId }) {
         logger.info('SDP Pipeline - Call Id: ' + callId + ' step: ' + step + ' operation: ' + operation + ' type: ' + type);
 
         if (currentSdp === originalSdp) {
@@ -34769,10 +34635,6 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _toConsumableArray2 = __webpack_require__("../../node_modules/babel-runtime/helpers/toConsumableArray.js");
-
-var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
-
 var _pipeline = __webpack_require__("../../packages/fcs/src/js/sdp/pipeline.js");
 
 var _logger = __webpack_require__("../../packages/fcs/src/js/sdp/logger.js");
@@ -34786,14 +34648,10 @@ var _bundleHandler2 = _interopRequireDefault(_bundleHandler);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
-    SdpPipeline: function SdpPipeline(container) {
-        var builtinHandlers = [(0, _bundleHandler2.default)(function () {
-            return container.Config;
-        })];
+    SdpPipeline: container => {
+        const builtinHandlers = [(0, _bundleHandler2.default)(() => container.Config)];
 
-        return (0, _pipeline.createConvertedSdpPipeline)(function () {
-            return [].concat((0, _toConsumableArray3.default)(container.Config.sdpHandlers), builtinHandlers);
-        }, (0, _logger2.default)(container.LogManager.getLogger('sdpLogger')));
+        return (0, _pipeline.createConvertedSdpPipeline)(() => [...container.Config.sdpHandlers, ...builtinHandlers], (0, _logger2.default)(container.LogManager.getLogger('sdpLogger')));
     }
 };
 
@@ -34868,14 +34726,14 @@ function createSdpPipeline(getHandlers, sdpLogger) {
      * @param {string} type The type of sdp. Can be 'offer' or 'answer'.
      * @returns {Object} sdp The possibly modified sdp.
      */
-    return function (callId, sdp, operation, step, type) {
-        var handlers = getHandlers();
-        var originalSdp = (0, _freeze2.default)(sdp);
-        var newSdp = originalSdp;
+    return (callId, sdp, operation, step, type) => {
+        const handlers = getHandlers();
+        const originalSdp = (0, _freeze2.default)(sdp);
+        let newSdp = originalSdp;
 
         // Function that is provided to handlers that needs to be called
         // to enable the next handler to be called.
-        var nextCalled = false;
+        let nextCalled = false;
         function next(sdp) {
             nextCalled = true;
             return sdp;
@@ -34883,17 +34741,17 @@ function createSdpPipeline(getHandlers, sdpLogger) {
 
         function callHandler(handler) {
             return handler({
-                next: next,
-                originalSdp: originalSdp,
+                next,
+                originalSdp,
                 currentSdp: newSdp,
-                operation: operation,
-                step: step,
-                type: type,
-                callId: callId
+                operation,
+                step,
+                type,
+                callId
             });
         }
 
-        for (var i = 0; i < handlers.length; i++) {
+        for (let i = 0; i < handlers.length; i++) {
             // Rest the flag back for each handler
             nextCalled = false;
 
@@ -34919,11 +34777,11 @@ function createSdpPipeline(getHandlers, sdpLogger) {
 // convert an sdp string to provide an sdp object to the pipeline and it will
 // convert the return value back to a string.
 function createConvertedSdpPipeline(getHandlers, sdpLogger) {
-    var pipeline = createSdpPipeline(getHandlers, sdpLogger);
+    const pipeline = createSdpPipeline(getHandlers, sdpLogger);
 
-    return function (callId, sdpString, operation, step, type) {
-        var sdpObject = (0, _parser.sdpParse)(sdpString);
-        var newSdp = pipeline(callId, sdpObject, operation, step, type);
+    return (callId, sdpString, operation, step, type) => {
+        const sdpObject = (0, _parser.sdpParse)(sdpString);
+        const newSdp = pipeline(callId, sdpObject, operation, step, type);
 
         // Optimization: no need to write the string if the sdp hasn't changed
         if (sdpObject === newSdp) {
@@ -34945,11 +34803,6 @@ function createConvertedSdpPipeline(getHandlers, sdpLogger) {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-
-var _toArray2 = __webpack_require__("../../node_modules/babel-runtime/helpers/toArray.js");
-
-var _toArray3 = _interopRequireDefault(_toArray2);
-
 exports.SdpParserImpl = SdpParserImpl;
 
 var _constants = __webpack_require__("../../packages/fcs/src/js/constants.js");
@@ -34958,10 +34811,10 @@ var _constants2 = _interopRequireDefault(_constants);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function SdpParserImpl(_ref) {
-    var _logManager = _ref.LogManager,
-        _fcsConfig = _ref.Config;
-
+function SdpParserImpl({
+    LogManager: _logManager,
+    Config: _fcsConfig
+}) {
     var logger = _logManager.getLogger('sdpParser'),
         self,
         nl = '\n',
@@ -35171,7 +35024,7 @@ function SdpParserImpl(_ref) {
             direction = _constants2.default.WEBRTC.MEDIA_STATE.INACTIVE,
             logmsg;
 
-        logmsg = function logmsg(state) {
+        logmsg = function (state) {
             logger.info('getSdpDirection: type= ' + type + ' state= ' + state);
         };
 
@@ -36065,7 +35918,7 @@ function SdpParserImpl(_ref) {
                     logger.debug('Provided control parameters were invalid. Keeping default opus codec control values.');
                 }
             } else {
-                logger.debug('Search parameter ' + searchParam + ' not found in sdp.');
+                logger.debug(`Search parameter ${searchParam} not found in sdp.`);
             }
         }
 
@@ -36724,7 +36577,7 @@ function SdpParserImpl(_ref) {
             direction = _constants2.default.WEBRTC.MEDIA_STATE.INACTIVE,
             logmsg;
 
-        logmsg = function logmsg(state) {
+        logmsg = function (state) {
             if (logging) {
                 logger.debug('getSdpDirection: type= ' + type + ' state= ' + state);
             }
@@ -37179,15 +37032,10 @@ function SdpParserImpl(_ref) {
         if (this.checkRelayCandidateCollectionTimeout(relayCandidateCycle, relayCandidateConfigCycle)) {
             return true;
         }
-        var candidateParser = this.getCandidateType(relayCandidateCycle, relayCandidateConfigCycle);
+        const candidateParser = this.getCandidateType(relayCandidateCycle, relayCandidateConfigCycle);
 
-        var _sdp$split = sdp.split('m='),
-            _sdp$split2 = (0, _toArray3.default)(_sdp$split),
-            mLines = _sdp$split2.slice(1);
-
-        return mLines.every(function (mline) {
-            return mline.indexOf(candidateParser) !== -1;
-        });
+        const [, ...mLines] = sdp.split('m=');
+        return mLines.every(mline => mline.indexOf(candidateParser) !== -1);
     };
 
     this.getCandidateType = function (relayCandidateCycle, relayCandidateConfigCycle) {
@@ -37759,9 +37607,7 @@ Object.defineProperty(exports, "__esModule", {
 var _turnCredentialsManager = __webpack_require__("../../packages/fcs/src/js/turncredentials/turnCredentialsManager.js");
 
 exports.default = {
-    TurnCredentialsManager: function TurnCredentialsManager(container) {
-        return new _turnCredentialsManager.TurnCredentialsManagerImpl(container);
-    }
+    TurnCredentialsManager: container => new _turnCredentialsManager.TurnCredentialsManagerImpl(container)
 };
 
 /***/ }),
@@ -37786,10 +37632,10 @@ var _base = __webpack_require__("../../packages/fcs/src/lib/base64.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function TurnCredentialsManagerImpl(_ref) {
-    var _cache = _ref.Cache,
-        _utils = _ref.Utils;
-
+function TurnCredentialsManagerImpl({
+    Cache: _cache,
+    Utils: _utils
+}) {
     var self = this,
         CREDENTIALS_CACHE_KEY = 'JSL/VHVybkNyZWRlbnRpYWxz';
 
@@ -37949,26 +37795,14 @@ function extend(target, object) {
 function always(promise, handler) {
     return promise.then(
     // Success path, attach the always handler and then just a continuation of the param.
-    function (param) {
-        return new _promise2.default(function (resolve) {
-            return resolve(handler());
-        }).then(function () {
-            return param;
-        });
-    },
+    param => new _promise2.default(resolve => resolve(handler())).then(() => param),
     // Failure path, attach the always handler and then just a continuation with the re-thrown error.
-    function (error) {
-        return new _promise2.default(function (resolve) {
-            return resolve(handler());
-        }).then(function () {
-            throw error;
-        });
-    });
+    error => new _promise2.default(resolve => resolve(handler())).then(() => {
+        throw error;
+    }));
 }
 
-function Utils(_ref) {
-    var _logManager = _ref.LogManager;
-
+function Utils({ LogManager: _logManager }) {
     var logger;
 
     this.callFunctionIfExist = function callFunctionIfExist() {
@@ -38094,87 +37928,69 @@ var _webRtcPluginv31Adaptor = __webpack_require__("../../packages/fcs/src/js/web
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
-    WebRtcAdaptorBaseFactory: function WebRtcAdaptorBaseFactory(container) {
-        return function (decorator, model) {
-            return new _webRtcAdaptor.WebRtcAdaptorImpl((0, _extends3.default)({ decorator: decorator, model: model }, container));
-        };
+    WebRtcAdaptorBaseFactory: container => (decorator, model) => new _webRtcAdaptor.WebRtcAdaptorImpl((0, _extends3.default)({ decorator, model }, container)),
+
+    WebRtcChromeAdaptorFactory: container => function (base, decorator, model) {
+
+        decorator = decorator || container.WebRtcChromeDecoratorFactory;
+        model = model || container.WebRtcChromeAdaptorModelFactory();
+        base = base || container.WebRtcAdaptorBaseFactory(decorator, model);
+
+        return new _webRtcChromeAdaptor.WebRtcChromeAdaptorImpl((0, _extends3.default)({ base, decorator, model }, container));
     },
 
-    WebRtcChromeAdaptorFactory: function WebRtcChromeAdaptorFactory(container) {
-        return function (base, decorator, model) {
+    WebRtcContainerAdaptorFactory: container => function (base, decorator, model) {
 
-            decorator = decorator || container.WebRtcChromeDecoratorFactory;
-            model = model || container.WebRtcChromeAdaptorModelFactory();
-            base = base || container.WebRtcAdaptorBaseFactory(decorator, model);
+        decorator = decorator || container.WebRtcChromeDecoratorFactory;
+        model = model || container.WebRtcChromeAdaptorModelFactory();
+        base = base || container.WebRtcAdaptorBaseFactory(decorator, model);
 
-            return new _webRtcChromeAdaptor.WebRtcChromeAdaptorImpl((0, _extends3.default)({ base: base, decorator: decorator, model: model }, container));
-        };
+        return new _webRtcContainerAdaptor.WebRtcContainerAdaptorImpl((0, _extends3.default)({ base, decorator, model }, container));
     },
 
-    WebRtcContainerAdaptorFactory: function WebRtcContainerAdaptorFactory(container) {
-        return function (base, decorator, model) {
+    WebRtcFirefoxAdaptorFactory: container => function (base, decorator, model) {
 
-            decorator = decorator || container.WebRtcChromeDecoratorFactory;
-            model = model || container.WebRtcChromeAdaptorModelFactory();
-            base = base || container.WebRtcAdaptorBaseFactory(decorator, model);
+        decorator = decorator || container.WebRtcFirefoxDecoratorFactory;
+        model = model || container.WebRtcFirefoxAdaptorModelFactory();
+        base = base || container.WebRtcAdaptorBaseFactory(decorator, model);
 
-            return new _webRtcContainerAdaptor.WebRtcContainerAdaptorImpl((0, _extends3.default)({ base: base, decorator: decorator, model: model }, container));
-        };
+        return new _webRtcFirefoxAdaptor.WebRtcFirefoxAdaptorImpl((0, _extends3.default)({ base, decorator, model }, container));
     },
 
-    WebRtcFirefoxAdaptorFactory: function WebRtcFirefoxAdaptorFactory(container) {
-        return function (base, decorator, model) {
+    WebRtcFirefoxEsrAdaptorFactory: container => function (base, decorator, model) {
 
-            decorator = decorator || container.WebRtcFirefoxDecoratorFactory;
-            model = model || container.WebRtcFirefoxAdaptorModelFactory();
-            base = base || container.WebRtcAdaptorBaseFactory(decorator, model);
+        decorator = decorator || container.WebRtcFirefoxDecoratorFactory;
+        model = model || container.WebRtcFirefoxAdaptorModelFactory();
+        base = base || container.WebRtcFirefoxAdaptorFactory(undefined, decorator, model);
 
-            return new _webRtcFirefoxAdaptor.WebRtcFirefoxAdaptorImpl((0, _extends3.default)({ base: base, decorator: decorator, model: model }, container));
-        };
+        return new _webRtcFirefoxEsrAdaptor.WebRtcFirefoxEsrAdaptorImpl((0, _extends3.default)({ base, decorator, model }, container));
     },
 
-    WebRtcFirefoxEsrAdaptorFactory: function WebRtcFirefoxEsrAdaptorFactory(container) {
-        return function (base, decorator, model) {
+    WebRtcPluginAdaptorFactory: container => function (base, decorator, model) {
 
-            decorator = decorator || container.WebRtcFirefoxDecoratorFactory;
-            model = model || container.WebRtcFirefoxAdaptorModelFactory();
-            base = base || container.WebRtcFirefoxAdaptorFactory(undefined, decorator, model);
+        decorator = decorator || container.WebRtcDecoratorFactory;
+        model = model || container.WebRtcPluginAdaptorModelFactory();
+        base = base || container.WebRtcAdaptorBaseFactory(decorator, model);
 
-            return new _webRtcFirefoxEsrAdaptor.WebRtcFirefoxEsrAdaptorImpl((0, _extends3.default)({ base: base, decorator: decorator, model: model }, container));
-        };
+        return new _webRtcPluginAdaptor.WebRtcPluginAdaptorImpl((0, _extends3.default)({ base, decorator, model }, container));
     },
 
-    WebRtcPluginAdaptorFactory: function WebRtcPluginAdaptorFactory(container) {
-        return function (base, decorator, model) {
+    WebRtcPluginv22AdaptorFactory: container => function (base, decorator, model) {
 
-            decorator = decorator || container.WebRtcDecoratorFactory;
-            model = model || container.WebRtcPluginAdaptorModelFactory();
-            base = base || container.WebRtcAdaptorBaseFactory(decorator, model);
+        decorator = decorator || container.WebRtcDecoratorFactory;
+        model = model || container.WebRtcPluginAdaptorModelFactory();
+        base = base || container.WebRtcPluginAdaptorFactory(decorator, model);
 
-            return new _webRtcPluginAdaptor.WebRtcPluginAdaptorImpl((0, _extends3.default)({ base: base, decorator: decorator, model: model }, container));
-        };
+        return new _webRtcPluginv22Adaptor.WebRtcPluginv22AdaptorImpl((0, _extends3.default)({ base, decorator, model }, container));
     },
 
-    WebRtcPluginv22AdaptorFactory: function WebRtcPluginv22AdaptorFactory(container) {
-        return function (base, decorator, model) {
+    WebRtcPluginv31AdaptorFactory: container => function (base, decorator, model) {
 
-            decorator = decorator || container.WebRtcDecoratorFactory;
-            model = model || container.WebRtcPluginAdaptorModelFactory();
-            base = base || container.WebRtcPluginAdaptorFactory(decorator, model);
+        decorator = decorator || container.WebRtcDecoratorFactory;
+        model = model || container.WebRtcPluginAdaptorModelFactory();
+        base = base || container.WebRtcPluginAdaptorFactory(base, decorator, model);
 
-            return new _webRtcPluginv22Adaptor.WebRtcPluginv22AdaptorImpl((0, _extends3.default)({ base: base, decorator: decorator, model: model }, container));
-        };
-    },
-
-    WebRtcPluginv31AdaptorFactory: function WebRtcPluginv31AdaptorFactory(container) {
-        return function (base, decorator, model) {
-
-            decorator = decorator || container.WebRtcDecoratorFactory;
-            model = model || container.WebRtcPluginAdaptorModelFactory();
-            base = base || container.WebRtcPluginAdaptorFactory(base, decorator, model);
-
-            return new _webRtcPluginv31Adaptor.WebRtcPluginv31AdaptorImpl((0, _extends3.default)({ base: base, decorator: decorator, model: model }, container));
-        };
+        return new _webRtcPluginv31Adaptor.WebRtcPluginv31AdaptorImpl((0, _extends3.default)({ base, decorator, model }, container));
     }
 };
 
@@ -38210,17 +38026,17 @@ var _errors2 = _interopRequireDefault(_errors);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function WebRtcAdaptorImpl(_ref) {
-    var _decorator = _ref.decorator,
-        _model = _ref.model,
-        _logManager = _ref.LogManager,
-        _utils = _ref.Utils,
-        _sdpParser = _ref.SdpParser,
-        _cache = _ref.Cache,
-        _fcs = _ref.Core,
-        _config = _ref.Config,
-        _sdpPipeline = _ref.SdpPipeline;
-
+function WebRtcAdaptorImpl({
+    decorator: _decorator,
+    model: _model,
+    LogManager: _logManager,
+    Utils: _utils,
+    SdpParser: _sdpParser,
+    Cache: _cache,
+    Core: _fcs,
+    Config: _config,
+    SdpPipeline: _sdpPipeline
+}) {
     /*
      * ABE-832: On MAC OS, Safari browser version 6.1 doesn't recognize array
      * indices of integer type. Therefore, all [0] calls are changed to ["0"].
@@ -38638,20 +38454,20 @@ function WebRtcAdaptorImpl(_ref) {
             return;
         }
 
-        var safeStreamId = (0, _utils2.makeSafeForCSS)(call.remoteStream.id);
+        const safeStreamId = (0, _utils2.makeSafeForCSS)(call.remoteStream.id);
 
         // Find stream audio sinks for this stream and mute their volume. Do this via the DOM.
         // Will only support <video> and <audio> tags created via `createStreamRenderer`
         // Once found, set their muted state to the silence state.
 
-        var audioRenderer = document.querySelector('#audio-stream-id-' + safeStreamId);
+        const audioRenderer = document.querySelector('#audio-stream-id-' + safeStreamId);
         if (audioRenderer) {
             // Found matching audio renderer. Set the muted status.
             audioRenderer.muted = call.silenced;
         } else {
             // Couldn't find an audio renderer, try to see if there is a video renderer. This is only
             // possible in non-split mode (legacy). Or for local stream, which would be a different stream id.
-            var videoRenderer = document.querySelector('#video-stream-id-' + safeStreamId);
+            const videoRenderer = document.querySelector('#video-stream-id-' + safeStreamId);
             if (videoRenderer) {
                 videoRenderer.muted = call.silenced;
             }
@@ -39279,7 +39095,7 @@ function WebRtcAdaptorImpl(_ref) {
 
             localDesc = self.getRtcLibrary().createRTCSessionDescription(_constants2.default.WEBRTC.SDP.TYPE.OFFER, obj.sdp);
 
-            var createUpdateCreateOfferSetLocalDescriptionSuccessCallback = function createUpdateCreateOfferSetLocalDescriptionSuccessCallback() {
+            var createUpdateCreateOfferSetLocalDescriptionSuccessCallback = function () {
                 logger.debug('createUpdate setLocalDescription success. iceConnectionState: ' + peer.iceConnectionState + ' iceGatheringState: ' + peer.iceGatheringState);
                 // The above process un-mutes the client. We must ensure it continues to be muted if necessary.
                 if (call.audioMuted) {
@@ -39436,7 +39252,7 @@ function WebRtcAdaptorImpl(_ref) {
 
             localDescObj = self.getRtcLibrary().createRTCSessionDescription(_constants2.default.WEBRTC.SDP.TYPE.OFFER, obj.sdp);
 
-            var createHoldUpdateSetLocalDescriptionSuccessCallback = function createHoldUpdateSetLocalDescriptionSuccessCallback() {
+            var createHoldUpdateSetLocalDescriptionSuccessCallback = function () {
                 logger.debug('createHoldUpdate setLocalDescription success. iceConnectionState: ' + peer.iceConnectionState + ' iceGatheringState: ' + peer.iceGatheringState);
                 if (call.supportTrickle) {
                     _utils.callFunctionIfExist(successCallback, peer.localDescription.sdp);
@@ -39701,7 +39517,7 @@ function WebRtcAdaptorImpl(_ref) {
 
                     localDescObj = self.getRtcLibrary().createRTCSessionDescription(_constants2.default.WEBRTC.SDP.TYPE.ANSWER, obj.sdp);
 
-                    var processUpdateSetLocalDescriptionSuccessCallback = function processUpdateSetLocalDescriptionSuccessCallback() {
+                    var processUpdateSetLocalDescriptionSuccessCallback = function () {
                         logger.debug('processUpdate setLocalDescription success. iceConnectionState: ' + peer.iceConnectionState + ' iceGatheringState: ' + peer.iceGatheringState);
                         if (call.supportTrickle) {
                             _utils.callFunctionIfExist(successCallback, peer.localDescription.sdp);
@@ -39753,12 +39569,12 @@ function WebRtcAdaptorImpl(_ref) {
         //      but processAnswer is most often a call start operation.
         var callOperation = isAnswer ? _constants2.default.WEBRTC.SDP.OPERATION.ANSWER_CALL : _constants2.default.WEBRTC.SDP.OPERATION.START_CALL;
 
-        onSuccessAfterWorkarounds = function onSuccessAfterWorkarounds() {
+        onSuccessAfterWorkarounds = function () {
             call.remoteVideoState = _sdpParser.getVideoSdpDirection(call.sdp);
             _utils.callFunctionIfExist(onSuccess);
         };
 
-        setRemoteDescription = function setRemoteDescription(operation, call, onSuccess, onFailure) {
+        setRemoteDescription = function (operation, call, onSuccess, onFailure) {
             logger.trace('processAnswer: Setting remote description with (answer) SDP: ' + call.sdp);
             self.setRemoteDescription(operation, call, peer, _constants2.default.WEBRTC.SDP.TYPE.ANSWER, call.sdp, function () {
                 logger.debug('processAnswer: setRemoteDescription success');
@@ -39893,7 +39709,7 @@ function WebRtcAdaptorImpl(_ref) {
         logger.trace('processRespond: Setting remote description with (answer) SDP: ' + call.sdp);
         self.setRemoteDescription(_constants2.default.WEBRTC.SDP.OPERATION.RESPOND, call, peer, _constants2.default.WEBRTC.SDP.TYPE.ANSWER, call.sdp, function () {
             logger.debug('processRespond: setRemoteDescription success');
-            var onSuccessAfterWorkarounds = function onSuccessAfterWorkarounds() {
+            var onSuccessAfterWorkarounds = function () {
                 call.remoteVideoState = _sdpParser.getVideoSdpDirection(call.sdp);
                 _utils.callFunctionIfExist(onSuccess);
             };
@@ -39915,7 +39731,7 @@ function WebRtcAdaptorImpl(_ref) {
             localHoldFlag = false,
             remoteHoldFlag = false;
 
-        onSuccessAfterWorkaround = function onSuccessAfterWorkaround() {
+        onSuccessAfterWorkaround = function () {
             //call.remoteVideoState = getSdpDirection(call.sdp, video);
             _utils.callFunctionIfExist(onSuccess);
         };
@@ -40121,9 +39937,7 @@ function WebRtcAdaptorImpl(_ref) {
     };
 
     // Native implementation lies on webRtcAdaptor.js
-    self.useDefaultRenderer = function (stream, local, isVideoTrackAvailable) {
-        var muted = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
-
+    self.useDefaultRenderer = function (stream, local, isVideoTrackAvailable, muted = false) {
         var videoContainer;
 
         if (self.getDefaultVideoContainer() && self.getDefaultVideoContainer().children.length === 0) {
@@ -40141,21 +39955,12 @@ function WebRtcAdaptorImpl(_ref) {
             audio: !local,
             video: isVideoTrackAvailable,
             split: true,
-            muted: muted
+            muted
         });
     };
 
     // Native implementation lies on webRtcAdaptor.js
-    self.createStreamRenderer = function (stream, container) {
-        var _ref2 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-            _ref2$audio = _ref2.audio,
-            audio = _ref2$audio === undefined ? true : _ref2$audio,
-            _ref2$video = _ref2.video,
-            video = _ref2$video === undefined ? true : _ref2$video,
-            _ref2$split = _ref2.split,
-            split = _ref2$split === undefined ? false : _ref2$split,
-            _ref2$muted = _ref2.muted,
-            muted = _ref2$muted === undefined ? false : _ref2$muted;
+    self.createStreamRenderer = function (stream, container, { audio = true, video = true, split = false, muted = false } = {}) {
 
         /**
          * Sets the output speaker for audio from the HTMLElement to the default
@@ -40896,7 +40701,7 @@ function WebRtcAdaptorImpl(_ref) {
             pc._peerId = peerId++;
 
             if (call.peer) {
-                logger.debug('createPeer - Peer Id: ' + call.peer._peerId + ' - detaching old peer from call ' + call.id + '.');
+                logger.debug(`createPeer - Peer Id: ${call.peer._peerId} - detaching old peer from call ${call.id}.`);
 
                 // Let's make sure we stop listening to any events from the old peer.
                 call.peer.onconnecting = undefined;
@@ -40917,7 +40722,7 @@ function WebRtcAdaptorImpl(_ref) {
             self.setPeerCount(self.getPeerCount() + 1);
             call.peer = pc;
 
-            logger.debug('createPeer - Peer Id: ' + pc._peerId + ' - created new peer and attached to call (' + call.id + ').');
+            logger.debug(`createPeer - Peer Id: ${pc._peerId} - created new peer and attached to call (${call.id}).`);
 
             pc.onconnecting = function (event) {
                 self.onSessionConnecting(call, event);
@@ -40936,11 +40741,11 @@ function WebRtcAdaptorImpl(_ref) {
             };
             pc.onicecandidate = function (event) {
                 if (pc !== call.peer) {
-                    logger.error('Peer Id: ' + pc._peerId + ' - received notification from detached peer not on call (Other Peer id: ' + call.peer._peerId + ' )');
+                    logger.error(`Peer Id: ${pc._peerId} - received notification from detached peer not on call (Other Peer id: ${call.peer._peerId} )`);
                     return;
                 }
                 if (pc.iceGatheringState === 'complete') {
-                    logger.debug('Peer Id: ' + pc._peerId + ' - ice gathering complete');
+                    logger.debug(`Peer Id: ${pc._peerId} - ice gathering complete`);
                     self.onIceComplete(call);
                 } else {
                     self.setupIceCandidateCollectionTimer(call);
@@ -40949,7 +40754,7 @@ function WebRtcAdaptorImpl(_ref) {
             };
             pc.onicecomplete = function () {
                 if (pc !== call.peer) {
-                    logger.error('Peer Id: ' + pc._peerId + ' - received notification from detached peer not on call (Other Peer id: ' + call.peer._peerId + ' )');
+                    logger.error(`Peer Id: ${pc._peerId} - received notification from detached peer not on call (Other Peer id: ${call.peer._peerId} )`);
                     return;
                 }
 
@@ -40963,10 +40768,10 @@ function WebRtcAdaptorImpl(_ref) {
             };
 
             pc.onicegatheringstatechange = function () {
-                logger.debug('Peer Id: ' + pc._peerId + ' - ice gathering state change:' + pc.iceGatheringState);
+                logger.debug(`Peer Id: ${pc._peerId} - ice gathering state change:` + pc.iceGatheringState);
             };
 
-            logger.info('Peer Id: ' + pc._peerId + ' - create PeerConnection successfully.');
+            logger.info(`Peer Id: ${pc._peerId} - create PeerConnection successfully.`);
 
             self.setupWebrtcLogCollectionTimer(call);
 
@@ -41156,10 +40961,8 @@ function WebRtcAdaptorImpl(_ref) {
     };
 
     // Native implementation lies on webRtcAdaptor.js
-    self.disposeStreamRenderer = function (container) {
-        var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-
-        var safeId = (0, _utils2.makeSafeForCSS)(id);
+    self.disposeStreamRenderer = function (container, id = '') {
+        const safeId = (0, _utils2.makeSafeForCSS)(id);
 
         logger.info('disposeStreamRenderer');
         if (container) {
@@ -41405,7 +41208,7 @@ function WebRtcAdaptorImpl(_ref) {
         }
     };
 
-    var updateVideoConstraints = function updateVideoConstraints(videoConstraints, videoResolution, deviceId) {
+    var updateVideoConstraints = function (videoConstraints, videoResolution, deviceId) {
         // If the constraint is a boolean, leave it as such if no resolution or deviceId was specified
         if (typeof videoConstraints === 'boolean') {
             if (!videoResolution && !deviceId) {
@@ -41590,7 +41393,7 @@ function WebRtcAdaptorImpl(_ref) {
         } else {
             logger.warn('remote party is not ready to receive candidates');
             if (!call.updateCandidateInterval) {
-                call.updateCandidateInterval = setInterval(function () {
+                call.updateCandidateInterval = setInterval(() => {
                     self.updateCandidates(call);
                 }, 1000);
             }
@@ -41607,9 +41410,9 @@ function WebRtcAdaptorImpl(_ref) {
             candidate = self.getRtcLibrary().createRTCIceCandidate(candidateArray[i]);
             logger.debug('candidate to be added:  ', candidate);
 
-            peer.addIceCandidate(candidate).then(function () {
+            peer.addIceCandidate(candidate).then(() => {
                 logger.debug('addIceCandidate success:  ');
-            }).catch(function (e) {
+            }).catch(e => {
                 logger.error('Error: Failure during addIceCandidate : ', e);
             });
         }
@@ -41675,12 +41478,12 @@ var _call = __webpack_require__("../../packages/fcs/src/js/call/call.js");
 
 var _utils2 = __webpack_require__("../../packages/fcs/src/js/utils/index.js");
 
-function WebRtcChromeAdaptorImpl(_ref) {
-    var _super = _ref.base,
-        _model = _ref.model,
-        _logManager = _ref.LogManager,
-        _utils = _ref.Utils;
-
+function WebRtcChromeAdaptorImpl({
+    base: _super,
+    model: _model,
+    LogManager: _logManager,
+    Utils: _utils
+}) {
     var self = this,
         logger = _logManager.getLogger('WebRtcChromeAdaptorImpl');
     logger.debug('WebRtcChromeAdaptor initializing');
@@ -41762,15 +41565,15 @@ var _utils2 = __webpack_require__("../../packages/fcs/src/js/utils/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function WebRtcContainerAdaptorImpl(_ref) {
-    var _super = _ref.base,
-        _model = _ref.model,
-        _logManager = _ref.LogManager,
-        _utils = _ref.Utils,
-        _sdpParser = _ref.SdpParser,
-        _config = _ref.Config,
-        _sdpPipeline = _ref.SdpPipeline;
-
+function WebRtcContainerAdaptorImpl({
+    base: _super,
+    model: _model,
+    LogManager: _logManager,
+    Utils: _utils,
+    SdpParser: _sdpParser,
+    Config: _config,
+    SdpPipeline: _sdpPipeline
+}) {
     var self = this,
         logger = _logManager.getLogger('WebRtcContainerAdaptorImpl');
     logger.debug('WebRtcContainerAdaptor initializing');
@@ -42239,12 +42042,12 @@ function WebRtcContainerAdaptorImpl(_ref) {
             peer = call.peer,
             origSdp;
 
-        onSuccessAfterWorkarounds = function onSuccessAfterWorkarounds() {
+        onSuccessAfterWorkarounds = function () {
             call.remoteVideoState = _sdpParser.getVideoSdpDirection(call.sdp);
             _utils.callFunctionIfExist(onSuccess);
         };
 
-        setRemoteDescription = function setRemoteDescription(operation, call, onSuccess, onFailure) {
+        setRemoteDescription = function (operation, call, onSuccess, onFailure) {
             logger.trace('processAnswer: Setting remote description with (answer) SDP: ' + call.sdp);
             self.setRemoteDescription(operation, call, peer, _constants2.default.WEBRTC.SDP.TYPE.ANSWER, call.sdp, function () {
                 logger.debug('processAnswer: setRemoteDescription success');
@@ -42365,7 +42168,7 @@ function WebRtcContainerAdaptorImpl(_ref) {
         logger.trace('processRespond: Setting remote description with (answer) SDP: ' + callSdpWithNoSsrc);
         self.setRemoteDescription(_constants2.default.WEBRTC.SDP.OPERATION.RESPOND, call, peer, _constants2.default.WEBRTC.SDP.TYPE.ANSWER, callSdpWithNoSsrc, function () {
             logger.debug('processRespond: setRemoteDescription success');
-            var onSuccessAfterWorkarounds = function onSuccessAfterWorkarounds() {
+            var onSuccessAfterWorkarounds = function () {
                 call.remoteVideoState = _sdpParser.getVideoSdpDirection(call.sdp);
                 _utils.callFunctionIfExist(onSuccess);
             };
@@ -42384,7 +42187,7 @@ function WebRtcContainerAdaptorImpl(_ref) {
             localHoldFlag = false,
             remoteHoldFlag = false;
 
-        onSuccessAfterWorkaround = function onSuccessAfterWorkaround() {
+        onSuccessAfterWorkaround = function () {
             //call.remoteVideoState = getSdpDirection(call.sdp, video);
             _utils.callFunctionIfExist(onSuccess);
         };
@@ -42523,15 +42326,15 @@ var _utils2 = __webpack_require__("../../packages/fcs/src/js/utils/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function WebRtcFirefoxAdaptorImpl(_ref) {
-    var _super = _ref.base,
-        _model = _ref.mode,
-        _logManager = _ref.LogManager,
-        _utils = _ref.Utils,
-        _sdpParser = _ref.SdpParser,
-        _config = _ref.Config,
-        _sdpPipeline = _ref.SdpPipeline;
-
+function WebRtcFirefoxAdaptorImpl({
+    base: _super,
+    mode: _model,
+    LogManager: _logManager,
+    Utils: _utils,
+    SdpParser: _sdpParser,
+    Config: _config,
+    SdpPipeline: _sdpPipeline
+}) {
     var self = this,
         logger = _logManager.getLogger('WebRtcFirefoxAdaptorImpl'),
         peerId = 0;
@@ -42696,7 +42499,7 @@ function WebRtcFirefoxAdaptorImpl(_ref) {
 
         var operation = hold ? _constants2.default.WEBRTC.SDP.OPERATION.HOLD : _constants2.default.WEBRTC.SDP.OPERATION.UNHOLD;
 
-        createHoldUpdate = function createHoldUpdate() {
+        createHoldUpdate = function () {
             localSdp = call.stableLocalSdp;
 
             self.createNewPeerForCall(call);
@@ -42761,11 +42564,11 @@ function WebRtcFirefoxAdaptorImpl(_ref) {
 
             // TODO: This should not be done here just for code consistency
             self.getUserMedia({
-                onSuccess: function onSuccess(mediaInfo) {
+                onSuccess: function (mediaInfo) {
                     self.storeLocalStreamToCall(call, mediaInfo.id);
                     call.isVideoSourceAllowed = mediaInfo.video;
                     createHoldUpdate();
-                }, onFailure: function onFailure() {
+                }, onFailure: function () {
                     _utils.callFunctionIfExist(failureCallback);
                 }, options: {
                     audioConstraints: true,
@@ -43369,7 +43172,7 @@ function WebRtcFirefoxAdaptorImpl(_ref) {
             pc._peerId = peerId++;
 
             if (call.peer) {
-                logger.debug('createPeer - Peer Id: ' + call.peer._peerId + ' - detaching old peer from call ' + call.id + '.');
+                logger.debug(`createPeer - Peer Id: ${call.peer._peerId} - detaching old peer from call ${call.id}.`);
 
                 // Let's make sure we stop listening to any events from the old peer.
                 call.peer.onconnecting = undefined;
@@ -43407,11 +43210,11 @@ function WebRtcFirefoxAdaptorImpl(_ref) {
             };
             pc.onicecandidate = function (event) {
                 if (pc !== call.peer) {
-                    logger.error('Peer Id: ' + pc._peerId + ' - received notification from detached peer not on call (Other Peer id: ' + call.peer._peerId + ' )');
+                    logger.error(`Peer Id: ${pc._peerId} - received notification from detached peer not on call (Other Peer id: ${call.peer._peerId} )`);
                     return;
                 }
                 if (event.currentTarget.iceGatheringState === 'complete') {
-                    logger.debug('Peer Id: ' + pc._peerId + ' - ice gathering complete');
+                    logger.debug(`Peer Id: ${pc._peerId} - ice gathering complete`);
                     self.onIceComplete(call);
                 } else {
                     self.setupIceCandidateCollectionTimer(call);
@@ -43429,10 +43232,10 @@ function WebRtcFirefoxAdaptorImpl(_ref) {
             };
 
             pc.onicegatheringstatechange = function () {
-                logger.debug('Peer Id: ' + pc._peerId + ' - ice gathering state change:' + pc.iceGatheringState);
+                logger.debug(`Peer Id: ${pc._peerId} - ice gathering state change:` + pc.iceGatheringState);
             };
 
-            logger.info('Peer Id: ' + pc._peerId + ' - create PeerConnection successfully.');
+            logger.info(`Peer Id: ${pc._peerId} - create PeerConnection successfully.`);
 
             // Will be commented-in after decision of necessary stats
             // self.setupWebrtcLogCollectionTimer(call);
@@ -43659,12 +43462,12 @@ var _utils2 = __webpack_require__("../../packages/fcs/src/js/utils/index.js");
 
 var _call = __webpack_require__("../../packages/fcs/src/js/call/call.js");
 
-function WebRtcFirefoxEsrAdaptorImpl(_ref) {
-    var _super = _ref.base,
-        _model = _ref.model,
-        _logManager = _ref.LogManager,
-        _utils = _ref.Utils;
-
+function WebRtcFirefoxEsrAdaptorImpl({
+    base: _super,
+    model: _model,
+    LogManager: _logManager,
+    Utils: _utils
+}) {
     var self = this,
         logger = _logManager.getLogger('WebRtcFirefoxEsrAdaptorImpl');
     logger.debug('WebRtcFirefoxEsrAdaptor initializing');
@@ -43703,10 +43506,10 @@ function WebRtcFirefoxEsrAdaptorImpl(_ref) {
 
                 localMedia = {
                     audioContext: {
-                        close: function close() {}
+                        close: function () {}
                     },
                     mediaStreamDestination: {
-                        disconnect: function disconnect() {}
+                        disconnect: function () {}
                     },
                     stream: stream,
                     originalStream: stream
@@ -43768,18 +43571,18 @@ var _call = __webpack_require__("../../packages/fcs/src/js/call/call.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function WebRtcPluginAdaptorImpl(_ref) {
-    var _super = _ref.base,
-        _decorator = _ref.decorator,
-        _model = _ref.model,
-        _logManager = _ref.LogManager,
-        _utils = _ref.Utils,
-        _sdpParser = _ref.SdpParser,
-        _cache = _ref.Cache,
-        _fcs = _ref.Core,
-        _config = _ref.Config,
-        _sdpPipeline = _ref.SdpPipeline;
-
+function WebRtcPluginAdaptorImpl({
+    base: _super,
+    decorator: _decorator,
+    model: _model,
+    LogManager: _logManager,
+    Utils: _utils,
+    SdpParser: _sdpParser,
+    Cache: _cache,
+    Core: _fcs,
+    Config: _config,
+    SdpPipeline: _sdpPipeline
+}) {
     var self = this,
         logger = _logManager.getLogger('WebRtcPluginAdaptorImpl'),
         peerId = 0;
@@ -44124,10 +43927,10 @@ function WebRtcPluginAdaptorImpl(_ref) {
             self.getRtcLibrary().getUserMedia(constraints, function getUserMediaSuccessCallback(stream) {
                 localMedia = {
                     audioContext: {
-                        close: function close() {}
+                        close: function () {}
                     },
                     mediaStreamDestination: {
-                        disconnect: function disconnect() {}
+                        disconnect: function () {}
                     },
                     stream: stream,
                     originalStream: stream
@@ -44505,7 +44308,7 @@ function WebRtcPluginAdaptorImpl(_ref) {
         //This is highly required for meetme on DTLS
         call.sdp = _sdpParser.setTcpSetupAttribute(call.sdp, 'actpass');
 
-        remoteDescriptionMainProcess = function remoteDescriptionMainProcess() {
+        remoteDescriptionMainProcess = function () {
             logger.trace('processUpdate: Setting remote description with (offer) SDP: ' + call.sdp);
             self.setRemoteDescription(_constants2.default.WEBRTC.SDP.OPERATION.UPDATE, call, peer, _constants2.default.WEBRTC.SDP.TYPE.OFFER, call.sdp, function processUpdateSetRemoteDescriptionSuccessCallback() {
                 logger.debug('processUpdate: setRemoteDescription success');
@@ -44609,12 +44412,12 @@ function WebRtcPluginAdaptorImpl(_ref) {
             peer = call.peer,
             origSdp;
 
-        onSuccessAfterWorkarounds = function onSuccessAfterWorkarounds() {
+        onSuccessAfterWorkarounds = function () {
             call.remoteVideoState = _sdpParser.getVideoSdpDirection(call.sdp);
             _utils.callFunctionIfExist(onSuccess);
         };
 
-        setRemoteDescription = function setRemoteDescription(operation, call, onSuccess, onFailure) {
+        setRemoteDescription = function (operation, call, onSuccess, onFailure) {
             logger.trace('processAnswer: Setting remote description with (answer) SDP: ' + call.sdp);
             self.setRemoteDescription(operation, call, call.peer, _constants2.default.WEBRTC.SDP.TYPE.ANSWER, call.sdp, function () {
                 logger.debug('processAnswer: setRemoteDescription success');
@@ -44805,9 +44608,7 @@ function WebRtcPluginAdaptorImpl(_ref) {
      * Enabler implementation lies on webRtcPluginAdaptor.js
      * processEnablerRespond
      */
-    self.processRespond = function (call, onSuccess, onFailure, isJoin) {
-        var operation = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : _constants2.default.WEBRTC.SDP.OPERATION.START_CALL;
-
+    self.processRespond = function (call, onSuccess, onFailure, isJoin, operation = _constants2.default.WEBRTC.SDP.OPERATION.START_CALL) {
         var remoteVideoDirection;
 
         logger.debug('processRespond: state= ' + call.peer.signalingState);
@@ -44846,7 +44647,7 @@ function WebRtcPluginAdaptorImpl(_ref) {
         logger.trace('processRespond: Setting remote description with (answer) SDP: ' + call.sdp);
         self.setRemoteDescription(null, call, call.peer, _constants2.default.WEBRTC.SDP.TYPE.ANSWER, call.sdp, function () {
             logger.debug('processRespond: setRemoteDescription success');
-            var onSuccessAfterWorkaround = function onSuccessAfterWorkaround() {
+            var onSuccessAfterWorkaround = function () {
                 call.remoteVideoState = _sdpParser.getVideoSdpDirection(call.sdp);
                 _utils.callFunctionIfExist(onSuccess);
             };
@@ -45217,7 +45018,7 @@ function WebRtcPluginAdaptorImpl(_ref) {
             pc._peerId = peerId++;
 
             if (call.peer) {
-                logger.debug('createPeer - Peer Id: ' + call.peer._peerId + ' - detaching old peer from call ' + call.id + '.');
+                logger.debug(`createPeer - Peer Id: ${call.peer._peerId} - detaching old peer from call ${call.id}.`);
 
                 // Let's make sure we stop listening to any events from the old peer.
                 call.peer.onconnecting = undefined;
@@ -45255,7 +45056,7 @@ function WebRtcPluginAdaptorImpl(_ref) {
             };
             pc.onicecandidate = function (event) {
                 if (pc !== call.peer) {
-                    logger.error('Peer Id: ' + pc._peerId + ' - received notification from detached peer not on call (Other Peer id: ' + call.peer._peerId + ' )');
+                    logger.error(`Peer Id: ${pc._peerId} - received notification from detached peer not on call (Other Peer id: ${call.peer._peerId} )`);
                     return;
                 }
 
@@ -45264,7 +45065,7 @@ function WebRtcPluginAdaptorImpl(_ref) {
             };
             pc.onicecomplete = function () {
                 if (pc !== call.peer) {
-                    logger.error('Peer Id: ' + pc._peerId + ' - received notification from detached peer not on call (Other Peer id: ' + call.peer._peerId + ' )');
+                    logger.error(`Peer Id: ${pc._peerId} - received notification from detached peer not on call (Other Peer id: ${call.peer._peerId} )`);
                     return;
                 }
                 self.onIceComplete(call);
@@ -45277,10 +45078,10 @@ function WebRtcPluginAdaptorImpl(_ref) {
             };
 
             pc.onicegatheringstatechange = function () {
-                logger.debug('Peer Id: ' + pc._peerId + ' - ice gathering state change:' + pc.iceGatheringState);
+                logger.debug(`Peer Id: ${pc._peerId} - ice gathering state change:` + pc.iceGatheringState);
             };
 
-            logger.info('Peer Id: ' + pc._peerId + ' - create PeerConnection successfully.');
+            logger.info(`Peer Id: ${pc._peerId} - create PeerConnection successfully.`);
 
             self.setupWebrtcLogCollectionTimer(call);
 
@@ -45527,7 +45328,7 @@ function WebRtcPluginAdaptorImpl(_ref) {
             return;
         }
 
-        var streamUrl = self.getRtcLibrary().getURLFromStream(stream);
+        const streamUrl = self.getRtcLibrary().getURLFromStream(stream);
 
         container.innerHTML = '<object width=\'100%\' height=\'100%\' type=\'application/x-gcfwenabler-video\'><param name=\'autoplay\' value=\'true\' /><param name=\'videosrc\' value=\'' + streamUrl + '\' /></object>';
 
@@ -45899,11 +45700,11 @@ exports.WebRtcPluginv22AdaptorImpl = WebRtcPluginv22AdaptorImpl;
 
 var _utils = __webpack_require__("../../packages/fcs/src/js/utils/index.js");
 
-function WebRtcPluginv22AdaptorImpl(_ref) {
-    var _super = _ref.base,
-        _model = _ref.model,
-        _logManager = _ref.LogManager;
-
+function WebRtcPluginv22AdaptorImpl({
+    base: _super,
+    model: _model,
+    LogManager: _logManager
+}) {
     var self = this,
         webRtcPlugin22Version = {
         major: 2,
@@ -45941,12 +45742,12 @@ exports.WebRtcPluginv31AdaptorImpl = WebRtcPluginv31AdaptorImpl;
 
 var _utils = __webpack_require__("../../packages/fcs/src/js/utils/index.js");
 
-function WebRtcPluginv31AdaptorImpl(_ref) {
-    var _super = _ref.base,
-        _model = _ref.model,
-        _logManager = _ref.LogManager,
-        _sdpParser = _ref.SdpParser;
-
+function WebRtcPluginv31AdaptorImpl({
+    base: _super,
+    model: _model,
+    LogManager: _logManager,
+    SdpParser: _sdpParser
+}) {
     var self = this,
         webRtcPlugin31Version = {
         major: 3,
@@ -46025,21 +45826,9 @@ var _webRtcLibraryChromeDecorator = __webpack_require__("../../packages/fcs/src/
 var _webRtcLibraryFirefoxDecorator = __webpack_require__("../../packages/fcs/src/js/webrtc/decorator/webRtcLibraryFirefoxDecorator.js");
 
 exports.default = {
-    WebRtcDecoratorFactory: function WebRtcDecoratorFactory(container) {
-        return function (target) {
-            return (0, _webRtcLibraryDecorator.webRtcLibraryDecoratorImpl)(target, container.Utils);
-        };
-    },
-    WebRtcChromeDecoratorFactory: function WebRtcChromeDecoratorFactory(container) {
-        return function (target) {
-            return (0, _webRtcLibraryChromeDecorator.webRtcLibraryChromeDecoratorImpl)(target, container.Global, container.Navigator, container.Utils, container.LogManager);
-        };
-    },
-    WebRtcFirefoxDecoratorFactory: function WebRtcFirefoxDecoratorFactory(container) {
-        return function (target) {
-            return (0, _webRtcLibraryFirefoxDecorator.webRtcLibraryFirefoxDecoratorImpl)(target, container.WebRtcChromeDecoratorFactory, container.Global, container.Navigator);
-        };
-    }
+    WebRtcDecoratorFactory: container => target => (0, _webRtcLibraryDecorator.webRtcLibraryDecoratorImpl)(target, container.Utils),
+    WebRtcChromeDecoratorFactory: container => target => (0, _webRtcLibraryChromeDecorator.webRtcLibraryChromeDecoratorImpl)(target, container.Global, container.Navigator, container.Utils, container.LogManager),
+    WebRtcFirefoxDecoratorFactory: container => target => (0, _webRtcLibraryFirefoxDecorator.webRtcLibraryFirefoxDecoratorImpl)(target, container.WebRtcChromeDecoratorFactory, container.Global, container.Navigator)
 };
 
 /***/ }),
@@ -46519,18 +46308,10 @@ var _webRtcFirefoxAdaptorModel = __webpack_require__("../../packages/fcs/src/js/
 var _webRtcPluginAdaptorModel = __webpack_require__("../../packages/fcs/src/js/webrtc/model/webRtcPluginAdaptorModel.js");
 
 exports.default = {
-    WebRtcAdaptorModelFactory: function WebRtcAdaptorModelFactory() {
-        return _webRtcAdaptorModel.WebRtcAdaptorModel;
-    },
-    WebRtcChromeAdaptorModelFactory: function WebRtcChromeAdaptorModelFactory() {
-        return _webRtcChromeAdaptorModel.WebRtcChromeAdaptorModel;
-    },
-    WebRtcFirefoxAdaptorModelFactory: function WebRtcFirefoxAdaptorModelFactory() {
-        return _webRtcFirefoxAdaptorModel.WebRtcFirefoxAdaptorModel;
-    },
-    WebRtcPluginAdaptorModelFactory: function WebRtcPluginAdaptorModelFactory() {
-        return _webRtcPluginAdaptorModel.WebRtcPluginAdaptorModel;
-    }
+    WebRtcAdaptorModelFactory: () => _webRtcAdaptorModel.WebRtcAdaptorModel,
+    WebRtcChromeAdaptorModelFactory: () => _webRtcChromeAdaptorModel.WebRtcChromeAdaptorModel,
+    WebRtcFirefoxAdaptorModelFactory: () => _webRtcFirefoxAdaptorModel.WebRtcFirefoxAdaptorModel,
+    WebRtcPluginAdaptorModelFactory: () => _webRtcPluginAdaptorModel.WebRtcPluginAdaptorModel
 };
 
 /***/ }),
@@ -47046,12 +46827,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = (0, _extends3.default)({}, _module2.default, _module4.default, _module6.default, {
 
-    WebRtcAdaptorFactory: function WebRtcAdaptorFactory(container) {
-        return new _webRtcAdaptorFactory.WebRtcAdaptorFactory(container);
-    },
-    WebRtcManager: function WebRtcManager(container) {
-        return new _webRtcManager.WebRtcManager(container);
-    }
+    WebRtcAdaptorFactory: container => new _webRtcAdaptorFactory.WebRtcAdaptorFactory(container),
+    WebRtcManager: container => new _webRtcManager.WebRtcManager(container)
 });
 
 /***/ }),
@@ -47066,17 +46843,18 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.WebRtcAdaptorFactory = WebRtcAdaptorFactory;
-function WebRtcAdaptorFactory(_ref) {
-    var _navigator = _ref.Navigator,
-        _logManager = _ref.LogManager,
-        _config = _ref.Config,
-        _WebRtcChromeAdaptor = _ref.WebRtcChromeAdaptorFactory,
-        _WebRtcContainerAdaptor = _ref.WebRtcContainerAdaptorFactory,
-        _WebRtcFirefoxAdaptor = _ref.WebRtcFirefoxAdaptorFactory,
-        _WebRtcFirefoxEsrAdaptor = _ref.WebRtcFirefoxEsrAdaptorFactory,
-        _WebRtcPluginv22Adaptor = _ref.WebRtcPluginv22AdaptorFactory,
-        _WebRtcPluginv31Adaptor = _ref.WebRtcPluginv31AdaptorFactory;
+function WebRtcAdaptorFactory({
+    Navigator: _navigator,
+    LogManager: _logManager,
+    Config: _config,
 
+    WebRtcChromeAdaptorFactory: _WebRtcChromeAdaptor,
+    WebRtcContainerAdaptorFactory: _WebRtcContainerAdaptor,
+    WebRtcFirefoxAdaptorFactory: _WebRtcFirefoxAdaptor,
+    WebRtcFirefoxEsrAdaptorFactory: _WebRtcFirefoxEsrAdaptor,
+    WebRtcPluginv22AdaptorFactory: _WebRtcPluginv22Adaptor,
+    WebRtcPluginv31AdaptorFactory: _WebRtcPluginv31Adaptor
+}) {
     var logger = _logManager.getLogger('WebRtcAdaptorFactory'),
         NAVIGATOR_TYPES = {
         CHROME: 'chrome',
@@ -47390,14 +47168,14 @@ var _call = __webpack_require__("../../packages/fcs/src/js/call/call.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function WebRtcManager(_ref) {
-    var _webRtcAdaptorFactory = _ref.WebRtcAdaptorFactory,
-        _logManager = _ref.LogManager,
-        _turnCredentialsManager = _ref.TurnCredentialsManager,
-        _navigator = _ref.Navigator,
-        _utils = _ref.Utils,
-        _globalBroadcaster = _ref.GlobalBroadcaster;
-
+function WebRtcManager({
+    WebRtcAdaptorFactory: _webRtcAdaptorFactory,
+    LogManager: _logManager,
+    TurnCredentialsManager: _turnCredentialsManager,
+    Navigator: _navigator,
+    Utils: _utils,
+    GlobalBroadcaster: _globalBroadcaster
+}) {
     var self = this,
         rtcAdaptor,
         logger = _logManager.getLogger('WebRtcManager');
@@ -47651,7 +47429,7 @@ function WebRtcManager(_ref) {
     };
 
     self.createDataChannelOffer = function (dataChannelWrapperObj, successCallback, failureCallback) {
-        var successCallbackWrapper = function successCallbackWrapper(sdp) {
+        var successCallbackWrapper = function (sdp) {
             clearSuccessParametersFromCall(dataChannelWrapperObj);
             _utils.callFunctionIfExist(successCallback, sdp);
         };
@@ -47673,7 +47451,7 @@ function WebRtcManager(_ref) {
     };
 
     self.createDataChannelAnswer = function (dataChannelWrapperObj, successCallback, failureCallback) {
-        var successCallbackWrapper = function successCallbackWrapper(sdp) {
+        var successCallbackWrapper = function (sdp) {
             clearSuccessParametersFromCall(dataChannelWrapperObj);
             _utils.callFunctionIfExist(successCallback, sdp);
         };
@@ -47693,7 +47471,7 @@ function WebRtcManager(_ref) {
     self.createOffer = function (call, successCallback, failureCallback, sendInitialVideo, offerToReceiveVideo, isAnswer) {
         logger.info('create offer SDP: sendInitialVideo= ' + sendInitialVideo);
 
-        var successCallbackWrapper = function successCallbackWrapper(sdp) {
+        var successCallbackWrapper = function (sdp) {
             clearSuccessParametersFromCall(call);
             call.initialVideoState = sendInitialVideo;
 
@@ -47727,7 +47505,7 @@ function WebRtcManager(_ref) {
         logger.info('creating answer SDP: callid= ' + call.id);
         logger.info('creating answer SDP: sendInitialVideo= ' + sendInitialVideo);
 
-        var successCallbackWrapper = function successCallbackWrapper(sdp) {
+        var successCallbackWrapper = function (sdp) {
             clearSuccessParametersFromCall(call);
             call.initialVideoState = sendInitialVideo;
             call.stableLocalSdp = sdp;
@@ -47760,7 +47538,7 @@ function WebRtcManager(_ref) {
     self.processDataChannelAnswer = function (call, successCallback, failureCallback) {
         if (call.peer) {
 
-            var successCallbackWrapper = function successCallbackWrapper() {
+            var successCallbackWrapper = function () {
                 clearSuccessParametersFromCall(call);
                 if (typeof successCallback === 'function') {
                     successCallback();
@@ -47781,7 +47559,7 @@ function WebRtcManager(_ref) {
     self.processAnswer = function (call, successCallback, failureCallback, isAnswer) {
         if (call.peer) {
 
-            var successCallbackWrapper = function successCallbackWrapper() {
+            var successCallbackWrapper = function () {
                 clearSuccessParametersFromCall(call);
                 call.stableLocalSdp = call.lastLocalSdp;
                 rtcAdaptor.restoreUserMuteStateOfCall(call);
@@ -47809,7 +47587,7 @@ function WebRtcManager(_ref) {
     self.processRespond = function (call, successCallback, failureCallback, isJoin) {
         if (call.peer) {
 
-            var successCallbackWrapper = function successCallbackWrapper() {
+            var successCallbackWrapper = function () {
                 clearSuccessParametersFromCall(call);
                 call.stableLocalSdp = call.lastLocalSdp;
                 rtcAdaptor.setOriginatorReceiveRemoteVideo(call);
@@ -47837,7 +47615,7 @@ function WebRtcManager(_ref) {
 
         if (call.peer) {
 
-            var successCallbackWrapper = function successCallbackWrapper(sdp) {
+            var successCallbackWrapper = function (sdp) {
                 clearSuccessParametersFromCall(call);
                 call.lastLocalSdp = sdp;
                 rtcAdaptor.muteVideoTrack(call, !isVideoStart, true);
@@ -47858,7 +47636,7 @@ function WebRtcManager(_ref) {
 
         if (call.peer) {
 
-            var successCallbackWrapper = function successCallbackWrapper(sdp) {
+            var successCallbackWrapper = function (sdp) {
                 clearSuccessParametersFromCall(call);
                 call.stableLocalSdp = sdp;
                 rtcAdaptor.restoreUserMuteStateOfCall(call);
@@ -47884,7 +47662,7 @@ function WebRtcManager(_ref) {
     self.createReOffer = function (call, successCallback, failureCallback, usePreviousMediaDirection) {
         if (call.peer) {
 
-            var successCallbackWrapper = function successCallbackWrapper(sdp) {
+            var successCallbackWrapper = function (sdp) {
                 clearSuccessParametersFromCall(call);
                 call.lastLocalSdp = sdp;
                 rtcAdaptor.restoreUserMuteStateOfCall(call);
@@ -47910,7 +47688,7 @@ function WebRtcManager(_ref) {
 
         if (call.peer) {
 
-            var successCallbackWrapper = function successCallbackWrapper(sdp) {
+            var successCallbackWrapper = function (sdp) {
                 clearSuccessParametersFromCall(call);
                 call.lastLocalSdp = sdp;
                 if (hold || remote_hold_status) {
@@ -47937,7 +47715,7 @@ function WebRtcManager(_ref) {
     self.processRemoteOfferOnLocalHold = function (call, successCallback, failureCallback) {
         if (call.peer) {
 
-            var successCallbackWrapper = function successCallbackWrapper(sdp) {
+            var successCallbackWrapper = function (sdp) {
                 clearSuccessParametersFromCall(call);
                 if (typeof successCallback === 'function') {
                     successCallback(sdp);
@@ -47966,7 +47744,7 @@ function WebRtcManager(_ref) {
 
         if (call.peer) {
 
-            var successCallbackWrapper = function successCallbackWrapper(sdp) {
+            var successCallbackWrapper = function (sdp) {
                 clearSuccessParametersFromCall(call);
                 call.stableLocalSdp = sdp;
                 if (!local_hold_status && !hold) {
@@ -48003,7 +47781,7 @@ function WebRtcManager(_ref) {
 
         if (call.peer) {
 
-            var successCallbackWrapper = function successCallbackWrapper() {
+            var successCallbackWrapper = function () {
                 clearSuccessParametersFromCall(call);
                 call.stableLocalSdp = call.lastLocalSdp;
                 rtcAdaptor.setOriginatorReceiveRemoteVideo(call);
@@ -48482,7 +48260,7 @@ exports.default = loadModule;
  *                         a special key `$defer` that allows registering deffered functions.
  */
 function loadModule(module) {
-    for (var service in module) {
+    for (let service in module) {
         if (module.hasOwnProperty(service)) {
             if (service === '$init') {
                 this.defer(module[service]);
@@ -59734,7 +59512,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '3.18.0-beta.468';
+  return '3.18.0-beta.469';
 }
 
 /***/ }),
