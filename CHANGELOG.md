@@ -7,6 +7,10 @@ Kandy.js change log.
 
 ## 3.18.0 - beta
 
+### Fixed
+
+- Fixed erroneous validation messages being thrown by valid authentication configurations.
+
 ## 3.17.0 - 2020-06-26
 
 ### Added

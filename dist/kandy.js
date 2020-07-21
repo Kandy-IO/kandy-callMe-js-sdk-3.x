@@ -1,7 +1,7 @@
 /**
  * Kandy.js
  * kandy.callMe.js
- * Version: 3.18.0-beta.475
+ * Version: 3.18.0-beta.476
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -49326,6 +49326,8 @@ var _sagas = __webpack_require__("../../packages/kandy/src/auth/callMe/sagas.js"
 
 var _sagas2 = __webpack_require__("../../packages/kandy/src/auth/oldLink/sagas.js");
 
+var _utils = __webpack_require__("../../packages/kandy/src/common/utils.js");
+
 var _validation = __webpack_require__("../../packages/kandy/src/common/validation/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -49336,49 +49338,49 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @name config.authentication
  * @memberof config
  * @instance
- * @param {Object} authentication Authentication configs.
- * @param {Object} authentication.subscription
+ * @param {Object}  authentication Authentication configs.
+ * @param {Object}  authentication.subscription
  * @param {string} [authentication.subscription.protocol='https'] Protocol to be used for subscription requests.
- * @param {string} authentication.subscription.server Server to be used for subscription requests.
+ * @param {string}  authentication.subscription.server Server to be used for subscription requests.
  * @param {Number} [authentication.subscription.port=443] Port to be used for subscription requests.
- * @param {Array} [authentication.subscription.service] Services to subscribe to for notifications.
- * @param {Object} authentication.websocket
+ * @param {Array}  [authentication.subscription.service] Services to subscribe to for notifications.
+ * @param {Object}  authentication.websocket
  * @param {string} [authentication.websocket.protocol='wss'] Protocol to be used for websocket notifications.
- * @param {string} authentication.websocket.server Server to be used for websocket notifications.
+ * @param {string}  authentication.websocket.server Server to be used for websocket notifications.
  * @param {Number} [authentication.websocket.port=443] Port to be used for websocket notifications.
  */
 
-// Re-use the no-op auth plugin.
 const defaultOptions = exports.defaultOptions = {
   subscription: {
     protocol: 'https',
     server: null,
     port: 443,
     version: '1', // not documented, but important
-    service: [],
-    websocket: {
-      protocol: 'wss',
-      server: null,
-      port: 443
-    }
+    service: []
+  },
+  websocket: {
+    protocol: 'wss',
+    server: null,
+    port: 443
   }
 
   // config validation
 };
 
 // Parse and/or Validate
+// Re-use the no-op auth plugin.
 const v8nValidation = _validation.validation.schema({
   subscription: _validation.validation.schema({
     protocol: (0, _validation.enums)(['http', 'https']),
     server: _validation.validation.string(),
     port: _validation.validation.positive(),
     version: (0, _validation.enums)(['1']), // not documented, but important
-    service: _validation.validation.array().every.string(),
-    websocket: _validation.validation.schema({
-      protocol: _validation.validation.string(),
-      server: _validation.validation.string(),
-      port: _validation.validation.positive()
-    })
+    service: _validation.validation.array().every.string()
+  }),
+  websocket: _validation.validation.schema({
+    protocol: _validation.validation.string(),
+    server: _validation.validation.string(),
+    port: _validation.validation.positive()
   })
 });
 const parseOptions = (0, _validation.parse)('authentication', v8nValidation);
@@ -49390,6 +49392,7 @@ const parseOptions = (0, _validation.parse)('authentication', v8nValidation);
  * @return {Object} A callMe authentication plugin.
  */
 function callMeAuth(options = {}) {
+  options = (0, _utils.mergeValues)(defaultOptions, options);
   parseOptions(options);
 
   // Use the no-op auth plugin as a basis.
@@ -59488,7 +59491,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '3.18.0-beta.475';
+  return '3.18.0-beta.476';
 }
 
 /***/ }),
