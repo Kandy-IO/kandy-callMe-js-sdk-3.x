@@ -7,6 +7,8 @@ Kandy.js change log.
 
 ## 3.19.0 - beta
 
+- Fixed a Call issue where an active call was not being reconnected to after successfully reconnecting to the network. `KAA-2468`
+
 ## 3.18.0 - 2020-07-31
 
 ### Fixed
