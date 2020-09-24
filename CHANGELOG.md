@@ -11,6 +11,10 @@ Kandy.js change log.
 
 - Added a new event `auth:credentialsSet`, to notify when connection credentials are set for all 3.x SDK's. `KAA-2490`
 
+### Changed
+
+- Removed `Creating LogManager` debug log since it was only in place to work around a bug in Chrome that has been fixed. `KAA-2494`
+
 ## 3.19.0 - 2020-08-28
 
 - Fixed a Call issue where an active call was not being reconnected to after successfully reconnecting to the network. `KAA-2468`
