@@ -5,6 +5,17 @@ Kandy.js change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 3.20.0 - 2020-10-02
+
+### Added
+
+- Added a new event `auth:credentialsSet`, to notify when connection credentials are set. `KAA-2490`
+- Added the ability to name the redux store instance for debugging with redux devtools extension.
+
+### Changed
+
+- Removed `Creating LogManager` debug log since it was only in place to work around a bug in Chrome that has been fixed. `KAA-2494`
+
 ## 3.19.0 - 2020-08-28
 
 - Fixed a Call issue where an active call was not being reconnected to after successfully reconnecting to the network. `KAA-2468`

@@ -631,55 +631,25 @@ The SDK will provide [Log Entries][5] to the
 
 **Properties**
 
--   `SILENT` **[string][8]** Log nothing.
--   `ERROR` **[string][8]** Log only unhandled errors.
--   `WARN` **[string][8]** Log issues that may cause problems or unexpected behaviour.
--   `INFO` **[string][8]** Log useful information and messages to indicate the SDK's internal operations.
--   `DEBUG` **[string][8]** Log information to help diagnose problematic behaviour.
-
-### LogHandler
-
-A LogHandler can be used to customize how the SDK should log information. By
-   default, the SDK will log information to the console, but a LogHandler can
-   be configured to change this behaviour.
-
-A LogHandler can be provided to the SDK as part of its configuration (see
-   [config.logs][19]). The SDK will then provide this
-   function with the logged information.
-
-Type: [Function][16]
-
-**Parameters**
-
--   `LogEntry` **[Object][7]** The LogEntry to be logged.
-
-**Examples**
-
-```javascript
-// Define a custom function to handle logs.
-function logHandler (logEntry) {
-  // Compile the meta info of the log for a prefix.
-  const { timestamp, level, target } = logEntry
-  let { method } = logEntry
-  const logInfo = `${timestamp} - ${target.type} - ${level}`
-
-  // Assume that the first message parameter is a string.
-  const [log, ...extra] = logEntry.messages
-
-  // For the timer methods, don't actually use the console methods.
-  //    The Logger already did the timing, so simply log out the info.
-  if (['time', 'timeLog', 'timeEnd'].includes(method)) {
-    method = 'debug'
-  }
-
-  console[method](`${logInfo} - ${log}`, ...extra)
-}
-
-// Provide the LogHandler as part of the SDK configurations.
-const configs = { ... }
-configs.logs.handler = logHandler
-const client = create(configs)
-```
+-   `SILENT` **[string][8]** Nothing will be logged.
+-   `ERROR` **[string][8]** Unhandled error information will be logged. If
+       the SDK encounters an issue it cannot resolve, the error will be included
+       in the logs. This likely points to an issue with the SDK itself or an
+       issue with how the SDK is being used.
+-   `WARN` **[string][8]** Warning messages for the application developer will
+       be logged. If the SDK encounters an issue that it can recover and continue,
+       a warning about the issue will be included in the logs. These logs point
+       to issues that need to be handled by the application. For example, providing
+       an invalid configuration to the SDK will cause a warning log that explains
+       the issue.
+-   `INFO` **[string][8]** General information about the SDK's operations will
+       be logged, outlining how the SDK is handling the operations. Reading through
+       these logs should provide a high-level view of what the SDK is doing,
+       and why it is doing it.
+-   `DEBUG` **[string][8]** Detailed information about the SDK's operations,
+       meant for debugging issues, will be logged. Specific information and relevant
+       operation data are provided for understanding the scenario that the SDK
+       was in during the operation.
 
 ### LogEntry
 
@@ -728,6 +698,50 @@ function defaultLogHandler (logEntry) {
 
   console[method](`${logInfo} - ${log}`, ...extra)
 }
+```
+
+### LogHandler
+
+A LogHandler can be used to customize how the SDK should log information. By
+   default, the SDK will log information to the console, but a LogHandler can
+   be configured to change this behaviour.
+
+A LogHandler can be provided to the SDK as part of its configuration (see
+   [config.logs][19]). The SDK will then provide this
+   function with the logged information.
+
+Type: [Function][16]
+
+**Parameters**
+
+-   `LogEntry` **[Object][7]** The LogEntry to be logged.
+
+**Examples**
+
+```javascript
+// Define a custom function to handle logs.
+function logHandler (logEntry) {
+  // Compile the meta info of the log for a prefix.
+  const { timestamp, level, target } = logEntry
+  let { method } = logEntry
+  const logInfo = `${timestamp} - ${target.type} - ${level}`
+
+  // Assume that the first message parameter is a string.
+  const [log, ...extra] = logEntry.messages
+
+  // For the timer methods, don't actually use the console methods.
+  //    The Logger already did the timing, so simply log out the info.
+  if (['time', 'timeLog', 'timeEnd'].includes(method)) {
+    method = 'debug'
+  }
+
+  console[method](`${logInfo} - ${log}`, ...extra)
+}
+
+// Provide the LogHandler as part of the SDK configurations.
+const configs = { ... }
+configs.logs.handler = logHandler
+const client = create(configs)
 ```
 
 ## Media
