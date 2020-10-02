@@ -5,11 +5,11 @@ Kandy.js change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
-## 3.20.0 - beta
+## 3.20.0 - 2020-10-02
 
 ### Added
 
-- Added a new event `auth:credentialsSet`, to notify when connection credentials are set for all 3.x SDK's. `KAA-2490`
+- Added a new event `auth:credentialsSet`, to notify when connection credentials are set. `KAA-2490`
 - Added the ability to name the redux store instance for debugging with redux devtools extension.
 
 ### Changed
