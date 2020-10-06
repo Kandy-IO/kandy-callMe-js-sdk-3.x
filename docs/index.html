@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset='utf-8' />
-  <title>kandy-callMe-js-sdk-3.x 3.20.0 | Documentation</title>
+  <title>kandy-callMe-js-sdk-3.x 3.21.0 | Documentation</title>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' type='text/css' rel='stylesheet' />
   <link href='assets/style.css' type='text/css' rel='stylesheet' />
@@ -14,7 +14,7 @@
       <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
         <div class='py1 px2'>
           <h3 class='mb0 no-anchor'>kandy-callMe-js-sdk-3.x</h3>
-          <div class='mb1'><code>3.20.0</code></div>
+          <div class='mb1'><code>3.21.0</code></div>
           <input
             placeholder='Filter'
             id='filter-input'
@@ -671,7 +671,9 @@ for v3.X. Requires log level debug.
 
               
                 <tr>
-  <td class='break-word'><span class='code bold'>logs.logActions</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>)?</code>
+  <td class='break-word'><span class='code bold'>logs.logActions</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>)</code>
+  
+    (default <code>false</code>)
   </td>
   <td class='break-word'><span>Options specifically for action logs when
 logLevel is at DEBUG+ levels. Set this to false to not output action logs.
@@ -693,7 +695,7 @@ that logs actions to the console.
     <tr>
   <td class='break-word'><span class='code bold'>logs.logActions.actionOnly</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>
   
-    (default <code>true</code>)
+    (default <code>false</code>)
   </td>
   <td class='break-word'><span>Only output information
 about the action itself. Omits the SDK context for when it occurred.
@@ -742,7 +744,7 @@ on the action logs
     <tr>
   <td class='break-word'><span class='code bold'>logs.logActions.exposePayloads</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>
   
-    (default <code>false</code>)
+    (default <code>true</code>)
   </td>
   <td class='break-word'><span>Allow action payloads
 to be exposed in the logs, potentially displaying sensitive information.
