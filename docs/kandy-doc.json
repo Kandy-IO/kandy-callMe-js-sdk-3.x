@@ -791,7 +791,8 @@
                   ]
                 }
               },
-              "name": "logs.logActions"
+              "name": "logs.logActions",
+              "default": "false"
             },
             {
               "title": "param",
@@ -818,7 +819,7 @@
                 }
               },
               "name": "logs.logActions.actionOnly",
-              "default": "true"
+              "default": "false"
             },
             {
               "title": "param",
@@ -874,7 +875,7 @@
                 }
               },
               "name": "logs.logActions.exposePayloads",
-              "default": "false"
+              "default": "true"
             }
           ],
           "loc": {
@@ -894,7 +895,7 @@
                 "column": 0
               },
               "end": {
-                "line": 59,
+                "line": 50,
                 "column": 1
               }
             },
@@ -1265,21 +1266,19 @@
                     }
                   },
                   "type": {
-                    "type": "OptionalType",
-                    "expression": {
-                      "type": "UnionType",
-                      "elements": [
-                        {
-                          "type": "NameExpression",
-                          "name": "Object"
-                        },
-                        {
-                          "type": "NameExpression",
-                          "name": "boolean"
-                        }
-                      ]
-                    }
+                    "type": "UnionType",
+                    "elements": [
+                      {
+                        "type": "NameExpression",
+                        "name": "Object"
+                      },
+                      {
+                        "type": "NameExpression",
+                        "name": "boolean"
+                      }
+                    ]
                   },
+                  "default": "false",
                   "properties": [
                     {
                       "title": "param",
@@ -1415,7 +1414,7 @@
                         "type": "NameExpression",
                         "name": "boolean"
                       },
-                      "default": "true"
+                      "default": "false"
                     },
                     {
                       "title": "param",
@@ -1681,7 +1680,7 @@
                         "type": "NameExpression",
                         "name": "boolean"
                       },
-                      "default": "false"
+                      "default": "true"
                     }
                   ]
                 }
@@ -10020,22 +10019,22 @@
           ],
           "loc": {
             "start": {
-              "line": 233,
+              "line": 240,
               "column": 4
             },
             "end": {
-              "line": 243,
+              "line": 250,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 244,
+                "line": 251,
                 "column": 4
               },
               "end": {
-                "line": 247,
+                "line": 254,
                 "column": 5
               }
             },

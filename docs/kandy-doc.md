@@ -52,13 +52,13 @@ The format of logs can also be customized by providing a
            to the console.
     -   `logs.enableFcsLogs` **[boolean][11]** Enable the detailed call logger
            for v3.X. Requires log level debug. (optional, default `true`)
-    -   `logs.logActions` **([Object][7] \| [boolean][11])?** Options specifically for action logs when
-           logLevel is at DEBUG+ levels. Set this to false to not output action logs.
+    -   `logs.logActions` **([Object][7] \| [boolean][11])** Options specifically for action logs when
+           logLevel is at DEBUG+ levels. Set this to false to not output action logs. (optional, default `false`)
         -   `logs.logActions.handler` **[logger.LogHandler][10]?** The function to receive action
                log entries from the SDK. If not provided, a default handler will be used
                that logs actions to the console.
         -   `logs.logActions.actionOnly` **[boolean][11]** Only output information
-               about the action itself. Omits the SDK context for when it occurred. (optional, default `true`)
+               about the action itself. Omits the SDK context for when it occurred. (optional, default `false`)
         -   `logs.logActions.collapsed` **[boolean][11]** Whether logs should be
                minimized when initially output. The full log is still output and can be
                inspected on the console. (optional, default `false`)
@@ -67,7 +67,7 @@ The format of logs can also be customized by providing a
         -   `logs.logActions.level` **[string][8]** Log level to be set
                on the action logs (optional, default `'debug'`)
         -   `logs.logActions.exposePayloads` **[boolean][11]** Allow action payloads
-               to be exposed in the logs, potentially displaying sensitive information. (optional, default `false`)
+               to be exposed in the logs, potentially displaying sensitive information. (optional, default `true`)
 
 ### config.authentication
 
