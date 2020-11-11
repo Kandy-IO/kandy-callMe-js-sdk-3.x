@@ -7,6 +7,10 @@ Kandy.js change log.
 
 ## 3.22.0 - beta
 
+### Fixed
+
+- Fixed an issue where if an error occured during the user connect before the call, further call attempts would not work. `KAA-2529`
+
 ## 3.21.0 - 2020-10-30
 
 ### Changed
