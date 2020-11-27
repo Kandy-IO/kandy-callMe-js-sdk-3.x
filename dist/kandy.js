@@ -1,7 +1,7 @@
 /**
  * Kandy.js
  * kandy.callMe.js
- * Version: 3.22.0-beta.590
+ * Version: 3.22.0-beta.591
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -59805,7 +59805,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '3.22.0-beta.590';
+  return '3.22.0-beta.591';
 }
 
 /***/ }),
