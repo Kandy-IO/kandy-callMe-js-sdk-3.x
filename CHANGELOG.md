@@ -5,6 +5,12 @@ Kandy.js change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 3.22.0 - 2020-11-27
+
+### Fixed
+
+- Fixed an issue where if an error occured during the user connect before the call, further call attempts would not work. `KAA-2529`
+
 ## 3.21.0 - 2020-10-30
 
 ### Changed
