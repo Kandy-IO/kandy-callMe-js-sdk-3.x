@@ -1,7 +1,7 @@
 /**
  * Kandy.js
  * kandy.callMe.js
- * Version: 3.22.0-beta.589
+ * Version: 3.22.0-beta.590
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -49981,7 +49981,7 @@ function connect(credentials, options) {
 /**
  * Create a set connection info action that takes a connection and user info object
  *
- * @method connectFinished
+ * @method setConnectionInfo
  * @param {Object} $0
  * @param {Object} $0.userInfo An object representing the user information.
  * @param {Object} $0.connection A connection object. Information about how to connect to the backend services.
@@ -50170,7 +50170,7 @@ function resubscribeFinished({ error, attemptNum }, platform) {
  * Creates a refreshTokens action with the given credentials as a payload.
  *
  * @method refreshTokens
- * @param {Object} credentials A crendetials object containing tokens.
+ * @param {Object} credentials A credentials object containing tokens.
  * @return {Object} A flux standard action.
  */
 function refreshTokens(credentials) {
@@ -50261,7 +50261,7 @@ function setTokens({ accessToken, idToken }) {
 /**
  * Creates a setCredentials action that takes a credentials object.
  *
- * @method connect
+ * @method setCredentials
  * @param {Object} $0
  * @param {string} $0.username The username.
  * @param {string} $0.password The user's password.
@@ -50285,7 +50285,7 @@ function setCredentials({ username, password, authname, hmacToken, bearerAccessT
  * Create a setCredentials finished action that takes a userInfo object on success and possibly
  * an error object.
  *
- * @method connectFinished
+ * @method setCredentialsFinished
  * @param {Object} $0
  * @param {Object} $0.userInfo An object representing the user information.
  * @param {Object} $0.connection A connection object. Information about how to connect to the backend services.
@@ -59805,7 +59805,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '3.22.0-beta.589';
+  return '3.22.0-beta.590';
 }
 
 /***/ }),
