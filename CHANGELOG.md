@@ -11,6 +11,10 @@ Kandy.js change log.
 
 - Added the ability to customize the `X-CPaaS-Agent` header's value by appending any custom string to its value. `KJS-162`
 
+### Fixed
+
+- Fixed a Call issue where the system believes audio is still being used by SDK after a call ends because of AudioContext usage. `KAA-2646`
+
 ## 3.28.0 - 2021-05-28
 
 ## 3.27.0 - 2021-04-30
