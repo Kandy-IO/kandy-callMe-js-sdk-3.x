@@ -7,9 +7,9 @@ Kandy.js change log.
 
 ## 3.31.0 - beta
 
-### Changed
+### Fixed
 
-- Changed how we merge data when the `updateConfig()` API is called. For arrays, it will now replace the array instead of merging it's elements. All other types should update in the same way they previously updated. `KJS-239`
+- Fixed an issue with the `updateConfig()` API where it would merge arrays instead of replace them. `KJS-205`
 
 ## 3.30.0 - 2021-07-30
 
@@ -17,7 +17,7 @@ Kandy.js change log.
 
 ### Added
 
-- Added the ability to customize the `X-CPaaS-Agent` header's value by appending any custom string to its value. `KJS-162`
+- Added the ability to customize the `X-CPaaS-Agent` header's value by appending any custom string to its value. `KJS-159`
 
 ### Fixed
 
