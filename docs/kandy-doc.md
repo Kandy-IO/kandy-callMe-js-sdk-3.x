@@ -562,6 +562,38 @@ Explicitly send the current custom parameters for a call.
 The 'connection' namespace is used to connect and maintain connections between
 the SDK and one or more backend servers.
 
+### WSConnectionObject
+
+Information about a websocket connection.
+
+Can be retrieved using the [connection.getSocketState][18] API.
+
+Type: [Object][7]
+
+**Properties**
+
+-   `connected` **[boolean][11]** The state of the websocket connection.
+-   `pinging` **[boolean][11]** True if the client has sent a ping to the server and is still waiting for a pong response.
+-   `method` **[Object][7]** Information about how the websocket is being used.
+    -   `method.type` **[string][8]?** How the websocket is staying connected.
+    -   `method.responsibleParty` **[string][8]?** Who is responsible for keeping the connection alive.
+-   `platform` **[string][8]** The SDK platform being used.
+-   `pingInterval` **[number][12]** How often the client will ping the server to test for websocket connectivity.
+-   `reconnectLimit` **[number][12]** How many times the SDK will try to reconnect a disconnected websocket.
+-   `reconnectDelay` **[number][12]** How long the SDK will wait before retrying websocket reconnection.
+-   `reconnectTimeMultiplier` **[number][12]** Reconnect delay multiplier for subsequent attempts. The reconnect delay time will be multiplied by this after each failed reconnect attempt to increase the delay between attempts. eg. 5000ms then 10000ms then 20000ms delay if value is 2.
+-   `reconnectTimeLimit` **[number][12]** Maximum time delay between reconnect attempts (milliseconds). Used in conjunction with `reconnectTimeMultiplier` to prevent overly long delays between reconnection attempts.
+-   `autoReconnect` **[boolean][11]** Indicates if the SDK should automatically try reconnecting a disconnected websocket.
+-   `maxMissedPings` **[number][12]** How many missed pings before the SDK stops trying to reconnect a disconnected websocket.
+-   `webSocketOAuthMode` **[string][8]** The mode used for authenticating with the server.
+-   `wsInfo` **[Object][7]** Information required to connect a websocket to the server.
+    -   `wsInfo.protocol` **[string][8]?** The protocol to use to connect a websocket.
+    -   `wsInfo.server` **[string][8]?** The domain name or IP address of the server to connect to.
+    -   `wsInfo.port` **[number][12]?** The port of the server to connect to.
+    -   `wsInfo.url` **[string][8]?** The URL path to use to request a websocket connection.
+    -   `wsInfo.params` **[string][8]?** Any additional params that might be required by the server to establish the websocket connection.
+-   `lastContact` **[number][12]** The date and time that the last known contact with the server was.
+
 ### getSocketState
 
 Get the state of the websocket.
@@ -569,6 +601,8 @@ Get the state of the websocket.
 **Parameters**
 
 -   `platform` **[string][8]** Backend platform for which to request the websocket's state. (optional, default `'link'`)
+
+Returns **[connection.WSConnectionObject][19]** Details about the current websocket connection, including state and configuration.
 
 ### enableConnectivityChecking
 
@@ -587,7 +621,7 @@ Type: [string][8]
 **Parameters**
 
 -   `params` **[Object][7]** 
-    -   `params.error` **[api.BasicError][18]** The Basic error object.
+    -   `params.error` **[api.BasicError][20]** The Basic error object.
 
 ## getDevices
 
@@ -600,7 +634,7 @@ The SDK has an internal logging system for providing information about its
    types of information, which are routed to a
    "[Log Handler][4]" for consumption. An application
    can provide their own Log Handler (see
-   [config.logs][19]) to customize how the logs are
+   [config.logs][21]) to customize how the logs are
    handled, or allow the default Log Handler to print the logs to the
    console.
 
@@ -660,7 +694,7 @@ A LogEntry object is the data that the SDK compiles when information is
    and who logged it.
 
 A [LogHandler][4] provided to the SDK (see
-   [config.logs][19]) will need to handle LogEntry
+   [config.logs][21]) will need to handle LogEntry
    objects.
 
 Type: [Object][7]
@@ -709,7 +743,7 @@ A LogHandler can be used to customize how the SDK should log information. By
    be configured to change this behaviour.
 
 A LogHandler can be provided to the SDK as part of its configuration (see
-   [config.logs][19]). The SDK will then provide this
+   [config.logs][21]). The SDK will then provide this
    function with the logged information.
 
 Type: [Function][16]
@@ -769,7 +803,7 @@ Provides an external notification to the system for processing.
 ### registerApplePush
 
 Registers with Apple push notification service. Once registration is successful, the application will be able to receive
-standard and/or voip push notifications. It can then send these notifications to the SDK with [api.notifications.process][20]
+standard and/or voip push notifications. It can then send these notifications to the SDK with [api.notifications.process][22]
 in order for the SDK to process them.
 
 **Parameters**
@@ -787,13 +821,13 @@ in order for the SDK to process them.
     -   `params.isProduction` **[boolean][11]** If true, push notification will be sent to production.
                                                If false, push notification will be sent to sandbox.
 
-Returns **[Promise][21]** When successful,  the information of the registration.
+Returns **[Promise][23]** When successful,  the information of the registration.
                   Promise will reject with error object otherwise.
 
 ### registerAndroidPush
 
 Registers with Google push notification service. Once registration is successful, the application will be able to receive
-standard and/or voip push notifications. It can then send these notifications to the SDK with [api.notifications.process][20]
+standard and/or voip push notifications. It can then send these notifications to the SDK with [api.notifications.process][22]
 in order for the SDK to process them.
 
 **Parameters**
@@ -807,7 +841,7 @@ in order for the SDK to process them.
     -   `params.realm` **[string][8]** The realm used by the push registration service to identify
                                        and establish a connection with the service gateway.
 
-Returns **[Promise][21]** When successful,  the information of the registration.
+Returns **[Promise][23]** When successful,  the information of the registration.
                   Promise will reject with error object otherwise.
 
 ### unregisterApplePush
@@ -818,7 +852,7 @@ Unregister Apple push notifications.
 
 -   `registrationInfo` **[string][8]** The data returned from the push registration
 
-Returns **[Promise][21]** When successful, the promise will resolve with undefined.
+Returns **[Promise][23]** When successful, the promise will resolve with undefined.
                   Promise will reject with error object otherwise.
 
 ### unregisterAndroidPush
@@ -829,7 +863,7 @@ Unregister Android push notifications.
 
 -   `registrationInfo` **[string][8]** The data returned from the push registration
 
-Returns **[Promise][21]** When successful, the promise will resolve with undefined.
+Returns **[Promise][23]** When successful, the promise will resolve with undefined.
                   Promise will reject with error object otherwise.
 
 ### enableWebsocket
@@ -842,14 +876,14 @@ Enables, or disables, the processing of websocket notifications.
 
 ## sdpHandlers
 
-A set of [SdpHandlerFunction][22]s for manipulating SDP information.
+A set of [SdpHandlerFunction][24]s for manipulating SDP information.
 These handlers are used to customize low-level call behaviour for very specific
 environments and/or scenarios.
 
 Note that SDP handlers are exposed on the entry point of the SDK. They can be added during
-initialization of the SDK using the [config.call.sdpHandlers][23] configuration
+initialization of the SDK using the [config.call.sdpHandlers][25] configuration
 parameter. They can also be set after the SDK's creation by using the
-[call.setSdpHandlers][24] function.
+[call.setSdpHandlers][26] function.
 
 **Examples**
 
@@ -890,7 +924,7 @@ length (usually to 4KB) and will reject calls that have SDP size above this amou
 While creating an SDP handler would allow a user to perform this type of manipulation, it is a non-trivial task that requires in-depth knowledge of WebRTC SDP.
 
 To facilitate this common task, the createCodecRemover function creates a codec removal handler that can be used for this purpose. Applications can use this codec
-removal handler in combination with the [call.getAvailableCodecs][25] function in order to build logic to determine the best codecs to use
+removal handler in combination with the [call.getAvailableCodecs][27] function in order to build logic to determine the best codecs to use
 for their application.
 
 **Parameters**
@@ -981,18 +1015,22 @@ client.media.setDefaultDevices({
 
 [17]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error
 
-[18]: #apibasicerror
+[18]: #connectiongetsocketstate
 
-[19]: #configconfiglogs
+[19]: #connectionwsconnectionobject
 
-[20]: api.notifications.process
+[20]: #apibasicerror
 
-[21]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
+[21]: #configconfiglogs
 
-[22]: call.SdpHandlerFunction
+[22]: api.notifications.process
 
-[23]: #configconfigcall
+[23]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
 
-[24]: call.setSdpHandlers
+[24]: call.SdpHandlerFunction
 
-[25]: call.getAvailableCodecs
+[25]: #configconfigcall
+
+[26]: call.setSdpHandlers
+
+[27]: call.getAvailableCodecs
