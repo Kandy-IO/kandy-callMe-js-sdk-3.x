@@ -5,11 +5,11 @@
 The SDK creation factory. Create an instance of the SDK by calling this factory with the desired configurations.
 The SDK instance will be refered as 'api' throughout the rest of the documentation content.
 
-**Parameters**
+### Parameters
 
--   `config` **[config][1]** The configuration object.
+*   `config` **[config][1]** The configuration object.
 
-**Examples**
+### Examples
 
 ```javascript
 // Instantiate the SDK.
@@ -35,97 +35,106 @@ values you can use when instantiating the SDK using the [create][3] function.
 Configuration options for the Logs feature.
 
 The SDK will log information about the operations it is performing. The
-   amount of information will depend on how the Logs feature is configured.
+amount of information will depend on how the Logs feature is configured.
 
 The format of logs can also be customized by providing a
-   [LogHandler][4]. This function will receive a
-   [LogEntry][5] which it can handle as it sees fit. By
-   default, the SDK will log information to the console. For more
-   information, see the [Logs feature][6] description.
+[LogHandler][4]. This function will receive a
+[LogEntry][5] which it can handle as it sees fit. By
+default, the SDK will log information to the console. For more
+information, see the [Logs feature][6] description.
 
-**Parameters**
+#### Parameters
 
--   `logs` **[Object][7]** Logs configs.
-    -   `logs.logLevel` **[string][8]** Log level to be set. See [logger.levels][9]. (optional, default `'debug'`)
-    -   `logs.handler` **[logger.LogHandler][10]?** The function to receive log entries from the
-           SDK. If not provided, a default handler will be used that logs entries
-           to the console.
-    -   `logs.enableFcsLogs` **[boolean][11]** Enable the detailed call logger
-           for v3.X. Requires log level debug. (optional, default `true`)
-    -   `logs.logActions` **([Object][7] \| [boolean][11])** Options specifically for action logs when
-           logLevel is at DEBUG+ levels. Set this to false to not output action logs. (optional, default `false`)
-        -   `logs.logActions.handler` **[logger.LogHandler][10]?** The function to receive action
-               log entries from the SDK. If not provided, a default handler will be used
-               that logs actions to the console.
-        -   `logs.logActions.actionOnly` **[boolean][11]** Only output information
-               about the action itself. Omits the SDK context for when it occurred. (optional, default `false`)
-        -   `logs.logActions.collapsed` **[boolean][11]** Whether logs should be
-               minimized when initially output. The full log is still output and can be
-               inspected on the console. (optional, default `false`)
-        -   `logs.logActions.diff` **[boolean][11]** Include a diff of what SDK
-               context was changed by the action. (optional, default `false`)
-        -   `logs.logActions.level` **[string][8]** Log level to be set
-               on the action logs (optional, default `'debug'`)
-        -   `logs.logActions.exposePayloads` **[boolean][11]** Allow action payloads
-               to be exposed in the logs, potentially displaying sensitive information. (optional, default `true`)
+*   `logs` **[Object][7]** Logs configs.
+
+    *   `logs.logLevel` **[string][8]** Log level to be set. See [logger.levels][9]. (optional, default `'debug'`)
+    *   `logs.handler` **[logger.LogHandler][10]?** The function to receive log entries from the
+        SDK. If not provided, a default handler will be used that logs entries
+        to the console.
+    *   `logs.enableFcsLogs` **[boolean][11]** Enable the detailed call logger
+        for v3.X. Requires log level debug. (optional, default `true`)
+    *   `logs.logActions` **([Object][7] | [boolean][11])** Options specifically for action logs when
+        logLevel is at DEBUG+ levels. Set this to false to not output action logs. (optional, default `false`)
+
+        *   `logs.logActions.handler` **[logger.LogHandler][10]?** The function to receive action
+            log entries from the SDK. If not provided, a default handler will be used
+            that logs actions to the console.
+        *   `logs.logActions.actionOnly` **[boolean][11]** Only output information
+            about the action itself. Omits the SDK context for when it occurred. (optional, default `false`)
+        *   `logs.logActions.collapsed` **[boolean][11]** Whether logs should be
+            minimized when initially output. The full log is still output and can be
+            inspected on the console. (optional, default `false`)
+        *   `logs.logActions.diff` **[boolean][11]** Include a diff of what SDK
+            context was changed by the action. (optional, default `false`)
+        *   `logs.logActions.level` **[string][8]** Log level to be set
+            on the action logs (optional, default `'debug'`)
+        *   `logs.logActions.exposePayloads` **[boolean][11]** Allow action payloads
+            to be exposed in the logs, potentially displaying sensitive information. (optional, default `true`)
 
 ### config.authentication
 
 Configuration options for the CallMe Authentication feature.
 
-**Parameters**
+#### Parameters
 
--   `authentication` **[Object][7]** Authentication configs.
-    -   `authentication.subscription` **[Object][7]** 
-        -   `authentication.subscription.protocol` **[string][8]** Protocol to be used for subscription requests. (optional, default `'https'`)
-        -   `authentication.subscription.server` **[string][8]** Server to be used for subscription requests.
-        -   `authentication.subscription.port` **[Number][12]** Port to be used for subscription requests. (optional, default `443`)
-        -   `authentication.subscription.service` **[Array][13]?** Services to subscribe to for notifications.
-    -   `authentication.websocket` **[Object][7]** 
-        -   `authentication.websocket.protocol` **[string][8]** Protocol to be used for websocket notifications. (optional, default `'wss'`)
-        -   `authentication.websocket.server` **[string][8]** Server to be used for websocket notifications.
-        -   `authentication.websocket.port` **[Number][12]** Port to be used for websocket notifications. (optional, default `443`)
+*   `authentication` **[Object][7]** Authentication configs.
+
+    *   `authentication.subscription` **[Object][7]** 
+
+        *   `authentication.subscription.protocol` **[string][8]** Protocol to be used for subscription requests. (optional, default `'https'`)
+        *   `authentication.subscription.server` **[string][8]** Server to be used for subscription requests.
+        *   `authentication.subscription.port` **[Number][12]** Port to be used for subscription requests. (optional, default `443`)
+        *   `authentication.subscription.service` **[Array][13]?** Services to subscribe to for notifications.
+    *   `authentication.websocket` **[Object][7]** 
+
+        *   `authentication.websocket.protocol` **[string][8]** Protocol to be used for websocket notifications. (optional, default `'wss'`)
+        *   `authentication.websocket.server` **[string][8]** Server to be used for websocket notifications.
+        *   `authentication.websocket.port` **[Number][12]** Port to be used for websocket notifications. (optional, default `443`)
 
 ### config.call
 
 Configuration options for the call feature.
 
-**Parameters**
+#### Parameters
 
--   `call` **[Object][7]** The call configuration object.
-    -   `call.callDefaults` **[Object][7]?** Default options to be used when making/answering a call.
-        -   `call.callDefaults.isAudioEnabled` **[boolean][11]** Specifies whether audio is enabled or not. (optional, default `true`)
-        -   `call.callDefaults.isVideoEnabled` **[boolean][11]** Specifies whether video is enabled or not. (optional, default `true`)
-        -   `call.callDefaults.sendInitialVideo` **[boolean][11]** Specifies whether to send an inital video stream or not. (optional, default `false`)
-        -   `call.callDefaults.remoteVideoContainer` **[Object][7]?** Specifies the container where video (coming from remote party) is rendered.
-        -   `call.callDefaults.localVideoContainer` **[Object][7]?** Specifies the container where video (coming from local party) is rendered.
-    -   `call.chromeExtensionId` **[string][8]?** ID of the screenshare extension being used for screenshare of Google Chrome.
-    -   `call.recordCallStats` **[boolean][11]** Whether to enable the recording of call statistics as part of app's local storage. (optional, default `false`)
-    -   `call.earlyMedia` **[boolean][11]** Whether to use early media (e.g. for playing incoming tones) as part of an outgoing call. (optional, default `false`)
-    -   `call.callAuditTimer` **[number][12]** Audit time value for calls, as a positive number in milliseconds. (optional, default `30000`)
-    -   `call.activeCallTimeoutMS` **[number][12]** Timeout for an existing ringing call before it gets terminated, as a positive number in milliseconds. (optional, default `120000`)
-    -   `call.ringingFeedback` **[boolean][11]?** When enabled, inform Spidr that RingingFeedback is supported.
-    -   `call.codecsToReplace` **[string][8]?** Specifies alternative audio/video codecs to use for a given call. It has been deprecated so pipeline parameter should be used instead.
-    -   `call.videoInactiveOnHold` **[boolean][11]** Sets the video as "inactive" instead of "sendonly" when holding a call. (optional, default `false`)
-    -   `call.forceDisableMediaOnHold` **[boolean][11]** Disables any type of media (e.g. Comfort Noise) from transmitting when call is held locally. (optional, default `false`)
-    -   `call.iceCandidateCollectionTimeoutInterval` **[number][12]** When provided (in milliseconds), ice candidate collection is assumed to be completed if at least one candidate is received within the interval. (optional, default `3000`)
-    -   `call.relayCandidateCollectionTimeoutCycle` **[boolean][11]** When enabled, iceCandidateCollectionTimeoutInterval is restarted until receiving first relay candidate. If the provided cycle limit is reached, ice candidate collection assumed to be completed. (optional, default `false`)
-    -   `call.recordCallStats` **[boolean][11]** When enabled, call statistics are recorded in app's localstorage after the call is terminated. (optional, default `false`)
-    -   `call.callConstraints` **[Object][7]?** Custom RTCPeerConnection constraints to use for calls. Will cause errors if malformed.
-        -   `call.callConstraints.chrome` **[Object][7]?** Custom constraints to be used on Google Chrome.
-        -   `call.callConstraints.firefox` **[Object][7]?** Custom constraints to be used on Mozilla Firefox.
-    -   `call.bundlePolicy` **[string][8]** The bundle policy to use for peer connections. Value can be fcs.SDP_CONSTANTS.BUNDLE_POLICY.MAX_COMPAT, fcs.SDP_CONSTANTS.BUNDLE_POLICY.MAX_BUNDLE, fcs.SDP_CONSTANTS.BUNDLE_POLICY.BALANCED or fcs.SDP_CONSTANTS.BUNDLE_POLICY.DISABLED. The DISABLED option means that bundle group lines will be removed from every SDP. (optional, default `'DISABLED'`)
-    -   `call.opusConfig` **[Object][7]?** Bandwidth controls to add for Opus audio codec.
-        -   `call.opusConfig.maxPlaybackRate` **[number][12]?** Maximum playback rate, in bits per second. Must be a positive value between 8000 and 48000.
-        -   `call.opusConfig.maxAverageBitrate` **[number][12]?** A bitrate encoding value between 6000 and 510000 bits per second.
-        -   `call.opusConfig.fec` **[number][12]?** Specifies whether Forward Error Correction is enabled or not. When enabled, FEC provides robustness against packet loss. Acceptable values can only be 0 or 1.
-        -   `call.opusConfig.dtx` **[number][12]?** Specifies whether Discontinuous Transmission mode is enabled or not. When enabled, DTX reduces the bitrate during silence or background noise. Acceptable values can only be 0 or 1.
-        -   `call.opusConfig.ptime` **[number][12]?** Packet (i.e. frame) duration in milliseconds. Frames will be combined into packets to achieve the maximum of 120 ms duration. A positive value between 2.5 and 120.
-    -   `call.webrtcLogCollectionInterval` **[number][12]** Interval at which to collect WebRTC logs for calls, in milliseconds. (optional, default `3000`)
-    -   `call.useRelay` **[boolean][11]** Whether we should force connection through the relay candidates (i.e. TURN server). Mostly used for testing. (optional, default `false`)
-    -   `call.trickleIceSupport` **[string][8]** Whether we should advertise and use Trickle ICE. Accepted value is one of: 'none', 'half' or 'full'. (optional, default `'none'`)
-    -   `call.continuity` **[boolean][11]** Whether an existing voice call can be persisted, as a mobile phone moves between circuit switched and packet switched domains (e.g. GSM to WiFi). (optional, default `false`)
-    -   `call.resyncOnConnect` **[boolean][11]** Whether all active calls should be resynched upon connecting or reconnecting to the websocket (requires Kandy Link 4.7.1+). (optional, default `false`)
+*   `call` **[Object][7]** The call configuration object.
+
+    *   `call.callDefaults` **[Object][7]?** Default options to be used when making/answering a call.
+
+        *   `call.callDefaults.isAudioEnabled` **[boolean][11]** Specifies whether audio is enabled or not. (optional, default `true`)
+        *   `call.callDefaults.isVideoEnabled` **[boolean][11]** Specifies whether video is enabled or not. (optional, default `true`)
+        *   `call.callDefaults.sendInitialVideo` **[boolean][11]** Specifies whether to send an inital video stream or not. (optional, default `false`)
+        *   `call.callDefaults.remoteVideoContainer` **[Object][7]?** Specifies the container where video (coming from remote party) is rendered.
+        *   `call.callDefaults.localVideoContainer` **[Object][7]?** Specifies the container where video (coming from local party) is rendered.
+    *   `call.chromeExtensionId` **[string][8]?** ID of the screenshare extension being used for screenshare of Google Chrome.
+    *   `call.recordCallStats` **[boolean][11]** Whether to enable the recording of call statistics as part of app's local storage. (optional, default `false`)
+    *   `call.earlyMedia` **[boolean][11]** Whether to use early media (e.g. for playing incoming tones) as part of an outgoing call. (optional, default `false`)
+    *   `call.callAuditTimer` **[number][12]** Audit time value for calls, as a positive number in milliseconds. (optional, default `30000`)
+    *   `call.activeCallTimeoutMS` **[number][12]** Timeout for an existing ringing call before it gets terminated, as a positive number in milliseconds. (optional, default `120000`)
+    *   `call.ringingFeedback` **[boolean][11]?** When enabled, inform Spidr that RingingFeedback is supported.
+    *   `call.codecsToReplace` **[string][8]?** Specifies alternative audio/video codecs to use for a given call. It has been deprecated so pipeline parameter should be used instead.
+    *   `call.videoInactiveOnHold` **[boolean][11]** Sets the video as "inactive" instead of "sendonly" when holding a call. (optional, default `false`)
+    *   `call.forceDisableMediaOnHold` **[boolean][11]** Disables any type of media (e.g. Comfort Noise) from transmitting when call is held locally. (optional, default `false`)
+    *   `call.iceCandidateCollectionTimeoutInterval` **[number][12]** When provided (in milliseconds), ice candidate collection is assumed to be completed if at least one candidate is received within the interval. (optional, default `3000`)
+    *   `call.relayCandidateCollectionTimeoutCycle` **[boolean][11]** When enabled, iceCandidateCollectionTimeoutInterval is restarted until receiving first relay candidate. If the provided cycle limit is reached, ice candidate collection assumed to be completed. (optional, default `false`)
+    *   `call.recordCallStats` **[boolean][11]** When enabled, call statistics are recorded in app's localstorage after the call is terminated. (optional, default `false`)
+    *   `call.callConstraints` **[Object][7]?** Custom RTCPeerConnection constraints to use for calls. Will cause errors if malformed.
+
+        *   `call.callConstraints.chrome` **[Object][7]?** Custom constraints to be used on Google Chrome.
+        *   `call.callConstraints.firefox` **[Object][7]?** Custom constraints to be used on Mozilla Firefox.
+    *   `call.bundlePolicy` **[string][8]** The bundle policy to use for peer connections. Value can be fcs.SDP_CONSTANTS.BUNDLE_POLICY.MAX_COMPAT, fcs.SDP_CONSTANTS.BUNDLE_POLICY.MAX_BUNDLE, fcs.SDP_CONSTANTS.BUNDLE_POLICY.BALANCED or fcs.SDP_CONSTANTS.BUNDLE_POLICY.DISABLED. The DISABLED option means that bundle group lines will be removed from every SDP. (optional, default `'DISABLED'`)
+    *   `call.opusConfig` **[Object][7]?** Bandwidth controls to add for Opus audio codec.
+
+        *   `call.opusConfig.maxPlaybackRate` **[number][12]?** Maximum playback rate, in bits per second. Must be a positive value between 8000 and 48000.
+        *   `call.opusConfig.maxAverageBitrate` **[number][12]?** A bitrate encoding value between 6000 and 510000 bits per second.
+        *   `call.opusConfig.fec` **[number][12]?** Specifies whether Forward Error Correction is enabled or not. When enabled, FEC provides robustness against packet loss. Acceptable values can only be 0 or 1.
+        *   `call.opusConfig.dtx` **[number][12]?** Specifies whether Discontinuous Transmission mode is enabled or not. When enabled, DTX reduces the bitrate during silence or background noise. Acceptable values can only be 0 or 1.
+        *   `call.opusConfig.ptime` **[number][12]?** Packet (i.e. frame) duration in milliseconds. Frames will be combined into packets to achieve the maximum of 120 ms duration. A positive value between 2.5 and 120.
+    *   `call.webrtcLogCollectionInterval` **[number][12]** Interval at which to collect WebRTC logs for calls, in milliseconds. (optional, default `3000`)
+    *   `call.useRelay` **[boolean][11]** Whether we should force connection through the relay candidates (i.e. TURN server). Mostly used for testing. (optional, default `false`)
+    *   `call.trickleIceSupport` **[string][8]** Whether we should advertise and use Trickle ICE. Accepted value is one of: 'none', 'half' or 'full'. (optional, default `'none'`)
+    *   `call.continuity` **[boolean][11]** Whether an existing voice call can be persisted, as a mobile phone moves between circuit switched and packet switched domains (e.g. GSM to WiFi). (optional, default `false`)
+    *   `call.resyncOnConnect` **[boolean][11]** Whether all active calls should be resynched upon connecting or reconnecting to the websocket (requires Kandy Link 4.7.1+). (optional, default `false`)
 
 ### config.connectivity
 
@@ -134,65 +143,72 @@ The SDK can only use keepalive as the connectivity check.
 
 Keep Alive: The client sends "keepalive" messages (to the server) on the websocket at regular intervals. This lets the server know that the client is still connected, and that it should "keep the connection alive".
 
-For more information on keepalive see here: [https://en.wikipedia.org/wiki/Keepalive][14]
+For more information on keepalive see here: https://en.wikipedia.org/wiki/Keepalive
 
-**Parameters**
+#### Parameters
 
--   `connectivity` **[Object][7]** Connectivity configs.
-    -   `connectivity.pingInterval` **[Number][12]** Time in between websocket ping attempts (milliseconds). (optional, default `30000`)
-    -   `connectivity.reconnectLimit` **[Number][12]** Number of failed reconnect attempts before reporting an error. Can be set to 0 to not limit reconnection attempts. (optional, default `5`)
-    -   `connectivity.reconnectDelay` **[Number][12]** Base time between websocket reconnect attempts (milliseconds). (optional, default `5000`)
-    -   `connectivity.reconnectTimeMultiplier` **[Number][12]** Reconnect delay multiplier for subsequent attempts. The reconnect delay time will be multiplied by this after each failed reconnect attempt to increase the delay between attempts. eg. 5000ms then 10000ms then 20000ms delay if value is 2. (optional, default `1`)
-    -   `connectivity.reconnectTimeLimit` **[Number][12]** Maximum time delay between reconnect attempts (milliseconds). Used in conjunction with the reconnect time multiplier to prevent overly long delays between reconnection attempts. (optional, default `640000`)
-    -   `connectivity.autoReconnect` **[Boolean][11]** Flag to determine whether the SDK will attempt to automatically reconnect after connectivity disruptions. (optional, default `true`)
-    -   `connectivity.maxMissedPings` **[Number][12]** Maximum pings sent (without receiving a response) before reporting an error. (optional, default `3`)
-    -   `connectivity.checkConnectivity` **[Boolean][11]** Flag to determine whether the SDK should check connectivity. (optional, default `true`)
-    -   `connectivity.webSocketOAuthMode` **[string][8]** query will send the bearer access token to authenticate the websocket and none will not send it. (optional, default `query`)
+*   `connectivity` **[Object][7]** Connectivity configs.
+
+    *   `connectivity.pingInterval` **[Number][12]** Time in between websocket ping attempts (milliseconds). (optional, default `30000`)
+    *   `connectivity.reconnectLimit` **[Number][12]** Number of failed reconnect attempts before reporting an error. Can be set to 0 to not limit reconnection attempts. (optional, default `5`)
+    *   `connectivity.reconnectDelay` **[Number][12]** Base time between websocket reconnect attempts (milliseconds). (optional, default `5000`)
+    *   `connectivity.reconnectTimeMultiplier` **[Number][12]** Reconnect delay multiplier for subsequent attempts. The reconnect delay time will be multiplied by this after each failed reconnect attempt to increase the delay between attempts. eg. 5000ms then 10000ms then 20000ms delay if value is 2. (optional, default `1`)
+    *   `connectivity.reconnectTimeLimit` **[Number][12]** Maximum time delay between reconnect attempts (milliseconds). Used in conjunction with the reconnect time multiplier to prevent overly long delays between reconnection attempts. (optional, default `640000`)
+    *   `connectivity.autoReconnect` **[Boolean][11]** Flag to determine whether the SDK will attempt to automatically reconnect after connectivity disruptions. (optional, default `true`)
+    *   `connectivity.maxMissedPings` **[Number][12]** Maximum pings sent (without receiving a response) before reporting an error. (optional, default `3`)
+    *   `connectivity.checkConnectivity` **[Boolean][11]** Flag to determine whether the SDK should check connectivity. (optional, default `true`)
+    *   `connectivity.webSocketOAuthMode` **[string][8]** query will send the bearer access token to authenticate the websocket and none will not send it. (optional, default `query`)
 
 ### config.notifications
 
 Configuration options for the notification feature.
 
-**Parameters**
+#### Parameters
 
--   `notifications` **[Object][7]** The notifications configuration object.
-    -   `notifications.idCacheLength` **[number][12]** Default amount of event ids to remember for de-duplication purposes. (optional, default `100`)
-    -   `notifications.incomingCallNotificationMode` **[string][8]** Communication channel mode used for incoming call notifications. Supported values are 'any-channel' or 'push-channel-only'. (optional, default `'any-channel'`)
-    -   `notifications.pushRegistration` **[Object][7]?** Object describing the server to use for push services.
-        -   `notifications.pushRegistration.server` **[string][8]?** Hostname for the push registration server.
-        -   `notifications.pushRegistration.port` **[string][8]?** Port for the push registration server.
-        -   `notifications.pushRegistration.protocol` **[string][8]?** Protocol for the push registration server.
-        -   `notifications.pushRegistration.version` **[string][8]?** Version for the push registration server.
+*   `notifications` **[Object][7]** The notifications configuration object.
+
+    *   `notifications.idCacheLength` **[number][12]** Default amount of event ids to remember for de-duplication purposes. (optional, default `100`)
+    *   `notifications.incomingCallNotificationMode` **[string][8]** Communication channel mode used for incoming call notifications. Supported values are 'any-channel' or 'push-channel-only'. (optional, default `'any-channel'`)
+    *   `notifications.pushRegistration` **[Object][7]?** Object describing the server to use for push services.
+
+        *   `notifications.pushRegistration.server` **[string][8]?** Hostname for the push registration server.
+        *   `notifications.pushRegistration.port` **[string][8]?** Port for the push registration server.
+        *   `notifications.pushRegistration.protocol` **[string][8]?** Protocol for the push registration server.
+        *   `notifications.pushRegistration.version` **[string][8]?** Version for the push registration server.
 
 ## devices:change
 
 Available media devices have been changed.
 
-**Parameters**
+### Parameters
 
--   `params` **[Object][7]** 
-    -   `params.devices` **[Object][7]** The devices, seperated by device type.
+*   `params` **[Object][7]** 
+
+    *   `params.devices` **[Object][7]** The devices, seperated by device type.
 
 ## devices:defaultsChange
 
 A change has been made to default devices used for calls.
 
-**Parameters**
+### Parameters
 
--   `params` **[Object][7]** 
-    -   `params.devices` **[Object][7]** The devices now set as default.
+*   `params` **[Object][7]** 
+
+    *   `params.devices` **[Object][7]** The devices now set as default.
 
 ## media:initialize
 
 Media support has been checked.
 
-**Parameters**
+### Parameters
 
--   `params` **[Object][7]** 
-    -   `params.result` **[Object][7]** Results of initializing media.
-        -   `params.result.error` **[boolean][11]** Whether the initiazation was successful or not.
-        -   `params.result.code` **[number][12]** A unqiue code describing the result scenario.
-        -   `params.result.message` **[string][8]** Human readable message of the result.
+*   `params` **[Object][7]** 
+
+    *   `params.result` **[Object][7]** Results of initializing media.
+
+        *   `params.result.error` **[boolean][11]** Whether the initiazation was successful or not.
+        *   `params.result.code` **[number][12]** A unqiue code describing the result scenario.
+        *   `params.result.message` **[string][8]** Human readable message of the result.
 
 ## api
 
@@ -210,9 +226,9 @@ Destroys the SDK, and removes its state, rendering the SDK unusable.
 Useful when a user logs out and their call data needs to be destroyed.
 The SDK must be recreated to be usable again.
 The destroy command is async, and will happen on the next tick
-  so as not to interfere with any ongoing events.
+so as not to interfere with any ongoing events.
 
-**Examples**
+#### Examples
 
 ```javascript
 // Instantiate the SDK.
@@ -242,20 +258,20 @@ Returns **[Object][7]** A configuration Object.
 
 Update values in the global Config section of the store. The values pertain to the SDK configuration.
 
-**Parameters**
+#### Parameters
 
--   `newConfigValues` **[Object][7]** Key-value pairs that will be placed into the store. See [config][15] for details on what key-value pairs are available for use.
+*   `newConfigValues` **[Object][7]** Key-value pairs that will be placed into the store. See [config][14] for details on what key-value pairs are available for use.
 
 ### on
 
 Add an event listener for the specified event type. The event is emitted by the SDK instance.
 
-**Parameters**
+#### Parameters
 
--   `type` **[string][8]** The event type for which to add the listener.
--   `listener` **[Function][16]** The listener for the event type. The parameters of the listener depend on the event type.
+*   `type` **[string][8]** The event type for which to add the listener.
+*   `listener` **[Function][15]** The listener for the event type. The parameters of the listener depend on the event type.
 
-**Examples**
+#### Examples
 
 ```javascript
 // Listen for events of a specific type emitted by the SDK.
@@ -264,41 +280,44 @@ client.on('dummy:event', function (params) {
 })
 ```
 
--   Throws **[Error][17]** Invalid event type
+*   Throws **[Error][16]** Invalid event type
 
 ### off
 
 Removes an event listener for the specified event type. The event is emitted by the SDK instance.
 
-**Parameters**
+#### Parameters
 
--   `type` **[string][8]** The event type for which to remote the listener.
--   `listener` **[Function][16]** The listener to remove.
+*   `type` **[string][8]** The event type for which to remote the listener.
+*   `listener` **[Function][15]** The listener to remove.
 
+<!---->
 
--   Throws **[Error][17]** Invalid event type
+*   Throws **[Error][16]** Invalid event type
 
 ### subscribe
 
 Adds a global event listener to SDK instance.
 
-**Parameters**
+#### Parameters
 
--   `listener` **[Function][16]** The event listener to add. The parameters are (type, ...args), where args depend on the event type.
+*   `listener` **[Function][15]** The event listener to add. The parameters are (type, ...args), where args depend on the event type.
 
+<!---->
 
--   Throws **[Error][17]** Listener not a function
+*   Throws **[Error][16]** Listener not a function
 
 ### unsubscribe
 
 Removes a global event listener from SDK instance.
 
-**Parameters**
+#### Parameters
 
--   `listener` **[Function][16]** The event listener to remove.
+*   `listener` **[Function][15]** The event listener to remove.
 
+<!---->
 
--   Throws **[Error][17]** Listener not a function
+*   Throws **[Error][16]** Listener not a function
 
 ### getUserInfo
 
@@ -307,7 +326,7 @@ Retrieves information about the current user.
 Returns **[Object][7]** user The user data.
 
 Returns **[string][8]** user.username The username of the current user. Note that this username can take different encoded forms.
-                                It's not meant to be displayed to a user.
+It's not meant to be displayed to a user.
 
 Returns **[string][8]** user.token The current access token.
 
@@ -317,10 +336,10 @@ The Basic Error object. Provides information about an error that occurred in the
 
 Type: [Object][7]
 
-**Properties**
+#### Properties
 
--   `code` **[string][8]** The code of the error. If no code is known, this will be 'NO_CODE'.
--   `message` **[string][8]** A human-readable message to describe the error. If no message is known, this will be 'An error occurred'.
+*   `code` **[string][8]** The code of the error. If no code is known, this will be 'NO_CODE'.
+*   `message` **[string][8]** A human-readable message to describe the error. If no message is known, this will be 'An error occurred'.
 
 ## Calls
 
@@ -335,7 +354,7 @@ Whenever 'user' is mentioned as input parameter within this API, it needs to be 
 
 Retrieves the state of calls made during the current session.
 
-**Examples**
+#### Examples
 
 ```javascript
 let calls = client.call.getAll();
@@ -350,9 +369,9 @@ Returns **[Array][13]** Call objects.
 
 Retrieves a call from state with a specific call ID.
 
-**Parameters**
+#### Parameters
 
--   `callId` **[string][8]** The ID of the call to retrieve.
+*   `callId` **[string][8]** The ID of the call to retrieve.
 
 Returns **[Object][7]** A call object.
 
@@ -361,32 +380,32 @@ Returns **[Object][7]** A call object.
 Changes camera and microphone for the specified call.
 The call will use the current selected default devices.
 
-**Parameters**
+#### Parameters
 
--   `callId` **[string][8]** The ID of the call to act upon.
+*   `callId` **[string][8]** The ID of the call to act upon.
 
 ### changeSpeaker
 
 Changes speaker used for call audio output.
 Supported on browser's that support HTMLMediaElement.setSinkId().
 
-**Parameters**
+#### Parameters
 
--   `speakerId` **[string][8]** ID of the speaker to use for call audio.
+*   `speakerId` **[string][8]** ID of the speaker to use for call audio.
 
 ### states
 
 States of a call.
 
-**Properties**
+#### Properties
 
--   `IN_CALL` **[string][8]** The call is on-going.
--   `RINGING` **[string][8]** The call has been established and is waiting for a user response.
--   `ENDED` **[string][8]** The call has been terminated.
--   `ON_HOLD` **[string][8]** The call has been put on hold locally.
--   `ON_REMOTE_HOLD` **[string][8]** The call has been put on hold remotely.
+*   `IN_CALL` **[string][8]** The call is on-going.
+*   `RINGING` **[string][8]** The call has been established and is waiting for a user response.
+*   `ENDED` **[string][8]** The call has been terminated.
+*   `ON_HOLD` **[string][8]** The call has been put on hold locally.
+*   `ON_REMOTE_HOLD` **[string][8]** The call has been put on hold remotely.
 
-**Examples**
+#### Examples
 
 ```javascript
 client.on('call:stateChange', function(callInfo) {
@@ -400,76 +419,76 @@ client.on('call:stateChange', function(callInfo) {
 
 State of the media connection within a call.
 
-**Properties**
+#### Properties
 
--   `NEW` **[string][8]** A new media connection process has started.
--   `CHECKING` **[string][8]** Media is searching for a connection.
--   `CONNECTED` **[string][8]** Media has found a connection, but may still be searching for a better connection to use.
--   `COMLETED` **[string][8]** Media has finished searching and been established. Audio/video should now be flowing on the call.
--   `FAILED` **[string][8]** Media was not able to find a connection. Audio/video will not flow.
--   `DISCONNECTED` **[string][8]** The media connection has lost its connection and is trying to recover.
--   `CLOSED` **[string][8]** The media connection has shut down.
+*   `NEW` **[string][8]** A new media connection process has started.
+*   `CHECKING` **[string][8]** Media is searching for a connection.
+*   `CONNECTED` **[string][8]** Media has found a connection, but may still be searching for a better connection to use.
+*   `COMLETED` **[string][8]** Media has finished searching and been established. Audio/video should now be flowing on the call.
+*   `FAILED` **[string][8]** Media was not able to find a connection. Audio/video will not flow.
+*   `DISCONNECTED` **[string][8]** The media connection has lost its connection and is trying to recover.
+*   `CLOSED` **[string][8]** The media connection has shut down.
 
 ### end
 
 End an on-going call.
 
-**Parameters**
+#### Parameters
 
--   `callId` **[string][8]** Id of the call to end.
+*   `callId` **[string][8]** Id of the call to end.
 
 ### mute
 
 Mute the local audio stream on an ongoing call.
 
-**Parameters**
+#### Parameters
 
--   `callId` **[string][8]** The ID of the call being acted on.
+*   `callId` **[string][8]** The ID of the call being acted on.
 
 ### unmute
 
 Unmute the local audio stream on an ongoing call.
 
-**Parameters**
+#### Parameters
 
--   `callId` **[string][8]** The ID of the call being acted on.
+*   `callId` **[string][8]** The ID of the call being acted on.
 
 ### silence
 
 Silence the remote audio on an ongoing call.
 
-**Parameters**
+#### Parameters
 
--   `callId` **[string][8]** The ID of the call being acted on.
+*   `callId` **[string][8]** The ID of the call being acted on.
 
 ### unsilence
 
 Un-silence the remote audio on an ongoing call.
 
-**Parameters**
+#### Parameters
 
--   `callId` **[string][8]** The ID of the call being acted on.
+*   `callId` **[string][8]** The ID of the call being acted on.
 
 ### getCustomParameters
 
 Retrieves a call's customParameters.
 
-**Parameters**
+#### Parameters
 
--   `callId` **[string][8]** The ID of the call to retrieve custom parameters.
+*   `callId` **[string][8]** The ID of the call to retrieve custom parameters.
 
-Returns **[Array][13]&lt;{name: [string][8], value: [string][8]}>** Custom parameters of the call.
+Returns **[Array][13]<{name: [string][8], value: [string][8]}>** Custom parameters of the call.
 
 ### setCustomParameters
 
 Set custom parameters on an ongoing call.
 
-**Parameters**
+#### Parameters
 
--   `callId` **[string][8]** The ID of the call being acted on.
--   `customParameters` **[Array][13]&lt;{name: [string][8], value: [string][8]}>** Custom parameters for the call.
+*   `callId` **[string][8]** The ID of the call being acted on.
+*   `customParameters` **[Array][13]<{name: [string][8], value: [string][8]}>** Custom parameters for the call.
 
-**Examples**
+#### Examples
 
 ```javascript
 // Set custom parameters for call.
@@ -487,75 +506,78 @@ client.call.setCustomParameters(
 
 Start local video stream for an ongoing call.
 
-**Parameters**
+#### Parameters
 
--   `callId` **[string][8]** Id of the call being acted on.
--   `options` **[Object][7]?** Options for the video stream.
-    -   `options.videoResolution` **[Object][7]?** The video resolution configuation object.
-        -   `options.videoResolution.height` **[number][12]?** The height of the outoing video in pixels.
-        -   `options.videoResolution.width` **[number][12]?** The width of the outoing video in pixels.
+*   `callId` **[string][8]** Id of the call being acted on.
+*   `options` **[Object][7]?** Options for the video stream.
+
+    *   `options.videoResolution` **[Object][7]?** The video resolution configuation object.
+
+        *   `options.videoResolution.height` **[number][12]?** The height of the outoing video in pixels.
+        *   `options.videoResolution.width` **[number][12]?** The width of the outoing video in pixels.
 
 ### stopVideo
 
 Stop local video for an ongoing call.
 
-**Parameters**
+#### Parameters
 
--   `callId` **[string][8]** Id of the call being acted on.
+*   `callId` **[string][8]** Id of the call being acted on.
 
 ### hold
 
 Put an ongoing call on hold.
 
-**Parameters**
+#### Parameters
 
--   `callId` **[string][8]** Id of the call being acted on.
+*   `callId` **[string][8]** Id of the call being acted on.
 
 ### unhold
 
 Return a held call to ongoing.
 
-**Parameters**
+#### Parameters
 
--   `callId` **[string][8]** Id of the call being acted on.
+*   `callId` **[string][8]** Id of the call being acted on.
 
 ### startScreenshare
 
 Starts sharing a screen over a call.
 
-**Parameters**
+#### Parameters
 
--   `callId` **[string][8]** Id of the call being acted on.
--   `options` **[Object][7]** 
-    -   `options.mediaSourceId` **[string][8]** Id of the media screen to share.
-    -   `options.height` **[Number][12]** The height of the video stream to send. (optional, default `768`)
-    -   `options.width` **[Number][12]** The width of the video stream to send. (optional, default `1024`)
-    -   `options.frameRate` **[Number][12]** The number of frames per second to request. (optional, default `15`)
+*   `callId` **[string][8]** Id of the call being acted on.
+*   `options` **[Object][7]** 
+
+    *   `options.mediaSourceId` **[string][8]** Id of the media screen to share.
+    *   `options.height` **[Number][12]** The height of the video stream to send. (optional, default `768`)
+    *   `options.width` **[Number][12]** The width of the video stream to send. (optional, default `1024`)
+    *   `options.frameRate` **[Number][12]** The number of frames per second to request. (optional, default `15`)
 
 ### stopScreenshare
 
 Stops sharing a screen over a call.
 
-**Parameters**
+#### Parameters
 
--   `callId` **[string][8]** Id of the call being acted on.
+*   `callId` **[string][8]** Id of the call being acted on.
 
 ### sendDTMF
 
 Send a DTMF tone over a call.
 
-**Parameters**
+#### Parameters
 
--   `callId` **[string][8]** Id of the call being acted on.
--   `tone` **[number][12]** DTMF tone to send. Valid values are [0,1,2,3,4,5,6,7,8,9,#].
+*   `callId` **[string][8]** Id of the call being acted on.
+*   `tone` **[number][12]** DTMF tone to send. Valid values are \[0,1,2,3,4,5,6,7,8,9,#].
 
 ### sendCustomParameters
 
 Explicitly send the current custom parameters for a call.
 
-**Parameters**
+#### Parameters
 
--   `callId` **[string][8]** Id of the call being acted on.
+*   `callId` **[string][8]** Id of the call being acted on.
 
 ## connection
 
@@ -566,51 +588,63 @@ the SDK and one or more backend servers.
 
 Information about a websocket connection.
 
-Can be retrieved using the [connection.getSocketState][18] API.
+Can be retrieved using the [connection.getSocketState][17] API.
 
 Type: [Object][7]
 
-**Properties**
+#### Properties
 
--   `connected` **[boolean][11]** The state of the websocket connection.
--   `pinging` **[boolean][11]** True if the client has sent a ping to the server and is still waiting for a pong response.
--   `method` **[Object][7]** Information about how the websocket is being used.
-    -   `method.type` **[string][8]?** How the websocket is staying connected.
-    -   `method.responsibleParty` **[string][8]?** Who is responsible for keeping the connection alive.
--   `platform` **[string][8]** The SDK platform being used.
--   `pingInterval` **[number][12]** How often the client will ping the server to test for websocket connectivity.
--   `reconnectLimit` **[number][12]** How many times the SDK will try to reconnect a disconnected websocket.
--   `reconnectDelay` **[number][12]** How long the SDK will wait before retrying websocket reconnection.
--   `reconnectTimeMultiplier` **[number][12]** Reconnect delay multiplier for subsequent attempts. The reconnect delay time will be multiplied by this after each failed reconnect attempt to increase the delay between attempts. eg. 5000ms then 10000ms then 20000ms delay if value is 2.
--   `reconnectTimeLimit` **[number][12]** Maximum time delay between reconnect attempts (milliseconds). Used in conjunction with `reconnectTimeMultiplier` to prevent overly long delays between reconnection attempts.
--   `autoReconnect` **[boolean][11]** Indicates if the SDK should automatically try reconnecting a disconnected websocket.
--   `maxMissedPings` **[number][12]** How many missed pings before the SDK stops trying to reconnect a disconnected websocket.
--   `webSocketOAuthMode` **[string][8]** The mode used for authenticating with the server.
--   `wsInfo` **[Object][7]** Information required to connect a websocket to the server.
-    -   `wsInfo.protocol` **[string][8]?** The protocol to use to connect a websocket.
-    -   `wsInfo.server` **[string][8]?** The domain name or IP address of the server to connect to.
-    -   `wsInfo.port` **[number][12]?** The port of the server to connect to.
-    -   `wsInfo.url` **[string][8]?** The URL path to use to request a websocket connection.
-    -   `wsInfo.params` **[string][8]?** Any additional params that might be required by the server to establish the websocket connection.
--   `lastContact` **[number][12]** The date and time that the last known contact with the server was.
+*   `connected` **[boolean][11]** The state of the websocket connection.
+*   `pinging` **[boolean][11]** True if the client has sent a ping to the server and is still waiting for a pong response.
+*   `method` **[Object][7]** Information about how the websocket is being used.
+
+    *   `method.type` **[string][8]?** How the websocket is staying connected.
+    *   `method.responsibleParty` **[string][8]?** Who is responsible for keeping the connection alive.
+*   `platform` **[string][8]** The SDK platform being used.
+*   `pingInterval` **[number][12]** How often the client will ping the server to test for websocket connectivity.
+*   `reconnectLimit` **[number][12]** How many times the SDK will try to reconnect a disconnected websocket.
+*   `reconnectDelay` **[number][12]** How long the SDK will wait before retrying websocket reconnection.
+*   `reconnectTimeMultiplier` **[number][12]** Reconnect delay multiplier for subsequent attempts. The reconnect delay time will be multiplied by this after each failed reconnect attempt to increase the delay between attempts. eg. 5000ms then 10000ms then 20000ms delay if value is 2.
+*   `reconnectTimeLimit` **[number][12]** Maximum time delay between reconnect attempts (milliseconds). Used in conjunction with `reconnectTimeMultiplier` to prevent overly long delays between reconnection attempts.
+*   `autoReconnect` **[boolean][11]** Indicates if the SDK should automatically try reconnecting a disconnected websocket.
+*   `maxMissedPings` **[number][12]** How many missed pings before the SDK stops trying to reconnect a disconnected websocket.
+*   `webSocketOAuthMode` **[string][8]** The mode used for authenticating with the server.
+*   `wsInfo` **[Object][7]** Information required to connect a websocket to the server.
+
+    *   `wsInfo.protocol` **[string][8]?** The protocol to use to connect a websocket.
+    *   `wsInfo.server` **[string][8]?** The domain name or IP address of the server to connect to.
+    *   `wsInfo.port` **[number][12]?** The port of the server to connect to.
+    *   `wsInfo.url` **[string][8]?** The URL path to use to request a websocket connection.
+    *   `wsInfo.params` **[string][8]?** Any additional params that might be required by the server to establish the websocket connection.
+*   `lastContact` **[number][12]** The date and time that the last known contact with the server was.
 
 ### getSocketState
 
 Get the state of the websocket.
 
-**Parameters**
+#### Parameters
 
--   `platform` **[string][8]** Backend platform for which to request the websocket's state. (optional, default `'link'`)
+*   `platform` **[string][8]** Backend platform for which to request the websocket's state. (optional, default `'link'`)
 
-Returns **[connection.WSConnectionObject][19]** Details about the current websocket connection, including state and configuration.
+Returns **[connection.WSConnectionObject][18]** Details about the current websocket connection, including state and configuration.
 
 ### enableConnectivityChecking
 
 Enables or disables connectivity checking.
 
-**Parameters**
+#### Parameters
 
--   `enable` **[boolean][11]** Enable connectivity checking.
+*   `enable` **[boolean][11]** Enable connectivity checking.
+
+### ws:change
+
+The websocket to the server has changed state.
+
+#### Parameters
+
+*   `params` **[Object][7]** 
+
+    *   `params.platform` **[string][8]** The platform
 
 ## DEVICE_ERROR
 
@@ -618,10 +652,11 @@ An error occurred while performing a device operation.
 
 Type: [string][8]
 
-**Parameters**
+### Parameters
 
--   `params` **[Object][7]** 
-    -   `params.error` **[api.BasicError][20]** The Basic error object.
+*   `params` **[Object][7]** 
+
+    *   `params.error` **[api.BasicError][19]** The Basic error object.
 
 ## getDevices
 
@@ -630,91 +665,92 @@ Retrieves the available media devices for use.
 ## logger
 
 The SDK has an internal logging system for providing information about its
-   behaviour. The SDK will generate logs, at different levels for different
-   types of information, which are routed to a
-   "[Log Handler][4]" for consumption. An application
-   can provide their own Log Handler (see
-   [config.logs][21]) to customize how the logs are
-   handled, or allow the default Log Handler to print the logs to the
-   console.
+behaviour. The SDK will generate logs, at different levels for different
+types of information, which are routed to a
+"[Log Handler][4]" for consumption. An application
+can provide their own Log Handler (see
+[config.logs][20]) to customize how the logs are
+handled, or allow the default Log Handler to print the logs to the
+console.
 
 The SDK's default Log Handler is merely a thin wrapper around the browser's
-   console API (ie. `window.console`). It receives the log generated by the
-   SDK, called a "[Log Entry][5]", formats a
-   human-readable message with it, then uses the console to log it at the
-   appropriate level. This is important to be aware of, since your browser's
-   console may affect how you see the SDK's default log messages. Since the
-   default Log Handler uses the console's levels, the browser may filter
-   which messages are shown depending on which levels it has configured. For
-   a user that understands console log levels, this can be helpful for
-   filtering the logs to only the relevant information. But it can equally
-   be a hindrance by hiding the more detailed log messages (at the 'debug'
-   level), since browser can have this level hidden by default. For this
-   reason, we recommend providing a custom Log Handler to the SDK that is
-   better suited for your application and its users.
+console API (ie. `window.console`). It receives the log generated by the
+SDK, called a "[Log Entry][5]", formats a
+human-readable message with it, then uses the console to log it at the
+appropriate level. This is important to be aware of, since your browser's
+console may affect how you see the SDK's default log messages. Since the
+default Log Handler uses the console's levels, the browser may filter
+which messages are shown depending on which levels it has configured. For
+a user that understands console log levels, this can be helpful for
+filtering the logs to only the relevant information. But it can equally
+be a hindrance by hiding the more detailed log messages (at the 'debug'
+level), since browser can have this level hidden by default. For this
+reason, we recommend providing a custom Log Handler to the SDK that is
+better suited for your application and its users.
 
 ### levels
 
 Possible levels for the SDK logger.
 
 The SDK will provide [Log Entries][5] to the
-   [Log Handler][4] for all logs at or above the set
-   log level. 'debug' is considered the lowest level and 'silent' the
-   highest level. For example, if the current level is 'info', then the
-   [Log Handler][4] will receive
-   [Log Entries][5] for logs at 'info', 'warn', and
-   'error', but not for the 'debug' level.
+[Log Handler][4] for all logs at or above the set
+log level. 'debug' is considered the lowest level and 'silent' the
+highest level. For example, if the current level is 'info', then the
+[Log Handler][4] will receive
+[Log Entries][5] for logs at 'info', 'warn', and
+'error', but not for the 'debug' level.
 
-**Properties**
+#### Properties
 
--   `SILENT` **[string][8]** Nothing will be logged.
--   `ERROR` **[string][8]** Unhandled error information will be logged. If
-       the SDK encounters an issue it cannot resolve, the error will be included
-       in the logs. This likely points to an issue with the SDK itself or an
-       issue with how the SDK is being used.
--   `WARN` **[string][8]** Warning messages for the application developer will
-       be logged. If the SDK encounters an issue that it can recover and continue,
-       a warning about the issue will be included in the logs. These logs point
-       to issues that need to be handled by the application. For example, providing
-       an invalid configuration to the SDK will cause a warning log that explains
-       the issue.
--   `INFO` **[string][8]** General information about the SDK's operations will
-       be logged, outlining how the SDK is handling the operations. Reading through
-       these logs should provide a high-level view of what the SDK is doing,
-       and why it is doing it.
--   `DEBUG` **[string][8]** Detailed information about the SDK's operations,
-       meant for debugging issues, will be logged. Specific information and relevant
-       operation data are provided for understanding the scenario that the SDK
-       was in during the operation.
+*   `SILENT` **[string][8]** Nothing will be logged.
+*   `ERROR` **[string][8]** Unhandled error information will be logged. If
+    the SDK encounters an issue it cannot resolve, the error will be included
+    in the logs. This likely points to an issue with the SDK itself or an
+    issue with how the SDK is being used.
+*   `WARN` **[string][8]** Warning messages for the application developer will
+    be logged. If the SDK encounters an issue that it can recover and continue,
+    a warning about the issue will be included in the logs. These logs point
+    to issues that need to be handled by the application. For example, providing
+    an invalid configuration to the SDK will cause a warning log that explains
+    the issue.
+*   `INFO` **[string][8]** General information about the SDK's operations will
+    be logged, outlining how the SDK is handling the operations. Reading through
+    these logs should provide a high-level view of what the SDK is doing,
+    and why it is doing it.
+*   `DEBUG` **[string][8]** Detailed information about the SDK's operations,
+    meant for debugging issues, will be logged. Specific information and relevant
+    operation data are provided for understanding the scenario that the SDK
+    was in during the operation.
 
 ### LogEntry
 
 A LogEntry object is the data that the SDK compiles when information is
-   logged. It contains both the logged information and meta-info about when
-   and who logged it.
+logged. It contains both the logged information and meta-info about when
+and who logged it.
 
 A [LogHandler][4] provided to the SDK (see
-   [config.logs][21]) will need to handle LogEntry
-   objects.
+[config.logs][20]) will need to handle LogEntry
+objects.
 
 Type: [Object][7]
 
-**Properties**
+#### Properties
 
--   `timestamp` **[number][12]** When the log was created, based on UNIX epoch.
--   `method` **[string][8]** The log function that was used to create the log.
--   `level` **[string][8]** The level of severity the log.
--   `target` **[Object][7]** The subject that the log is about.
-    -   `target.type` **[string][8]** The type of the target. This is also
-           used as part of the name of the Logger.
-    -   `target.id` **[string][8]?** A unique identifer for the target.
-    -   `target.name` **[string][8]** A combination of the target type and ID. If no
-           id was provided, this will be the same as the type.
--   `messages` **[Array][13]** The logged information, given to the Logger
-       method as parameters.
--   `timer` **[Object][7]?** Timing data, if the log method was a timer method.
+*   `timestamp` **[number][12]** When the log was created, based on UNIX epoch.
+*   `method` **[string][8]** The log function that was used to create the log.
+*   `level` **[string][8]** The level of severity the log.
+*   `target` **[Object][7]** The subject that the log is about.
 
-**Examples**
+    *   `target.type` **[string][8]** The type of the target. This is also
+        used as part of the name of the Logger.
+    *   `target.id` **[string][8]?** A unique identifer for the target.
+    *   `target.name` **[string][8]** A combination of the target type and ID. If no
+        id was provided, this will be the same as the type.
+*   `messages` **[Array][13]** The logged information, given to the Logger
+    method as parameters.
+*   `timer` **[Object][7]?** Timing data, if the log method was a timer method.
+
+#### Examples
 
 ```javascript
 function defaultLogHandler (logEntry) {
@@ -739,20 +775,20 @@ function defaultLogHandler (logEntry) {
 ### LogHandler
 
 A LogHandler can be used to customize how the SDK should log information. By
-   default, the SDK will log information to the console, but a LogHandler can
-   be configured to change this behaviour.
+default, the SDK will log information to the console, but a LogHandler can
+be configured to change this behaviour.
 
 A LogHandler can be provided to the SDK as part of its configuration (see
-   [config.logs][21]). The SDK will then provide this
-   function with the logged information.
+[config.logs][20]). The SDK will then provide this
+function with the logged information.
 
-Type: [Function][16]
+Type: [Function][15]
 
-**Parameters**
+#### Parameters
 
--   `LogEntry` **[Object][7]** The LogEntry to be logged.
+*   `LogEntry` **[Object][7]** The LogEntry to be logged.
 
-**Examples**
+#### Examples
 
 ```javascript
 // Define a custom function to handle logs.
@@ -795,97 +831,120 @@ enabling/disabling the processing of websocket notifications.
 
 Provides an external notification to the system for processing.
 
-**Parameters**
+#### Parameters
 
--   `notification` **[Object][7]** 
--   `channel` **[string][8]?** The channel that the notification came from.
+*   `notification` **[Object][7]** 
+*   `channel` **[string][8]?** The channel that the notification came from.
 
 ### registerApplePush
 
 Registers with Apple push notification service. Once registration is successful, the application will be able to receive
-standard and/or voip push notifications. It can then send these notifications to the SDK with [api.notifications.process][22]
+standard and/or voip push notifications. It can then send these notifications to the SDK with [api.notifications.process][21]
 in order for the SDK to process them.
 
-**Parameters**
+#### Parameters
 
--   `params` **[Object][7]** 
-    -   `params.services` **[Array][13]&lt;[string][8]>** Array of services for which we wish to receive notifications.
-    -   `params.voipDeviceToken` **[string][8]** The voip device token used for voip push on iOS.
-                                                 This token is required if registering for call service notifications on iOS.
-    -   `params.standardDeviceToken` **[string][8]** The standardDevice token used for standard push on iOS .
-                                                     This token is required when registering for non-call service notifications.
-    -   `params.bundleId` **[string][8]** The bundleId to identify the application receiving the push notification.
-    -   `params.clientCorrelator` **[string][8]** Unique identifier for a client device.
-    -   `params.realm` **[string][8]** The realm used by the push registration service to identify and
-                                       establish a connection with the service gateway.
-    -   `params.isProduction` **[boolean][11]** If true, push notification will be sent to production.
-                                               If false, push notification will be sent to sandbox.
+*   `params` **[Object][7]** 
 
-Returns **[Promise][23]** When successful,  the information of the registration.
-                  Promise will reject with error object otherwise.
+    *   `params.services` **[Array][13]<[string][8]>** Array of services for which we wish to receive notifications.
+    *   `params.voipDeviceToken` **[string][8]** The voip device token used for voip push on iOS.
+        This token is required if registering for call service notifications on iOS.
+    *   `params.standardDeviceToken` **[string][8]** The standardDevice token used for standard push on iOS .
+        This token is required when registering for non-call service notifications.
+    *   `params.bundleId` **[string][8]** The bundleId to identify the application receiving the push notification.
+    *   `params.clientCorrelator` **[string][8]** Unique identifier for a client device.
+    *   `params.realm` **[string][8]** The realm used by the push registration service to identify and
+        establish a connection with the service gateway.
+    *   `params.isProduction` **[boolean][11]** If true, push notification will be sent to production.
+        If false, push notification will be sent to sandbox.
+
+Returns **[Promise][22]** When successful,  the information of the registration.
+Promise will reject with error object otherwise.
 
 ### registerAndroidPush
 
 Registers with Google push notification service. Once registration is successful, the application will be able to receive
-standard and/or voip push notifications. It can then send these notifications to the SDK with [api.notifications.process][22]
+standard and/or voip push notifications. It can then send these notifications to the SDK with [api.notifications.process][21]
 in order for the SDK to process them.
 
-**Parameters**
+#### Parameters
 
--   `params` **[Object][7]** 
-    -   `params.services` **[Array][13]&lt;[string][8]>** Array of services to register for.
-    -   `params.deviceToken` **[string][8]** The device token used for standard push on Android. This token is required
-                                             when registering for all related services notifications.
-    -   `params.bundleId` **[string][8]** The bundleId to identify the application receiving the push notification.
-    -   `params.clientCorrelator` **[string][8]** Unique identifier for a client device.
-    -   `params.realm` **[string][8]** The realm used by the push registration service to identify
-                                       and establish a connection with the service gateway.
+*   `params` **[Object][7]** 
 
-Returns **[Promise][23]** When successful,  the information of the registration.
-                  Promise will reject with error object otherwise.
+    *   `params.services` **[Array][13]<[string][8]>** Array of services to register for.
+    *   `params.deviceToken` **[string][8]** The device token used for standard push on Android. This token is required
+        when registering for all related services notifications.
+    *   `params.bundleId` **[string][8]** The bundleId to identify the application receiving the push notification.
+    *   `params.clientCorrelator` **[string][8]** Unique identifier for a client device.
+    *   `params.realm` **[string][8]** The realm used by the push registration service to identify
+        and establish a connection with the service gateway.
+
+Returns **[Promise][22]** When successful,  the information of the registration.
+Promise will reject with error object otherwise.
 
 ### unregisterApplePush
 
 Unregister Apple push notifications.
 
-**Parameters**
+#### Parameters
 
--   `registrationInfo` **[string][8]** The data returned from the push registration
+*   `registrationInfo` **[string][8]** The data returned from the push registration
 
-Returns **[Promise][23]** When successful, the promise will resolve with undefined.
-                  Promise will reject with error object otherwise.
+Returns **[Promise][22]** When successful, the promise will resolve with undefined.
+Promise will reject with error object otherwise.
 
 ### unregisterAndroidPush
 
 Unregister Android push notifications.
 
-**Parameters**
+#### Parameters
 
--   `registrationInfo` **[string][8]** The data returned from the push registration
+*   `registrationInfo` **[string][8]** The data returned from the push registration
 
-Returns **[Promise][23]** When successful, the promise will resolve with undefined.
-                  Promise will reject with error object otherwise.
+Returns **[Promise][22]** When successful, the promise will resolve with undefined.
+Promise will reject with error object otherwise.
 
 ### enableWebsocket
 
 Enables, or disables, the processing of websocket notifications.
 
-**Parameters**
+#### Parameters
 
--   `enable` **[boolean][11]** Whether the websocket channel should be enabled.
+*   `enable` **[boolean][11]** Whether the websocket channel should be enabled.
+
+### notifications:change
+
+Push notifications registration state has changed.
+
+#### Parameters
+
+*   `params` **[Object][7]** 
+
+    *   `params.channel` **[string][8]** The channel for the notification.
+
+### notifications:error
+
+An error occurred with push notifications.
+
+#### Parameters
+
+*   `params` **[Object][7]** 
+
+    *   `params.error` **[api.BasicError][19]** The Basic error object.
+    *   `params.channel` **[string][8]** The channel for the notification.
 
 ## sdpHandlers
 
-A set of [SdpHandlerFunction][24]s for manipulating SDP information.
+A set of [SdpHandlerFunction][23]s for manipulating SDP information.
 These handlers are used to customize low-level call behaviour for very specific
 environments and/or scenarios.
 
 Note that SDP handlers are exposed on the entry point of the SDK. They can be added during
-initialization of the SDK using the [config.call.sdpHandlers][25] configuration
+initialization of the SDK using the [config.call.sdpHandlers][24] configuration
 parameter. They can also be set after the SDK's creation by using the
-[call.setSdpHandlers][26] function.
+[call.setSdpHandlers][25] function.
 
-**Examples**
+### Examples
 
 ```javascript
 import { create, sdpHandlers } from 'kandy';
@@ -908,11 +967,11 @@ An object that represents a selector to match codecs of an RTP map in SDP.
 
 Type: [Object][7]
 
-**Properties**
+#### Properties
 
--   `name` **[string][8]** The name of the codec.
--   `fmtpParams` **[Array][13]&lt;[string][8]>** An array of strings to match against the "a=fmtp" format parameters for the corresponding codec.
-                                         All of the elements in the array must be contained in the "a=fmtp" attribute in order to be a match.
+*   `name` **[string][8]** The name of the codec.
+*   `fmtpParams` **[Array][13]<[string][8]>** An array of strings to match against the "a=fmtp" format parameters for the corresponding codec.
+    All of the elements in the array must be contained in the "a=fmtp" attribute in order to be a match.
 
 ### createCodecRemover
 
@@ -924,15 +983,15 @@ length (usually to 4KB) and will reject calls that have SDP size above this amou
 While creating an SDP handler would allow a user to perform this type of manipulation, it is a non-trivial task that requires in-depth knowledge of WebRTC SDP.
 
 To facilitate this common task, the createCodecRemover function creates a codec removal handler that can be used for this purpose. Applications can use this codec
-removal handler in combination with the [call.getAvailableCodecs][27] function in order to build logic to determine the best codecs to use
+removal handler in combination with the [call.getAvailableCodecs][26] function in order to build logic to determine the best codecs to use
 for their application.
 
-**Parameters**
+#### Parameters
 
--   `codecs` **([Array][13]&lt;CodecSelector> | [Array][13]&lt;[string][8]>)** A list of codec selectors to remove from the SDP. If passing a list of strings, they will be converted into
-                                                         codec selectors that correspond to those names without any extra FMTP parameters.
+*   `codecs` **([Array][13]\<CodecSelector> | [Array][13]<[string][8]>)** A list of codec selectors to remove from the SDP. If passing a list of strings, they will be converted into
+    codec selectors that correspond to those names without any extra FMTP parameters.
 
-**Examples**
+#### Examples
 
 ```javascript
 import { create, sdpHandlers } from 'kandy';
@@ -964,14 +1023,15 @@ Sets the selected devices as the default devices.
 They will be used for audio output for future calls.
 Changing speaker is supported on browser's that support HTMLMediaElement.setSinkId().
 
-**Parameters**
+### Parameters
 
--   `devices` **[Object][7]** 
-    -   `devices.camera` **[string][8]?** The ID of the camera to set as default.
-    -   `devices.microphone` **[string][8]?** The ID of the microphone to set as default.
-    -   `devices.speaker` **[string][8]?** The ID of the speaker to set as default.
+*   `devices` **[Object][7]** 
 
-**Examples**
+    *   `devices.camera` **[string][8]?** The ID of the camera to set as default.
+    *   `devices.microphone` **[string][8]?** The ID of the microphone to set as default.
+    *   `devices.speaker` **[string][8]?** The ID of the speaker to set as default.
+
+### Examples
 
 ```javascript
 // Set only the default microphone and camera.
@@ -1007,30 +1067,28 @@ client.media.setDefaultDevices({
 
 [13]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
 
-[14]: https://en.wikipedia.org/wiki/Keepalive
+[14]: #config
 
-[15]: #config
+[15]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
 
-[16]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+[16]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error
 
-[17]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error
+[17]: #connectiongetsocketstate
 
-[18]: #connectiongetsocketstate
+[18]: #connectionwsconnectionobject
 
-[19]: #connectionwsconnectionobject
+[19]: #apibasicerror
 
-[20]: #apibasicerror
+[20]: #configconfiglogs
 
-[21]: #configconfiglogs
+[21]: api.notifications.process
 
-[22]: api.notifications.process
+[22]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
 
-[23]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
+[23]: call.SdpHandlerFunction
 
-[24]: call.SdpHandlerFunction
+[24]: #configconfigcall
 
-[25]: #configconfigcall
+[25]: call.setSdpHandlers
 
-[26]: call.setSdpHandlers
-
-[27]: call.getAvailableCodecs
+[26]: call.getAvailableCodecs
