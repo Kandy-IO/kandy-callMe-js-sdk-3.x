@@ -1,7 +1,7 @@
 /**
  * Kandy.js
  * kandy.callMe.js
- * Version: 3.33.0-beta.763
+ * Version: 3.33.0-beta.764
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -2335,7 +2335,6 @@ module.exports = { "default": __webpack_require__(198), __esModule: true };
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getExposedState = getExposedState;
 exports.getAuthConfig = getAuthConfig;
 exports.getSubscriptionInfo = getSubscriptionInfo;
 exports.getConnectionInfo = getConnectionInfo;
@@ -2352,16 +2351,6 @@ var _fp = __webpack_require__(3);
 var _constants = __webpack_require__(63);
 
 var _constants2 = __webpack_require__(15);
-
-/**
- * Plugin selector function to expose state globally
- * @param  {Object} pluginState The localized (plugin) state
- * @return {Object}             The exposed state
- */
-function getExposedState(pluginState) {
-  // TODO: Filter out unwanted auth stuff from public state.
-  return (0, _fp.cloneDeep)(pluginState);
-}
 
 /*
  * Redux-saga selector functions.
@@ -11363,7 +11352,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '3.33.0-beta.763';
+  return '3.33.0-beta.764';
 }
 
 /***/ }),
@@ -17627,7 +17616,6 @@ function factory(plugins, options = {}) {
 
   var sagas = [];
   var store;
-  var selectors = {};
   var middlewares = [];
   var reducers = {};
   var initSagas = [];
@@ -17688,9 +17676,6 @@ function factory(plugins, options = {}) {
     }
     if (plugin.reducer) {
       reducers[plugin.name] = plugin.reducer;
-    }
-    if (plugin.selector) {
-      selectors[plugin.name] = (0, _fp.memoize)(plugin.selector);
     }
     if (plugin.middleware) {
       if (plugin.name === 'logs') {
@@ -17793,29 +17778,10 @@ function factory(plugins, options = {}) {
   }
 
   // setup the API
-  var selectState = function (state) {
-    var exposedState = {};
-
-    // Determine what state should be exposed to an application.
-    plugins.forEach(function (plugin) {
-      const name = plugin.name;
-      // If the plugin designates a selector to filter public state, use it.
-      if (selectors[name]) {
-        exposedState[name] = selectors[name](state[name]);
-      } else if (state[name]) {
-        // Otherwise, just expose the state directly, but
-        //      only expose state if there actually is state.
-        exposedState[name] = state[name];
-      }
-    });
-    return exposedState;
-  };
-  selectState = (0, _fp.memoize)(selectState);
-
   const publicAPI = (0, _extends3.default)({}, context.api, {
     state: {
       get: function () {
-        return selectState(store.getState());
+        return store.getState();
       },
       subscribe: function (...args) {
         return store.subscribe(...args);
@@ -58436,7 +58402,6 @@ function* wsEmitter(ws, platform) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getExposedState = getExposedState;
 exports.getSubscriptionConfig = getSubscriptionConfig;
 exports.getRegisteredServices = getRegisteredServices;
 exports.getNotificationChannels = getNotificationChannels;
@@ -58453,18 +58418,6 @@ var _selectors = __webpack_require__(20);
 var _utils = __webpack_require__(14);
 
 /**
- * Plugin selector function to expose state globally
- * @param  {Object} pluginState The localized (plugin) state
- * @return {Object}             The exposed state
- */
-
-
-// Auth selectors for backwards compatability.
-function getExposedState(pluginState) {
-  return (0, _fp.cloneDeep)(pluginState);
-}
-
-/**
  * Retrieves the config options provided by the subscription plugin.
  * NOTE: This is only used by CPaaS currently and won't work with
  * the old auth/subscription config on link.  It will work with the new
@@ -58474,7 +58427,7 @@ function getExposedState(pluginState) {
  */
 
 
-// Utilities.
+// Auth selectors for backwards compatability.
 function getSubscriptionConfig(state) {
   return (0, _fp.cloneDeep)(state.config.subscription);
 }
@@ -58484,6 +58437,9 @@ function getSubscriptionConfig(state) {
  * @method getRegisteredServices
  * @return {Array}
  */
+
+
+// Utilities.
 function getRegisteredServices(state) {
   return (0, _fp.cloneDeep)(state.subscription.registeredServices);
 }
