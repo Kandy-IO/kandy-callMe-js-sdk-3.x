@@ -1,7 +1,7 @@
 /**
  * Kandy.js
  * kandy.callMe.js
- * Version: 3.33.0-beta.775
+ * Version: 3.33.0-beta.776
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -2263,73 +2263,6 @@ module.exports = !__webpack_require__(31)(function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-
-
-/**
- * Use invariant() to assert state which your program assumes to be true.
- *
- * Provide sprintf-style format (only %s is supported) and arguments
- * to provide information about what broke and what you were
- * expecting.
- *
- * The invariant message will be stripped in production, but the invariant
- * will remain to ensure logic does not differ in production.
- */
-
-var invariant = function(condition, format, a, b, c, d, e, f) {
-  if (false) {}
-
-  if (!condition) {
-    var error;
-    if (format === undefined) {
-      error = new Error(
-        'Minified exception occurred; use the non-minified dev environment ' +
-        'for the full error message and additional helpful warnings.'
-      );
-    } else {
-      var args = [a, b, c, d, e, f];
-      var argIndex = 0;
-      error = new Error(
-        format.replace(/%s/g, function() { return args[argIndex++]; })
-      );
-      error.name = 'Invariant Violation';
-    }
-
-    error.framesToPop = 1; // we don't care about invariant's own frame
-    throw error;
-  }
-};
-
-module.exports = invariant;
-
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports) {
-
-module.exports = function (it) {
-  return typeof it === 'object' ? it !== null : typeof it === 'function';
-};
-
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(198), __esModule: true };
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
 
 
 Object.defineProperty(exports, "__esModule", {
@@ -2577,6 +2510,73 @@ function getRequestInfo(state, platform) {
 }
 
 /***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+/**
+ * Use invariant() to assert state which your program assumes to be true.
+ *
+ * Provide sprintf-style format (only %s is supported) and arguments
+ * to provide information about what broke and what you were
+ * expecting.
+ *
+ * The invariant message will be stripped in production, but the invariant
+ * will remain to ensure logic does not differ in production.
+ */
+
+var invariant = function(condition, format, a, b, c, d, e, f) {
+  if (false) {}
+
+  if (!condition) {
+    var error;
+    if (format === undefined) {
+      error = new Error(
+        'Minified exception occurred; use the non-minified dev environment ' +
+        'for the full error message and additional helpful warnings.'
+      );
+    } else {
+      var args = [a, b, c, d, e, f];
+      var argIndex = 0;
+      error = new Error(
+        format.replace(/%s/g, function() { return args[argIndex++]; })
+      );
+      error.name = 'Invariant Violation';
+    }
+
+    error.framesToPop = 1; // we don't care about invariant's own frame
+    throw error;
+  }
+};
+
+module.exports = invariant;
+
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports) {
+
+module.exports = function (it) {
+  return typeof it === 'object' ? it !== null : typeof it === 'function';
+};
+
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(198), __esModule: true };
+
+/***/ }),
 /* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2615,7 +2615,7 @@ __webpack_require__.d(__webpack_exports__, "handleAction", function() { return /
 __webpack_require__.d(__webpack_exports__, "handleActions", function() { return /* reexport */ handleActions; });
 
 // EXTERNAL MODULE: /var/jenkins_home/workspace/Kandy.js_beta/node_modules/invariant/browser.js
-var browser = __webpack_require__(17);
+var browser = __webpack_require__(18);
 var browser_default = /*#__PURE__*/__webpack_require__.n(browser);
 
 // CONCATENATED MODULE: /var/jenkins_home/workspace/Kandy.js_beta/node_modules/redux-actions/es/utils/isFunction.js
@@ -3161,7 +3161,7 @@ module.exports = __webpack_require__(16) ? function (object, key, value) {
 /* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(18);
+var isObject = __webpack_require__(19);
 module.exports = function (it) {
   if (!isObject(it)) throw TypeError(it + ' is not an object!');
   return it;
@@ -7552,7 +7552,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.parse = exports.validationResults = exports.errorMessages = exports.enums = exports.validation = undefined;
 
-var _stringify = __webpack_require__(19);
+var _stringify = __webpack_require__(20);
 
 var _stringify2 = _interopRequireDefault(_stringify);
 
@@ -7777,7 +7777,7 @@ module.exports = { "default": __webpack_require__(184), __esModule: true };
 /***/ (function(module, exports, __webpack_require__) {
 
 var META = __webpack_require__(56)('meta');
-var isObject = __webpack_require__(18);
+var isObject = __webpack_require__(19);
 var has = __webpack_require__(32);
 var setDesc = __webpack_require__(21).f;
 var id = 0;
@@ -11187,7 +11187,7 @@ function delayP(ms, val) {
 /* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(18);
+var isObject = __webpack_require__(19);
 var document = __webpack_require__(9).document;
 // typeof document.createElement is 'object' in old IE
 var is = isObject(document) && isObject(document.createElement);
@@ -11201,7 +11201,7 @@ module.exports = function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.1 ToPrimitive(input [, PreferredType])
-var isObject = __webpack_require__(18);
+var isObject = __webpack_require__(19);
 // instead of the ES6 spec version, we didn't implement @@toPrimitive case
 // and the second argument - flag - preferred type is a string
 module.exports = function (it, S) {
@@ -11373,7 +11373,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '3.33.0-beta.775';
+  return '3.33.0-beta.776';
 }
 
 /***/ }),
@@ -13110,7 +13110,7 @@ module.exports = function (KEY) {
 /* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(18);
+var isObject = __webpack_require__(19);
 module.exports = function (it, TYPE) {
   if (!isObject(it) || it._t !== TYPE) throw TypeError('Incompatible receiver, ' + TYPE + ' required!');
   return it;
@@ -13309,7 +13309,7 @@ module.exports = function (exec) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var anObject = __webpack_require__(25);
-var isObject = __webpack_require__(18);
+var isObject = __webpack_require__(19);
 var newPromiseCapability = __webpack_require__(96);
 
 module.exports = function (C, x) {
@@ -13337,7 +13337,7 @@ var _extends2 = __webpack_require__(4);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _stringify = __webpack_require__(19);
+var _stringify = __webpack_require__(20);
 
 var _stringify2 = _interopRequireDefault(_stringify);
 
@@ -13782,7 +13782,7 @@ exports.getCpaasAgentHeaderValue = getCpaasAgentHeaderValue;
 
 var _selectors = __webpack_require__(271);
 
-var _selectors2 = __webpack_require__(20);
+var _selectors2 = __webpack_require__(17);
 
 var _version = __webpack_require__(84);
 
@@ -13906,7 +13906,7 @@ var actionTypes = _interopRequireWildcard(_actionTypes);
 
 var _constants = __webpack_require__(63);
 
-var _selectors = __webpack_require__(20);
+var _selectors = __webpack_require__(17);
 
 var _constants2 = __webpack_require__(15);
 
@@ -14336,7 +14336,7 @@ var _actionTypes = __webpack_require__(28);
 
 var _selectors = __webpack_require__(66);
 
-var _selectors2 = __webpack_require__(20);
+var _selectors2 = __webpack_require__(17);
 
 var _actionTypes2 = __webpack_require__(273);
 
@@ -16611,7 +16611,7 @@ var _extends2 = __webpack_require__(4);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _stringify = __webpack_require__(19);
+var _stringify = __webpack_require__(20);
 
 var _stringify2 = _interopRequireDefault(_stringify);
 
@@ -20456,7 +20456,7 @@ var wksDefine = __webpack_require__(86);
 var enumKeys = __webpack_require__(189);
 var isArray = __webpack_require__(111);
 var anObject = __webpack_require__(25);
-var isObject = __webpack_require__(18);
+var isObject = __webpack_require__(19);
 var toObject = __webpack_require__(40);
 var toIObject = __webpack_require__(33);
 var toPrimitive = __webpack_require__(73);
@@ -22956,7 +22956,7 @@ var hide = __webpack_require__(24);
 var redefineAll = __webpack_require__(93);
 var forOf = __webpack_require__(53);
 var anInstance = __webpack_require__(94);
-var isObject = __webpack_require__(18);
+var isObject = __webpack_require__(19);
 var setToStringTag = __webpack_require__(49);
 var dP = __webpack_require__(21).f;
 var each = __webpack_require__(218)(0);
@@ -23074,7 +23074,7 @@ module.exports = function (original, length) {
 /* 220 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(18);
+var isObject = __webpack_require__(19);
 var isArray = __webpack_require__(111);
 var SPECIES = __webpack_require__(11)('species');
 
@@ -24444,7 +24444,7 @@ var global = __webpack_require__(9);
 var ctx = __webpack_require__(23);
 var classof = __webpack_require__(95);
 var $export = __webpack_require__(8);
-var isObject = __webpack_require__(18);
+var isObject = __webpack_require__(19);
 var aFunction = __webpack_require__(44);
 var anInstance = __webpack_require__(94);
 var forOf = __webpack_require__(53);
@@ -25723,7 +25723,7 @@ var _actions = __webpack_require__(62);
 
 var actions = _interopRequireWildcard(_actions);
 
-var _selectors = __webpack_require__(20);
+var _selectors = __webpack_require__(17);
 
 var _constants = __webpack_require__(63);
 
@@ -26212,7 +26212,7 @@ var _actions = __webpack_require__(62);
 
 var actions = _interopRequireWildcard(_actions);
 
-var _selectors = __webpack_require__(20);
+var _selectors = __webpack_require__(17);
 
 var _requests = __webpack_require__(130);
 
@@ -27269,7 +27269,7 @@ var _actionTypes3 = __webpack_require__(28);
 
 var connActionTypes = _interopRequireWildcard(_actionTypes3);
 
-var _selectors = __webpack_require__(20);
+var _selectors = __webpack_require__(17);
 
 var _actions = __webpack_require__(27);
 
@@ -36271,7 +36271,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _stringify = __webpack_require__(19);
+var _stringify = __webpack_require__(20);
 
 var _stringify2 = _interopRequireDefault(_stringify);
 
@@ -36846,7 +36846,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _stringify = __webpack_require__(19);
+var _stringify = __webpack_require__(20);
 
 var _stringify2 = _interopRequireDefault(_stringify);
 
@@ -37024,7 +37024,7 @@ module.exports = __webpack_require__(7).Object.freeze;
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.5 Object.freeze(O)
-var isObject = __webpack_require__(18);
+var isObject = __webpack_require__(19);
 var meta = __webpack_require__(58).onFreeze;
 
 __webpack_require__(107)('freeze', function ($freeze) {
@@ -38113,7 +38113,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _stringify = __webpack_require__(19);
+var _stringify = __webpack_require__(20);
 
 var _stringify2 = _interopRequireDefault(_stringify);
 
@@ -40797,7 +40797,7 @@ var _extends2 = __webpack_require__(4);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _stringify = __webpack_require__(19);
+var _stringify = __webpack_require__(20);
 
 var _stringify2 = _interopRequireDefault(_stringify);
 
@@ -45063,7 +45063,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _stringify = __webpack_require__(19);
+var _stringify = __webpack_require__(20);
 
 var _stringify2 = _interopRequireDefault(_stringify);
 
@@ -50608,7 +50608,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _stringify = __webpack_require__(19);
+var _stringify = __webpack_require__(20);
 
 var _stringify2 = _interopRequireDefault(_stringify);
 
@@ -53569,7 +53569,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _stringify = __webpack_require__(19);
+var _stringify = __webpack_require__(20);
 
 var _stringify2 = _interopRequireDefault(_stringify);
 
@@ -55253,7 +55253,7 @@ exports.default = api;
 
 var _selectors = __webpack_require__(145);
 
-var _selectors2 = __webpack_require__(20);
+var _selectors2 = __webpack_require__(17);
 
 var _selectors3 = __webpack_require__(125);
 
@@ -57380,6 +57380,8 @@ exports.default = baseConnectivity;
 
 var _interface = __webpack_require__(373);
 
+var _interface2 = _interopRequireDefault(_interface);
+
 var _events = __webpack_require__(376);
 
 var _events2 = _interopRequireDefault(_events);
@@ -57421,16 +57423,16 @@ function baseConnectivity(options) {
   }
 
   function* init() {
-    yield (0, _effects.put)((0, _actions.update)(options, _interface.name));
+    yield (0, _effects.put)((0, _actions.update)(options, _interface2.default.name));
     yield (0, _effects.put)((0, _actions2.mapEvents)(_events2.default));
   }
 
   return {
     sagas: [_sagas.wsConnectFlow],
     init,
-    name: _interface.name,
-    reducer: _interface.reducer,
-    api: _interface.api
+    name: _interface2.default.name,
+    reducer: _interface2.default.reducer,
+    api: _interface2.default.api
   };
 } // Connectivity plugin.
 
@@ -57444,7 +57446,6 @@ function baseConnectivity(options) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.reducer = exports.api = exports.name = undefined;
 
 var _name = __webpack_require__(136);
 
@@ -57460,9 +57461,7 @@ var _reducers2 = _interopRequireDefault(_reducers);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.name = _name2.default;
-exports.api = _api2.default;
-exports.reducer = _reducers2.default;
+exports.default = { name: _name2.default, api: _api2.default, reducer: _reducers2.default };
 
 /***/ }),
 /* 374 */
@@ -57482,10 +57481,9 @@ var _actions = __webpack_require__(65);
 
 var _selectors = __webpack_require__(66);
 
-var _logs = __webpack_require__(5);
+var _selectors2 = __webpack_require__(17);
 
-// Constants
-const log = _logs.logManager.getLogger('CONNECTIVITY');
+var _logs = __webpack_require__(5);
 
 /**
  * The 'connection' namespace is used to connect and maintain connections between
@@ -57527,6 +57525,10 @@ const log = _logs.logManager.getLogger('CONNECTIVITY');
  * @property {number} lastContact The date and time that the last known contact with the server was.
  */
 
+const log = _logs.logManager.getLogger('CONNECTIVITY');
+
+// Selectors
+// Constants
 function api({ dispatch, getState }) {
   const connectivityApi = {
     /**
@@ -57553,6 +57555,35 @@ function api({ dispatch, getState }) {
     enableConnectivityChecking(enable) {
       log.debug(_logs.API_LOG_TAG + 'connection.enableConnectivityChecking: ', enable);
       dispatch((0, _actions.changeConnectivityChecking)(enable));
+    },
+
+    /**
+     * Triggers a reset in the connection to the WebSocket being used for notifications.
+     * This can be used in scenarios where a network issue (undetectable by the SDK)
+     * is detected by an application.
+     *
+     * If there is no WebSocket currently connected, this function has no effect.
+     * Calling this function will trigger all the normal WebSocket and connectivity lifecycle
+     * events as well as trigger re-connection processing that follows the configuration of the SDK.
+     * Calling this function always has the potential of causing some events being lost by the
+     * SDK and preventing proper operation.
+     * @public
+     * @memberof connection
+     * @method resetConnection
+     */
+    resetConnection() {
+      const state = getState();
+      const platform = (0, _selectors2.getPlatform)(state);
+      log.debug(_logs.API_LOG_TAG + 'connection.resetConnection: ', platform);
+
+      const wsState = (0, _selectors.getConnectionState)(state, platform);
+      if (!wsState.connected) {
+        log.debug(_logs.API_LOG_TAG + 'connection.resetConnection: No active websocket connection. Ignoring request.');
+        return;
+      }
+      // Dispatching this action would close/cleanup existing ws connection
+      // However, we'll re-connect after that.
+      dispatch((0, _actions.lostConnection)(undefined, platform));
     }
   };
   return { connection: connectivityApi };
@@ -57795,7 +57826,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _stringify = __webpack_require__(19);
+var _stringify = __webpack_require__(20);
 
 var _stringify2 = _interopRequireDefault(_stringify);
 
@@ -57817,7 +57848,7 @@ var _actions = __webpack_require__(65);
 
 var actions = _interopRequireWildcard(_actions);
 
-var _selectors2 = __webpack_require__(20);
+var _selectors2 = __webpack_require__(17);
 
 var _selectors3 = __webpack_require__(380);
 
@@ -58435,7 +58466,7 @@ exports.getWebsocketConfig = getWebsocketConfig;
 
 var _fp = __webpack_require__(3);
 
-var _selectors = __webpack_require__(20);
+var _selectors = __webpack_require__(17);
 
 var _utils = __webpack_require__(14);
 
@@ -59156,7 +59187,7 @@ var _fp = __webpack_require__(3);
 
 var _effects = __webpack_require__(6);
 
-var _selectors = __webpack_require__(20);
+var _selectors = __webpack_require__(17);
 
 var _logs = __webpack_require__(5);
 
@@ -59304,7 +59335,7 @@ var _reduxSaga = __webpack_require__(69);
 
 var _effects = __webpack_require__(6);
 
-var _selectors = __webpack_require__(20);
+var _selectors = __webpack_require__(17);
 
 var _constants = __webpack_require__(15);
 
