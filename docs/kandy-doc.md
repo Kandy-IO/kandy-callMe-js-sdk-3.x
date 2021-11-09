@@ -3,7 +3,7 @@
 ## create
 
 The SDK creation factory. Create an instance of the SDK by calling this factory with the desired configurations.
-The SDK instance will be refered as 'api' throughout the rest of the documentation content.
+The SDK instance will be referred as 'api' throughout the rest of the documentation content.
 
 ### Parameters
 
@@ -103,7 +103,7 @@ Configuration options for the call feature.
 
         *   `call.callDefaults.isAudioEnabled` **[boolean][11]** Specifies whether audio is enabled or not. (optional, default `true`)
         *   `call.callDefaults.isVideoEnabled` **[boolean][11]** Specifies whether video is enabled or not. (optional, default `true`)
-        *   `call.callDefaults.sendInitialVideo` **[boolean][11]** Specifies whether to send an inital video stream or not. (optional, default `false`)
+        *   `call.callDefaults.sendInitialVideo` **[boolean][11]** Specifies whether to send an initial video stream or not. (optional, default `false`)
         *   `call.callDefaults.remoteVideoContainer` **[Object][7]?** Specifies the container where video (coming from remote party) is rendered.
         *   `call.callDefaults.localVideoContainer` **[Object][7]?** Specifies the container where video (coming from local party) is rendered.
     *   `call.chromeExtensionId` **[string][8]?** ID of the screenshare extension being used for screenshare of Google Chrome.
@@ -184,7 +184,7 @@ Available media devices have been changed.
 
 *   `params` **[Object][7]** 
 
-    *   `params.devices` **[Object][7]** The devices, seperated by device type.
+    *   `params.devices` **[Object][7]** The devices, separated by device type.
 
 ## devices:defaultsChange
 
@@ -206,8 +206,8 @@ Media support has been checked.
 
     *   `params.result` **[Object][7]** Results of initializing media.
 
-        *   `params.result.error` **[boolean][11]** Whether the initiazation was successful or not.
-        *   `params.result.code` **[number][12]** A unqiue code describing the result scenario.
+        *   `params.result.error` **[boolean][11]** Whether the initialization was successful or not.
+        *   `params.result.code` **[number][12]** A unique code describing the result scenario.
         *   `params.result.message` **[string][8]** Human readable message of the result.
 
 ## api
@@ -457,7 +457,7 @@ State of the media connection within a call.
 *   `NEW` **[string][8]** A new media connection process has started.
 *   `CHECKING` **[string][8]** Media is searching for a connection.
 *   `CONNECTED` **[string][8]** Media has found a connection, but may still be searching for a better connection to use.
-*   `COMLETED` **[string][8]** Media has finished searching and been established. Audio/video should now be flowing on the call.
+*   `COMPLETED` **[string][8]** Media has finished searching and been established. Audio/video should now be flowing on the call.
 *   `FAILED` **[string][8]** Media was not able to find a connection. Audio/video will not flow.
 *   `DISCONNECTED` **[string][8]** The media connection has lost its connection and is trying to recover.
 *   `CLOSED` **[string][8]** The media connection has shut down.
@@ -544,10 +544,10 @@ Start local video stream for an ongoing call.
 *   `callId` **[string][8]** Id of the call being acted on.
 *   `options` **[Object][7]?** Options for the video stream.
 
-    *   `options.videoResolution` **[Object][7]?** The video resolution configuation object.
+    *   `options.videoResolution` **[Object][7]?** The video resolution configuration object.
 
-        *   `options.videoResolution.height` **[number][12]?** The height of the outoing video in pixels.
-        *   `options.videoResolution.width` **[number][12]?** The width of the outoing video in pixels.
+        *   `options.videoResolution.height` **[number][12]?** The height of the outgoing video in pixels.
+        *   `options.videoResolution.width` **[number][12]?** The width of the outgoing video in pixels.
 
 ### stopVideo
 
@@ -788,7 +788,7 @@ Type: [Object][7]
 
     *   `target.type` **[string][8]** The type of the target. This is also
         used as part of the name of the Logger.
-    *   `target.id` **[string][8]?** A unique identifer for the target.
+    *   `target.id` **[string][8]?** A unique identifier for the target.
     *   `target.name` **[string][8]** A combination of the target type and ID. If no
         id was provided, this will be the same as the type.
 *   `messages` **[Array][13]** The logged information, given to the Logger
