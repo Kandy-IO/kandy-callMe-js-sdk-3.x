@@ -3,7 +3,7 @@
 ## create
 
 The SDK creation factory. Create an instance of the SDK by calling this factory with the desired configurations.
-The SDK instance will be refered as 'api' throughout the rest of the documentation content.
+The SDK instance will be referred as 'api' throughout the rest of the documentation content.
 
 ### Parameters
 
@@ -103,7 +103,7 @@ Configuration options for the call feature.
 
         *   `call.callDefaults.isAudioEnabled` **[boolean][11]** Specifies whether audio is enabled or not. (optional, default `true`)
         *   `call.callDefaults.isVideoEnabled` **[boolean][11]** Specifies whether video is enabled or not. (optional, default `true`)
-        *   `call.callDefaults.sendInitialVideo` **[boolean][11]** Specifies whether to send an inital video stream or not. (optional, default `false`)
+        *   `call.callDefaults.sendInitialVideo` **[boolean][11]** Specifies whether to send an initial video stream or not. (optional, default `false`)
         *   `call.callDefaults.remoteVideoContainer` **[Object][7]?** Specifies the container where video (coming from remote party) is rendered.
         *   `call.callDefaults.localVideoContainer` **[Object][7]?** Specifies the container where video (coming from local party) is rendered.
     *   `call.chromeExtensionId` **[string][8]?** ID of the screenshare extension being used for screenshare of Google Chrome.
@@ -184,7 +184,7 @@ Available media devices have been changed.
 
 *   `params` **[Object][7]** 
 
-    *   `params.devices` **[Object][7]** The devices, seperated by device type.
+    *   `params.devices` **[Object][7]** The devices, separated by device type.
 
 ## devices:defaultsChange
 
@@ -206,8 +206,8 @@ Media support has been checked.
 
     *   `params.result` **[Object][7]** Results of initializing media.
 
-        *   `params.result.error` **[boolean][11]** Whether the initiazation was successful or not.
-        *   `params.result.code` **[number][12]** A unqiue code describing the result scenario.
+        *   `params.result.error` **[boolean][11]** Whether the initialization was successful or not.
+        *   `params.result.code` **[number][12]** A unique code describing the result scenario.
         *   `params.result.message` **[string][8]** Human readable message of the result.
 
 ## api
@@ -341,39 +341,6 @@ Type: [Object][7]
 *   `code` **[string][8]** The code of the error. If no code is known, this will be 'NO_CODE'.
 *   `message` **[string][8]** A human-readable message to describe the error. If no message is known, this will be 'An error occurred'.
 
-### fetch
-
-Send a request to the underlying REST service with the appropriate configuration and authentication.
-This is a wrapper on top of the browser's [fetch API][17]
-and behaves very similarly but using SDK configuration for the base URL and authentication as well
-as SDK logging.
-
-#### Parameters
-
-*   `resource` **[string][8]** The full path of the resource to fetch from the underlying service. This should include any REST version
-    or user information. This path will be appended to the base URL according to SDK configuration.
-*   `init` **RequestInit** An object containing any custom settings that you want to apply to the request. See [fetch API][17]
-    for a full description and defaults.
-
-#### Examples
-
-```javascript
-// Send a REST request to the server
-// Create a request options object following [fetch API](https://developer.mozilla.org/en-US/docs/Web/API/fetch)
-const requestOptions = {
-  method: 'POST',
-  body: JSON.stringify({
-    test: 123
-  })
-}
-
-// Note that you will need to subscribe for the `custom` service in order to
-// receive notifications from the `externalnotification` service.
-const response = await client.fetch('/rest/version/1/user/xyz@test.com/externalnotification', requestOptions)
-```
-
-Returns **[Promise][18]<[Response][19]>** A promise for a [Response][20] object.
-
 ## Calls
 
 The Calls feature is used to make audio and video calls to and from
@@ -457,7 +424,7 @@ State of the media connection within a call.
 *   `NEW` **[string][8]** A new media connection process has started.
 *   `CHECKING` **[string][8]** Media is searching for a connection.
 *   `CONNECTED` **[string][8]** Media has found a connection, but may still be searching for a better connection to use.
-*   `COMLETED` **[string][8]** Media has finished searching and been established. Audio/video should now be flowing on the call.
+*   `COMPLETED` **[string][8]** Media has finished searching and been established. Audio/video should now be flowing on the call.
 *   `FAILED` **[string][8]** Media was not able to find a connection. Audio/video will not flow.
 *   `DISCONNECTED` **[string][8]** The media connection has lost its connection and is trying to recover.
 *   `CLOSED` **[string][8]** The media connection has shut down.
@@ -544,10 +511,10 @@ Start local video stream for an ongoing call.
 *   `callId` **[string][8]** Id of the call being acted on.
 *   `options` **[Object][7]?** Options for the video stream.
 
-    *   `options.videoResolution` **[Object][7]?** The video resolution configuation object.
+    *   `options.videoResolution` **[Object][7]?** The video resolution configuration object.
 
-        *   `options.videoResolution.height` **[number][12]?** The height of the outoing video in pixels.
-        *   `options.videoResolution.width` **[number][12]?** The width of the outoing video in pixels.
+        *   `options.videoResolution.height` **[number][12]?** The height of the outgoing video in pixels.
+        *   `options.videoResolution.width` **[number][12]?** The width of the outgoing video in pixels.
 
 ### stopVideo
 
@@ -621,7 +588,7 @@ the SDK and one or more backend servers.
 
 Information about a websocket connection.
 
-Can be retrieved using the [connection.getSocketState][21] API.
+Can be retrieved using the [connection.getSocketState][17] API.
 
 Type: [Object][7]
 
@@ -659,7 +626,7 @@ Get the state of the websocket.
 
 *   `platform` **[string][8]** Backend platform for which to request the websocket's state. (optional, default `'link'`)
 
-Returns **[connection.WSConnectionObject][22]** Details about the current websocket connection, including state and configuration.
+Returns **[connection.WSConnectionObject][18]** Details about the current websocket connection, including state and configuration.
 
 ### enableConnectivityChecking
 
@@ -701,7 +668,7 @@ Type: [string][8]
 
 *   `params` **[Object][7]** 
 
-    *   `params.error` **[api.BasicError][23]** The Basic error object.
+    *   `params.error` **[api.BasicError][19]** The Basic error object.
 
 ## getDevices
 
@@ -714,7 +681,7 @@ behaviour. The SDK will generate logs, at different levels for different
 types of information, which are routed to a
 "[Log Handler][4]" for consumption. An application
 can provide their own Log Handler (see
-[config.logs][24]) to customize how the logs are
+[config.logs][20]) to customize how the logs are
 handled, or allow the default Log Handler to print the logs to the
 console.
 
@@ -774,7 +741,7 @@ logged. It contains both the logged information and meta-info about when
 and who logged it.
 
 A [LogHandler][4] provided to the SDK (see
-[config.logs][24]) will need to handle LogEntry
+[config.logs][20]) will need to handle LogEntry
 objects.
 
 Type: [Object][7]
@@ -788,7 +755,7 @@ Type: [Object][7]
 
     *   `target.type` **[string][8]** The type of the target. This is also
         used as part of the name of the Logger.
-    *   `target.id` **[string][8]?** A unique identifer for the target.
+    *   `target.id` **[string][8]?** A unique identifier for the target.
     *   `target.name` **[string][8]** A combination of the target type and ID. If no
         id was provided, this will be the same as the type.
 *   `messages` **[Array][13]** The logged information, given to the Logger
@@ -824,7 +791,7 @@ default, the SDK will log information to the console, but a LogHandler can
 be configured to change this behaviour.
 
 A LogHandler can be provided to the SDK as part of its configuration (see
-[config.logs][24]). The SDK will then provide this
+[config.logs][20]). The SDK will then provide this
 function with the logged information.
 
 Type: [Function][15]
@@ -884,7 +851,7 @@ Provides an external notification to the system for processing.
 ### registerApplePush
 
 Registers with Apple push notification service. Once registration is successful, the application will be able to receive
-standard and/or voip push notifications. It can then send these notifications to the SDK with [api.notifications.process][25]
+standard and/or voip push notifications. It can then send these notifications to the SDK with [api.notifications.process][21]
 in order for the SDK to process them.
 
 #### Parameters
@@ -903,13 +870,13 @@ in order for the SDK to process them.
     *   `params.isProduction` **[boolean][11]** If true, push notification will be sent to production.
         If false, push notification will be sent to sandbox.
 
-Returns **[Promise][18]** When successful,  the information of the registration.
+Returns **[Promise][22]** When successful,  the information of the registration.
 Promise will reject with error object otherwise.
 
 ### registerAndroidPush
 
 Registers with Google push notification service. Once registration is successful, the application will be able to receive
-standard and/or voip push notifications. It can then send these notifications to the SDK with [api.notifications.process][25]
+standard and/or voip push notifications. It can then send these notifications to the SDK with [api.notifications.process][21]
 in order for the SDK to process them.
 
 #### Parameters
@@ -924,7 +891,7 @@ in order for the SDK to process them.
     *   `params.realm` **[string][8]** The realm used by the push registration service to identify
         and establish a connection with the service gateway.
 
-Returns **[Promise][18]** When successful,  the information of the registration.
+Returns **[Promise][22]** When successful,  the information of the registration.
 Promise will reject with error object otherwise.
 
 ### unregisterApplePush
@@ -935,7 +902,7 @@ Unregister Apple push notifications.
 
 *   `registrationInfo` **[string][8]** The data returned from the push registration
 
-Returns **[Promise][18]** When successful, the promise will resolve with undefined.
+Returns **[Promise][22]** When successful, the promise will resolve with undefined.
 Promise will reject with error object otherwise.
 
 ### unregisterAndroidPush
@@ -946,7 +913,7 @@ Unregister Android push notifications.
 
 *   `registrationInfo` **[string][8]** The data returned from the push registration
 
-Returns **[Promise][18]** When successful, the promise will resolve with undefined.
+Returns **[Promise][22]** When successful, the promise will resolve with undefined.
 Promise will reject with error object otherwise.
 
 ### enableWebsocket
@@ -975,8 +942,45 @@ An error occurred with push notifications.
 
 *   `params` **[Object][7]** 
 
-    *   `params.error` **[api.BasicError][23]** The Basic error object.
+    *   `params.error` **[api.BasicError][19]** The Basic error object.
     *   `params.channel` **[string][8]** The channel for the notification.
+
+## request
+
+The 'request' namespace (within the 'api' type) is used to make network requests to the server.
+
+### fetch
+
+Send a request to the underlying REST service with the appropriate configuration and authentication.
+This is a wrapper on top of the browser's [fetch API][23]
+and behaves very similarly but using SDK configuration for the base URL and authentication as well
+as SDK logging.
+
+#### Parameters
+
+*   `resource` **[string][8]** The full path of the resource to fetch from the underlying service. This should include any REST version
+    or user information. This path will be appended to the base URL according to SDK configuration.
+*   `init` **RequestInit** An object containing any custom settings that you want to apply to the request. See [fetch API][23]
+    for a full description and defaults.
+
+#### Examples
+
+```javascript
+// Send a REST request to the server
+// Create a request options object following [fetch API](https://developer.mozilla.org/en-US/docs/Web/API/fetch)
+const requestOptions = {
+  method: 'POST',
+  body: JSON.stringify({
+    test: 123
+  })
+}
+
+// Note that you will need to subscribe for the `custom` service in order to
+// receive notifications from the `externalnotification` service.
+const response = await client.request.fetch('/rest/version/1/user/xyz@test.com/externalnotification', requestOptions)
+```
+
+Returns **[Promise][22]<[Response][24]>** A promise for a [Response][25] object.
 
 ## sdpHandlers
 
@@ -1118,23 +1122,23 @@ client.media.setDefaultDevices({
 
 [16]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error
 
-[17]: https://developer.mozilla.org/en-US/docs/Web/API/fetch
+[17]: #connectiongetsocketstate
 
-[18]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
+[18]: #connectionwsconnectionobject
 
-[19]: https://developer.mozilla.org/docs/Web/Guide/HTML/HTML5
+[19]: #apibasicerror
 
-[20]: https://developer.mozilla.org/en-US/docs/Web/API/Response
+[20]: #configconfiglogs
 
-[21]: #connectiongetsocketstate
+[21]: api.notifications.process
 
-[22]: #connectionwsconnectionobject
+[22]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
 
-[23]: #apibasicerror
+[23]: https://developer.mozilla.org/en-US/docs/Web/API/fetch
 
-[24]: #configconfiglogs
+[24]: https://developer.mozilla.org/docs/Web/Guide/HTML/HTML5
 
-[25]: api.notifications.process
+[25]: https://developer.mozilla.org/en-US/docs/Web/API/Response
 
 [26]: call.SdpHandlerFunction
 
