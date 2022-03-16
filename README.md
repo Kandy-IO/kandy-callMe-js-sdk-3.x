@@ -1,3 +1,5 @@
+The v3 stream of the Kandy CallMe JavaScript SDK has been deprecated and is not receiving regular updates. The latest version of the SDK can be found at https://github.com/Kandy-IO/kandy-callMe-js-sdk.
+
 # Kandy CallMe JavaScript SDK 3.x
 
 ## Install
@@ -15,7 +17,7 @@ To install a particular build branch or beta branch with the Github URL, run:
 ### In the browser :
 ```html
 <script src="https://unpkg.com/@kandy-io/callme-sdk-3.x@3.38.0/dist/kandy.js"
-  integrity="sha384-W03oMhgmHhlMKFc/yUEZaojzCv1XU9aELxuWVzxeaNeJNGv4O8cIVfoE6aLN2vsq"
+  integrity="sha384-F2W/U+6ph3lrGyt7gqwYLdCo+IgdCAhz3ZP/Zk/bOMadIWhL8Cg0lB+RSdsgOdjM"
   crossorigin="anonymous">
 </script>
 ```
