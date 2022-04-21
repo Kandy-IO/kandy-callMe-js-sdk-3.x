@@ -262,15 +262,23 @@ This API will only modify the configurations provided, leaving other configurati
 as they were originally set, by performing a merge of the new values into the
 previous values.
 
-Please note that that the object provided to the `updateConfig` API may be different
-than the object retrieved from the [getConfig][14] API. This may happen when a format
+Please note that updating the [call.removeH264Codecs][14] configuration will not immediately change the SDP handlers used for a call. If you want to add or remove the
+h264 codec remover sdp handler you should follow this procedure:
+
+1.  Update the config for removeH264Codecs using the [updateConfig][15] API.
+2.  Update the sdp handler list using the [setSdpHandlers][16] API and provide any client defined SDP handler functions.
+
+    NOTE: You can get the currently defined SDP handler functions with the [getConfig][17] API.
+
+Please note that the object provided to the `updateConfig` API may be different
+than the object retrieved from the [getConfig][17] API. This may happen when a format
 change has happened and the SDK modifies the provided format to alleviate
 backwards-compatibility issues. We recommend ensuring the configurations you
-provide are as described by the [config][15] section.
+provide are as described by the [config][18] section.
 
 #### Parameters
 
-*   `newConfigValues` **[Object][7]** Key-value pairs that will be placed into the store. See [config][15] for details on what key-value pairs are available for use.
+*   `newConfigValues` **[Object][7]** Key-value pairs that will be placed into the store. See [config][18] for details on what key-value pairs are available for use.
 
 #### Examples
 
@@ -298,7 +306,7 @@ Add an event listener for the specified event type. The event is emitted by the 
 #### Parameters
 
 *   `type` **[string][8]** The event type for which to add the listener.
-*   `listener` **[Function][16]** The listener for the event type. The parameters of the listener depend on the event type.
+*   `listener` **[Function][19]** The listener for the event type. The parameters of the listener depend on the event type.
 
 #### Examples
 
@@ -309,7 +317,7 @@ client.on('dummy:event', function (params) {
 })
 ```
 
-*   Throws **[Error][17]** Invalid event type
+*   Throws **[Error][20]** Invalid event type
 
 ### off
 
@@ -318,11 +326,11 @@ Removes an event listener for the specified event type. The event is emitted by 
 #### Parameters
 
 *   `type` **[string][8]** The event type for which to remote the listener.
-*   `listener` **[Function][16]** The listener to remove.
+*   `listener` **[Function][19]** The listener to remove.
 
 <!---->
 
-*   Throws **[Error][17]** Invalid event type
+*   Throws **[Error][20]** Invalid event type
 
 ### subscribe
 
@@ -330,11 +338,11 @@ Adds a global event listener to SDK instance.
 
 #### Parameters
 
-*   `listener` **[Function][16]** The event listener to add. The parameters are (type, ...args), where args depend on the event type.
+*   `listener` **[Function][19]** The event listener to add. The parameters are (type, ...args), where args depend on the event type.
 
 <!---->
 
-*   Throws **[Error][17]** Listener not a function
+*   Throws **[Error][20]** Listener not a function
 
 ### unsubscribe
 
@@ -342,11 +350,11 @@ Removes a global event listener from SDK instance.
 
 #### Parameters
 
-*   `listener` **[Function][16]** The event listener to remove.
+*   `listener` **[Function][19]** The event listener to remove.
 
 <!---->
 
-*   Throws **[Error][17]** Listener not a function
+*   Throws **[Error][20]** Listener not a function
 
 ### getUserInfo
 
@@ -617,7 +625,7 @@ the SDK and one or more backend servers.
 
 Information about a websocket connection.
 
-Can be retrieved using the [connection.getSocketState][18] API.
+Can be retrieved using the [connection.getSocketState][21] API.
 
 Type: [Object][7]
 
@@ -655,7 +663,7 @@ Get the state of the websocket.
 
 *   `platform` **[string][8]** Backend platform for which to request the websocket's state. (optional, default `'link'`)
 
-Returns **[connection.WSConnectionObject][19]** Details about the current websocket connection, including state and configuration.
+Returns **[connection.WSConnectionObject][22]** Details about the current websocket connection, including state and configuration.
 
 ### enableConnectivityChecking
 
@@ -697,7 +705,7 @@ Type: [string][8]
 
 *   `params` **[Object][7]** 
 
-    *   `params.error` **[api.BasicError][20]** The Basic error object.
+    *   `params.error` **[api.BasicError][23]** The Basic error object.
 
 ## getDevices
 
@@ -710,7 +718,7 @@ behaviour. The SDK will generate logs, at different levels for different
 types of information, which are routed to a
 "[Log Handler][4]" for consumption. An application
 can provide their own Log Handler (see
-[config.logs][21]) to customize how the logs are
+[config.logs][24]) to customize how the logs are
 handled, or allow the default Log Handler to print the logs to the
 console.
 
@@ -770,7 +778,7 @@ logged. It contains both the logged information and meta-info about when
 and who logged it.
 
 A [LogHandler][4] provided to the SDK (see
-[config.logs][21]) will need to handle LogEntry
+[config.logs][24]) will need to handle LogEntry
 objects.
 
 Type: [Object][7]
@@ -820,10 +828,10 @@ default, the SDK will log information to the console, but a LogHandler can
 be configured to change this behaviour.
 
 A LogHandler can be provided to the SDK as part of its configuration (see
-[config.logs][21]). The SDK will then provide this
+[config.logs][24]). The SDK will then provide this
 function with the logged information.
 
-Type: [Function][16]
+Type: [Function][19]
 
 #### Parameters
 
@@ -880,7 +888,7 @@ Provides an external notification to the system for processing.
 ### registerApplePush
 
 Registers with Apple push notification service. Once registration is successful, the application will be able to receive
-standard and/or voip push notifications. It can then send these notifications to the SDK with [api.notifications.process][22]
+standard and/or voip push notifications. It can then send these notifications to the SDK with [api.notifications.process][25]
 in order for the SDK to process them.
 
 #### Parameters
@@ -899,13 +907,13 @@ in order for the SDK to process them.
     *   `params.isProduction` **[boolean][11]** If true, push notification will be sent to production.
         If false, push notification will be sent to sandbox.
 
-Returns **[Promise][23]** When successful,  the information of the registration.
+Returns **[Promise][26]** When successful,  the information of the registration.
 Promise will reject with error object otherwise.
 
 ### registerAndroidPush
 
 Registers with Google push notification service. Once registration is successful, the application will be able to receive
-standard and/or voip push notifications. It can then send these notifications to the SDK with [api.notifications.process][22]
+standard and/or voip push notifications. It can then send these notifications to the SDK with [api.notifications.process][25]
 in order for the SDK to process them.
 
 #### Parameters
@@ -920,7 +928,7 @@ in order for the SDK to process them.
     *   `params.realm` **[string][8]** The realm used by the push registration service to identify
         and establish a connection with the service gateway.
 
-Returns **[Promise][23]** When successful,  the information of the registration.
+Returns **[Promise][26]** When successful,  the information of the registration.
 Promise will reject with error object otherwise.
 
 ### unregisterApplePush
@@ -931,7 +939,7 @@ Unregister Apple push notifications.
 
 *   `registrationInfo` **[string][8]** The data returned from the push registration
 
-Returns **[Promise][23]** When successful, the promise will resolve with undefined.
+Returns **[Promise][26]** When successful, the promise will resolve with undefined.
 Promise will reject with error object otherwise.
 
 ### unregisterAndroidPush
@@ -942,7 +950,7 @@ Unregister Android push notifications.
 
 *   `registrationInfo` **[string][8]** The data returned from the push registration
 
-Returns **[Promise][23]** When successful, the promise will resolve with undefined.
+Returns **[Promise][26]** When successful, the promise will resolve with undefined.
 Promise will reject with error object otherwise.
 
 ### enableWebsocket
@@ -971,7 +979,7 @@ An error occurred with push notifications.
 
 *   `params` **[Object][7]** 
 
-    *   `params.error` **[api.BasicError][20]** The Basic error object.
+    *   `params.error` **[api.BasicError][23]** The Basic error object.
     *   `params.channel` **[string][8]** The channel for the notification.
 
 ## request
@@ -981,7 +989,7 @@ The 'request' namespace (within the 'api' type) is used to make network requests
 ### fetch
 
 Send a request to the underlying REST service with the appropriate configuration and authentication.
-This is a wrapper on top of the browser's [fetch API][24]
+This is a wrapper on top of the browser's [fetch API][27]
 and behaves very similarly but using SDK configuration for the base URL and authentication as well
 as SDK logging.
 
@@ -989,7 +997,7 @@ as SDK logging.
 
 *   `resource` **[string][8]** The full path of the resource to fetch from the underlying service. This should include any REST version
     or user information. This path will be appended to the base URL according to SDK configuration.
-*   `init` **RequestInit** An object containing any custom settings that you want to apply to the request. See [fetch API][24]
+*   `init` **RequestInit** An object containing any custom settings that you want to apply to the request. See [fetch API][27]
     for a full description and defaults.
 
 #### Examples
@@ -1009,18 +1017,18 @@ const requestOptions = {
 const response = await client.request.fetch('/rest/version/1/user/xyz@test.com/externalnotification', requestOptions)
 ```
 
-Returns **[Promise][23]<[Response][25]>** A promise for a [Response][26] object.
+Returns **[Promise][26]<[Response][28]>** A promise for a [Response][29] object.
 
 ## sdpHandlers
 
-A set of [SdpHandlerFunction][27]s for manipulating SDP information.
+A set of [SdpHandlerFunction][30]s for manipulating SDP information.
 These handlers are used to customize low-level call behaviour for very specific
 environments and/or scenarios.
 
 Note that SDP handlers are exposed on the entry point of the SDK. They can be added during
-initialization of the SDK using the [config.call.sdpHandlers][28] configuration
+initialization of the SDK using the [config.call.sdpHandlers][14] configuration
 parameter. They can also be set after the SDK's creation by using the
-[call.setSdpHandlers][29] function.
+[call.setSdpHandlers][16] function.
 
 ### Examples
 
@@ -1061,7 +1069,7 @@ length (usually to 4KB) and will reject calls that have SDP size above this amou
 While creating an SDP handler would allow a user to perform this type of manipulation, it is a non-trivial task that requires in-depth knowledge of WebRTC SDP.
 
 To facilitate this common task, the createCodecRemover function creates a codec removal handler that can be used for this purpose. Applications can use this codec
-removal handler in combination with the [call.getAvailableCodecs][30] function in order to build logic to determine the best codecs to use
+removal handler in combination with the [call.getAvailableCodecs][31] function in order to build logic to determine the best codecs to use
 for their application.
 
 #### Parameters
@@ -1145,36 +1153,38 @@ client.media.setDefaultDevices({
 
 [13]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
 
-[14]: #apigetconfig
+[14]: #configconfigcall
 
-[15]: #config
+[15]: #apiupdateconfig
 
-[16]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+[16]: call.setSdpHandlers
 
-[17]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error
+[17]: #apigetconfig
 
-[18]: #connectiongetsocketstate
+[18]: #config
 
-[19]: #connectionwsconnectionobject
+[19]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
 
-[20]: #apibasicerror
+[20]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error
 
-[21]: #configconfiglogs
+[21]: #connectiongetsocketstate
 
-[22]: api.notifications.process
+[22]: #connectionwsconnectionobject
 
-[23]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
+[23]: #apibasicerror
 
-[24]: https://developer.mozilla.org/en-US/docs/Web/API/fetch
+[24]: #configconfiglogs
 
-[25]: https://developer.mozilla.org/docs/Web/Guide/HTML/HTML5
+[25]: api.notifications.process
 
-[26]: https://developer.mozilla.org/en-US/docs/Web/API/Response
+[26]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
 
-[27]: call.SdpHandlerFunction
+[27]: https://developer.mozilla.org/en-US/docs/Web/API/fetch
 
-[28]: #configconfigcall
+[28]: https://developer.mozilla.org/docs/Web/Guide/HTML/HTML5
 
-[29]: call.setSdpHandlers
+[29]: https://developer.mozilla.org/en-US/docs/Web/API/Response
 
-[30]: call.getAvailableCodecs
+[30]: call.SdpHandlerFunction
+
+[31]: call.getAvailableCodecs
