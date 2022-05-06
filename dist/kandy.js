@@ -1,7 +1,7 @@
 /**
  * Kandy.js
  * kandy.callMe.js
- * Version: 3.40.0-beta.881
+ * Version: 3.40.0-beta.882
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -8000,7 +8000,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '3.40.0-beta.881';
+  return '3.40.0-beta.882';
 }
 
 /***/ }),
@@ -59056,6 +59056,7 @@ exports.getSubscriptionInfo = getSubscriptionInfo;
 exports.getSubscriptions = getSubscriptions;
 exports.getSubscriptionExpiry = getSubscriptionExpiry;
 exports.getWebsocketConfig = getWebsocketConfig;
+exports.getPendingOperation = getPendingOperation;
 
 var _fp = __webpack_require__(3);
 
@@ -59201,6 +59202,15 @@ function getWebsocketConfig(state) {
   // provided values for websocket will be used from authentication config and defaults
   // will come from the subscription plugin.
   return (0, _utils.mergeValues)(subConfig.websocket, authConfig.websocket);
+}
+
+/**
+ * Return the pending operation if one is pending.
+ * @method getPendingOperation
+ * @return {string}
+ */
+function getPendingOperation(state) {
+  return state.subscription.pendingOperation;
 }
 
 /***/ }),
